@@ -1,0 +1,23 @@
+.cart__no__items{
+    width: 80%;
+    margin: 30px auto 0 auto;
+    background-color: white;
+    box-shadow: 0px 0px 7px 0 rgba(220, 220, 220, 0.7);
+}
+
+.cart__contains__items{
+    width: 80%;
+    margin: 30px auto 0 auto;
+}
+
+.cart__table{
+    border-bottom-color: white;
+}
+
+.cart__table__title{
+    color: white;
+    font-weight: 600;
+}
+.cart__deliveryDate:focus{
+    border-color: green;
+}
