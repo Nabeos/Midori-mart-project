@@ -1,0 +1,43 @@
+.button__register__hover:hover {
+  background-color: rgb(3, 75, 3);
+  color: white;
+}
+
+.register__border__hover:hover {
+  border-color: #5ae4a8 !important;
+}
+
+.register__border__hover:focus {
+  border-color: #5ae4a8 !important;
+}
+
+.register__border__button:hover {
+  border-color: #5ae4a8 !important;
+  color: white;
+  background-color: #5ae4a8 !important;
+}
+
+.register__border__button {
+  border-radius: 5px !important;
+}
+
+.register__confirm__button:hover {
+  color: rgb(3, 75, 3) !important;
+}
+
+
+.register__confirm__button {
+  color: #5ae4a8 !important;
+}
+
+.register__confirm__button:focus {
+  color: #5ae4a8 !important;
+}
+
+.register__logo__m1 {
+  color: #17782c;
+}
+
+.register__logo__m2 {
+  color: #349275;
+}

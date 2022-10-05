@@ -1,0 +1,27 @@
+.footer__background{
+    background-color: #0c6e21!important;
+}
+
+.footer__logo__m1{
+    color: #17782C
+}
+
+.footer__logo__m2{
+    color: #349275
+}
+
+.footer__hover:hover{
+    color: #349275!important;
+}
+
+.facebook__hover:hover{
+    color: #04225e!important;
+}
+
+.mail__hover:hover{
+    color: #ab3c3c!important;
+}
+
+.phone__hover:hover{
+    color: #2d0a5a!important;
+}

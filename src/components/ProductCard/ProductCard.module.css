@@ -1,0 +1,15 @@
+.productcard__border:hover {
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+}
+
+.productcard__border {
+  border: lightgray;
+}
+
+.productcard__cardtitle {
+  color: black;
+}
+
+.productcard__cardtitle:hover {
+  color: #0c6e21;
+}

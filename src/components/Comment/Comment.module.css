@@ -1,0 +1,14 @@
+.comment__border{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  background-color: white;
+}
+
+.comment__avatar__circle{
+    border-radius: 10rem;
+}
+
+.comment__overflow:hover{
+    overflow-y: auto;
+}

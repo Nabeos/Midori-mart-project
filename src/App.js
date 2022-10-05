@@ -23,6 +23,9 @@ import RevenueManagement from './pages/RevenueManagement/RevenueManagement';
 import ShipperManagement from './pages/ShipperManagement/ShipperManagement';
 import UserManagement from './pages/UserManagement/UserManagement';
 import UserProfile from './pages/UserProfile/UserProfile';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ProductList from './pages/ProductList/ProductList';
+import Blog from './pages/Blog/Blog';
 
 export const history = createBrowserHistory();
 function App() {
@@ -34,10 +37,13 @@ function App() {
         <Route exact path="/checkout/:orderId" component={Checkout} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
         <Route exact path="/orderpicking/:orderId" component={OrderPicking} />
-        <Route exact path="/product/:id" component={ProductDetail} />
+        <Route exact path="/product" component={ProductDetail} />
+        <Route exact path="/productlist" component={ProductList} />
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
+        <Route exact path="/blog" component={Blog} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />

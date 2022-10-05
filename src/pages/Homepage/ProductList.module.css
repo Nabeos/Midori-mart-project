@@ -1,0 +1,35 @@
+.productlist__border__general {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 0.5rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    background: rgba(0, 0, 0, 0.4);
+  
+  }
+  
+  .productlist__border__filter{
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 1rem;
+  }
+  
+  .productlist__cardtitle {
+    color: black;
+  }
+  
+  .productlist__cardtitle:hover {
+    color: #0c6e21;
+  }
+  
+  .productlist__relatedproduct__border:hover{
+    box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
+  
+  .productlist__relatedproduct__border{
+    border: lightgray
+  }
+  
+  .productlist__addtocart__button{
+    margin-top: 1rem;
+    border: 1px solid #166534
+  }

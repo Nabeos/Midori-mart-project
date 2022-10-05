@@ -1,0 +1,125 @@
+.productdetail__border {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  background-color: white;
+}
+
+.productdetail__slogan__border{
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.productdetail__border__weight {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-left: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  border-radius: 5px;
+}
+
+.productdetail__decrease__button {
+  border-radius: 5px 0 0 5px;
+  border-color: rgba(166, 157, 157, 0.3);
+}
+
+.productdetail__increase__button {
+  border-radius: 0 5px 5px 0;
+  border-color: rgba(166, 157, 157, 0.3);
+}
+
+.productdetail__quantity {
+  border-color: rgba(166, 157, 157, 0.3);
+}
+
+.productdetail__quantity:hover {
+  border-color: rgba(166, 157, 157, 0.3);
+}
+
+.productdetail__quantity:focus {
+  border-color: rgba(166, 157, 157, 0.3);
+}
+
+.productdetail__buynow__button {
+  background-color: #0c6e21;
+  color: white;
+  border-radius: 5px;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.productdetail__buynow__button:hover {
+  background-color: white;
+  color: #0c6e21;
+  border-color: #0c6e21;
+}
+
+.productdetail__addtocart__button {
+  border-color: #0c6e21;
+  color: #0c6e21;
+  border-radius: 5px;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.productdetail__addtocart__button:hover {
+  background-color: #0c6e21;
+  color: white;
+  border-color: #0c6e21;
+}
+
+.productdetail__rate__button {
+  background-color: #0c6e21;
+  color: white;
+  border-radius: 5px;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-top: 0.8rem;
+  margin-left: 6.5rem;
+}
+
+.productdetail__rate__button:hover {
+  background-color: white;
+  color: #0c6e21;
+  border-color: #0c6e21;
+}
+
+.productdetail__textarea:focus {
+  border-color: #0c6e21;
+}
+
+.productdetail__textarea:hover {
+  border-color: #0c6e21;
+}
+
+.productdetail__cardtitle {
+  color: black;
+}
+
+.productdetail__cardtitle:hover {
+  color: #0c6e21;
+}
+
+.productdetail__relatedproduct__border:hover{
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+}
+
+.productdetail__relatedproduct__border{
+  border: lightgray
+}
+
+.productdetail__prearrow{
+ color: blue
+}
+
+.productdetail__overflow:hover{
+  overflow-y: auto;
+}

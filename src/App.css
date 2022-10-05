@@ -5,6 +5,7 @@
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -17,4 +18,76 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.slick-dots li button:before{
+  font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    content: '';
+    text-align: center;
+    opacity: 0!important;
+    color: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 0!important;
+  color: black;
+}
+
+.slick-dots li button:before {
+  font-family: 'slick';
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  content: '';
+  text-align: center;
+  opacity: 0;
+  color: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ant-carousel .slick-dots li button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 3px;
+  padding: 0;
+  color: transparent;
+  font-size: 0;
+  background: #000;
+  border: 0;
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: all 0.5s;
+
+}
+
+.ant-carousel .slick-dots {
+  position: absolute;
+  right: 0;
+  bottom: 10;
+  left: 0;
+  z-index: 15;
+  display: flex !important;
+  justify-content: center;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.ant-carousel img{
+  object-fit: cover;
 }

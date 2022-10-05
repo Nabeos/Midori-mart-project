@@ -1,3 +1,54 @@
-.homepage_title{
-    color: red;
+.homepage_title {
+  color: red;
+}
+
+.homepage__slogan__border {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.homepage__dealhot__block {
+  border-radius: 10px;
+  background: linear-gradient(to bottom right, #ffcc66 0%, #ff3300 100%);
+  box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.homepage__dealhot__general {
+  background-image: url("https://media02.stockfood.com/largepreviews/Mzg2MDQ5NTQx/12453211-Top-view-of-brown-rice-with-fresh-delicious-vegetables-and-ingredients-for-tasty-cooking-on-vintage-dark.jpg");
+  background-repeat: no-repeat;
+  background-size: 160vh 100vh;
+}
+
+.homepage__product__section {
+  background-size: 300vh 100vh;
+}
+
+
+
+.homepage__bestseller__seemore{
+  color: white;
+}
+
+.homepage__bestseller__seemore:hover{
+  color: rgb(3, 74, 3);
+}
+
+.homepage__product__bestseller{
+  background-image: url("https://media.istockphoto.com/photos/food-backgrounds-table-filled-with-large-variety-of-food-picture-id1155240408?b=1&k=20&m=1155240408&s=170667a&w=0&h=xQCZ2QB1TS81T4X0W2tEYDBrkEX4z-wuMYRFvvqg1Qk=");
+  background-repeat: no-repeat;
+  background-size: 110vh 65vh;
+}
+
+.homepage__hotdeal__countdown{
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.homepage__dealhot__left{
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.homepage__dealhot__right{
+  background: rgba(0, 0, 0, 0.4);
 }

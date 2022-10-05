@@ -1,0 +1,16 @@
+.header__navbar{
+    background-color: #055417!important;
+}
+
+.header__logo__m1{
+    color: #17782C
+}
+
+.header__logo__m2{
+    color: #349275
+}
+
+.header__searchbar:focus{
+    border: 1px solid rgba(5, 84, 23, 0.5)
+}
+
