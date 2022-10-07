@@ -26,6 +26,9 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ProductList from './pages/ProductList/ProductList';
 import Blog from './pages/Blog/Blog';
+import PaymentMethod from './pages/PaymentMethod/PaymentMethod';
+import PaymentByMomo from './pages/PaymentByMomo/PaymentByMomo';
+
 
 export const history = createBrowserHistory();
 function App() {
@@ -35,6 +38,8 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/checkout/:orderId" component={Checkout} />
+        <Route exact path="/payment/:orderId" component={PaymentMethod} />
+        <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />

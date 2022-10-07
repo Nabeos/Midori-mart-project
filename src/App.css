@@ -5,20 +5,22 @@
 body {
   margin: 0;
   padding: 0;
+  line-height: 0;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', */
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+>>>>>>> OrderProducts
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    sans-serif; */
+  font-family: 'Helvetica Neue', sans-serif!important;
   font-size: 16px;
-  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 .slick-dots li button:before{
   font-family: 'slick';
     font-size: 6px;
@@ -91,3 +93,21 @@ code {
 .ant-carousel img{
   object-fit: cover;
 }
+
+
+.ant-checkbox-checked .ant-checkbox-inner{
+  background-color: green!important;
+  border-color: green!important;
+}
+.ant-checkbox:hover .ant-checkbox-inner{
+  border-color: green!important;
+}
+
+.ant-checkbox-checked::after{
+  border-color: green!important;
+}
+
+.swal2-styled{
+  box-shadow: none!important;
+}
+

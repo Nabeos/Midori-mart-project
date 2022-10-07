@@ -170,7 +170,7 @@ function ProductFilters(props) {
     <section className="filters" aria-labelledby="filters-header">
       <header id="filters-header" className="text-base font-medium mt-3 ml-2">{"Danh mục"}</header>
       <div className="">
-        <div style={{borderBottom:"1px solid lightgray"}}>
+        <div style={{ borderBottom: "1px solid lightgray" }}>
           <ul className={`${styles.productlist__border}`}>
             {categories.map((category) => (
               <li key={category}>
@@ -198,42 +198,42 @@ function Product(props) {
   };
   return (
     <div className="">
-    <div
-      className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
-      style={{ minHeight: "30vh" }}
-    >
-      <div key={product.id} className="product">
-        <div className="flex justify-center items-center">
-          {" "}
-          <img src={product.image} style={{ width: "60%" }} />
-        </div>
-        <div className="product-details -mt-14">
-          <header
-            className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-            style={{height:"5.2vh"}}
-          >
-            <a
+      <div
+        className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
+        style={{ minHeight: "30vh" }}
+      >
+        <div key={product.id} className="product">
+          <div className="flex justify-center items-center">
+            {" "}
+            <img className={styles.productlist__image} src={product.image} style={{ width: "60%" }} />
+          </div>
+          <div className="product-details -mt-14">
+            <header
               className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-              href="/product"
+              style={{ height: "5.2vh" }}
             >
-              {product.title}
-            </a>
-          </header>
-          <div className="text-xs">{product.sku}</div>
-          <div className="text-sm mt-2 font-normal">{`${padPrice(
-            product.price
-          )}`}</div>
+              <a
+                className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
+                href="/product"
+              >
+                {product.title}
+              </a>
+            </header>
+            <div className="text-xs">{product.sku}</div>
+            <div className="text-sm mt-2 font-normal">{`${padPrice(
+              product.price
+            )}`}</div>
+          </div>
+          <button
+            style={{ width: "100%" }}
+            onClick={handleNavigate}
+            className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
+          >
+            Thêm vào giỏ
+          </button>
         </div>
-        <button
-          style={{ width: "100%" }}
-          onClick={handleNavigate}
-          className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
-        >
-          Thêm vào giỏ
-        </button>
       </div>
     </div>
-  </div>
   );
 }
 
@@ -295,20 +295,20 @@ export default function ProductList() {
         >
           <div
             className={`${styles.productlist__border__filter} `}
-            style={{ width: "50%", borderBottom:"" }}
+            style={{ width: "50%", borderBottom: "" }}
           >
             <ProductFilters
               categories={CATEGORIES}
               onFilterChange={handleFilterChange}
               className=""
-              style={{ width: "50%", borderBottom:"" }}
+              style={{ width: "50%", borderBottom: "" }}
             />
-            <div className="font-medium" style={{width:"100%", borderBottom: "1px solid lightgray"}}>Thương hiệu</div>
-            <div className="font-medium" style={{width:"100%", borderBottom: "1px solid lightgray"}}>Thời gian</div>
+            <div className="font-medium" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
+            <div className="font-medium" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thời gian</div>
           </div>
           <div>
             <div
-              className={`${styles.productlist__border__general} flex justify-end `} style={{width:"99%"}}
+              className={`${styles.productlist__border__general} flex justify-end `} style={{ width: "99%" }}
             >
               <select
                 className={`${styles.productlist__border__weight} mr-3 mt-3`}

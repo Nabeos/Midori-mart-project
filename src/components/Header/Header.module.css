@@ -14,3 +14,8 @@
     border: 1px solid rgba(5, 84, 23, 0.5)
 }
 
+.header__logo {
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+}

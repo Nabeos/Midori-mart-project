@@ -12,23 +12,27 @@ import {
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FaUserCircle } from "react-icons/fa";
+import { history } from "../../App";
 
 export default function Header() {
+  const handleNavigateToCartPage = () => {
+    history.push("/cart");
+  }
   return (
     <div className="bg-white">
       <div className="grid grid-cols-12 ml-11 -mt-10 items-center">
         <div className="col-span-2 mr-2 flex items-center">
-        <NavLink
+          <NavLink
             to="/"
             className="text-black no-underline font-medium flex items-center"
           >
-          <img src="./images/midori_logo.png" style={{ width: "50%" }} />
-          <div className="-ml-10 text-2xl font-bold">
-            <span className={`${styles.header__logo__m1} `}>M</span>
-            <span>idori</span>
-            <span className={`${styles.header__logo__m2} `}>M</span>
-            <span>art</span>
-          </div>
+            <img className={styles.header__logo} src="./images/midori_logo.png" style={{ width: "50%" }} />
+            <div className="-ml-10 text-2xl font-bold">
+              <span className={`${styles.header__logo__m1} `}>M</span>
+              <span>idori</span>
+              <span className={`${styles.header__logo__m2} `}>M</span>
+              <span>art</span>
+            </div>
           </NavLink>
         </div>
         <div className="col-span-7">
@@ -39,7 +43,7 @@ export default function Header() {
               placeholder="Tìm kiếm sản phẩm"
             />
             <InputGroup.Text>
-              <SearchOutlined className=""/>
+              <SearchOutlined className="" />
             </InputGroup.Text>
           </InputGroup>
         </div>
@@ -52,7 +56,7 @@ export default function Header() {
           </NavLink>
         </div>
         <div className="col-span-1 text-center">
-          <ShoppingCartOutlined className="text-3xl mb-2 -ml-10" />
+          <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 -ml-10" />
         </div>
         <div className="col-span-1 text-center ml-2">
           <FaUserCircle className="text-3xl hidden" />

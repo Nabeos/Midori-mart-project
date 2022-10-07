@@ -1,0 +1,58 @@
+.cart__no__items{
+    width: 80%;
+    margin: 30px auto 0 auto;
+    background-color: white;
+    box-shadow: 0px 0px 7px 0 rgba(220, 220, 220, 0.7);
+}
+
+.cart__contains__items{
+    width: 80%;
+    margin: 30px auto 0 auto;
+}
+
+.cart__table{
+    border-bottom-color: white;
+}
+
+.cart__table__title{
+    color: white;
+    font-weight: 600;
+}
+.cart__deliveryDate:focus{
+    border-color: green;
+}
+
+/* Thử nghiệm */
+.cart__increase__button {
+    border-radius: 5px 0 0 5px;
+    border-color: rgba(166, 157, 157, 0.3);
+  }
+  
+.cart__decrease__button {
+    border-radius: 0 5px 5px 0;
+    border-color: rgba(166, 157, 157, 0.3);
+}
+
+.cart__decrease__button:hover {
+    background-color: #b91c1c!important;
+    border-color: #b91c1c!important;
+}
+
+.cart__increase__button:hover {
+    background-color: #15803d!important;
+    border-color: #15803d!important;
+}
+
+.cart__quantity {
+    border-color: rgba(166, 157, 157, 0.3)!important;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+  
+.cart__quantity:hover {
+    border-color: rgba(166, 157, 157, 0.3);
+}
+  
+.cart__quantity:focus {
+    border-color: rgba(166, 157, 157, 0.3);
+}

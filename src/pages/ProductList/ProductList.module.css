@@ -23,12 +23,12 @@ main {
   overflow: hidden;
   position: relative;
 }
-img {
+
+.productlist__image{
   height: 200px;
   object-fit: contain;
   width: 100%;
 }
-
 .product-details {
   display: flex;
   flex-direction: column;

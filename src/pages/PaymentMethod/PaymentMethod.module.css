@@ -1,0 +1,50 @@
+.payment__breadcrumb_item:after{
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 11px;
+    vertical-align: middle;
+    margin: 0 0.5em;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjExIiBvcGFjaXR5PSIuNCIgZmlsbD0iIzAwMCI+PHBhdGggZD0iTS41MjYgMS40MDhsNCA0LjY0NS4wMTQtLjgzLTQgNC4zNTQuOTIuODQ2IDQtNC4zNTYuMzc2LS40MS0uMzYyLS40Mi00LTQuNjQ1LS45NDguODE2eiIvPjwvc3ZnPg==),none;
+}
+
+.payment__breadcrumb_item_inactive{
+    display: inline-block;
+    color: #999999;
+}
+
+.payment__totalBill{
+    position: relative;
+}
+.payment__totalBill::before{
+    background-color: #e1e1e1;
+    content: '';
+    position: absolute;
+    top: -0.5em;
+    left: 0;
+    width: 100%;
+    height: 1px;
+}
+.payment__right{
+    position: relative;
+}
+.payment__right::after{
+    content: "";
+    display: block;
+    width: 1px;
+    height: 720px;
+    position: absolute;
+    top: 0;
+    left: -7%;
+    bottom: 0;
+    background: #e1e1e1;
+    z-index: -1;
+    box-shadow: 0 -1px 0 #e1e1e1 inset;
+}
+.payment__checkbox .ant-checkbox-checked .ant-checkbox-inner{
+    background-color: green!important;
+    border-color: green!important;
+}
+.payment__voucher:focus{
+    border-color: green;
+}
