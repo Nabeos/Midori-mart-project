@@ -200,17 +200,18 @@ function Product(props) {
     <div className="">
       <div
         className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
-        style={{ minHeight: "30vh" }}
+        style={{ minHeight: "250px" }}
       >
-        <div key={product.id} className="product">
-          <div className="flex justify-center items-center">
-            {" "}
-            <img className={styles.productlist__image} src={product.image} style={{ width: "60%" }} />
-          </div>
-          <div className="product-details -mt-14">
+        <div key={product.id} className="product flex flex-col">
+
+          <div className="product-details">
+            <div className="flex justify-center items-center">
+              {" "}
+              <img className="mb-1" src={product.image} style={{ width: "60%" }} />
+            </div>
             <header
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-              style={{ height: "5.2vh" }}
+              className={`${styles.productlist__cardtitle} text-center no-underline text-sm font-semibold hover:text-green-800 h-24`}
+
             >
               <a
                 className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
@@ -218,11 +219,12 @@ function Product(props) {
               >
                 {product.title}
               </a>
+              <div className="text-xs">{product.sku}</div>
+              <div className="text-sm mt-2 font-normal">{`${padPrice(
+                product.price
+              )}`}</div>
             </header>
-            <div className="text-xs">{product.sku}</div>
-            <div className="text-sm mt-2 font-normal">{`${padPrice(
-              product.price
-            )}`}</div>
+
           </div>
           <button
             style={{ width: "100%" }}
@@ -241,7 +243,7 @@ function ProductsList(props) {
   const { products } = props;
 
   return (
-    <div className="products grid grid-cols-5">
+    <div className="products grid grid-cols-5 mb-5">
       {products.map((product) => (
         <div>
           <Product className="col-span-1" product={product} />

@@ -90,7 +90,7 @@ export default function ProductDetail() {
     <div>
       <Header />
       <div className="bg-gray-100">
-        <div className="flex justify-center" style={{ width: "100%" }}>
+        <div className="flex justify-center" style={{ width: "80%", margin: '0 auto' }}>
           <div className="grid grid-cols-3">
             <div
               className={`${styles.productdetail__border} mt-10 mb-10 col-span-2 -ml-1`}
@@ -160,7 +160,7 @@ export default function ProductDetail() {
                   </div>
                   <div className="text-3xl font-bold mt-10">23000đ</div>
                   <div className="mt-1">
-                    <Button 
+                    <Button
                       className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
                     >
                       Mua ngay
@@ -426,10 +426,10 @@ export default function ProductDetail() {
               Sản phẩm liên quan
             </div>
             <Slider {...settings}>
-              <div style={{ width: "100%", height: "50vh" }}>
+              <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -437,17 +437,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 1
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -456,12 +459,13 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -469,17 +473,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai 2
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 2
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -488,12 +495,13 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -501,17 +509,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai 3
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 3
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -520,12 +531,13 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -533,17 +545,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai 4
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 4
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -552,12 +567,13 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -565,17 +581,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai 5
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 5
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -584,12 +603,13 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", height: "40vh" }}
+                  style={{ width: "80%", minHeight: "350px" }}
                 >
                   <Card.Img
                     className=""
@@ -597,17 +617,20 @@ export default function ProductDetail() {
                     style={{ width: "100%" }}
                     src="./images/meat.jpg"
                   />
-                  <Card.Body className="">
-                    <NavLink
-                      to="/login"
-                      className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                    >
-                      Thịt nạc vai 6
-                    </NavLink>
-                    <Card.Text>
-                      <div className="text-xs ">SKU: 23022001</div>
-                      <div className="text-lg mt-2 font-normal">23.000đ</div>
-                    </Card.Text>
+                  <Card.Body className="p-0">
+                    <div className="h-28">
+                      <NavLink
+                        to="/login"
+                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                      >
+                        Thịt nạc vai 6
+                      </NavLink>
+                      <Card.Text>
+                        <div className="text-xs">SKU: 23022001</div>
+                        <div className="text-lg mt-2 font-normal">23.000đ</div>
+                      </Card.Text>
+                    </div>
+
                     <Button
                       style={{ width: "100%" }}
                       className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
@@ -616,6 +639,7 @@ export default function ProductDetail() {
                       Thêm vào giỏ
                     </Button>
                   </Card.Body>
+
                 </Card>
               </div>
             </Slider>

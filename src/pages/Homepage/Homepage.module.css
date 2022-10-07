@@ -38,7 +38,7 @@
 .homepage__product__bestseller{
   background-image: url("https://media.istockphoto.com/photos/food-backgrounds-table-filled-with-large-variety-of-food-picture-id1155240408?b=1&k=20&m=1155240408&s=170667a&w=0&h=xQCZ2QB1TS81T4X0W2tEYDBrkEX4z-wuMYRFvvqg1Qk=");
   background-repeat: no-repeat;
-  background-size: 110vh 65vh;
+  background-size: cover;
 }
 
 .homepage__hotdeal__countdown{

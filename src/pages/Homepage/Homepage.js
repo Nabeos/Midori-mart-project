@@ -30,11 +30,11 @@ export default function Homepage() {
   };
   return (
     //Demo cách sử dụng module.css trong react
-    <div className="bg-gray-100" style={{width:"100%"}}>
+    <div className="bg-gray-100" style={{ width: "100%" }}>
       <Header />
-       <CarouselBanner/>
+      <CarouselBanner />
       <div style={{ width: "100%" }}>
-       
+
         <div className="flex justify-center">
           <div
             className={`${styles.homepage__dealhot__general} relative rounded-md bg-green-800 mt-20 flex justify-center`}
@@ -64,7 +64,7 @@ export default function Homepage() {
               <div
                 className={`${styles.homepage__dealhot__right} col-span-1 rounded-md flex justify-center items-center text-center `}
               >
-                <HomepageDealhot className=""/>
+                <HomepageDealhot className="" />
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function Homepage() {
             className={`${styles.homepage__product__section} relative bg-white mt-20 grid grid-cols-2`}
             style={{
               width: "80%",
-              height: "65vh",
+              minHeight: "550px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
@@ -95,7 +95,7 @@ export default function Homepage() {
                 className="absolute"
                 style={{
                   width: "50%",
-                  height: "65vh",
+                  minHeight: "550px",
                   background: "rgba(0, 0, 0, 0.6)",
                   borderTopLeftRadius: "5px",
                   borderBottomLeftRadius: "5px",
@@ -105,7 +105,7 @@ export default function Homepage() {
                   className=" absolute text-white"
                   style={{
                     width: "50%",
-                    height: "",
+                    minHeight: "",
                     marginTop: "48vh",
                     marginLeft: "3vh",
                   }}
@@ -130,64 +130,64 @@ export default function Homepage() {
         </div>
 
         {/* product by category*/}
-        <div className="flex flex-col items-center -mt-10">
+        <div className="flex flex-col items-center">
           <div
-            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center`}
+            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              height: "70vh",
+              minHeight: "600px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
           >
-            <div className="flex justify-start text-lg font-semibold" style={{width:"100%", borderBottom:"2px solid lightgray"}}><div className="-mt-7 ml-3 text-base font-semibold">Thịt tươi sống</div></div>
-            <div className="" style={{width:"80%"}}>
-              <HomepageProductByCategory/>
+            <div className="flex justify-start text-lg font-semibold" style={{ width: "100%", borderBottom: "2px solid lightgray" }}><div className="-mt-7 ml-3 text-base font-semibold">Thịt tươi sống</div></div>
+            <div className="" style={{ width: "80%" }}>
+              <HomepageProductByCategory />
             </div>
-            
+
           </div>
         </div>
 
         <div className="flex flex-col items-center -mt-10">
           <div
-            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center`}
+            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              height: "70vh",
+              minHeight: "600px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
           >
-            <div className="flex justify-start text-lg font-semibold" style={{width:"100%", borderBottom:"2px solid lightgray"}}><div className="flex justify-start -mt-7 ml-3 text-base font-semibold">Rau củ quả</div></div>
-            <div className="" style={{width:"80%"}}>
-              <HomepageProductByCategory/>
+            <div className="flex justify-start text-lg font-semibold" style={{ width: "100%", borderBottom: "2px solid lightgray" }}><div className="flex justify-start -mt-7 ml-3 text-base font-semibold">Rau củ quả</div></div>
+            <div className="" style={{ width: "80%" }}>
+              <HomepageProductByCategory />
             </div>
-            
+
           </div>
         </div>
 
         <div className="flex flex-col items-center -mt-10">
           <div
-            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center`}
+            className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              height: "70vh",
+              minHeight: "600px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
           >
-            <div className="flex justify-start text-lg font-semibold" style={{width:"100%", borderBottom:"2px solid lightgray"}}><div className="flex justify-start -mt-7 ml-3 text-base font-semibold">Đồ hộp</div></div>
-            <div className="" style={{width:"80%"}}>
-              <HomepageProductByCategory/>
+            <div className="flex justify-start text-lg font-semibold" style={{ width: "100%", borderBottom: "2px solid lightgray" }}><div className="flex justify-start -mt-7 ml-3 text-base font-semibold">Đồ hộp</div></div>
+            <div className="" style={{ width: "80%" }}>
+              <HomepageProductByCategory />
             </div>
-            
+
           </div>
         </div>
 
 
 
 
-     
+
       </div>
       <hr className="border-2 border-green- mt-14" />
       <div className="flex justify-center">

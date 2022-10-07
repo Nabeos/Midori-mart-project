@@ -30,33 +30,33 @@ const PRODUCTS = [
     image:
       "https://cdn-crownx.winmart.vn/images/prod/162428535691210054870-KG-Choo-sua-Burine-Grie%CE%B2brei-Vanille-d%C3%A0nh-cho-tre-tu-6-thong-tuoi-(Vi-6-hu-x-50g).jpg",
   },
-    {
-      id: 4,
-      title: "Kiwi xanh Newzealand",
-      price: "79.900 ₫",
-      sku: 23022001,
-      category: "Trái cây",
-      image:
-        "https://cdn-crownx.winmart.vn/images/prod/162428311346610235280-HOP-Chai-tay-toilet-xanh-huong-ng%C3%A0n-hoa-Klife-180g.jpg",
-    },
-    {
-      id: 5,
-      title: "Cá đuối",
-      price: "77.700 ₫",
-      sku: 23022001,
-      category: "Hải sản",
-      image:
-        "https://cdn-vincart.vinid.net/cdn-cgi/image/fit=scale-down,w=600,quality=75,f=auto/vm/product/2601185000000/9535015157790.jpg",
-    },
-    {
-      id: 6,
-      title: "Cá thu nguyên con",
-      price: "578.000 ₫",
-      sku: 23022001,
-      category: "Hải sản",
-      image:
-        "https://cdn-crownx.winmart.vn/images/prod/162428530874210053305-KG-Socola-sua-nhon-bonh-quy-oreo-Cadbury-Dairy-Milk-thanh-40g.jpg",
-    },
+  {
+    id: 4,
+    title: "Kiwi xanh Newzealand",
+    price: "79.900 ₫",
+    sku: 23022001,
+    category: "Trái cây",
+    image:
+      "https://cdn-crownx.winmart.vn/images/prod/162428311346610235280-HOP-Chai-tay-toilet-xanh-huong-ng%C3%A0n-hoa-Klife-180g.jpg",
+  },
+  {
+    id: 5,
+    title: "Cá đuối",
+    price: "77.700 ₫",
+    sku: 23022001,
+    category: "Hải sản",
+    image:
+      "https://cdn-vincart.vinid.net/cdn-cgi/image/fit=scale-down,w=600,quality=75,f=auto/vm/product/2601185000000/9535015157790.jpg",
+  },
+  {
+    id: 6,
+    title: "Cá thu nguyên con",
+    price: "578.000 ₫",
+    sku: 23022001,
+    category: "Hải sản",
+    image:
+      "https://cdn-crownx.winmart.vn/images/prod/162428530874210053305-KG-Socola-sua-nhon-bonh-quy-oreo-Cadbury-Dairy-Milk-thanh-40g.jpg",
+  },
   {
     id: 7,
     title: "Cá basa tươi ",
@@ -100,16 +100,16 @@ function Product(props) {
     <div className="">
       <div
         className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
-        style={{ minHeight: "30vh" }}
+        style={{ minHeight: "250px" }}
       >
         <div key={product.id} className="product">
           <div className="flex justify-center items-center">
             {" "}
             <img src={product.image} style={{ width: "60%" }} />
           </div>
-          <div className="product-details -mt-14">
+          <div className="product-details">
             <header
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
+              className={`${styles.productlist__cardtitle} text-center no-underline text-sm font-semibold hover:text-green-800 h-20`}
               style={{}}
             >
               <a
@@ -118,11 +118,12 @@ function Product(props) {
               >
                 {product.title}
               </a>
+              <div className="text-xs">{product.sku}</div>
+              <div className="text-sm mt-2 font-normal">{`${padPrice(
+                product.price
+              )}`}</div>
             </header>
-            <div className="text-xs">{product.sku}</div>
-            <div className="text-sm mt-2 font-normal">{`${padPrice(
-              product.price
-            )}`}</div>
+
           </div>
           <button
             style={{ width: "100%" }}

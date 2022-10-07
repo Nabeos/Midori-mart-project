@@ -97,17 +97,20 @@ function Product(props) {
     history.push("/product");
   };
   return (
-    <div className="">
+    <div className="" style={{}}>
       <div
-        className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 -mb-3 mr-3 pr-5 pl-5`}
-        style={{ minHeight: "30vh" }}
+        className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5`}
+        style={{ minHeight: "250px" }}
       >
-        <div key={product.id} className="product">
-         <div className="flex justify-center items-center"> <img  src={product.image} style={{width:"60%"}}/></div>
-          <div className="product-details -mt-14">
+        <div key={product.id} className="product flex flex-col">
+
+          <div className="product-details">
+            <div className="flex justify-center items-center">
+              <img src={product.image} style={{ width: "60%" }} />
+            </div>
             <header
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-              style={{ }}
+              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800 h-20 text-center`}
+              style={{}}
             >
               <a
                 className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
@@ -115,11 +118,12 @@ function Product(props) {
               >
                 {product.title}
               </a>
+              <div className="text-xs">{product.sku}</div>
+              <div className="text-sm mt-2 font-normal">{`${padPrice(
+                product.price
+              )}`}</div>
             </header>
-            <div className="text-xs">{product.sku}</div>
-            <div className="text-sm mt-2 font-normal">{`${padPrice(
-              product.price
-            )}`}</div>
+
           </div>
           <button
             style={{ width: "100%" }}
@@ -154,14 +158,11 @@ export default function HomepageProductList() {
     filters: new Set(),
   });
   return (
-    <div>
-      <div >
-        <ProductsList
+    <div style={{ minHeight: '500px' }}>
+      <ProductsList
         className={`${styles.productlist__border__general}`}
         products={state.products}
       />
-      </div>
-      
     </div>
   );
 }

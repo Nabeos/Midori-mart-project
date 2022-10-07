@@ -73,11 +73,11 @@ export default function Header() {
         variant="dark"
         className={`${styles.header__navbar} -mt-10`}
       >
-        <Container>
+        <Container style={{ width: '80%', margin: '0 auto' }}>
           {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
-          <Nav className="me-auto">
+          <Nav className="me-auto h-16" >
             {/* How to navigate without button */}
-            <div className="grid grid-cols-12 ml-28 mt-2 mb-2 text-sm flex text-center">
+            <div className="grid grid-cols-12 mt-2 mb-2 text-sm flex text-center justify-around items-center">
               <NavLink
                 to="/productlist"
                 activeStyle={{ fontWeight: "bold" }}
