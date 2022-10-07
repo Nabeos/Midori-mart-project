@@ -100,7 +100,7 @@ const PRODUCTS = [
     sku: 23022001,
     category: "Thịt",
     image:
-      "https://cdn-crownx.winmart.vn/images/prod/ba%20ch%E1%BB%89%20b%C3%B2%20m%E1%BB%B9%20c%E1%BA%AFt%20cu%E1%BB%99n%20ch%E1%BA%A5m%20s%E1%BB%91t%20sukiyaki%20orifood%20khay%20500g_9ebde064-3004-4617-ae12-e18e9c44a575.jpg",
+      "https://cdn-crownx.winmart.vn/images/prod/162428206102210617956-KG-Giu-Lua-MEATDeli-lo-chuoi-thuong-hang-250g.jpg",
   },
   {
     id: 11,
@@ -200,7 +200,7 @@ function Product(props) {
     <div className="">
       <div
         className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
-        style={{ minHeight: "250px" }}
+        style={{ minHeight: "280px" }}
       >
         <div key={product.id} className="product flex flex-col">
 
@@ -210,7 +210,7 @@ function Product(props) {
               <img className="mb-1" src={product.image} style={{ width: "60%" }} />
             </div>
             <header
-              className={`${styles.productlist__cardtitle} text-center no-underline text-sm font-semibold hover:text-green-800 h-24`}
+              className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-24`}
 
             >
               <a

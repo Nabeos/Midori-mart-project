@@ -110,7 +110,7 @@ function Product(props) {
               <img className="mb-1" src={product.image} style={{ width: "60%", }} />
             </div>
             <header
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800 h-20`}
+              className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-20`}
               style={{}}
             >
               <a

@@ -100,7 +100,7 @@ function Product(props) {
     <div className="" style={{}}>
       <div
         className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5`}
-        style={{ minHeight: "250px" }}
+        style={{ minHeight: "280px" }}
       >
         <div key={product.id} className="product flex flex-col">
 
@@ -109,7 +109,7 @@ function Product(props) {
               <img src={product.image} style={{ width: "60%" }} />
             </div>
             <header
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800 h-20 text-center`}
+              className={`${styles.productlist__cardtitle} flex flex-col items-start no-underline text-sm font-semibold hover:text-green-800 h-20 text-center`}
               style={{}}
             >
               <a

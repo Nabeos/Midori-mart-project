@@ -76,7 +76,7 @@ export default function Homepage() {
             className={`${styles.homepage__product__section} relative bg-white mt-20 grid grid-cols-2`}
             style={{
               width: "80%",
-              minHeight: "550px",
+              minHeight: "620px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
@@ -95,7 +95,7 @@ export default function Homepage() {
                 className="absolute"
                 style={{
                   width: "50%",
-                  minHeight: "550px",
+                  minHeight: "620px",
                   background: "rgba(0, 0, 0, 0.6)",
                   borderTopLeftRadius: "5px",
                   borderBottomLeftRadius: "5px",
@@ -135,7 +135,7 @@ export default function Homepage() {
             className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              minHeight: "600px",
+              minHeight: "660px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
@@ -153,7 +153,7 @@ export default function Homepage() {
             className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              minHeight: "600px",
+              minHeight: "660px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
@@ -171,7 +171,7 @@ export default function Homepage() {
             className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
             style={{
               width: "80%",
-              minHeight: "600px",
+              minHeight: "660px",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
               borderRadius: "5px",
             }}
