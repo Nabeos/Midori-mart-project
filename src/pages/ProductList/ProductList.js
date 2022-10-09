@@ -172,6 +172,7 @@ function ProductFilters(props) {
       <div className="">
         <div style={{ borderBottom: "1px solid lightgray" }}>
           <ul className={`${styles.productlist__border}`}>
+            {/* Chỗ này để call categories */}
             {categories.map((category) => (
               <li key={category}>
                 <label className="flex">
