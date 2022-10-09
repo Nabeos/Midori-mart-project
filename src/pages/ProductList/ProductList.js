@@ -254,9 +254,15 @@ function ProductsList(props) {
 }
 export default function ProductList() {
   const [state, setState] = useState({
+    //Tạo ProductListReducer rồi dùng useSelector lấy về
     products: PRODUCTS,
     filters: new Set(),
   });
+
+  useEffect(() => {
+    //Đây là nơi gọi api để lấy dữ liệu
+  }, [])
+
 
   const handleFilterChange = useCallback(
     (event) => {
