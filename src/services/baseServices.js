@@ -1,12 +1,12 @@
 import Axios from "axios"
-import { DOMAIN, TOKEN } from "../utils/settings/config"
+import { DOMAIN_CAPSTONE, TOKEN } from "../utils/settings/config"
 
 
 export class baseService {
     //put json về phía backend
     put = (url, model) => {
         return Axios({
-            url: `${DOMAIN}/${url}`,
+            url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'PUT',
             data: model,
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
@@ -15,7 +15,7 @@ export class baseService {
 
     post = (url, model) => {
         return Axios({
-            url: `${DOMAIN}/${url}`,
+            url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'POST',
             data: model,
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
@@ -24,7 +24,7 @@ export class baseService {
 
     get = (url) => {
         return Axios({
-            url: `${DOMAIN}/${url}`,
+            url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
@@ -32,7 +32,7 @@ export class baseService {
 
     delete = (url) => {
         return Axios({
-            url: `${DOMAIN}/${url}`,
+            url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
