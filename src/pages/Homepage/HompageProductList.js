@@ -113,7 +113,7 @@ function Product(props) {
               style={{}}
             >
               <a
-                className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
+                className={`${styles.productlist__cardtitle} no-underline text-left text-sm font-semibold hover:text-green-800`}
                 href="/product"
               >
                 {product.title}
