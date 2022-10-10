@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
 const { useCallback, useEffect, useState } = React;
 
-const CATEGORIES = ["Trái cây", "Hải sản", "Thịt", "Đồ hộp"];
 const PRODUCTS = [
   {
     id: 1,
@@ -173,17 +172,18 @@ function ProductFilters(props) {
       <header id="filters-header" className="text-base font-medium mt-3 ml-2">{"Danh mục"}</header>
       <div className="">
         <div style={{ borderBottom: "1px solid lightgray" }}>
-          <ul className={`${styles.productlist__border}`}>
+          <ul className={`${styles.productlist__border} pl-4`}>
             {/* Chỗ này để call categories */}
-            {categories.map((category) => (
-              <li key={category}>
+            {categories.map(({ id, name }, index) => (
+              <li key={index}>
                 <label className="flex">
                   <input
                     onChange={onFilterChange}
                     type="checkbox"
-                    value={category}
+                    className="mr-2"
+                    value={id}
                   />
-                  {category}
+                  {name}
                 </label>
               </li>
             ))}
@@ -261,6 +261,8 @@ export default function ProductList() {
     products: PRODUCTS,
     filters: new Set(),
   });
+  const categories = useSelector(state => state.CategoriesReducer.categories);
+  console.log("KHÁNH TOÀN: ", categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -308,10 +310,10 @@ export default function ProductList() {
         >
           <div
             className={`${styles.productlist__border__filter} `}
-            style={{ width: "50%", borderBottom: "" }}
+            style={{ width: "70%", borderBottom: "" }}
           >
             <ProductFilters
-              categories={CATEGORIES}
+              categories={categories}
               onFilterChange={handleFilterChange}
               className=""
               style={{ width: "50%", borderBottom: "" }}
