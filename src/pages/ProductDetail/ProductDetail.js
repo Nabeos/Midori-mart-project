@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import Slogan from "../../components/Slogan/Slogan";
 import Comment from "../../components/Comment/Comment";
+import { history } from "../../App";
 const { Meta } = Card;
 
 function SampleNextArrow(props) {
@@ -70,6 +71,10 @@ export default function ProductDetail() {
   };
   //   rating star
   const [currentValue, setCurrentValue] = useState(5);
+
+  const handleNavigateToCartPage = () => {
+    history.push("/cart");
+  }
 
   // quantity handle
   let [num, setNum] = useState(0);
@@ -162,6 +167,7 @@ export default function ProductDetail() {
                   <div className="mt-1">
                     <Button
                       className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
+                      onClick={handleNavigateToCartPage}
                     >
                       Mua ngay
                     </Button>

@@ -262,7 +262,6 @@ export default function ProductList() {
     filters: new Set(),
   });
   const categories = useSelector(state => state.CategoriesReducer.categories);
-  console.log("KHÁNH TOÀN: ", categories);
   const dispatch = useDispatch();
 
   useEffect(() => {

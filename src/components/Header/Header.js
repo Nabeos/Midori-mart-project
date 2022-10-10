@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Header.module.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -13,11 +13,34 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FaUserCircle } from "react-icons/fa";
 import { history } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
 
 export default function Header() {
+  const categories = useSelector(state => state.CategoriesReducer.categories);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction());
+  }, [])
+
   const handleNavigateToCartPage = () => {
     history.push("/cart");
   }
+
+  const handleRenderCategoriesNav = () => {
+    return categories.map(({ id, name }, index) => {
+      return <NavLink
+        key={index}
+        to="/productlist"
+        activeStyle={{ fontWeight: "bold" }}
+        className="text-white whitespace-nowrap hover:text-lime-800 no-underline font-semibold col-span-1 text-lg"
+      >
+        {name}
+      </NavLink>
+    })
+  }
+
   return (
     <div className="bg-white">
       <div className="grid grid-cols-12 ml-11 -mt-10 items-center">
@@ -74,66 +97,9 @@ export default function Header() {
         className={`${styles.header__navbar} -mt-10`}
       >
         <Container style={{ width: '80%', margin: '0 auto' }}>
-          {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
-          <Nav className="me-auto h-16" >
-            {/* How to navigate without button */}
-            <div className="grid grid-cols-12 mt-2 mb-2 text-sm flex text-center justify-around items-center">
-              <NavLink
-                to="/productlist"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline col-span-1 font-semibold text-lg"
-              >
-                Trái cây
-              </NavLink>
-              <NavLink
-                to="/logout"
-                activeStyle={{ fontWeight: "bolder" }}
-                className="text-white hover:text-lime-800 ml-4 no-underline col-span-1 font-semibold text-lg"
-              >
-                Rau củ
-              </NavLink>
-              <NavLink
-                to="/register"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 ml-6 no-underline col-span-1 font-semibold text-lg"
-              >
-                Thịt tươi
-              </NavLink>
-              <NavLink
-                to="/login"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline col-span-2 font-semibold text-lg"
-              >
-                Thủy hải sản
-              </NavLink>
-              <NavLink
-                to="/logout"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline -ml-16 col-span-2 font-semibold text-lg"
-              >
-                Thực phẩm khô
-              </NavLink>
-              <NavLink
-                to="/register"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline -ml-12 col-span-1 font-semibold text-lg"
-              >
-                Thức uống
-              </NavLink>
-              <NavLink
-                to="/logout"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline -ml-3 col-span-2 font-semibold text-lg"
-              >
-                Kem-bơ-sữa-trứng
-              </NavLink>
-              <NavLink
-                to="/register"
-                activeStyle={{ fontWeight: "bold" }}
-                className="text-white hover:text-lime-800 no-underline ml-5 col-span-2 font-semibold text-lg"
-              >
-                Thực phẩm chế biến
-              </NavLink>
+          <Nav className="me-auto h-16">
+            <div className="text-sm flex text-center justify-around items-center gap-5">
+              {handleRenderCategoriesNav()}
             </div>
           </Nav>
         </Container>
