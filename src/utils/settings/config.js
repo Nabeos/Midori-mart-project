@@ -1,3 +1,2 @@
-// export const DOMAIN = 'http://movieapi.cyberlearn.vn';
-export const DOMAIN_CAPSTONE = 'https://midori-mart.herokuapp.com/swagger-ui/index.html#'
+export const DOMAIN_CAPSTONE = 'http://localhost:5050';
 export const TOKEN = 'accessToken';

@@ -8,6 +8,8 @@ import { history } from "../../App";
 import styles from "./ProductList.module.css";
 import Slogan from "../../components/Slogan/Slogan";
 import { Pagination } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
 const { useCallback, useEffect, useState } = React;
 
 const CATEGORIES = ["Trái cây", "Hải sản", "Thịt", "Đồ hộp"];
@@ -259,9 +261,11 @@ export default function ProductList() {
     products: PRODUCTS,
     filters: new Set(),
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //Đây là nơi gọi api để lấy dữ liệu
+    dispatch(getAllCategoriesAction());
   }, [])
 
 

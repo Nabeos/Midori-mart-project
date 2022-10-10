@@ -9,7 +9,7 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'PUT',
             data: model,
-            headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 
@@ -18,7 +18,7 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'POST',
             data: model,
-            headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 
@@ -26,7 +26,7 @@ export class baseService {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 
@@ -34,7 +34,7 @@ export class baseService {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'DELETE',
-            headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 }
