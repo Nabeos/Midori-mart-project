@@ -46,7 +46,7 @@ function App() {
         <Route exact path="/ordermanagement" component={OrderManagement} />
         <Route exact path="/orderpicking/:orderId" component={OrderPicking} />
         <Route exact path="/product" component={ProductDetail} />
-        <Route exact path="/productlist" component={ProductList} />
+        <Route exact path="/productlist/:id" component={ProductList} />
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
         <Route exact path="/blog" component={Blog} />
         <Route exact path="/register" component={Register} />

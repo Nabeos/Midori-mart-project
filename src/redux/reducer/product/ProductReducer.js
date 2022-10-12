@@ -7,7 +7,9 @@ const initialState = {
 export const ProductReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT_LIST_BY_CATEGORY_ID:
-            state.productListByCategoryId = action.productList;
+            let productListUpdate = [...state.productListByCategoryId];
+            productListUpdate = action.productList;
+            state.productListByCategoryId = productListUpdate;
             return { ...state }
 
         default:

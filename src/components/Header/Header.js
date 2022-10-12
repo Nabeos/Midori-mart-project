@@ -15,6 +15,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { history } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
+import { getProductListByCategoryIdAction } from "../../redux/action/product/ProductAction";
 
 export default function Header() {
   const categories = useSelector(state => state.CategoriesReducer.categories);
@@ -32,7 +33,8 @@ export default function Header() {
     return categories.map(({ id, name }, index) => {
       return <NavLink
         key={index}
-        to="/productlist"
+        to={`/productlist/${id}`}
+        onClick={() => { dispatch(getProductListByCategoryIdAction(id, 1000, 0)) }}
         activeStyle={{ fontWeight: "bold" }}
         className="text-white whitespace-nowrap hover:text-lime-800 no-underline font-semibold col-span-1 text-lg"
       >
@@ -49,7 +51,7 @@ export default function Header() {
             to="/"
             className="text-black no-underline font-medium flex items-center"
           >
-            <img className={styles.header__logo} src="./images/midori_logo.png" style={{ width: "50%" }} />
+            <img className={styles.header__logo} src="/images/midori_logo.png" style={{ width: "50%" }} />
             <div className="-ml-10 text-2xl font-bold">
               <span className={`${styles.header__logo__m1} `}>M</span>
               <span>idori</span>
