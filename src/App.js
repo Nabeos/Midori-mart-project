@@ -28,6 +28,9 @@ import ProductList from './pages/ProductList/ProductList';
 import Blog from './pages/Blog/Blog';
 import PaymentMethod from './pages/PaymentMethod/PaymentMethod';
 import PaymentByMomo from './pages/PaymentByMomo/PaymentByMomo';
+import SearchResult from './pages/SearchResult/SearchResult';
+import AuthorizationManagement from './pages/AuthorizationManagement/AuthorizationManagement';
+import UserDetail from './pages/UserManagement/UserDetail';
 
 
 export const history = createBrowserHistory();
@@ -50,9 +53,12 @@ function App() {
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
         <Route exact path="/blog" component={Blog} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/searchresult" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
         <Route exact path="/usermanagement" component={UserManagement} />
+        <Route exact path="/userdetail" component={UserDetail} />
+        <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
         <Route exact path="/userprofile/:userId" component={UserProfile} />
         <Route exact path="*" component={PageNotFound} />
       </Switch>

@@ -1,0 +1,36 @@
+.userdetail__border__hover:hover {
+    border-color: #166534 !important;
+  }
+  
+  .userdetail__border__hover:focus {
+    border-color: #166534 !important;
+  }
+  
+  .userdetail__border__button:hover {
+    border-color: #166534 !important;
+    color: white;
+    background-color: #166534 !important;
+  }
+  
+  .userdetail__border__button {
+    border-radius: 5px !important;
+  }
+
+  .userdetail__delete__hover:hover {
+    border-color: #d13030 !important;
+  }
+  
+  .userdetail__delete__hover:focus {
+    border-color: #d13030 !important;
+  }
+  
+  .userdetail__delete__button:hover {
+    border-color: #d13030 !important;
+    color: white;
+    background-color: #d13030 !important;
+  }
+  
+  .userdetail__delete__button {
+    border-radius: 5px !important;
+    margin-left: 6px;
+  }
