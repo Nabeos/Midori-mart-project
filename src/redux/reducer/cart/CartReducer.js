@@ -1,4 +1,4 @@
-import { HANDLE_QUANTITY } from "../../type/cart/CartType"
+import { HANDLE_ADD_TO_CART_QUANTITY, HANDLE_QUANTITY } from "../../type/cart/CartType"
 
 const initialState = {
     cartList: [
@@ -6,7 +6,8 @@ const initialState = {
         { id: 2, productName: 'SỮA CHUA NHA ĐAM DALAT MILK', price: 11000, image: '/images/dalatmilk.jpg', quantity: 1 },
         { id: 3, productName: 'THỊT JAMBON HEO MUỐI J-LAFARGUE 100G', price: 104400, image: '/images/jambon.jpg', quantity: 2 }
     ],
-    totalBill: 0
+    totalBill: 0,
+    totalProductQuantityInCart: 0
 }
 
 export const CartReducer = (state = initialState, action) => {
@@ -25,6 +26,11 @@ export const CartReducer = (state = initialState, action) => {
                 productItem.quantity += action.quantity;
             }
 
+            return { ...state }
+        case HANDLE_ADD_TO_CART_QUANTITY:
+            let cartListAddToCartUpdate = [...state.cartList]
+            state.totalProductQuantityInCart = cartListAddToCartUpdate.length;
+            state.totalProductQuantityInCart += action.quantity;
             return { ...state }
 
         default:

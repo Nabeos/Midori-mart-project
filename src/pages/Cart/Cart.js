@@ -67,18 +67,7 @@ export default function Cart() {
                 </td>
                 <td>
                     <div className='d-flex items-center' style={{}}>
-                        <button
-                            className={`${styles.cart__increase__button} btn btn-outline-secondary`}
-                            type="button"
-                            onClick={() => {
-                                handleProductQuantity(item.id, 1)
-                            }}
-                        >
-                            +
-                        </button>
-                        <div className={`${styles.cart__quantity} p-3 text-center flex items-center justify-center shadow-none text-base`} style={{ width: "20%", height: '38px' }}>
-                            {item.quantity}
-                        </div>
+
                         <button
                             className={`${styles.cart__decrease__button} btn btn-outline-secondary`}
                             type="button"
@@ -88,6 +77,20 @@ export default function Cart() {
                         >
                             -
                         </button>
+                        <div className={`${styles.cart__quantity} p-3 text-center flex items-center justify-center shadow-none text-base`} style={{ width: "20%", height: '38px' }}>
+                            {item.quantity}
+                        </div>
+                        <button
+                            className={`${styles.cart__increase__button} btn btn-outline-secondary`}
+                            type="button"
+                            onClick={() => {
+                                handleProductQuantity(item.id, 1)
+                            }}
+                        >
+                            +
+                        </button>
+
+
 
                     </div>
 

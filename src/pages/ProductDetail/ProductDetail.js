@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import styles from "./ProductDetail.module.css";
 import { Button, Form, Input, Rate } from "antd";
+import { useSelector, useDispatch } from 'react-redux'
 import {
   FaBullseye,
   FaClock,
@@ -25,6 +26,7 @@ import {
 import Slogan from "../../components/Slogan/Slogan";
 import Comment from "../../components/Comment/Comment";
 import { history } from "../../App";
+import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
 const { Meta } = Card;
 
 function SampleNextArrow(props) {
@@ -71,26 +73,30 @@ export default function ProductDetail() {
   };
   //   rating star
   const [currentValue, setCurrentValue] = useState(5);
+  const dispatch = useDispatch();
 
   const handleNavigateToCartPage = () => {
     history.push("/cart");
   }
 
   // quantity handle
-  let [num, setNum] = useState(0);
+  let [num, setNum] = useState(1);
   let incNum = () => {
-    if (num < 10) {
-      setNum(Number(num) + 1);
-    }
+    setNum(Number(num) + 1);
   };
   let decNum = () => {
-    if (num > 0) {
+    if (num > 1) {
       setNum(num - 1);
     }
   };
   let handleChange = (e) => {
     setNum(e.target.value);
   };
+
+  const handleAddToCart = () => {
+    dispatch(handleAddToCartQuantity(num));
+  }
+
   return (
     <div>
       <Header />
@@ -99,7 +105,7 @@ export default function ProductDetail() {
           <div className="grid grid-cols-3">
             <div
               className={`${styles.productdetail__border} mt-10 mb-10 col-span-2 -ml-1`}
-              style={{ width: "98%", height: "82%" }}
+              style={{ width: "98%", minHeight: "370px" }}
             >
               <div className="grid grid-cols-2">
                 <div className="col-span-1 flex justify-center">
@@ -122,14 +128,8 @@ export default function ProductDetail() {
                     Tình trạng: <span>còn</span>
                   </div>
                   <div className="mt-1">
-                    <label>Khối lượng</label>
-                    <select
-                      className={`${styles.productdetail__border__weight}`}
-                    >
-                      <option value="0.5">0.5kg</option>
-                      <option value="1">1kg</option>
-                      <option value="1.5">1.5kg</option>
-                    </select>
+                    <label>Khối lượng:</label>
+                    <span className="ml-1">0.5kg</span>
                   </div>
                   <div className="flex flex-row mt-2">
                     <label>Số lượng</label>
@@ -173,6 +173,9 @@ export default function ProductDetail() {
                     </Button>
                     <Button
                       className={`${styles.productdetail__addtocart__button} text-center text-base font-medium focus:bg-green-800 focus:text-white focus:border-green-800`}
+                      onClick={() => {
+                        handleAddToCart()
+                      }}
                     >
                       Thêm vào giỏ
                     </Button>
@@ -429,7 +432,7 @@ export default function ProductDetail() {
             style={{ width: "80%" }}
           >
             <div className="font-semibold text-xl pl-6 pt-3 ">
-              Sản phẩm liên quan
+              Các sản phẩm trái cây bán chạy
             </div>
             <Slider {...settings}>
               <div>

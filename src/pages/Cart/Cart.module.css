@@ -24,12 +24,12 @@
 
 /* Thử nghiệm */
 .cart__increase__button {
-    border-radius: 5px 0 0 5px;
+    border-radius: 0 5px 5px 0;
     border-color: rgba(166, 157, 157, 0.3);
-  }
+}
   
 .cart__decrease__button {
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px 0 0 5px;
     border-color: rgba(166, 157, 157, 0.3);
 }
 

@@ -3,13 +3,23 @@ import styles from "./ForgotPassword.module.css";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { NavLink } from "react-router-dom";
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { connect, useSelector } from 'react-redux'
 
-export default function ForgotPassword() {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+function ForgotPassword(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+
+  console.log("INITIAL VALUES: ", values);
   return (
-    <div className="grid grid-cols-3 " style={{minHeight: "100vh"}}>
+    <div className="grid grid-cols-3 " style={{ minHeight: "100vh" }}>
       <div className="col-span-2 flex items-center justify-center">
         <img
           src="./images/resetPassword.jpg"
@@ -42,77 +52,48 @@ export default function ForgotPassword() {
         <Form
           name="normal_login"
           initialValues={{
-            remember: true,
           }}
-          onFinish={onFinish}
+          onSubmitCapture={handleSubmit}
         >
-          <div className="mb-6">
-            <label
-              for="email"
-              className="block mb-1 text-sm font-normal text-gray-900 dark:text-gray-300"
-            >
-              <span className="text-lg">Tên đăng nhập</span>
-            </label>
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Hãy nhập tên người dùng!",
-                },
-              ]}
-            >
-              <Input
-                type="text"
-                id="username"
-                className={`${styles.forgotpassword__border__radius} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="abc"
-                required=""
-                style={{ width: "88%", height:"6vh" }}
-              />
-            </Form.Item>
-          </div>
-
-          <div className="-mt-4">
+          <div className="">
             <label
               for="email"
               className="block mb-1 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Email</span>
             </label>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Hãy nhập email!",
-                },
-              ]}
-            >
+            <Form.Item className="mb-1">
               <Input
-                type="email"
+                type="text"
                 id="email"
+                name="email"
+                onChange={e => {
+                  props.setFieldTouched('email')
+                  handleChange(e)
+                }}
                 className={`${styles.forgotpassword__border__radius} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                 placeholder="abc@cgmail.com"
                 required=""
-                style={{ width: "88%", height:"6vh"}}
+                style={{ width: "88%", minHeight: "40px" }}
               />
             </Form.Item>
+            {errors.email && touched.email ? <div className='text-red-600'>{errors.email}</div> : <div></div>}
           </div>
 
-          <div className="flex flex-col -mt-1">
+          <div className="flex flex-col">
             <Form.Item>
               <Button
                 type="default"
                 htmlType="submit"
-                className={`${styles.forgotpassword__border__button} pt-3 pb-11 font-semibold text-xl focus:border-green-900 focus:text-green-900`}
-                style={{ width: "88%", }}
+                className={`${styles.forgotpassword__border__button} mt-2 pt-3 pb-11 font-semibold text-xl focus:border-green-900 focus:text-green-900`}
+                style={{ width: "88%" }}
+                onSubmitCapture={handleSubmit}
               >
                 Gửi yêu cầu
               </Button>
               <br />
             </Form.Item>
-            <div className="-mt-5 text-base">
+            <div className="text-base">
               <NavLink
                 to="/login"
                 className={`${styles.forgotpassword__login__button} font-medium no-underline text-green-800`}
@@ -126,3 +107,33 @@ export default function ForgotPassword() {
     </div>
   );
 }
+
+const ForgotPasswordWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    email: "",
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .required("Quý khách không được để trống mục email !!!")
+      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+  }),
+
+
+  handleSubmit: (values, { setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT");
+    console.log("VALUE FORM: ", values);
+  },
+
+  displayName: 'FormatPasswordWithFormik'
+})(ForgotPassword);
+
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, null)(ForgotPasswordWithFormik);

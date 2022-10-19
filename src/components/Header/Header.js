@@ -16,15 +16,20 @@ import { history } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
 import { getProductListByCategoryIdAction } from "../../redux/action/product/ProductAction";
+import { Input } from 'antd';
+import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
+const { Search } = Input;
 
 export default function Header() {
   const categories = useSelector(state => state.CategoriesReducer.categories);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
+    dispatch(handleAddToCartQuantity(0));
   }, [])
-
+  const { totalProductQuantityInCart } = useSelector(state => state.CartReducer);
   const handleNavigateToCartPage = () => {
     history.push("/cart");
   }
@@ -41,6 +46,15 @@ export default function Header() {
         {name}
       </NavLink>
     })
+  }
+
+  const handleSearchChange = (e) => {
+    console.log(e.target.value);
+  }
+
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    console.log(e.target.value)
   }
 
   return (
@@ -61,16 +75,22 @@ export default function Header() {
           </NavLink>
         </div>
         <div className="col-span-7">
-          <InputGroup className={`${styles.header__searchbar} `}>
-            <Form.Control
-              aria-label="Dollar amount (with dot and two decimal places)"
-              className={`${styles.header__searchbar} form-control shadow-none `}
-              placeholder="Tìm kiếm sản phẩm"
-            />
-            <InputGroup.Text>
-              <SearchOutlined className="" />
-            </InputGroup.Text>
-          </InputGroup>
+          {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
+          <Form onSubmit={e => { handleSubmitSearch(e) }}>
+
+
+            <InputGroup className={`${styles.header__searchbar} `} >
+              <Form.Control
+                className={`${styles.header__searchbar} form-control shadow-none `}
+                placeholder="Tìm kiếm sản phẩm"
+                onChange={e => { handleSearchChange(e) }}
+              />
+              <InputGroup.Text>
+                <SearchOutlined className="" onClick={e => { handleSearchChange(e) }} />
+              </InputGroup.Text>
+            </InputGroup>
+          </Form>
+
         </div>
         <div className="col-span-1 text-center">
           <NavLink
@@ -82,6 +102,7 @@ export default function Header() {
         </div>
         <div className="col-span-1 text-center">
           <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 -ml-10" />
+          <span>({totalProductQuantityInCart})</span>
         </div>
         <div className="col-span-1 text-center ml-2">
           <FaUserCircle className="text-3xl hidden" />

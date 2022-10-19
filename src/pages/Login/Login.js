@@ -5,11 +5,23 @@ import styles from "./Login.module.css";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { NavLink } from "react-router-dom";
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { connect, useSelector } from 'react-redux'
 
-export default function Login() {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+function Login(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+
+  console.log("INITIAL VALUES: ", values);
+
+
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2 flex items-center justify-center">
@@ -44,7 +56,7 @@ export default function Login() {
           initialValues={{
             remember: true,
           }}
-          onFinish={onFinish}
+          onSubmitCapture={handleSubmit}
         >
           <div className="-mt-5">
             <label
@@ -53,62 +65,59 @@ export default function Login() {
             >
               <span className="text-lg">Email</span>
             </label>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Hãy nhập email!",
-                },
-              ]}
+            <Form.Item className="mb-1"
             >
               <Input
-                type="email"
+                type="text"
                 id="email"
+                name="email"
+                onChange={e => {
+                  props.setFieldTouched('email')
+                  handleChange(e)
+                }}
                 className={`${styles.login__border__radius} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                 placeholder="abc@gmail.com"
-                required=""
-                style={{ width: "88%", height: "6vh" }}
+                style={{ width: "88%", minHeight: "40px" }}
               />
             </Form.Item>
+            {errors.email && touched.email ? <div className='text-red-600'>{errors.email}</div> : <div></div>}
           </div>
-          <div className="-mt-3">
+          <div className="">
             <div className="flex">
               <div className="flex justify-end " style={{ width: "87%" }}>
                 <NavLink
                   to="/forgotpassword"
-                  className={`${styles.login__register__button} font-normal text-md -mb-2 text-green-800`}
+                  className={`${styles.login__register__button} mt-2 font-normal text-md text-green-800`}
                 >
                   Quên mật khẩu
                 </NavLink>
               </div>
             </div>
 
-            <div className="-mt-5">
+            <div className="">
               <label
                 for="password"
                 className="block mb-1 font-normal text-gray-900 dark:text-gray-300"
               >
                 <span className="text-lg">Mật khẩu</span>
               </label>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy nhập mật khẩu!",
-                  },
-                ]}
+              <Form.Item className="mb-1"
               >
                 <Input
                   type="password"
+                  name="password"
                   id="password"
-                  className={`${styles.login__border__radius} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                  className={`${styles.login__border__radius} mb-2 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                  onChange={e => {
+                    props.setFieldTouched('password')
+                    handleChange(e)
+                  }}
                   placeholder="•••••••••"
                   required=""
-                  style={{ width: "88%", height: "6vh" }}
+                  style={{ width: "88%", minHeight: "40px" }}
                 />
               </Form.Item>
+              {errors.password && touched.password ? <div className='text-red-600'>{errors.password}</div> : <div></div>}
             </div>
           </div>
 
@@ -117,8 +126,9 @@ export default function Login() {
               <Button
                 type="default"
                 htmlType="submit"
-                className={`${styles.login__border__button} pt-3 pb-11 font-semibold text-xl focus:border-green-900 focus:text-green-900`}
+                className={`${styles.login__border__button} mt-2 pt-3 pb-11 font-semibold text-xl focus:border-green-900 focus:text-green-900`}
                 style={{ width: "88%" }}
+                onSubmit={handleSubmit}
               >
                 Đăng nhập
               </Button>
@@ -139,3 +149,40 @@ export default function Login() {
     </div>
   );
 }
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+
+const LoginWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    email: "",
+    password: ""
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .required("Quý khách không được để trống mục email !!!")
+      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+
+    password: Yup.string()
+      .min(6, 'Độ dài password tối thiếu là 6 ký tự !!!')
+      .max(32, 'Độ dài password tối đa là 32 ký tự !!!')
+      .required("Quý khách vui lòng không được để trống mục password !!!")
+      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!')
+  }),
+
+
+  handleSubmit: (values, { setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT");
+    console.log("VALUE FORM: ", values);
+  },
+
+  displayName: 'LoginWithFormik'
+})(Login);
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, null)(LoginWithFormik);

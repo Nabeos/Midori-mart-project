@@ -94,11 +94,21 @@ code {
   object-fit: cover;
 }
 
+.ant-checkbox-wrapper{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
 
 .ant-checkbox-checked .ant-checkbox-inner{
   background-color: green!important;
   border-color: green!important;
 }
+
+.ant-checkbox-wrapper + .ant-checkbox-wrapper{
+  margin-left: 0;
+}
+
 .ant-checkbox:hover .ant-checkbox-inner{
   border-color: green!important;
 }
@@ -111,3 +121,54 @@ code {
   box-shadow: none!important;
 }
 
+.ant-tooltip-inner{
+  background-color: white;
+  color: black;
+  box-shadow: none;
+}
+
+.ant-tooltip-inner::after{
+  content:'đ';
+}
+
+
+.ant-tooltip-placement-top{
+  top: 700px!important;
+}
+
+
+
+.ant-tooltip-arrow{
+  width: 0px;
+  height: 0px;
+}
+
+.ant-tooltip-arrow-content::before{
+  background: white!important;
+}
+
+.ant-slider-track{
+  background-color: black!important;
+  transition: black 0.3s;
+}
+
+.ant-slider-handle.ant-tooltip-open{
+  border-color: black;
+  background: black;
+}
+
+.ant-slider-handle.ant-tooltip-open:hover .ant-slider-track{
+  background: black!important;
+}
+
+.ant-slider-handle:focus{
+  box-shadow: none;
+}
+
+.ant-slider-rail{
+  background-color: #C0C0C0!important;
+}
+
+.ant-slider:hover .ant-slider-rail{
+  background-color: #C0C0C0!important;
+}

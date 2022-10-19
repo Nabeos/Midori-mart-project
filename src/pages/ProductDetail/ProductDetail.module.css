@@ -29,6 +29,14 @@
   border-color: rgba(166, 157, 157, 0.3);
 }
 
+.productdetail__increase__button:hover {
+  background-color: #15803d!important;
+}
+
+.productdetail__decrease__button:hover {
+  background-color: #b91c1c!important;
+}
+
 .productdetail__quantity {
   border-color: rgba(166, 157, 157, 0.3);
 }
