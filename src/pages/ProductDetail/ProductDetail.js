@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState, Component, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Header from "../../components/Header/Header";
@@ -27,6 +27,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import Comment from "../../components/Comment/Comment";
 import { history } from "../../App";
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
+import { getProductDetailAction } from "../../redux/action/product/ProductAction";
 const { Meta } = Card;
 
 function SampleNextArrow(props) {
@@ -61,7 +62,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default function ProductDetail() {
+export default function ProductDetail(props) {
   //related product
   const settings = {
     dots: false,
@@ -73,7 +74,12 @@ export default function ProductDetail() {
   };
   //   rating star
   const [currentValue, setCurrentValue] = useState(5);
+  const productDetail = useSelector(state => state.ProductReducer.productDetail);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProductDetailAction(props.match.params.id));
+  }, [])
+
 
   const handleNavigateToCartPage = () => {
     history.push("/cart");
@@ -110,7 +116,7 @@ export default function ProductDetail() {
               <div className="grid grid-cols-2">
                 <div className="col-span-1 flex justify-center">
                   <img
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                     style={{ width: "83%", height: "98%" }}
                   />
                 </div>
@@ -223,7 +229,7 @@ export default function ProductDetail() {
                 </div>
                 <div className="flex justify-center">
                   <img
-                    src="./images/customer.png"
+                    src="/images/customer.png"
                     style={{ width: "40%", height: "30%" }}
                   />
                 </div>
@@ -444,7 +450,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">
@@ -480,7 +486,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">
@@ -516,7 +522,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">
@@ -552,7 +558,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">
@@ -588,7 +594,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">
@@ -624,7 +630,7 @@ export default function ProductDetail() {
                     className=""
                     variant="top"
                     style={{ width: "100%" }}
-                    src="./images/meat.jpg"
+                    src="/images/meat.jpg"
                   />
                   <Card.Body className="p-0">
                     <div className="h-28">

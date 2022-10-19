@@ -9,6 +9,10 @@ export class ProductManagementService extends baseService {
         return this.get(`api/productManagement/getProductsById?category=${categoryId}&limit=${limit}&offset=${offset}`);
     }
 
+    getProductDetail = (productId) => {
+        return this.get();
+    }
+
 }
 
 export const productManagementService = new ProductManagementService();

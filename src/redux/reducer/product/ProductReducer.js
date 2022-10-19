@@ -1,4 +1,4 @@
-import { GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID } from "../../type/product/ProductType";
+import { GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID } from "../../type/product/ProductType";
 
 const initialState = {
     productListByCategoryId: [
@@ -6,7 +6,8 @@ const initialState = {
     ],
     productListLengthByCategoryId: [
 
-    ]
+    ],
+    productDetail: {}
 }
 
 export const ProductReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ export const ProductReducer = (state = initialState, action) => {
             let productListLengthUpdate = [...state.productListLengthByCategoryId];
             productListLengthUpdate = action.productList;
             state.productListLengthByCategoryId = productListLengthUpdate;
+            return { ...state }
+        case GET_PRODUCT_DETAIL:
+            let productDetailUpdate = { ...state.productDetail };
+            productDetailUpdate = action.productDetail;
+            state.productDetail = productDetailUpdate;
             return { ...state }
         default:
             return { ...state }
