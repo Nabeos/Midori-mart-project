@@ -1,0 +1,20 @@
+.sidebaradmin__logo__m1 {
+  color: #17782c;
+}
+
+.sidebaradmin__logo__m2 {
+  color: #349275;
+}
+
+.sidebaradmin__logo {
+  height: 200px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.sidebaradmin__text {
+  color: black;
+  margin-top: .2rem;
+  padding: .6rem;
+  border-radius: 5px;
+}

@@ -28,7 +28,7 @@ export default function Footer() {
                   >
                     <div className="flex items-center -ml-56">
                       <img
-                        src="./images/logo_no_background.png"
+                        src="/images/logo_no_background.png"
                         style={{ width: "50%" }}
                       />
                       <div className="-ml-14 text-4xl">

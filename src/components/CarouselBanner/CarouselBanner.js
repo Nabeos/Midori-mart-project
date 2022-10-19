@@ -9,13 +9,13 @@ export default function CarouselBanner() {
           <div>
             <img
               src="https://theme.hstatic.net/1000282430/1000544102/14/banner-slider-1.jpg?v=2058"
-              style={{ width:"1906px", height: "640px" }}
+              style={{ width:"2395px", height: "640px" }}
             />
           </div>
           <div>
             <img
               src="https://theme.hstatic.net/1000282430/1000544102/14/banner-slider-2.jpg?v=2058"
-              style={{ width:"1906px", height: "640px" }}
+              style={{ width:"2395px", height: "640px" }}
             />
           </div>
         </Carousel>
