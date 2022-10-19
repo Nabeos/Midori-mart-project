@@ -25,11 +25,11 @@ export default function UserManagement() {
   };
 
   return (
-    <div className="bg-gray-200 grid grid-cols-6" style={{ height: "100%" }}>
-      <div className="col-span-1">
+    <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
+      <div className="col-span-2">
         <SidebarAdmin />
       </div>
-      <div className="col-span-5" style={{ height: "100%" }}>
+      <div className="col-span-10" style={{ height: "100%" }}>
         <div className="flex items-center flex-col">
           {/* header */}
           <div
@@ -58,7 +58,7 @@ export default function UserManagement() {
             </div>
             <hr className="border border-gray-400" />
             {/* popup add more users */}
-            <div className="mt-3 ml-2" style={{width:""}}>
+            <div className="mt-3 ml-2" style={{ width: "" }}>
               <Button
                 type=""
                 className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
@@ -71,7 +71,7 @@ export default function UserManagement() {
                 title="Thêm người dùng mới"
                 onCancel={handleCancel}
                 footer={[]}
-                style={{width:"1900px"}}
+                style={{ width: "1900px" }}
               >
                 <Form>
                   <div className="flex flex-row">
@@ -194,13 +194,13 @@ export default function UserManagement() {
                     <Form.Item
                       name="confirm"
                       dependencies={["password"]}
-                     
+
                     >
-                    <select className="border border-black pt-3 pb-3 text-base focus:border-green-900" style={{width:"100%"}}>
-                      <option>Chọn vai trò</option>
-                      <option>Quản lí của hàng</option>
-                      <option>Shipper</option>
-                    </select>
+                      <select className="border border-black pt-3 pb-3 text-base focus:border-green-900" style={{ width: "100%" }}>
+                        <option>Chọn vai trò</option>
+                        <option>Quản lí của hàng</option>
+                        <option>Shipper</option>
+                      </select>
                     </Form.Item>
                   </div>
                   <div className="-mt-4">
@@ -268,7 +268,7 @@ export default function UserManagement() {
                       />
                     </Form.Item>
                   </div>
-                 
+
                   <Button
                     type="default"
                     htmlType="submit"
@@ -277,7 +277,7 @@ export default function UserManagement() {
                   >
                     Thêm người dùng mới
                   </Button>
-                  
+
                 </Form>
               </Modal>
             </div>

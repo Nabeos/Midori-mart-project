@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useSelector } from 'react-redux'
+import { history } from "../../App";
 
 function Login(props) {
   const {
@@ -175,6 +176,7 @@ const LoginWithFormik = withFormik({
   handleSubmit: (values, { setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
     console.log("VALUE FORM: ", values);
+    history.push("/");
   },
 
   displayName: 'LoginWithFormik'

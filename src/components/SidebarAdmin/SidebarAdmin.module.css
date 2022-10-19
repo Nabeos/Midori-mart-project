@@ -18,3 +18,19 @@
   padding: .6rem;
   border-radius: 5px;
 }
+
+.sidebaradmin__sidebaritem:hover{
+background-color: rgb(21,128,61);
+}
+
+.sidebaradmin__sidebaritem:hover .sidebaradmin__text{
+ color: white;
+}
+
+.sidebaradmin__sidebaritemActive{
+  background-color: rgb(21,128,61);
+}
+
+.sidebaradmin__sidebaritemActive .sidebaradmin__text{
+ color: white!important;
+}

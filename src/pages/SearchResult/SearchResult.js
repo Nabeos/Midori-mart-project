@@ -69,7 +69,7 @@ function Product(props) {
     <div className="">
       <div
         className={`${styles.searchresult__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5 bg-white`}
-        style={{ minHeight: "320px" }}
+        style={{ minHeight: "280px" }}
       >
         <div key={product.id} className="product flex flex-col">
           <div className="product-details">
@@ -151,12 +151,12 @@ export default function SearchResult() {
             />
           </div>
           <div className="flex justify-center mb-4">
-              <Pagination
-                className="hover:text-green-800 focus:border-green-800"
-                defaultCurrent={1}
-                total={50}
-              />
-            </div>
+            <Pagination
+              className="hover:text-green-800 focus:border-green-800"
+              defaultCurrent={1}
+              total={50}
+            />
+          </div>
         </div>
       </div>
       <hr className="border-2 border-green-800 mt-14" />
