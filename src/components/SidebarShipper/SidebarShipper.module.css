@@ -1,0 +1,36 @@
+.sidebaradmin__logo__m1 {
+    color: #17782c;
+  }
+  
+  .sidebarshipper__logo__m2 {
+    color: #349275;
+  }
+  
+  .sidebarshipper__logo {
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+  }
+  
+  .sidebarshipper__text {
+    color: black;
+    margin-top: .2rem;
+    padding: .6rem;
+    border-radius: 5px;
+  }
+  
+  .sidebarshipper__sidebaritem:hover{
+  background-color: rgb(21,128,61);
+  }
+  
+  .sidebarshipper__sidebaritem:hover .sidebarshipper__text{
+   color: white!important;
+  }
+  
+  .sidebarshipper__sidebaritemActive{
+    background-color: rgb(21,128,61);
+  }
+  
+  .sidebarshipper__sidebaritemActive .sidebarshipper__text{
+   color: white!important;
+  }

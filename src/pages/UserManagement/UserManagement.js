@@ -50,11 +50,13 @@ export default function UserManagement() {
             }}
           >
             <div className="rounded-md mt-3 flex justify-end mr-3">
-              <Input
-                placeholder="Tìm kiếm"
-                className="shadow-none hover:border-green-700 focus:border-green-700"
-                style={{ width: "30%", height: "2.5rem" }}
-              />
+              <Form>
+                <Input
+                  placeholder="Tìm kiếm"
+                  className="shadow-none hover:border-green-700 focus:border-green-700"
+                  style={{ width: "100%", height: "2.5rem" }}
+                />
+              </Form>
             </div>
             <hr className="border border-gray-400" />
             {/* popup add more users */}
@@ -71,7 +73,7 @@ export default function UserManagement() {
                 title="Thêm người dùng mới"
                 onCancel={handleCancel}
                 footer={[]}
-                style={{ width: "1900px" }}
+                width={800}
               >
                 <Form>
                   <div className="flex flex-row">
@@ -191,12 +193,11 @@ export default function UserManagement() {
                     >
                       <span className="text-lg">Vai trò</span>
                     </label>
-                    <Form.Item
-                      name="confirm"
-                      dependencies={["password"]}
-
-                    >
-                      <select className="border border-black pt-3 pb-3 text-base focus:border-green-900" style={{ width: "100%" }}>
+                    <Form.Item name="confirm" dependencies={["password"]}>
+                      <select
+                        className="border border-black pt-3 pb-3 text-base focus:border-green-900"
+                        style={{ width: "100%" }}
+                      >
                         <option>Chọn vai trò</option>
                         <option>Quản lí của hàng</option>
                         <option>Shipper</option>
@@ -277,7 +278,6 @@ export default function UserManagement() {
                   >
                     Thêm người dùng mới
                   </Button>
-
                 </Form>
               </Modal>
             </div>
@@ -289,6 +289,10 @@ export default function UserManagement() {
               >
                 <thead>
                   <tr>
+                    <th className="border border-slate-300 p-4 text-lg text-center">
+                      {" "}
+                      STT
+                    </th>
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       {" "}
                       Họ và tên
@@ -312,6 +316,7 @@ export default function UserManagement() {
                 </thead>
                 <tbody>
                   <tr>
+                    <td className="border border-slate-300 text-center">1</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -338,6 +343,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">2</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -364,6 +370,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">3</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -390,6 +397,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">4</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -416,6 +424,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">5</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -442,6 +451,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">6</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -468,6 +478,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">7</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -494,6 +505,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">8</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -520,6 +532,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">9</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -546,6 +559,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">10</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -572,6 +586,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">11</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>
@@ -598,6 +613,7 @@ export default function UserManagement() {
                     </td>
                   </tr>
                   <tr>
+                    <td className="border border-slate-300 text-center">12</td>
                     <td className="border border-slate-300 text-center">
                       Đinh Kông Thành
                     </td>

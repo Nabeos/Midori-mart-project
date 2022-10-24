@@ -16,7 +16,7 @@ import {
 export default function Slogan() {
   return (
     <div>
-      <div >
+      <div className="bg-white">
         <div className="grid grid-cols-3">
           <div className="flex flex-col items-center mt-5 mb-14">
             <div className="mb-2">

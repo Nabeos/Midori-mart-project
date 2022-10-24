@@ -1,0 +1,22 @@
+.sidebaruserprofile__text {
+    color: black;
+    margin-top: .2rem;
+    padding: .6rem;
+    border-radius: 5px;
+  }
+  
+  .sidebaruserprofile__sidebaritem:hover{
+  background-color: rgb(21,128,61);
+  }
+  
+  .sidebaruserprofile__sidebaritem:hover .sidebaruserprofile__text{
+   color: white;
+  }
+  
+  .sidebaruserprofile__sidebaritemActive{
+    background-color: rgb(21,128,61);
+  }
+  
+  .sidebaruserprofile__sidebaritemActive .sidebaruserprofile__text{
+   color: white!important;
+  }

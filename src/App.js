@@ -31,6 +31,9 @@ import PaymentByMomo from './pages/PaymentByMomo/PaymentByMomo';
 import SearchResult from './pages/SearchResult/SearchResult';
 import AuthorizationManagement from './pages/AuthorizationManagement/AuthorizationManagement';
 import UserDetail from './pages/UserManagement/UserDetail';
+import UserOrderHistory from './pages/UserOrderHistory/UserOrderHistory';
+import UserOrderPending from './pages/UserOrderPending/UserOrderPending';
+import DeliveryManagement from './pages/DeliveryManagement/DeliveryManagement';
 
 
 export const history = createBrowserHistory();
@@ -56,10 +59,13 @@ function App() {
         <Route exact path="/searchresult" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
+        <Route exact path="/deliverymanagement" component={DeliveryManagement} />
         <Route exact path="/usermanagement" component={UserManagement} />
         <Route exact path="/userdetail" component={UserDetail} />
         <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
         <Route exact path="/userprofile/:userId" component={UserProfile} />
+        <Route exact path="/userorderhistory/:userId" component={UserOrderHistory} />
+        <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
         <Route exact path="*" component={PageNotFound} />
       </Switch>
     </Router>

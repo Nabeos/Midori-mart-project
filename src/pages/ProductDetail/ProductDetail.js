@@ -444,7 +444,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -468,7 +468,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ
@@ -480,7 +480,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -504,7 +504,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ
@@ -516,7 +516,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -540,7 +540,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ
@@ -552,7 +552,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -576,7 +576,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ
@@ -588,7 +588,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -612,7 +612,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ
@@ -624,7 +624,7 @@ export default function ProductDetail(props) {
               <div>
                 <Card
                   className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "350px" }}
+                  style={{ width: "80%", minHeight: "430px" }}
                 >
                   <Card.Img
                     className=""
@@ -648,7 +648,7 @@ export default function ProductDetail(props) {
 
                     <Button
                       style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-4"
+                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                       variant="success"
                     >
                       Thêm vào giỏ

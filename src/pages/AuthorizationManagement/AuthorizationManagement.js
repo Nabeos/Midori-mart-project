@@ -3,7 +3,7 @@ import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin";
 import styles from "./AuthorizationManagement.module.css";
 import { Button, Form, Modal, Pagination } from "antd";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function AuthorizationManagement() {
   // avatar hover
@@ -34,7 +34,7 @@ export default function AuthorizationManagement() {
 
   return (
     <div className="bg-gray-200 grid grid-cols-6" style={{ height: "100%" }}>
-      <div className="col-span-1" >
+      <div className="col-span-1">
         <SidebarAdmin />
       </div>
       <div className="col-span-5" style={{ height: "100%" }}>
@@ -47,7 +47,7 @@ export default function AuthorizationManagement() {
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
-           <HeaderManagement/>
+            <HeaderManagement />
           </div>
           <div
             className="bg-white rounded-md mt-3"
@@ -100,100 +100,244 @@ export default function AuthorizationManagement() {
             </div>
             {/* table for Authorization Management */}
             <div className="flex justify-center">
-              <table className={`${styles.authorizationmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `} style={{width:"80%", minHeight:"80rem"}}>
+              <table
+                className={`${styles.authorizationmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
+                style={{ width: "80%", minHeight: "80rem" }}
+              >
                 <thead>
                   <tr>
-                    <th className="border border-slate-300"></th>
-                    <th className="border border-slate-300 p-4 text-lg text-center">Khách hàng</th>
-                    <th className="border border-slate-300 p-4 text-center">Admin</th>
-                    <th className="border border-slate-300 p-4 text-center">Quản lí khách hàng</th>
-                    <th className="border border-slate-300 p-4 text-center">Shipper</th>
+                    <th className="border border-slate-300 p-4 text-lg text-center">STT</th>
+                    <th className="border border-slate-300 p-4 text-lg text-center">Tên trang</th>
+                    <th className="border border-slate-300 p-4 text-lg text-center">
+                      Khách hàng
+                    </th>
+                    <th className="border border-slate-300 p-4 text-center">
+                      Admin
+                    </th>
+                    <th className="border border-slate-300 p-4 text-center">
+                      Quản lí khách hàng
+                    </th>
+                    <th className="border border-slate-300 p-4 text-center">
+                      Shipper
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">1</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                    <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">2</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                    <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">3</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">4</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">5</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">6</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">7</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">8</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">9</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">10</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">11</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                   <tr>
-                  <td className="border border-slate-300 font-semibold">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
-                    <td className="border border-slate-300 text-center"><input type={"checkbox"}/></td>
+                    <td className="border border-slate-300 text-center">12</td>
+                    <td className="border border-slate-300 font-semibold">
+                      The Sliding Mr. Bones (Next Stop, Pottersville)
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
+                    <td className="border border-slate-300 text-center">
+                      <input type={"checkbox"} />
+                    </td>
                   </tr>
                 </tbody>
               </table>

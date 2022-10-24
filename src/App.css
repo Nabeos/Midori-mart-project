@@ -172,3 +172,25 @@ code {
 .ant-slider:hover .ant-slider-rail{
   background-color: #C0C0C0!important;
 }
+
+.ant-tabs-ink-bar {
+  border-bottom: solid #166534!important;
+}
+
+.ant-tabs-tab{
+ font-size: 1.1rem;
+}
+
+.ant-tabs-tab:hover{
+  color: #166534!important;
+}
+
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #166534 !important; 
+  font-weight: bold;
+}
+
+
+
+
