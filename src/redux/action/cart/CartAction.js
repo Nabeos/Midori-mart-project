@@ -1,12 +1,13 @@
 import { HANDLE_ADD_TO_CART_QUANTITY, HANDLE_QUANTITY } from "../../type/cart/CartType";
 
-export const handleQuantity = (id, quantity) => ({
+export const handleQuantity = (slug, quantity) => ({
     type: HANDLE_QUANTITY,
-    id,
+    slug,
     quantity
 })
 
-export const handleAddToCartQuantity = (quantity) => ({
+export const handleAddToCartQuantity = (productDetail, quantity) => ({
     type: HANDLE_ADD_TO_CART_QUANTITY,
+    productDetail,
     quantity
 })

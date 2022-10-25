@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import styles from "./ProductDetail.module.css";
-import { Button, Form, Input, Rate } from "antd";
+import { Button, Form, Input, Rate, notification } from "antd";
 import { useSelector, useDispatch } from 'react-redux'
 import {
   FaBullseye,
@@ -28,6 +28,7 @@ import Comment from "../../components/Comment/Comment";
 import { history } from "../../App";
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
 import { getProductDetailAction } from "../../redux/action/product/ProductAction";
+import { BUY_NOW } from "../../redux/type/cart/CartType";
 const { Meta } = Card;
 
 function SampleNextArrow(props) {
@@ -72,18 +73,22 @@ export default function ProductDetail(props) {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
+  const openNotification = (placement) => {
+    notification.success({
+      message: `Thêm sản phẩm vào giỏ hàng thành công`,
+      placement,
+      duration: 2
+    });
+  };
   //   rating star
   const [currentValue, setCurrentValue] = useState(5);
-  const productDetail = useSelector(state => state.ProductReducer.productDetail);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     dispatch(getProductDetailAction(props.match.params.id));
   }, [])
-
-
-  const handleNavigateToCartPage = () => {
-    history.push("/cart");
-  }
+  const productDetail = useSelector(state => state.ProductReducer.productDetail);
+  console.log("PRODUCT DETAIL: ", productDetail);
 
   // quantity handle
   let [num, setNum] = useState(1);
@@ -99,8 +104,17 @@ export default function ProductDetail(props) {
     setNum(e.target.value);
   };
 
-  const handleAddToCart = () => {
-    dispatch(handleAddToCartQuantity(num));
+  const handleNavigateToCartPage = (productItem, num) => {
+    history.push("/cart");
+    dispatch({
+      type: BUY_NOW,
+      productItem,
+      num
+    })
+  }
+
+  const handleAddToCart = (productDetail, num) => {
+    dispatch(handleAddToCartQuantity(productDetail, num));
   }
 
   return (
@@ -115,27 +129,32 @@ export default function ProductDetail(props) {
             >
               <div className="grid grid-cols-2">
                 <div className="col-span-1 flex justify-center">
-                  <img
-                    src="/images/meat.jpg"
-                    style={{ width: "83%", height: "98%" }}
-                  />
+                  {productDetail?.thumbnails?.map((item, index) => {
+                    if (index == 0) {
+                      return <img key={index}
+                        src={item}
+                        style={{ width: "83%", height: "98%" }}
+                      />
+                    }
+                  })}
+
                 </div>
                 <div className="col-span-1 flex flex-col mt-3 ml-3">
                   <div className="font-semibold text-2xl">
-                    Nạc thăn heo Meat Deli
+                    {productDetail?.title}
                   </div>
                   <div className="text-sm text-gray-400">
-                    SKU: <span>23022001</span>
+                    SKU: <span>{productDetail?.sku}</span>
                   </div>
                   <div className="mt-3">
-                    ĐVT: <span>kg</span>
+                    ĐVT: <span>{productDetail?.unit?.name}</span>
                   </div>
                   <div>
-                    Tình trạng: <span>còn</span>
+                    Tình trạng: <span>{productDetail?.status}</span>
                   </div>
                   <div className="mt-1">
-                    <label>Khối lượng:</label>
-                    <span className="ml-1">0.5kg</span>
+                    <label>Quy cách đóng gói:</label>
+                    <span className="ml-1">{productDetail?.amount}{productDetail?.unit?.name}</span>
                   </div>
                   <div className="flex flex-row mt-2">
                     <label>Số lượng</label>
@@ -169,18 +188,21 @@ export default function ProductDetail(props) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-3xl font-bold mt-10">23000đ</div>
+                  <div className="text-3xl font-bold my-2">{(productDetail?.price * num).toLocaleString()}đ</div>
                   <div className="mt-1">
                     <Button
                       className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
-                      onClick={handleNavigateToCartPage}
+                      onClick={() => {
+                        handleNavigateToCartPage(productDetail, num)
+                      }}
                     >
                       Mua ngay
                     </Button>
                     <Button
                       className={`${styles.productdetail__addtocart__button} text-center text-base font-medium focus:bg-green-800 focus:text-white focus:border-green-800`}
                       onClick={() => {
-                        handleAddToCart()
+                        handleAddToCart(productDetail, num)
+                        openNotification('bottomRight')
                       }}
                     >
                       Thêm vào giỏ
@@ -251,41 +273,7 @@ export default function ProductDetail(props) {
                 className="text-justify mt-2"
                 style={{ width: "95%", height: "50%" }}
               >
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32. The standard chunk of Lorem Ipsum used since
-                the 1500s is reproduced below for those interested. Sections
-                1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by
-                Cicero are also reproduced in their exact original form,
-                accompanied by English versions from the 1914 translation by H.
-                Rackham. Contrary to popular belief, Lorem Ipsum is not simply
-                random text. It has roots in a piece of classical Latin
-                literature from 45 BC, making it over 2000 years old. Richard
-                McClintock, a Latin professor at Hampden-Sydney College in
-                Virginia, looked up one of the more obscure Latin words,
-                consectetur, from a Lorem Ipsum passage, and going through the
-                cites of the word in classical literature, discovered the
-                undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-                1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good
-                and Evil) by Cicero, written in 45 BC. This book is a treatise
-                on the theory of ethics, very popular during the Renaissance.
-                The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-                comes from a line in section 1.10.32. The standard chunk of
-                Lorem Ipsum used since the 1500s is reproduced below for those
-                interested. Sections 1.10.32 and 1.10.33 from "de Finibus
-                Bonorum et Malorum" by Cicero are also reproduced in their exact
-                original form, accompanied by English versions from the 1914
-                translation by H. Rackham.
+                {productDetail?.description}
               </div>
             </div>
             <div
@@ -307,24 +295,7 @@ export default function ProductDetail(props) {
                   className="flex justify-end font-medium"
                   style={{ width: "95%" }}
                 >
-                  Việt Nam
-                </div>
-              </div>
-              <div
-                className="flex flex-row bottom-1 border-b-2 border-gray-200 pb-1 mt-2"
-                style={{ width: "90%" }}
-              >
-                <div
-                  className="flex font-medium justify-start"
-                  style={{ width: "100%" }}
-                >
-                  Thành phần
-                </div>{" "}
-                <div
-                  className="flex justify-end font-medium"
-                  style={{ width: "95%" }}
-                >
-                  Thịt lợn sống
+                  {productDetail?.merchant?.country?.name}
                 </div>
               </div>
               <div
@@ -358,7 +329,7 @@ export default function ProductDetail(props) {
                   className="flex justify-end font-medium"
                   style={{ width: "95%" }}
                 >
-                  Thịt
+                  {productDetail?.category?.name}
                 </div>
               </div>
             </div>

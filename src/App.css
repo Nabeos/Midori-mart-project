@@ -121,6 +121,10 @@ code {
   box-shadow: none!important;
 }
 
+.swal2-styled.swal2-confirm{
+  background-color: rgb(22, 163, 74)!important;
+}
+
 .ant-tooltip-inner{
   background-color: white;
   color: black;
@@ -171,4 +175,10 @@ code {
 
 .ant-slider:hover .ant-slider-rail{
   background-color: #C0C0C0!important;
+}
+
+.ant-btn-primary{
+  color: white!important;
+  background-color: #991b1b!important;
+  border-color: #991b1b!important;
 }

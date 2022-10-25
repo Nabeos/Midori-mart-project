@@ -18,8 +18,9 @@ const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
   const { product } = props;
-  const handleNavigate = (productId) => {
-    history.push(`/product/${productId}`);
+  console.log("PROPS PRODUCT LIST: ", product);
+  const handleNavigate = (slug) => {
+    history.push(`/product/${slug}`);
   };
   return (
     <div className="">
@@ -32,7 +33,12 @@ function Product(props) {
           <div className="product-details">
             <div className="flex justify-center items-center">
               {" "}
-              <img className="mb-1" src={product?.thumbnails} style={{ width: "60%" }} />
+              {product?.thumbnails.map((item, index) => {
+                if (index == 0) {
+                  return <img key={index} className="mb-1" src={item} style={{ width: "60%" }} />
+                }
+              })}
+
             </div>
             <header
               className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-24`}
@@ -51,7 +57,7 @@ function Product(props) {
           </div>
           <button
             style={{ width: "100%" }}
-            onClick={() => { handleNavigate(product.id) }}
+            onClick={() => { handleNavigate(product.slug) }}
             className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
           >
             Xem chi tiết
@@ -66,9 +72,9 @@ function ProductsList(props) {
   const { products } = props;
   return (
     <div className="products grid grid-cols-5 mb-5">
-      {products?.map((product) => (
+      {products?.map((product, index) => (
         <div>
-          <Product className="col-span-1" product={product} />
+          <Product key={index} className="col-span-1" product={product} />
         </div>
       ))}
     </div>

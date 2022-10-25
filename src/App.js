@@ -53,7 +53,7 @@ function App() {
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
         <Route exact path="/blog" component={Blog} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/searchresult" component={SearchResult} />
+        <Route exact path="/searchresult/:keyWord" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
         <Route exact path="/usermanagement" component={UserManagement} />
