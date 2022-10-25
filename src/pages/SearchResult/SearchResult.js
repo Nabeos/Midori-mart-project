@@ -4,61 +4,9 @@ import Header from "../../components/Header/Header";
 import Slogan from "../../components/Slogan/Slogan";
 import styles from "./SearchResult.module.css";
 import { history } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "antd";
 const { useCallback, useEffect, useState } = React;
-const PRODUCTS = [
-  {
-    id: 1,
-    title: "Táo Queen New Zealand",
-    price: "99.900 ₫",
-    sku: 23022001,
-    category: "Trái cây",
-    image:
-      "https://cdn-crownx.winmart.vn/images/prod/162427182365910055070-kg-too-queen-pg-size-110(vmnk)_5ae3fcb5-57b1-4a5e-8764-09f0fb10d5bc.jpg",
-  },
-  {
-    id: 2,
-    title: "Cam ruột vàng úc",
-    price: "47.940 ₫",
-    sku: 23022001,
-    category: "Trái cây ",
-    image:
-      "https://cdn-crownx.winmart.vn/images/prod/162985899484210628789.jpg",
-  },
-  {
-    id: 3,
-    title: "Bưởi hồng da xanh túi lưới",
-    price: "59.880 ₫",
-    sku: 23022001,
-    category: "Trái cây",
-    image:
-      "https://cdn-crownx.winmart.vn/images/prod/162428535691210054870-KG-Choo-sua-Burine-Grie%CE%B2brei-Vanille-d%C3%A0nh-cho-tre-tu-6-thong-tuoi-(Vi-6-hu-x-50g).jpg",
-  },
-  {
-    id: 4,
-    title: "Kiwi xanh Newzealand",
-    price: "79.900 ₫",
-    sku: 23022001,
-    category: "Trái cây",
-    image:
-      "https://cdn-crownx.winmart.vn/images/prod/162428311346610235280-HOP-Chai-tay-toilet-xanh-huong-ng%C3%A0n-hoa-Klife-180g.jpg",
-  },
-  {
-    id: 5,
-    title: "Cá đuối",
-    price: "77.700 ₫",
-    sku: 23022001,
-    category: "Hải sản",
-    image:
-      "https://cdn-vincart.vinid.net/cdn-cgi/image/fit=scale-down,w=600,quality=75,f=auto/vm/product/2601185000000/9535015157790.jpg",
-  },
-];
-
-function padPrice(input) {
-  const [dollars, cents = "00"] = String(input).split(".");
-
-  return `${dollars}.${cents.padEnd(2, "0")}`;
-}
 
 function Product(props) {
   const { product } = props;
@@ -75,11 +23,17 @@ function Product(props) {
           <div className="product-details">
             <div className="flex justify-center items-center">
               {" "}
-              <img
-                className="mb-1"
-                src={product.image}
-                style={{ width: "60%" }}
-              />
+              {product?.thumbnails?.map((item, index) => {
+                if (index == 0) {
+                  return <img
+                    key={index}
+                    className="mb-1"
+                    src={item}
+                    style={{ width: "60%" }}
+                  />
+                }
+              })}
+
             </div>
             <header
               className={`${styles.searchresult__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-24`}
@@ -91,9 +45,7 @@ function Product(props) {
                 {product.title}
               </a>
               <div className="text-xs">{product.sku}</div>
-              <div className="text-sm mt-2 font-normal">{`${padPrice(
-                product.price
-              )}`}</div>
+              <div className="text-sm mt-2 font-normal">{product.price.toLocaleString()}đ</div>
             </header>
           </div>
           <button
@@ -123,12 +75,16 @@ function ProductsList(props) {
   );
 }
 
-export default function SearchResult() {
+export default function SearchResult(props) {
+  const returnSearchProductList = useSelector(state => state.ProductReducer.returnSearchProductList);
   const [state, setState] = useState({
     //Tạo ProductListReducer rồi dùng useSelector lấy về
-    products: PRODUCTS,
+    products: returnSearchProductList,
     filters: new Set(),
   });
+  console.log("PROPS SEARCH RESULT: ", props.match.params.keyWord);
+
+
   return (
     <div className="bg-gray-100">
       <Header />
@@ -141,13 +97,13 @@ export default function SearchResult() {
           style={{ width: "80%" }}
         >
           <div className="flex justify-start-start text-xl ml-2 mt-2 font-semibold">
-            Có <span className="text-green-700 mr-1 ml-1 font-bold">23</span>{" "} sản phẩm cho{" "}
-            <span className="text-green-700 ml-1 font-bold">Thành</span>
+            Có <span className="text-green-700 mr-1 ml-1 font-bold">{returnSearchProductList.length}</span>{" "} sản phẩm cho{" "}
+            <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
           </div>
           <div>
             <ProductsList
               className={`${styles.searchresult__border__general}`}
-              products={state.products}
+              products={returnSearchProductList}
             />
           </div>
           <div className="flex justify-center mb-4">

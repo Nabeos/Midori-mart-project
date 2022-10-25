@@ -13,23 +13,54 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FaUserCircle } from "react-icons/fa";
 import { history } from "../../App";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, searchProductAction } from "../../redux/action/product/ProductAction";
 import { Input } from 'antd';
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { USER } from "../../redux/type/user/UserType";
+import { Popover } from "antd";
 const { Search } = Input;
 
-export default function Header() {
+
+
+function Header(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+  const handleLogOut = () => {
+    localStorage.removeItem(USER);
+    window.location.reload();
+  }
+  let user = JSON.parse(localStorage.getItem(USER));
+  const content = (
+    <div>
+      <NavLink to={`/userprofile/${user?.fullname}`} className="text-black no-underline" style={{ fontSize: '1.1rem' }}>User Profile</NavLink>
+      <p className="cursor-pointer" style={{ fontSize: '1.1rem' }} onClick={handleLogOut}>Log out</p>
+    </div >
+  );
+  console.log("INITIAL VALUES: ", values);
+
   const categories = useSelector(state => state.CategoriesReducer.categories);
+  // const user = useSelector(state => state.UserReducer.user);
+
+  console.log("USER IN HEADER: ", user);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
-    dispatch(handleAddToCartQuantity(0));
   }, [])
-  const { totalProductQuantityInCart } = useSelector(state => state.CartReducer);
+  const { cartList } = useSelector(state => state.CartReducer);
+
+  let totalQuantityInCart = 0;
   const handleNavigateToCartPage = () => {
     history.push("/cart");
   }
@@ -46,15 +77,6 @@ export default function Header() {
         {name}
       </NavLink>
     })
-  }
-
-  const handleSearchChange = (e) => {
-    console.log(e.target.value);
-  }
-
-  const handleSubmitSearch = (e) => {
-    e.preventDefault();
-    console.log(e.target.value)
   }
 
   return (
@@ -74,24 +96,40 @@ export default function Header() {
             </div>
           </NavLink>
         </div>
-        <div className="col-span-7">
-          {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
-          <Form onSubmit={e => { handleSubmitSearch(e) }}>
+        {localStorage.getItem(USER) ?
+          <div className="col-span-6">
+            {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
+            <Form onSubmit={handleSubmit}>
+              <InputGroup className={`${styles.header__searchbar} `} >
+                <Form.Control
+                  name="header__search"
+                  className={`${styles.header__searchbar} form-control shadow-none `}
+                  placeholder="Tìm kiếm sản phẩm"
+                  onChange={handleChange}
+                />
+                <InputGroup.Text>
+                  <SearchOutlined className="cursor-pointer" onClick={handleSubmit} />
+                </InputGroup.Text>
+              </InputGroup>
+            </Form>
 
+          </div> : <div className="col-span-7">
+            {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
+            <Form onSubmit={handleSubmit}>
+              <InputGroup className={`${styles.header__searchbar} `} >
+                <Form.Control
+                  name="header__search"
+                  className={`${styles.header__searchbar} form-control shadow-none `}
+                  placeholder="Tìm kiếm sản phẩm"
+                  onChange={handleChange}
+                />
+                <InputGroup.Text>
+                  <SearchOutlined className="cursor-pointer" onClick={handleSubmit} />
+                </InputGroup.Text>
+              </InputGroup>
+            </Form>
 
-            <InputGroup className={`${styles.header__searchbar} `} >
-              <Form.Control
-                className={`${styles.header__searchbar} form-control shadow-none `}
-                placeholder="Tìm kiếm sản phẩm"
-                onChange={e => { handleSearchChange(e) }}
-              />
-              <InputGroup.Text>
-                <SearchOutlined className="" onClick={e => { handleSearchChange(e) }} />
-              </InputGroup.Text>
-            </InputGroup>
-          </Form>
-
-        </div>
+          </div>}
         <div className="col-span-1 text-center">
           <NavLink
             to="/blog"
@@ -102,17 +140,27 @@ export default function Header() {
         </div>
         <div className="col-span-1 text-center">
           <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 -ml-10" />
-          <span>({totalProductQuantityInCart})</span>
+          {cartList.map((item, index) => {
+            totalQuantityInCart += item.quantity;
+          })}
+          <span>({totalQuantityInCart})</span>
         </div>
-        <div className="col-span-1 text-center ml-2">
+        {localStorage.getItem(USER) ? <div className="col-span-2">
+          <Popover content={content}>
+            <span className="text-lg cursor-pointer">
+              {user?.fullname}
+            </span>
+          </Popover>
+        </div> : <div className="col-span-1 text-center ml-2">
           <FaUserCircle className="text-3xl hidden" />
           <NavLink
             to="/login"
             className="font-medium text-lg -ml-24 no-underline text-black"
           >
-            Login
+            Đăng nhập
           </NavLink>
-        </div>
+        </div>}
+
       </div>
       <Navbar
         bg="primary"
@@ -130,3 +178,31 @@ export default function Header() {
     </div>
   );
 }
+
+
+const HeaderWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    header__search: ""
+  }),
+
+  validationSchema: Yup.object().shape({
+
+  }),
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
+    console.log("VALUE FORM: ", values);
+    props.dispatch(searchProductAction(values.header__search));
+    history.push(`/searchresult/${values.header__search}`);
+  },
+
+  displayName: 'HeaderWithFormik'
+})(Header);
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, null)(HeaderWithFormik);

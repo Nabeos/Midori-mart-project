@@ -6,11 +6,15 @@ export class ProductManagementService extends baseService {
     }
 
     getProductListByCategoryId = (categoryId, limit, offset) => {
-        return this.get(`api/productManagement/getProductsById?category=${categoryId}&limit=${limit}&offset=${offset}`);
+        return this.get(`api/productManagement/getProductsByCategoryId?category=${categoryId}&limit=${limit}&offset=${offset}`);
     }
 
-    getProductDetail = (productId) => {
-        return this.get();
+    getProductDetail = (slug) => {
+        return this.get(`api/productManagement/${slug}`);
+    }
+
+    searchProduct = (keyWord) => {
+        return this.get(`api/productManagement/searchProduct?title=${keyWord}`);
     }
 
 }

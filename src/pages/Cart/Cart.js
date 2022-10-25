@@ -1,16 +1,34 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { history } from '../../App';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import styles from './Cart.module.css';
-import { useSelector, useDispatch } from 'react-redux'
+import { connect, useSelector, useDispatch } from 'react-redux'
 import Table from 'react-bootstrap/Table';
-import { Button, Form, Input, Rate } from "antd";
+import moment from 'moment';
+import { Button, Form, Input, Rate, Popconfirm, message } from "antd";
 import { DeleteOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { handleQuantity } from '../../redux/action/cart/CartAction';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { DELETE_ALL_PRODUCTS_FROM_CART, REMOVE_PRODUCT_FROM_CART } from '../../redux/type/cart/CartType';
 
-export default function Cart() {
+
+function Cart(props) {
+    const {
+        values,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+    } = props;
+
+    const text = 'Quý khách muốn xóa sản phẩm này khỏi giỏ hàng?';
+    const messageDeleteAllProducts = 'Quý khách muốn xóa tất cả sản phẩm khỏi giỏ hàng?'
+    let productItemLocal = localStorage.getItem("productItem");
+    console.log("productItemLocal: ", productItemLocal);
     //Thử nghiệm
     let [num, setNum] = useState(0);
     let incNum = () => {
@@ -32,38 +50,52 @@ export default function Cart() {
 
     let totalBill = 0;
     let flag = 1;
+    useEffect(() => {
+
+    }, [])
+
     const { cartList } = useSelector(state => state.CartReducer);
+    console.log("CART LIST: ", cartList);
+    console.log("FIRST: ", cartList[0]);
     const dispatch = useDispatch();
     const handleReturnHomepage = () => {
         history.push("/");
     }
-    const handleDeleteProductFromCart = () => {
+    const handleDeleteProductFromCart = (sku) => {
+        dispatch({
+            type: REMOVE_PRODUCT_FROM_CART,
+            sku
+        })
+    }
 
+    const handleDeleteAllProductsFromCart = () => {
+        dispatch({
+            type: DELETE_ALL_PRODUCTS_FROM_CART
+        })
     }
-    const handleSubmit = () => {
 
-    }
-    const handleChange = () => {
-
-    }
-    const handleNavigateToCheckoutPage = () => {
-        history.push("/checkout/1000");
-    }
-    const handleProductQuantity = (id, quantity) => {
-        dispatch(handleQuantity(id, quantity));
+    const handleProductQuantity = (slug, quantity) => {
+        dispatch(handleQuantity(slug, quantity));
     }
     const handleDisplayProductsInCart = () => {
-        return cartList.map((item, index) => {
-            totalBill += item.price * item.quantity;
+        return cartList?.map((item, index) => {
+            console.log("item: ", item);
+            totalBill += item?.price * item?.quantity;
             return <tr height="10px" className='pb-0' key={index} style={{ borderBottom: '1px solid rgba(166, 157, 157, 0.3)' }}>
                 <td className='h-auto'>
                     <span className='d-flex'>
-                        <img src={item.image} style={{ width: '75px', height: '75px' }} />
-                        <span>{item.productName}</span>
+                        {item?.thumbnails?.map((image, index) => {
+                            if (index == 0) {
+                                return <img key={index} src={image} style={{ width: '75px', height: '75px' }} />
+
+                            }
+                        })}
+
+                        <span>{item?.title}</span>
                     </span>
                 </td>
                 <td>
-                    <span className='text-red-700 font-bold'>{item.price.toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span>
+                    <span className='text-red-700 font-bold'>{item?.price?.toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span>
                 </td>
                 <td>
                     <div className='d-flex items-center' style={{}}>
@@ -72,19 +104,19 @@ export default function Cart() {
                             className={`${styles.cart__decrease__button} btn btn-outline-secondary`}
                             type="button"
                             onClick={() => {
-                                handleProductQuantity(item.id, -1)
+                                handleProductQuantity(item.slug, -1)
                             }}
                         >
                             -
                         </button>
                         <div className={`${styles.cart__quantity} p-3 text-center flex items-center justify-center shadow-none text-base`} style={{ width: "20%", height: '38px' }}>
-                            {item.quantity}
+                            {item?.quantity}
                         </div>
                         <button
                             className={`${styles.cart__increase__button} btn btn-outline-secondary`}
                             type="button"
                             onClick={() => {
-                                handleProductQuantity(item.id, 1)
+                                handleProductQuantity(item.slug, 1)
                             }}
                         >
                             +
@@ -96,15 +128,22 @@ export default function Cart() {
 
                     {/* Chỉnh lại từ 49 đến 61 */}
                 </td>
-                <td><span className='text-red-700 font-bold'>{(item.quantity * item.price).toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span></td>
+                <td><span className='text-red-700 font-bold'>{(item?.quantity * item?.price).toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span></td>
                 <td>
-                    <DeleteOutlined onClick={handleDeleteProductFromCart} className='d-flex w-9 items-center bg-red-800 text-xl text-white p-2 hover:bg-red-900 cursor-pointer' />
+
+                    <Popconfirm placement="top"
+                        onConfirm={(sku) => { handleDeleteProductFromCart(item.sku) }}
+                        title={text}
+                        okText="Yes" cancelText="No">
+                        <DeleteOutlined
+                            className='d-flex w-9 items-center bg-red-800 text-xl text-white p-2 hover:bg-red-900 cursor-pointer' />
+                    </Popconfirm>
                 </td>
             </tr >
         })
     }
     return (
-        cartList?.length > 0 ? <div>
+        (cartList?.length > 0 && cartList[0].quantity !== undefined && cartList[0].quantity !== NaN) ? <div>
             <Header />
             <div className='bg-gray-100 p-5'>
                 <div className={styles.cart__contains__items}>
@@ -114,7 +153,13 @@ export default function Cart() {
                                 <h3 className='text-black mb-3'>
                                     Giỏ hàng
                                 </h3>
-                                <button className=' bg-red-800 text-white p-2 w-24 rounded-md hover:bg-red-900'>Xóa tất cả</button>
+                                <Popconfirm placement="top"
+                                    onConfirm={handleDeleteAllProductsFromCart}
+                                    title={messageDeleteAllProducts}
+                                    okText="Yes" cancelText="No">
+                                    <button className='bg-red-800 text-white p-2 w-24 rounded-md hover:bg-red-900'>Xóa tất cả</button>
+                                </Popconfirm>
+
                             </div>
                             <Table className={styles.cart__table}>
                                 <thead className='bg-green-700'>
@@ -136,25 +181,30 @@ export default function Cart() {
                             <form className="container-fluid" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-2 gap-3 mb-3">
                                     <div className="form-group">
-                                        <input type="date" placeholder='Chọn ngày giao' className={`${styles.cart__deliveryDate} form-control shadow-none`} name="id" />
+                                        <input type="date" onChange={e => {
+                                            handleChange(e)
+                                        }} placeholder='Chọn ngày giao' className={`${styles.cart__deliveryDate} form-control shadow-none`} name="deliveryDate" min={moment().format("YYYY-MM-DD")} />
+                                        {errors.deliveryDate && touched.deliveryDate ? <div className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryDate}</div> : <div></div>}
                                     </div>
 
                                     <div className="form-group">
-                                        <select className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
+                                        <select onChange={e => {
+                                            handleChange(e)
+                                        }} className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
                                             <option value="" selected disabled>Chọn giờ giao</option>
-                                            <option value="">9:00 - 10:00</option>
-                                            <option value="">10:00 - 11:00</option>
-                                            <option value="">11:00 - 12:00</option>
-                                            <option value="">12:00 - 13:00</option>
-                                            <option value="">13:00 - 14:00</option>
-                                            <option value="">14:00 - 15:00</option>
-                                            <option value="">15:00 - 16:00</option>
-                                            <option value="">16:00 - 17:00</option>
-                                            <option value="">17:00 - 18:00</option>
-                                            <option value="">18:00 - 19:00</option>
-                                            <option value="">19:00 - 20:00</option>
+                                            <option value="1">9:00 - 10:00</option>
+                                            <option value="2">10:00 - 11:00</option>
+                                            <option value="3">11:00 - 12:00</option>
+                                            <option value="4">12:00 - 13:00</option>
+                                            <option value="5">13:00 - 14:00</option>
+                                            <option value="6">14:00 - 15:00</option>
+                                            <option value="7">15:00 - 16:00</option>
+                                            <option value="8">16:00 - 17:00</option>
+                                            <option value="9">17:00 - 18:00</option>
+                                            <option value="10">18:00 - 19:00</option>
+                                            <option value="11">19:00 - 20:00</option>
                                         </select>
-
+                                        {errors.deliveryTime && touched.deliveryTime ? <span className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryTime}</span> : <span></span>}
                                     </div>
                                 </div>
                                 <div className='d-flex justify-between mb-3'>
@@ -168,7 +218,7 @@ export default function Cart() {
                                     <textarea className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="w3review" name="w3review" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
                                 </div>
                                 <div className='d-flex justify-center'>
-                                    <button className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onClick={handleNavigateToCheckoutPage}>
+                                    <button type="submit" className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onSubmit={handleSubmit}>
                                         Thanh toán
                                     </button>
                                 </div>
@@ -197,3 +247,35 @@ export default function Cart() {
         </div>
     )
 }
+
+const CartWithFormik = withFormik({
+    enableReinitialize: true,
+    mapPropsToValues: (props) => ({
+        deliveryDate: "",
+        deliveryTime: ""
+    }),
+
+    // Custom sync validation
+    validationSchema: Yup.object().shape({
+        deliveryDate: Yup.string()
+            .required("Quý khách vui lòng lựa chọn ngày nhận hàng!!!"),
+        deliveryTime: Yup.string()
+            .required("Quý khách vui lòng lựa chọn giờ nhận hàng !!!")
+    }),
+
+
+    handleSubmit: (values, { setSubmitting }) => {
+        console.log("CÓ VÀO HANDLE SUBMIT");
+        console.log("VALUE FORM: ", values);
+        history.push("/checkout/1000");
+    },
+
+    displayName: 'CartWithFormik'
+})(Cart);
+
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, null)(CartWithFormik);

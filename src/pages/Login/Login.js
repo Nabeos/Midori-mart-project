@@ -9,6 +9,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useSelector } from 'react-redux'
 import { history } from "../../App";
+import { loginAction } from "../../redux/action/user/UserAction";
 
 function Login(props) {
   const {
@@ -19,9 +20,6 @@ function Login(props) {
     handleBlur,
     handleSubmit,
   } = props;
-
-  console.log("INITIAL VALUES: ", values);
-
 
   return (
     <div className="grid grid-cols-3">
@@ -162,21 +160,23 @@ const LoginWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     email: Yup.string()
-      .required("Quý khách không được để trống mục email !!!")
-      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+      .required("Quý khách không được để trống mục email !!!"),
 
     password: Yup.string()
-      .min(6, 'Độ dài password tối thiếu là 6 ký tự !!!')
-      .max(32, 'Độ dài password tối đa là 32 ký tự !!!')
       .required("Quý khách vui lòng không được để trống mục password !!!")
-      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!')
   }),
 
 
-  handleSubmit: (values, { setSubmitting }) => {
+  handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
-    console.log("VALUE FORM: ", values);
-    history.push("/");
+    let data = {
+      "user": {
+        "email": values.email,
+        "password": values.password
+      }
+    }
+    console.log("data login: ", data);
+    props.dispatch(loginAction(data));
   },
 
   displayName: 'LoginWithFormik'

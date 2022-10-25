@@ -24,13 +24,12 @@ export default function UserOrderPending() {
       <Header />
       <div className="flex justify-center mt-3" style={{ width: "100%" }}>
         <div
-          className="grid grid-cols-6 justify-center"
+          className="grid grid-cols-12 justify-center gap-4"
           style={{ height: "100%", width: "80%" }}
         >
           <div
-            className="col-span-1 mt-2 mb-2 bg-white rounded-md"
+            className="col-span-3 mt-2 mb-2 bg-white rounded-md"
             style={{
-              width: "90%",
               height: "100%",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
@@ -38,7 +37,7 @@ export default function UserOrderPending() {
             <SidebarUserProfile />
           </div>
           <div
-            className="col-span-5 bg-white mt-2 mb-2"
+            className="col-span-9 bg-white mt-2 mb-2"
             style={{
               width: "100%",
               height: "100%",
@@ -47,7 +46,7 @@ export default function UserOrderPending() {
             }}
           >
             <div
-              className="text-start mt-2 ml-5 text-2xl font-semibold"
+              className="text-start mt-2 ml-5 text-xl font-semibold"
               style={{ width: "100%" }}
             >
               Đơn hàng đang xử lí của bạn
@@ -55,7 +54,7 @@ export default function UserOrderPending() {
             <div className="flex justify-center" style={{ width: "100%" }}>
               <table
                 className={`${styles.userorderpending__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                style={{ width: "80%", minHeight: "20rem" }}
+                style={{ width: '90%', minHeight: "20rem" }}
               >
                 <thead>
                   <th className="border border-slate-300 p-4 text-lg text-center">
@@ -86,10 +85,10 @@ export default function UserOrderPending() {
                 <tbody>
                   <td className="border border-slate-300 text-center">1</td>
                   <td className="border border-slate-300 text-center">
-                   23022001
+                    23022001
                   </td>
                   <td className="border border-slate-300 text-center">
-                   Đinh Kông Thành
+                    Đinh Kông Thành
                   </td>
                   <td className="border border-slate-300 text-center">
                     23/02/2001
@@ -99,7 +98,7 @@ export default function UserOrderPending() {
                     <span className="bg-green-600 text-white p-2 rounded-md">Đã hoàn tất</span>
                   </td>
                   <td className="border border-slate-300 text-center">
-                  <span className="bg-red-600 text-white p-2 rounded-md">Chưa giao</span>
+                    <span className="bg-red-600 text-white p-2 rounded-md">Chưa giao</span>
                   </td>
                   <td className="border border-slate-300 text-center">
                     {" "}
@@ -118,9 +117,9 @@ export default function UserOrderPending() {
                         footer={[]}
                         width={900}
                       >
-                       
-                          <UserOrderPendingDetail/>
-                        
+
+                        <UserOrderPendingDetail />
+
                       </Modal>
                     </div>
                   </td>

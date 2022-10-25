@@ -43,20 +43,32 @@
 .checkout__field:focus{
     border-color: green;
 }
-.checkout__field__province{
+/* .checkout__field__province{
     position: relative;
-}
+} */
 
 
 .checkout__voucher:focus{
     border-color: green;
 }
 
+.province__container{
+    position: relative;
+}
+.province__label__container{
+    position: absolute;
+    bottom: 55%;
+    z-index: 999;
+    top: 5%;
+    left: 1%;
+}
+
 .checkout__shipping__province{
     font-size: 0.75em;
     font-weight: normal;
-    position: absolute;
-    top: 120px;
+    /* position: absolute; */
+    /* left: 15px; */
+    /* bottom: 100px; */
     width: 100%;
     margin-bottom: 0;
     padding: 0 0.93333em;
@@ -71,19 +83,28 @@
     opacity: 1;
     color: #999999;
     transition: all 0.2s ease-out;
-    margin-top: 0.3em;
     display: block;
 }
 .checkout__field__district{
     position: relative;
 }
 
+.district__container{
+    position: relative;
+}
+.district__label__container{
+    position: absolute;
+    bottom: 55%;
+    z-index: 999;
+    top: 5%;
+    left: 1%;
+}
 .checkout__shipping__district{
     font-size: 0.75em;
     font-weight: normal;
-    position: absolute;
-    top: 120px;
-    left: 35%;
+    /* position: absolute; */
+    /* bottom: 55%;
+    left: 1%; */
     width: 100%;
     padding: 0 0.93333em;
     z-index: 1;
@@ -97,18 +118,29 @@
     opacity: 1;
     color: #999999;
     transition: all 0.2s ease-out;
-    margin-top: 0.3em;
     display: block;
 }
-.checkout__field__ward{
+/* .checkout__field__ward{
     position: relative;
+} */
+
+.ward__container{
+    position: relative;
+}
+.ward__label__container{
+    position: absolute;
+    bottom: 55%;
+    z-index: 999;
+    top: 5%;
+    left: 1%;
 }
 
 .checkout__shipping__ward{
     font-size: 0.75em;
     font-weight: normal;
-    position: absolute;
-    top: 120px;
+    /* position: absolute; */
+    /* left: 15px; */
+    /* bottom: 100px; */
     left: 68%;
     width: 100%;
     padding: 0 0.93333em;
@@ -123,6 +155,5 @@
     opacity: 1;
     color: #999999;
     transition: all 0.2s ease-out;
-    margin-top: 0.3em;
     display: block;
 }

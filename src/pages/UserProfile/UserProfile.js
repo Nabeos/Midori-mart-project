@@ -30,20 +30,19 @@ export default function UserProfile() {
       <Header />
       <div className="flex justify-center mt-3" style={{ width: "100%" }}>
         <div
-          className="grid grid-cols-6 justify-center"
+          className="grid grid-cols-12 justify-center gap-4"
           style={{ height: "100%", width: "80%" }}
         >
           <div
-            className="col-span-1 mt-2 mb-2 bg-white rounded-md"
+            className="col-span-3 mt-2 mb-2 bg-white rounded-md"
             style={{
-              width: "90%",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
             <SidebarUserProfile />
           </div>
           <div
-            className="col-span-5 flex flex-col items-center bg-white mt-2 mb-2"
+            className="col-span-9 flex flex-col items-center bg-white mt-2 mb-2"
             style={{
               width: "100%",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
@@ -51,12 +50,13 @@ export default function UserProfile() {
             }}
           >
             <Form className="" style={{ width: "80%" }}>
-              <div className="text-2xl font-bold mt-3 mb-3">
+              <div className="text-xl font-bold mt-3 mb-3">
                 Thông tin người dùng
               </div>
               <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
                 <img
                   src="https://static.vecteezy.com/system/resources/previews/002/400/532/original/young-happy-businessman-character-avatar-wearing-business-outfit-isolated-free-vector.jpg"
+                  className="mr-2"
                   style={{ width: "20%" }}
                 />
                 <div className="flex items-end mb-3 -ml-3">
@@ -135,24 +135,6 @@ export default function UserProfile() {
                     id="email"
                     className={`${styles.userprofile__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                     placeholder="abc@gmail.com"
-                    required=""
-                    style={{ width: "100%", height: "6vh" }}
-                  />
-                </Form.Item>
-              </div>
-              <div className="-mt-4">
-                <label
-                  for="password"
-                  className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                >
-                  <span className="text-lg">Mật khẩu</span>
-                </label>
-                <Form.Item name="password">
-                  <Input
-                    type="password"
-                    id="password"
-                    className={`${styles.userprofile__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                    placeholder="•••••••••"
                     required=""
                     style={{ width: "100%", height: "6vh" }}
                   />
@@ -278,8 +260,7 @@ export default function UserProfile() {
                 <Button
                   type="default"
                   htmlType="submit"
-                  className={`${styles.userprofile__border__button} pt-3 pb-5 font-semibold text-lg focus:border-green-900 focus:text-green-900`}
-                  style={{ width: "10%" }}
+                  className={`${styles.userprofile__border__button} flex justify-center items-center py-4 px-3 font-semibold text-lg focus:border-green-900 focus:text-green-900`}
                 >
                   CẬP NHẬT
                 </Button>

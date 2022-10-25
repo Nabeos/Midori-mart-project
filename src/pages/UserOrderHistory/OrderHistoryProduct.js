@@ -13,15 +13,6 @@ const PRODUCTS = [
       "https://cdn-crownx.winmart.vn/images/prod/162427182365910055070-kg-too-queen-pg-size-110(vmnk)_5ae3fcb5-57b1-4a5e-8764-09f0fb10d5bc.jpg",
   },
   {
-    id: 2,
-    title: "Cam ruột vàng úc",
-    price: "47.940 ₫",
-    sku: 23022001,
-    category: "Trái cây ",
-    image:
-      "https://cdn-crownx.winmart.vn/images/prod/162985899484210628789.jpg",
-  },
-  {
     id: 3,
     title: "Bưởi hồng da xanh túi lưới",
     price: "59.880 ₫",
@@ -99,8 +90,8 @@ function Product(props) {
   return (
     <div className="">
       <div
-        className={`${styles.userorderhistory__relatedproduct__border} ml-3 mt-3 mr-1 pr-5 pl-5 pt-3 pb-3 bg-white`}
-        style={{ minHeight: "250px", width:"80%" }}
+        className={`${styles.userorderhistory__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5 pt-3 pb-3 bg-white`}
+        style={{ minHeight: "250px", width: "200px" }}
       >
         <div key={product.id} className="product flex flex-col">
           <div className="product-details">
@@ -113,7 +104,7 @@ function Product(props) {
               />
             </div>
             <header
-              className={`${styles.userorderhistory__cardtitle} text-start no-underline text-sm font-semibold h-20`}
+              className={`${styles.userorderhistory__cardtitle} text-start no-underline text-sm font-semibold h-28`}
               style={{}}
             >
               <a
@@ -129,9 +120,8 @@ function Product(props) {
             </header>
           </div>
           <button
-            style={{ width: "100%" }}
             onClick={handleNavigate}
-            className={`${styles.userorderhistory__reorder__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-3 pb-3 font-medium text-xl`}
+            className={`${styles.userorderhistory__reorder__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white py-2 font-medium text-lg`}
           >
             Đặt lại hàng
           </button>
@@ -145,11 +135,9 @@ function ProductsList(props) {
   const { products } = props;
 
   return (
-    <div className="products grid grid-cols-3 ml-10">
+    <div className="products flex">
       {products.map((product) => (
-        <div className="">
-          <Product className="col-span-1" product={product} />
-        </div>
+        <Product className="" product={product} />
       ))}
     </div>
   );
@@ -161,7 +149,7 @@ export default function OrderHistoryProduct() {
     filters: new Set(),
   });
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex" style={{ width: '90%', margin: '0 auto' }}>
       <ProductsList
         className={`${styles.userorderhistory__border__general}`}
         products={state.products}

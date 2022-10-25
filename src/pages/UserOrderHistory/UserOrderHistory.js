@@ -13,21 +13,20 @@ export default function UserOrderHistory() {
       <Header />
       <div className="flex justify-center mt-3" style={{ width: "100%" }}>
         <div
-          className="grid grid-cols-6 justify-center"
+          className="grid grid-cols-12 justify-center gap-4"
           style={{ height: "100%", width: "80%" }}
         >
           <div
-            className="col-span-1 mt-2 mb-2 bg-white rounded-md"
+            className="col-span-3 mt-2 mb-2 bg-white rounded-md"
             style={{
-              width: "90%",
-              height:"100%",
+              height: "100%",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
             <SidebarUserProfile />
           </div>
           <div
-            className="col-span-5 bg-white mt-2 mb-2"
+            className="col-span-9 bg-white mt-2 mb-2"
             style={{
               width: "100%",
               height: "100%",
@@ -36,30 +35,30 @@ export default function UserOrderHistory() {
             }}
           >
             <div
-              className="text-start mt-2 ml-5 text-2xl font-semibold"
+              className="text-start mt-2 ml-5 text-xl font-semibold"
               style={{ width: "100%" }}
             >
               Lịch sử mua hàng của bạn
             </div>
-            <div className="flex flex-col justify-center" style={{width:"100%"}}>
+            <div className="flex flex-col justify-center" style={{ width: "100%" }}>
               <div className="flex flex-row justify-center">
-                <hr className="border-2 border-black" style={{width:"20%"}}/>
-                <div className="text-xl mr-2 ml-2">23 February 2001</div>
-                <hr className="border-2 border-black" style={{width:"20%"}}/>
+                <hr className="border-2 border-black" style={{ width: "20%" }} />
+                <div className="text-xl mr-2 ml-2">October 2022</div>
+                <hr className="border-2 border-black" style={{ width: "20%" }} />
               </div>
-              <OrderHistoryProduct/>
+              <OrderHistoryProduct />
             </div>
-             <div className="flex justify-center mt-10">
-            <Pagination
-              className="hover:text-green-800 focus:border-green-800"
-              defaultCurrent={1}
-              total={50}
-            />
+            <div className="flex justify-center mt-10">
+              <Pagination
+                className="hover:text-green-800 focus:border-green-800"
+                defaultCurrent={1}
+                total={50}
+              />
+            </div>
           </div>
-          </div>
-         
+
         </div>
-        
+
       </div>
       <hr className="border-2 border-green- mt-14" />
       <div className="flex justify-center">
@@ -69,7 +68,7 @@ export default function UserOrderHistory() {
         >
           <Slogan />
         </div>
-        </div>
+      </div>
       <Footer />
     </div>
   );
