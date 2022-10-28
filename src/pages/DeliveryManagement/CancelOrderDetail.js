@@ -1,6 +1,7 @@
-import React from 'react'
-import styles from "./DeliveringOrderDetail.module.css";
-export default function DeliveringOrderDetail() {
+import { Button } from "antd";
+import React from "react";
+import styles from "./CancelOrderDetail.module.css";
+export default function CancelOrderDetail() {
   return (
     <div className="">
       <div className="">
@@ -43,7 +44,7 @@ export default function DeliveringOrderDetail() {
           </div>
           <div className="overflow-y-auto" style={{ height: "30rem" }}>
             <table
-              className={`${styles.deliveringorderdetail__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-3`}
+              className={`${styles.cancelorderdetail__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-3`}
             >
               <thead>
                 <tr>
@@ -160,6 +161,9 @@ export default function DeliveringOrderDetail() {
                 Thành tiền:<span className="text-red-600"> 23tr</span>
               </div>
             </div>
+          </div>
+          <div className="flex justify-end items-center mt-3" style={{width:"98%"}}>
+            <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white">Đã lấy lại hàng</Button>
           </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import React from "react";
-import {Popover } from "antd";
+import {Popover, Button } from "antd";
+import { NavLink } from "react-router-dom";
 export default function HeaderManagement() {
   // avatar hover
   const content = (
     <div>
-      <p>Homepage</p>
+      <NavLink to={"/"}>Managemnet page</NavLink>
       <p>Log out</p>
     </div>
   );

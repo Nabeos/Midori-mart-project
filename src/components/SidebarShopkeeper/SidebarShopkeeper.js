@@ -108,7 +108,7 @@ export default function SidebarShopkeeper() {
               to={"/shippermanagement"}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
             >
-              Quản lí vận chuyển
+              Quản lí shipper
             </NavLink>
           </div>
         </div>

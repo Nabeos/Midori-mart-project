@@ -1,36 +1,3 @@
-.userorderhistory__border__general {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-left: 0.5rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    background: rgba(0, 0, 0, 0.4);
-  
-  }
-  
-  .userorderhistory__border__filter{
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-    margin-left: 1rem;
-  }
-  
-  .userorderhistory__cardtitle {
-    color: black;
-  }
-  
-  
-  
-  .userorderhistory__relatedproduct__border{
-    box-shadow: 5px 6px 11px 0 rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    background: rgb(255, 255, 255, 0.9)!important;
-  }
-
- 
-  
-  .userorderhistory__relatedproduct__border{
-    border: lightgray
-  }
-  
-  .userorderhistory__reorder__button{
-    margin-top: 1rem;
-    border: 1px solid #166534
-  }
+.orderhistoryproduct__table__striped tr:nth-child(even){
+  background: #f2f2f2;
+}

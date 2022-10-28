@@ -37,7 +37,7 @@ export default function CancelOrderManagement() {
       </div>
 
       <div className="flex justify-center">
-        <table
+      <table
           className={`${styles.cancelordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
           style={{ width: "80%", minHeight: "60rem" }}
         >
@@ -52,7 +52,7 @@ export default function CancelOrderManagement() {
                 Mã đơn hàng
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
-                Đơn vị vận chuyển
+                Địa chỉ giao hàng
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Thời gian tạo
@@ -71,23 +71,20 @@ export default function CancelOrderManagement() {
           <tbody>
             <tr>
               <td className="border border-slate-300 text-center">1</td>
-              <td className="border border-slate-300 text-center">23022001</td>
               <td className="border border-slate-300 text-center">
-                DKT express corporation
+                23022001
+              </td>
+              <td className="border border-slate-300 text-center">
+                Hà Đông, Hà Nội
               </td>
               <td className="border border-slate-300 text-center">
                 8:45 23/02/2001
               </td>
-              <td className="border border-slate-300 text-center">
-                8:45 23/02/2001
-              </td>
-              <td className="border border-slate-300 text-center">
-                <span className="p-2 bg-green-700 rounded-md text-white">
-                  Đang tiếp nhận
-                </span>
-              </td>
+              <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Mới</span></td>
 
               <td className="border border-slate-300 text-center">
+
                 <Button
                   type=""
                   className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
@@ -108,23 +105,20 @@ export default function CancelOrderManagement() {
             </tr>
             <tr>
               <td className="border border-slate-300 text-center">2</td>
-              <td className="border border-slate-300 text-center">23022001</td>
               <td className="border border-slate-300 text-center">
-                DKT express corporation
+                23022001
               </td>
               <td className="border border-slate-300 text-center">
-                8:45 23/02/2001
+                Hà Đông, Hà Nội
               </td>
               <td className="border border-slate-300 text-center">
-                8:45 23/02/2001
+              8:45 23/02/2001
               </td>
-              <td className="border border-slate-300 text-center">
-                <span className="p-2 bg-red-700 rounded-md text-white">
-                  Dừng tiếp nhận
-                </span>
-              </td>
+              <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Mới</span></td>
 
               <td className="border border-slate-300 text-center">
+         
                 <Button
                   type=""
                   className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"

@@ -1,4 +1,5 @@
-import React from 'react'
+import { Button } from "antd";
+import React from "react";
 import styles from "./DeliveringOrderDetail.module.css";
 export default function DeliveringOrderDetail() {
   return (
@@ -160,6 +161,9 @@ export default function DeliveringOrderDetail() {
                 Thành tiền:<span className="text-red-600"> 23tr</span>
               </div>
             </div>
+          </div>
+          <div className="flex justify-end items-center mt-3" style={{width:"98%"}}>
+            <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white">Đã giao hàng</Button>
           </div>
         </div>
       </div>

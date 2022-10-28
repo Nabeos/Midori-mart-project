@@ -9,6 +9,8 @@ import SidebarShipper from "../../components/SidebarShipper/SidebarShipper";
 import NewOrderDeliveryManagement from "./NewOrderDeliveryManagement";
 import SuccessfulOrderManagement from "../OrderManagement/SuccessfulOrderManagement";
 import SuccessfulOrderDeliveryManagement from "./SuccessfulOrderDeliveryManagement";
+import CancelOrderDeliveryManagement from "./CancelOrderDeliveryManagement";
+import DeliveringDeliveryOrderManagement from "./DeliveringDeliveryOrderManagement";
 
 export default function DeliveryManagement() {
   return (
@@ -44,9 +46,15 @@ export default function DeliveryManagement() {
                 <Tabs.TabPane tab="Đơn hàng mới" key="1">
                   <NewOrderDeliveryManagement />
                 </Tabs.TabPane>
-
-                <Tabs.TabPane tab="Đơn hàng thành công" key="4">
+                <Tabs.TabPane tab="Đơn hàng đang giao" key="2">
+                <DeliveringDeliveryOrderManagement/>
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Đơn hàng thành công" key="3">
                   <SuccessfulOrderDeliveryManagement />
+                </Tabs.TabPane>
+
+                <Tabs.TabPane tab="Đơn hàng bị hủy/trả lại" key="4">
+                  <CancelOrderDeliveryManagement/>
                 </Tabs.TabPane>
               </Tabs>
             </div>

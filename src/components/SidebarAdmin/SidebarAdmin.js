@@ -21,18 +21,7 @@ export default function SidebarAdmin() {
     history.push("/usermanagement");
     setActive(3);
   }
-  const handleNavigateBlogMngt = () => {
-    history.push("/usermanagement");
-    setActive(4);
-  }
-  const handleNavigateCategoriesMngt = () => {
-    history.push("/usermanagement");
-    setActive(5);
-  }
-  const handleNavigateBannerMngt = () => {
-    history.push("/usermanagement");
-    setActive(6);
-  }
+
   return (
     <div className='bg-white mr-2' style={{ minHeight: "100%", boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)" }}>
       <div>
@@ -59,15 +48,6 @@ export default function SidebarAdmin() {
         </div>
         <div className={`${styles.sidebaradmin__sidebaritem} ${active == 3 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateRevenueMngt}>
           <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí doanh thu</NavLink>
-        </div>
-        <div className={`${styles.sidebaradmin__sidebaritem} ${active == 4 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateBlogMngt}>
-          <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí blog</NavLink>
-        </div>
-        <div className={`${styles.sidebaradmin__sidebaritem} ${active == 5 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateCategoriesMngt}>
-          <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí danh mục sản phẩm</NavLink>
-        </div>
-        <div className={`${styles.sidebaradmin__sidebaritem} ${active == 6 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} p-2`} style={{ width: '100%' }} onClick={handleNavigateBannerMngt}>
-          <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí banner</NavLink>
         </div>
       </div>
     </div >

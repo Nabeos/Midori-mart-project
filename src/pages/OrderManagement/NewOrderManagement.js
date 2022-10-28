@@ -51,7 +51,7 @@ export default function NewOrderManagement() {
                 Mã đơn hàng
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
-                Đơn vị vận chuyển
+                Địa chỉ giao hàng
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Thời gian tạo
@@ -74,15 +74,19 @@ export default function NewOrderManagement() {
                 23022001
               </td>
               <td className="border border-slate-300 text-center">
-                DKT express corporation
+                Hà Đông, Hà Nội
               </td>
               <td className="border border-slate-300 text-center">
                 8:45 23/02/2001
               </td>
               <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-              <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Đang tiếp nhận</span></td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Mới</span></td>
 
               <td className="border border-slate-300 text-center">
+                <div>
+                  <Button className="mr-2 className='round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow">Xác nhận</Button>
+                  <Button className='round-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow'>Hủy đơn</Button>
+                </div>
                 <Button
                   type=""
                   className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
@@ -107,15 +111,19 @@ export default function NewOrderManagement() {
                 23022001
               </td>
               <td className="border border-slate-300 text-center">
-                DKT express corporation
+                Hà Đông, Hà Nội
               </td>
               <td className="border border-slate-300 text-center">
               8:45 23/02/2001
               </td>
               <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-              <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Dừng tiếp nhận</span></td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Mới</span></td>
 
               <td className="border border-slate-300 text-center">
+              <div>
+                  <Button className="mr-2 className='round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow">Xác nhận</Button>
+                  <Button className='round-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow'>Hủy đơn</Button>
+                </div>
                 <Button
                   type=""
                   className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"

@@ -3,8 +3,9 @@ import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import NewOrderDeliveryDetail from './NewOrderDeliveryDetail';
-import styles from "./NewOrderDeliveryManagement.module.css";
-export default function NewOrderDeliveryManagement() {
+import styles from "./DeliveringDeliveryOrderManagement.module.css";
+import DeliveringOrderDetail from './DeliveringOrderDetail';
+export default function DeliveringDeliveryOrderManagement() {
     const [open, setOpen] = useState(false);
     const showModal = () => {
       setOpen(true);
@@ -19,7 +20,7 @@ export default function NewOrderDeliveryManagement() {
             className=" mt-3 ml-2 text-xl font-semibold"
             style={{ width: "100%" }}
           >
-            Có <span className="text-green-800"> 2 </span> đơn hàng mới
+            Có <span className="text-green-800"> 2 </span> đơn hàng đang giao
           </div>
           <div
             className="rounded-md mt-3 flex justify-end mr-3 text-black"
@@ -37,7 +38,7 @@ export default function NewOrderDeliveryManagement() {
   
         <div className="flex justify-center">
           <table
-            className={`${styles.neworderdeliverymanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
+            className={`${styles.deliveringdeliveryordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
             style={{ width: "80%", minHeight: "60rem" }}
           >
             <thead>
@@ -80,7 +81,7 @@ export default function NewOrderDeliveryManagement() {
                   8:45 23/02/2001
                 </td>
                 <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-                <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Đang xử lí</span></td>
+                <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Đang giao</span></td>
   
                 <td className="border border-slate-300 text-center">
                 <div>
@@ -102,7 +103,7 @@ export default function NewOrderDeliveryManagement() {
                     footer={[]}
                     width={900}
                   >
-                    <NewOrderDeliveryDetail />
+                    <DeliveringOrderDetail />
                   </Modal> 
                     </div>
                  
@@ -120,7 +121,7 @@ export default function NewOrderDeliveryManagement() {
                 8:45 23/02/2001
                 </td>
                 <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-                <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Dừng tiếp nhận</span></td>
+                <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Dừng giao</span></td>
   
                 <td className="border border-slate-300 text-center">
                 <div>
@@ -142,7 +143,7 @@ export default function NewOrderDeliveryManagement() {
                     footer={[]}
                     width={900}
                   >
-                    <NewOrderDeliveryDetail />
+                    <DeliveringOrderDetail />
                   </Modal>  
                     </div>
                  

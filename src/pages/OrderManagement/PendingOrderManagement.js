@@ -36,106 +36,108 @@ export default function PendingOrderManagement() {
         </div>
   
         <div className="flex justify-center">
-          <table
-            className={`${styles.pendingordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-            style={{ width: "80%", minHeight: "60rem" }}
-          >
-            <thead>
-              <tr>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  {" "}
-                  STT
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  {" "}
-                  Mã đơn hàng
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  Đơn vị vận chuyển
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  Thời gian tạo
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                Thời gian giao hàng
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  Trạng thái đơn hàng
-                </th>
-                <th className="border border-slate-300 p-4 text-lg text-center">
-                  Xem chi tiết
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-slate-300 text-center">1</td>
-                <td className="border border-slate-300 text-center">
-                  23022001
-                </td>
-                <td className="border border-slate-300 text-center">
-                  DKT express corporation
-                </td>
-                <td className="border border-slate-300 text-center">
-                  8:45 23/02/2001
-                </td>
-                <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-                <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Đang tiếp nhận</span></td>
-  
-                <td className="border border-slate-300 text-center">
-                  <Button
-                    type=""
-                    className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                    onClick={showModal}
-                  >
-                    <FaEye />
-                  </Button>
-                  <Modal
-                    open={open}
-                    title="Chi tiết đơn hàng của khách hàng"
-                    onCancel={handleCancel}
-                    footer={[]}
-                    width={900}
-                  >
-                    <PendingOrderDetail />
-                  </Modal>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-300 text-center">2</td>
-                <td className="border border-slate-300 text-center">
-                  23022001
-                </td>
-                <td className="border border-slate-300 text-center">
-                  DKT express corporation
-                </td>
-                <td className="border border-slate-300 text-center">
+        <table
+          className={`${styles.pendingordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
+          style={{ width: "80%", minHeight: "60rem" }}
+        >
+          <thead>
+            <tr>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                {" "}
+                STT
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                {" "}
+                Mã đơn hàng
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Địa chỉ giao hàng
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Thời gian tạo
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+              Thời gian giao hàng
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Trạng thái đơn hàng
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Xem chi tiết
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border border-slate-300 text-center">1</td>
+              <td className="border border-slate-300 text-center">
+                23022001
+              </td>
+              <td className="border border-slate-300 text-center">
+                Hà Đông, Hà Nội
+              </td>
+              <td className="border border-slate-300 text-center">
                 8:45 23/02/2001
-                </td>
-                <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
-                <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Dừng tiếp nhận</span></td>
-  
-                <td className="border border-slate-300 text-center">
-                  <Button
-                    type=""
-                    className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                    onClick={showModal}
-                  >
-                    <FaEye />
-                  </Button>
-                  <Modal
-                    open={open}
-                    title="Chi tiết đơn hàng của khách hàng"
-                    onCancel={handleCancel}
-                    footer={[]}
-                    width={900}
-                  >
-                    <PendingOrderDetail />
-                  </Modal>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              </td>
+              <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">Mới</span></td>
+
+              <td className="border border-slate-300 text-center">
+
+                <Button
+                  type=""
+                  className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
+                  onClick={showModal}
+                >
+                  <FaEye />
+                </Button>
+                <Modal
+                  open={open}
+                  title="Chi tiết đơn hàng của khách hàng"
+                  onCancel={handleCancel}
+                  footer={[]}
+                  width={900}
+                >
+                  <PendingOrderDetail />
+                </Modal>
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-slate-300 text-center">2</td>
+              <td className="border border-slate-300 text-center">
+                23022001
+              </td>
+              <td className="border border-slate-300 text-center">
+                Hà Đông, Hà Nội
+              </td>
+              <td className="border border-slate-300 text-center">
+              8:45 23/02/2001
+              </td>
+              <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
+              <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">Mới</span></td>
+
+              <td className="border border-slate-300 text-center">
+         
+                <Button
+                  type=""
+                  className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
+                  onClick={showModal}
+                >
+                  <FaEye />
+                </Button>
+                <Modal
+                  open={open}
+                  title="Chi tiết đơn hàng của khách hàng"
+                  onCancel={handleCancel}
+                  footer={[]}
+                  width={900}
+                >
+                  <PendingOrderDetail />
+                </Modal>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         </div>
         <div className="flex justify-end mb-4" style={{ width: "90%" }}>
           <Pagination
