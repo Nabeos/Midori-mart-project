@@ -49,12 +49,12 @@ export default function UserOrderPending() {
               className="text-start mt-2 ml-5 text-xl font-semibold"
               style={{ width: "100%" }}
             >
-              Đơn hàng đang xử lí của bạn
+              Đơn hàng đang xử lý của bạn
             </div>
-            <div className="flex justify-center" style={{ width: "100%" }}>
+            <div className="flex justify-center p-3" style={{ width: "100%" }}>
               <table
-                className={`${styles.userorderpending__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                style={{ width: '90%', minHeight: "20rem" }}
+                className={`${styles.userorderpending__table__striped} p-3 table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
+                style={{ width: '100%', minHeight: "20rem" }}
               >
                 <thead>
                   <th className="border border-slate-300 p-4 text-lg text-center">
@@ -76,9 +76,6 @@ export default function UserOrderPending() {
                     Trạng thái đơn hàng
                   </th>
                   <th className="border border-slate-300 p-4 text-lg text-center">
-                    Trạng thái giao hàng
-                  </th>
-                  <th className="border border-slate-300 p-4 text-lg text-center">
                     Chi tiết
                   </th>
                 </thead>
@@ -96,9 +93,6 @@ export default function UserOrderPending() {
                   <td className="border border-slate-300 text-center">23.000đ</td>
                   <td className="border border-slate-300 text-center ">
                     <span className="bg-green-600 text-white p-2 rounded-md">Đã hoàn tất</span>
-                  </td>
-                  <td className="border border-slate-300 text-center">
-                    <span className="bg-red-600 text-white p-2 rounded-md">Chưa giao</span>
                   </td>
                   <td className="border border-slate-300 text-center">
                     {" "}

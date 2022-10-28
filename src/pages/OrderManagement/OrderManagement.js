@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import SidebarShopkeeper from "../../components/SidebarShopkeeper/SidebarShopkeeper";
 import styles from "./OrderManagement.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
@@ -12,8 +12,8 @@ import SuccessfulOrderManagement from "./SuccessfulOrderManagement";
 import CancelOrderManagement from "./CancelOrderManagement";
 
 export default function OrderManagement() {
-     // popup
-    
+  // popup
+
   return (
     <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
       <div className="col-span-2">
@@ -39,32 +39,32 @@ export default function OrderManagement() {
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
-           
+
             <hr className="border border-gray-400" />
 
             {/* table for order Management */}
             <div className="">
-                
-                <Tabs defaultActiveKey="1" className='ml-3'>
-              <Tabs.TabPane tab="Đơn hàng mới" key="1" >
-                <NewOrderManagement />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Đơn hàng đang xử lí" key="2">
-                <PendingOrderManagement/>
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Đơn hàng đang giao" key="3">
-                <DeliveringOrderManagement/>
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Đơn hàng thành công" key="4">
-                <SuccessfulOrderManagement/>
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Đơn hàng bị hủy/trả lại" key="5">
-                <CancelOrderManagement/>
-              </Tabs.TabPane>
-            </Tabs>
-            
+
+              <Tabs defaultActiveKey="1" className='ml-3'>
+                <Tabs.TabPane tab="Đơn hàng mới" key="1" >
+                  <NewOrderManagement />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Đơn hàng đã duyệt và đang xử lí" key="2">
+                  <PendingOrderManagement />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Đơn hàng đang giao" key="3">
+                  <DeliveringOrderManagement />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Đơn hàng thành công" key="4">
+                  <SuccessfulOrderManagement />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Đơn hàng bị hủy/trả lại" key="5">
+                  <CancelOrderManagement />
+                </Tabs.TabPane>
+              </Tabs>
+
             </div>
-            
+
           </div>
         </div>
       </div>
