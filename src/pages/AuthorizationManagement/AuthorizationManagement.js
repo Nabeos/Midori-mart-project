@@ -4,16 +4,9 @@ import styles from "./AuthorizationManagement.module.css";
 import { Button, Form, Modal, Pagination } from "antd";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import "bootstrap/dist/css/bootstrap.min.css";
+import AddAuthenticationPage from "./AddAuthenticationPage";
 
 export default function AuthorizationManagement() {
-  // avatar hover
-  const content = (
-    <div>
-      <p>Homepage</p>
-      <p>Log out</p>
-    </div>
-  );
-
   // popup
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
@@ -60,22 +53,20 @@ export default function AuthorizationManagement() {
             <div className="mt-3 ml-2">
               <Button
                 type=""
-                className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
+                className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base mr-2"
                 onClick={showPageModal}
               >
                 + Thêm trang
               </Button>
               <Modal
-                title="Basic Modal"
+                title="Thêm trang mới"
                 open={isPageModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                footer={[]}
+                width={500}
               >
-                <Form>
-                  <p>Some contents pages...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </Form>
+                <AddAuthenticationPage/>
               </Modal>
               {/* popup add more roles */}
               <Button

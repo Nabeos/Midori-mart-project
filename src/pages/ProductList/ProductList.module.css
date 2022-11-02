@@ -69,10 +69,6 @@ main {
   color: black;
 }
 
-.productlist__cardtitle:hover {
-  color: #0c6e21;
-}
-
 .productlist__relatedproduct__border:hover{
   box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
   border-radius: 5px;

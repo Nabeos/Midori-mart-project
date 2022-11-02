@@ -99,7 +99,7 @@ function Product(props) {
   return (
     <div className="">
       <div
-        className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mt-2 mr-3 pr-5 pl-5 bg-white`}
+        className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5 bg-white`}
         style={{ minHeight: "280px" }}
       >
         <div key={product.id} className="product">
@@ -109,7 +109,7 @@ function Product(props) {
           </div>
           <div className="product-details">
             <header
-              className={`${styles.productlist__cardtitle} text-left no-underline text-sm font-semibold hover:text-green-800 h-20`}
+              className={`${styles.productlist__cardtitle} text-left no-underline text-sm font-semibold h-20`}
               style={{}}
             >
               <a

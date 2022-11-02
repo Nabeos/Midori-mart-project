@@ -10,7 +10,7 @@ export default function SidebarShopkeeper() {
   console.log("active: ", active);
   // active = 1 ? "active" : "";
   const handleNavigateUserMngt = () => {
-    history.push("/usermanagement");
+    history.push("/customermanagement");
     setActive(1);
   };
   const handleNavigateOrderMngt = () => {
@@ -63,7 +63,7 @@ export default function SidebarShopkeeper() {
             onClick={handleNavigateUserMngt}
           >
             <NavLink
-              to={"/usermanagement"}
+              to={"/customermanagement"}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
             >
               Quản lí khách hàng

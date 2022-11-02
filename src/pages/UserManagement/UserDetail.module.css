@@ -1,15 +1,15 @@
 .userdetail__border__hover:hover {
-    border-color: #166534 !important;
+    border-color: #0c6e21 !important;
   }
   
   .userdetail__border__hover:focus {
-    border-color: #166534 !important;
+    border-color: #0c6e21 !important;
   }
   
   .userdetail__border__button:hover {
-    border-color: #166534 !important;
+    border-color: #0c6e21 !important;
     color: white;
-    background-color: #166534 !important;
+    background-color: #0c6e21 !important;
   }
   
   .userdetail__border__button {

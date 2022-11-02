@@ -41,7 +41,7 @@ function Product(props) {
 
             </div>
             <header
-              className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-24`}
+              className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold h-24`}
 
             >
               <a

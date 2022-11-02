@@ -1,0 +1,17 @@
+.userdetailInformation__border__hover:hover {
+    border-color: #166534 !important;
+  }
+  
+  .userdetailInformation__border__hover:focus {
+    border-color: #166534 !important;
+  }
+  
+  .userdetailInformation__border__button:hover {
+    border-color: #166534 !important;
+    color: white;
+    background-color: #166534 !important;
+  }
+  
+  .userdetailInformation__border__button {
+    border-radius: 5px !important;
+  }

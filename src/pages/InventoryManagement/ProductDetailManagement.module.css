@@ -1,0 +1,36 @@
+.productdetailmanagement__border__hover:hover {
+    border-color: #0c6e21 !important;
+  }
+  
+  .productdetailmanagement__border__hover:focus {
+    border-color: #0c6e21 !important;
+  }
+  
+  .productdetailmanagement__border__button:hover {
+    border-color: #0c6e21 !important;
+    color: white;
+    background-color: #0c6e21 !important;
+  }
+  
+  .productdetailmanagement__border__button {
+    border-radius: 5px !important;
+  }
+
+  .productdetailmanagement__delete__hover:hover {
+    border-color: #d13030 !important;
+  }
+  
+  .productdetailmanagement__delete__hover:focus {
+    border-color: #d13030 !important;
+  }
+  
+  .productdetailmanagement__delete__button:hover {
+    border-color: #d13030 !important;
+    color: white;
+    background-color: #d13030 !important;
+  }
+  
+  .productdetailmanagement__delete__button {
+    border-radius: 5px !important;
+    margin-left: 6px;
+  }

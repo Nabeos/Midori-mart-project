@@ -16,10 +16,6 @@
     color: black;
   }
   
-  .productlist__cardtitle:hover {
-    color: #0c6e21;
-  }
-  
   /* .productlist__relatedproduct__border{
     box-shadow: 5px 6px 11px 0 rgba(0, 0, 0, 0.7);
     border-radius: 5px;

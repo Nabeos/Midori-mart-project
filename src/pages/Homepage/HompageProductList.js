@@ -109,7 +109,7 @@ function Product(props) {
               <img src={product.image} style={{ width: "60%" }} />
             </div>
             <header
-              className={`${styles.productlist__cardtitle} flex flex-col items-start no-underline text-sm font-semibold hover:text-green-800 h-20 text-center`}
+              className={`${styles.productlist__cardtitle} flex flex-col items-start no-underline text-sm font-semibold h-20 text-center`}
               style={{}}
             >
               <a

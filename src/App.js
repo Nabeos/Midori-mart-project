@@ -34,6 +34,11 @@ import UserDetail from './pages/UserManagement/UserDetail';
 import UserOrderHistory from './pages/UserOrderHistory/UserOrderHistory';
 import UserOrderPending from './pages/UserOrderPending/UserOrderPending';
 import DeliveryManagement from './pages/DeliveryManagement/DeliveryManagement';
+import ManagerProfile from './pages/ManagerProfile/ManagerProfile';
+import ProductDetailManagement from './pages/InventoryManagement/ProductDetailManagement';
+import CustomerManagement from './pages/CustomerManagement/CustomerManagement';
+import CustomerDetailManagement from './pages/CustomerManagement/CustomerDetailManagement';
+import ShipperDetailManagement from './pages/ShipperManagement/ShipperDetailManagement';
 
 
 export const history = createBrowserHistory();
@@ -47,6 +52,7 @@ function App() {
         <Route exact path="/payment/:orderId" component={PaymentMethod} />
         <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
+        <Route exact path="/productdetailmanagement" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
@@ -61,9 +67,13 @@ function App() {
         <Route exact path="/shippermanagement" component={ShipperManagement} />
         <Route exact path="/deliverymanagement" component={DeliveryManagement} />
         <Route exact path="/usermanagement" component={UserManagement} />
+        <Route exact path="/customermanagement" component={CustomerManagement} />
+        <Route exact path="/customerdetailmanagement" component={CustomerDetailManagement} />
+        <Route exact path="/shipperdetailmanagement" component={ShipperDetailManagement} />
         <Route exact path="/userdetail" component={UserDetail} />
         <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
         <Route exact path="/userprofile/:userId" component={UserProfile} />
+        <Route exact path="/managerprofile/:userId" component={ManagerProfile} />
         <Route exact path="/userorderhistory/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
         <Route exact path="*" component={PageNotFound} />

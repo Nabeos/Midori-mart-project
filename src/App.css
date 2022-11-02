@@ -197,5 +197,29 @@ code {
 }
 
 .ant-modal {
-  top: 0;
+  top: 10px;
+}
+
+.ant-pagination-item-active{
+  border-color: #0c6e21;
+}
+
+.ant-pagination-item:hover{
+  border-color: #0c6e21;
+}
+
+.ant-pagination-item:focus{
+  color: #0c6e21;
+}
+
+.ant-pagination-next:hover{
+  border-color: #0c6e21!important;
+}
+
+.ant-pagination-item-link:hover{
+  border-color: #0c6e21!important;
+}
+
+.ant-pagination-item-link:hover{
+  color: #0c6e21!important;
 }
