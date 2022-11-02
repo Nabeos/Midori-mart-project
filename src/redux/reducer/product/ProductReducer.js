@@ -1,4 +1,4 @@
-import { GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT } from "../../type/product/ProductType";
+import { GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT, UPDATE_STAR_RATE } from "../../type/product/ProductType";
 
 const initialState = {
     productListByCategoryId: [
@@ -8,7 +8,8 @@ const initialState = {
 
     ],
     productDetail: {},
-    returnSearchProductList: []
+    returnSearchProductList: [],
+    starRate: 0
 }
 
 export const ProductReducer = (state = initialState, action) => {
@@ -32,6 +33,10 @@ export const ProductReducer = (state = initialState, action) => {
             let returnSearchProductListUpdate = [...state.returnSearchProductList];
             returnSearchProductListUpdate = action.searchProductList;
             state.returnSearchProductList = returnSearchProductListUpdate;
+            return { ...state }
+        case UPDATE_STAR_RATE:
+            console.log("CÓ VÀO UPDATE_STAR_RATE");
+            state.starRate = action.starRateUpdate;
             return { ...state }
         default:
             return { ...state }

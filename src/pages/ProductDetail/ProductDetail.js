@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import styles from "./ProductDetail.module.css";
 import { Button, Form, Input, Rate, notification } from "antd";
-import { useSelector, useDispatch } from 'react-redux'
+import { connect, useSelector, useDispatch } from 'react-redux'
 import {
   FaBullseye,
   FaClock,
@@ -29,6 +29,10 @@ import { history } from "../../App";
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
 import { getProductDetailAction } from "../../redux/action/product/ProductAction";
 import { BUY_NOW } from "../../redux/type/cart/CartType";
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { AddCommentAction } from "../../redux/action/comment/CommentAction";
+import { UPDATE_STAR_RATE } from "../../redux/type/product/ProductType";
 const { Meta } = Card;
 
 function SampleNextArrow(props) {
@@ -63,7 +67,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default function ProductDetail(props) {
+function ProductDetail(props) {
   //related product
   const settings = {
     dots: false,
@@ -73,6 +77,16 @@ export default function ProductDetail(props) {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
+
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+
   const openNotification = (placement) => {
     notification.success({
       message: `Thêm sản phẩm vào giỏ hàng thành công`,
@@ -81,15 +95,21 @@ export default function ProductDetail(props) {
     });
   };
   //   rating star
-  const [currentValue, setCurrentValue] = useState(5);
+  const [currentValue, setCurrentValue] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     dispatch(getProductDetailAction(props.match.params.id));
   }, [])
+
+
+
   const productDetail = useSelector(state => state.ProductReducer.productDetail);
   console.log("PRODUCT DETAIL: ", productDetail);
-
+  useEffect(() => {
+    console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+    dispatch(getProductDetailAction(props.match.params.id));
+  }, [productDetail?.comments])
   // quantity handle
   let [num, setNum] = useState(1);
   let incNum = () => {
@@ -100,7 +120,7 @@ export default function ProductDetail(props) {
       setNum(num - 1);
     }
   };
-  let handleChange = (e) => {
+  let handleChangeNumber = (e) => {
     setNum(e.target.value);
   };
 
@@ -115,6 +135,15 @@ export default function ProductDetail(props) {
 
   const handleAddToCart = (productDetail, num) => {
     dispatch(handleAddToCartQuantity(productDetail, num));
+  }
+
+  const renderCustomerReviewList = () => {
+    return productDetail?.comments?.map((item, index) => {
+      return <Comment thumbnail={item.user.thumbnail} userName={item.user.fullname}
+        starRate={item.starRate}
+        content={item.content}
+        updateTime={item.updatedAt} />
+    })
   }
 
   return (
@@ -173,7 +202,7 @@ export default function ProductDetail(props) {
                           type="text"
                           className={`${styles.productdetail__quantity} text-center shadow-none text-base`}
                           value={num}
-                          onChange={handleChange}
+                          onChange={handleChangeNumber}
                           style={{ width: "20%" }}
                         />
                         <div className="input-group-prepend">
@@ -343,24 +372,33 @@ export default function ProductDetail(props) {
             <div className="font-semibold text-xl pl-6 pt-3 ">
               Đánh giá sản phẩm
             </div>
-            <Form>
+            <Form onSubmitCapture={handleSubmit}>
               <div className="ml-6">
                 <div className="mb-3">
                   <label className="text-lg font-normal mr-5">
                     Đánh giá sao
                   </label>
                   <Rate
+                    // onChange={handleChange}
                     onChange={(value) => {
                       setCurrentValue(value);
+                      dispatch({
+                        type: UPDATE_STAR_RATE,
+                        starRateUpdate: value
+                      })
                     }}
-                    value={currentValue}
                     className="text-2xl"
+                    value={currentValue}
+                    name="starRate"
                   />
                 </div>
 
                 <div className="flex" style={{ width: "100%" }}>
                   <label className="text-lg font-normal mr-12">Bình luận</label>
                   <TextArea
+                    name="content"
+                    value={values.content}
+                    onChange={handleChange}
                     placeholder="Hãy cho chúng tôi biết bạn nghĩ gì về sản phẩm"
                     className={`${styles.productdetail__textarea} rounded-md shadow-none`}
                     style={{ width: "80%", height: "20vh" }}
@@ -368,7 +406,8 @@ export default function ProductDetail(props) {
                 </div>
                 <Button
                   className={`${styles.productdetail__rate__button} text-center text-base font-medium`}
-                  type="submit"
+                  htmlType="submit"
+                  onSubmit={handleSubmit}
                 >
                   Đánh giá
                 </Button>
@@ -379,24 +418,21 @@ export default function ProductDetail(props) {
         {/* Comments from other customers */}
         <div className="flex justify-center">
           <div
-            className={`${styles.productdetail__border} mt-4 mb-4`}
-            style={{ width: "80%" }}
+            className={`${styles.productdetail__border} overflow-y-scroll mt-4 mb-4`}
+            style={{ width: "80%", maxHeight: "350px" }}
           >
             <div className="font-semibold text-xl pl-6 pt-3 mb-2">
               Review sản phẩm
             </div>
             <div
               className={`${styles.productdetail__overflow} overflow-y-hidden flex overflow-x-hidden mb-3`}
-              style={{ width: "100%", height: "50vh" }}
+              style={{ width: "100%", minHeight: "30px" }}
             >
               <div
-                className="flex-col mt-2 ml-32 pb-3"
+                className="flex-col mt-2 pb-3"
                 style={{ width: "100%", height: "100%" }}
               >
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
+                {renderCustomerReviewList()}
               </div>
             </div>
           </div>
@@ -646,3 +682,42 @@ export default function ProductDetail(props) {
     </div>
   );
 }
+
+const ProductDetailWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    starRate: props.starRate,
+    content: "",
+    slug: props.productDetail.slug
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+
+  }),
+
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT");
+    let data = {
+      "comment": {
+        "content": values.content,
+        "starRate": values.starRate
+      }
+    }
+    console.log("SLUG FORMIK: ", values.slug);
+    console.log("data add comment: ", data);
+    props.dispatch(AddCommentAction(values.slug, data));
+  },
+
+  displayName: 'ProductDetailWithFormik'
+})(ProductDetail);
+
+const mapStateToProps = (state) => {
+  return {
+    productDetail: state.ProductReducer.productDetail,
+    starRate: state.ProductReducer.starRate
+  }
+}
+
+export default connect(mapStateToProps, null)(ProductDetailWithFormik);

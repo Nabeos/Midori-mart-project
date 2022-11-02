@@ -1,37 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SidebarShopkeeper.module.css";
 import { NavLink } from "react-router-dom";
 import { useStateCallback } from "use-state-callback";
 import { history } from "../../App";
 
 export default function SidebarShopkeeper() {
-  const [active, setActive] = useStateCallback(1);
-  // const [active, setActive] = useState(1);
-  console.log("active: ", active);
-  // active = 1 ? "active" : "";
-  const handleNavigateUserMngt = () => {
-    history.push("/usermanagement");
-    setActive(1);
-  };
+  const [active, setActive] = useState(1);
+  const handleNavigateCustomerMngt = () => {
+    history.push();
+  }
   const handleNavigateOrderMngt = () => {
     history.push("/ordermanagement");
-    setActive(2);
-  };
+  }
   const handleNavigateInventoryMngt = () => {
     history.push("/inventorymanagement");
-    setActive(3);
-  };
+  }
   const handleNavigateShipperMngt = () => {
     history.push("/shippermanagement");
-    setActive(4);
-  };
+  }
+
   return (
-    <div style={{height:"100%"}}>
+    <div style={{ height: "100%" }}>
       {" "}
       <div
         className="bg-white mr-2"
         style={{
-          height:"100%",
+          height: "100%",
           boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
         }}
       >
@@ -56,57 +50,77 @@ export default function SidebarShopkeeper() {
         </div>
         <div className="flex flex-col items-start" >
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${
-              active == 1 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
-            }  mb-2 p-2`}
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 1 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+              }  mb-2 p-2`}
             style={{ width: "100%" }}
-            onClick={handleNavigateUserMngt}
+            onClick={handleNavigateCustomerMngt}
           >
             <NavLink
               to={"/usermanagement"}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
+              isActive={(match, location) => {
+                if (location.pathname === "") {
+                  setActive(1);
+                }
+              }}
+              onClick={handleNavigateCustomerMngt}
             >
               Quản lí khách hàng
             </NavLink>
           </div>
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${
-              active == 2 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
-            } mb-2 p-2`}
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 2 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+              } mb-2 p-2`}
             style={{ width: "100%" }}
             onClick={handleNavigateOrderMngt}
           >
             <NavLink
               to={"/ordermanagement"}
+              isActive={(match, location) => {
+                if (location.pathname === "/ordermanagement") {
+                  setActive(2);
+                }
+              }}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
+              onClick={handleNavigateOrderMngt}
             >
               Quản lí đơn hàng
             </NavLink>
           </div>
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${
-              active == 3 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
-            } mb-2 p-2`}
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 3 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+              } mb-2 p-2`}
             style={{ width: "100%" }}
             onClick={handleNavigateInventoryMngt}
           >
             <NavLink
               to={"/inventorymanagement"}
+              isActive={(match, location) => {
+                if (location.pathname === "/inventorymanagement") {
+                  setActive(3);
+                }
+              }}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
+              onClick={handleNavigateInventoryMngt}
             >
               Quản lí kho
             </NavLink>
           </div>
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${
-              active == 4 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
-            } mb-2 p-2`}
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 4 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+              } mb-2 p-2`}
             style={{ width: "100%" }}
             onClick={handleNavigateShipperMngt}
           >
             <NavLink
               to={"/shippermanagement"}
+              isActive={(match, location) => {
+                if (location.pathname === "/shippermanagement") {
+                  setActive(4);
+                }
+              }}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
+              onClick={handleNavigateShipperMngt}
             >
               Quản lí shipper
             </NavLink>

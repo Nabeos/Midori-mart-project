@@ -1,29 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SidebarShipper.module.css";
 import { NavLink } from "react-router-dom";
 import { useStateCallback } from "use-state-callback";
 import { history } from "../../App";
 export default function SidebarShipper() {
-  const [active, setActive] = useStateCallback(1);
-  // const [active, setActive] = useState(1);
-  console.log("active: ", active);
-  // active = 1 ? "active" : "";
-  const handleNavigateUserMngt = () => {
-    history.push("/usermanagement");
-    setActive(1);
-  };
-  const handleNavigateOrderMngt = () => {
-    history.push("/ordermanagement");
-    setActive(2);
-  };
-  const handleNavigateInventoryMngt = () => {
-    history.push("/inventorymanagement");
-    setActive(3);
-  };
-  const handleNavigateShipperMngt = () => {
-    history.push("/shippermanagement");
-    setActive(4);
-  };
+  const [active, setActive] = useState(1);
+  const handleNavigateDeliveryMngt = () => {
+    history.push("/deliverymanagement");
+  }
   return (
     <div style={{ height: "100%" }}>
       {" "}
@@ -55,15 +39,21 @@ export default function SidebarShipper() {
         </div>
         <div className="flex flex-col items-start">
           <div
-            className={`${styles.sidebarshipper__sidebaritem} ${
-              active == 1 ? `${styles.sidebarshipper__sidebaritemActive}` : ""
-            }  mb-2 p-2`}
+            className={`${styles.sidebarshipper__sidebaritem} ${active == 1 ? `${styles.sidebarshipper__sidebaritemActive}` : ""
+              }  mb-2 ml-0 p-2`}
             style={{ width: "100%" }}
-            onClick={handleNavigateUserMngt}
+            onClick={handleNavigateDeliveryMngt}
           >
             <NavLink
               to={"/deliverymanagement"}
-              className={`${styles.sidebarshipper__text} no-underline text-xl`}
+              className={`${styles.sidebarshipper__text} whitespace-nowrap text-left no-underline text-xl`}
+              onClick={handleNavigateDeliveryMngt}
+              style={{ paddingLeft: "0px" }}
+              isActive={(match, location) => {
+                if (location.pathname === "/deliverymanagement") {
+                  setActive(1);
+                }
+              }}
             >
               Quản lí đơn vận chuyển
             </NavLink>

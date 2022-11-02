@@ -13,12 +13,30 @@ export class baseService {
         })
     }
 
+    putUpdateUserProfile = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     post = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'POST',
             data: model,
             // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    postComment = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 
@@ -36,6 +54,14 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getUserProfileApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

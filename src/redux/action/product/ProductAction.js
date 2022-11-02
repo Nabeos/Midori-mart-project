@@ -10,7 +10,7 @@ export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
                 productList: result.data.product
             })
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data);
         }
     }
 }
@@ -25,7 +25,7 @@ export const getProductListLengthByCategoryIdAction = (categoryId, limit, offset
                 productList: result.data.product
             })
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data)
         }
     }
 }

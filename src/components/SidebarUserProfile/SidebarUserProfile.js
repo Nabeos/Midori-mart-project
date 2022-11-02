@@ -1,67 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SidebarUserProfile.module.css";
 import { useStateCallback } from 'use-state-callback';
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
-export default function SidebarUserProfile() {
-  const [active, setActive] = useStateCallback(1);
-  // const [active, setActive] = useState(1);
-  console.log("active: ", active);
-  // active = 1 ? "active" : "";
-  const handleNavigateUserMngt = () => {
-    history.push("/userprofile/:userId");
-    setActive(1);
+import { USER } from "../../redux/type/user/UserType";
+
+export default function SidebarUserProfile(props) {
+  let user = JSON.parse(localStorage.getItem(USER));
+  const [active, setActive] = useState(1);
+  const handleNavigateUserProfile = () => {
+    history.push(`/userprofile/${user?.email}`);
   }
-  const handleNavigateAuthorizationMngt = () => {
-    history.push("/userorderhistory/:userId");
-    setActive(2);
+  const handleNavigateUserOrderHistory = () => {
+    history.push(`/userorderhistory/${user?.email}`);
   }
-  const handleNavigateRevenueMngt = () => {
-    history.push("/userorderpending/:userId");
-    setActive(3);
+  const handleNavigateUserOrderPending = () => {
+    history.push(`/userorderpending/${user?.email}`);
   }
 
   return (
     <div className="flex flex-col items-start rounded-md">
-      <div
-        className={`${styles.sidebaruserprofile__sidebaritem} ${active == 1 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ""
-          }  mb-2 p-2 rounded-t-md`}
-        style={{ width: "100%" }}
-        onClick={handleNavigateUserMngt}
-      >
+      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 1 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserProfile}>
         <NavLink
-          to={"/userprofile/:userId"}
+          to={`/userprofile/${user?.email}`}
+          isActive={(match, location) => {
+            if (location.pathname === `/userprofile/${user?.email}`) {
+              setActive(1);
+            }
+          }}
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
+          onClick={handleNavigateUserProfile}
         >
           Thông tin cá nhân
         </NavLink>
       </div>
-      <div
-        className={`${styles.sidebaruserprofile__sidebaritem} ${active == 2 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ""
-          } mb-2 p-2`}
-        style={{ width: "100%" }}
-        onClick={handleNavigateAuthorizationMngt}
-      >
+
+      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 2 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderHistory}>
         <NavLink
-          to={"/userorderhistory/:userId"}
+          to={`/userorderhistory/${user?.email}`}
+          isActive={(match, location) => {
+            if (location.pathname === `/userorderhistory/${user?.email}`) {
+              setActive(2);
+            }
+          }}
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
+          onClick={handleNavigateUserOrderHistory}
         >
           Lịch sử mua hàng
         </NavLink>
       </div>
-      <div
-        className={`${styles.sidebaruserprofile__sidebaritem} ${active == 3 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ""
-          } mb-2 p-2`}
-        style={{ width: "100%" }}
-        onClick={handleNavigateRevenueMngt}
-      >
+      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 3 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderPending}>
         <NavLink
-          to={"/useroderpending/:userId"}
+          to={`/userorderpending/${user?.email}`}
+          isActive={(match, location) => {
+            if (location.pathname === `/userorderpending/${user?.email}`) {
+              setActive(3);
+            }
+          }}
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
+          onClick={handleNavigateUserOrderPending}
         >
           Đơn hàng đang xử lý
         </NavLink>
       </div>
-    </div>
+    </div >
   );
 }

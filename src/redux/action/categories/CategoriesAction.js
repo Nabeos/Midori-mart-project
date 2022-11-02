@@ -11,7 +11,7 @@ export const getAllCategoriesAction = () => {
                 categoriesList: result.data.categories
             })
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data)
         }
     }
 }

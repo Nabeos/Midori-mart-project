@@ -22,6 +22,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { USER } from "../../redux/type/user/UserType";
 import { Popover } from "antd";
+import { TOKEN } from "../../utils/settings/config";
 const { Search } = Input;
 
 
@@ -37,13 +38,17 @@ function Header(props) {
   } = props;
   const handleLogOut = () => {
     localStorage.removeItem(USER);
+    localStorage.removeItem(TOKEN);
+    localStorage.removeItem("cart");
+    localStorage.removeItem("deliveryDate");
+    localStorage.removeItem("deliveryTime");
     window.location.reload();
   }
   let user = JSON.parse(localStorage.getItem(USER));
   const content = (
     <div>
-      <NavLink to={`/userprofile/${user?.fullname}`} className="text-black no-underline" style={{ fontSize: '1.1rem' }}>User Profile</NavLink>
-      <p className="cursor-pointer" style={{ fontSize: '1.1rem' }} onClick={handleLogOut}>Log out</p>
+      <NavLink to={`/userprofile/${user?.email}`} className="text-black no-underline" style={{ fontSize: '1.1rem' }}>Thông tin cá nhân</NavLink>
+      <p className="cursor-pointer" style={{ fontSize: '1.1rem' }} onClick={handleLogOut}>Đăng xuất</p>
     </div >
   );
   console.log("INITIAL VALUES: ", values);

@@ -18,6 +18,7 @@ import Header from "../../components/Header/Header";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useSelector } from 'react-redux'
+import { registerAction } from "../../redux/action/user/UserAction";
 
 function Register(props) {
   const {
@@ -60,7 +61,7 @@ function Register(props) {
           </span>
         </div>
         <div className="">
-          <Form>
+          <Form onSubmitCapture={handleSubmit}>
             <div className="flex mb-2">
               <div style={{ width: "100%" }}>
                 <label
@@ -233,7 +234,7 @@ function Register(props) {
 }
 
 const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-const regexAllLetter = /^[a-zA-Z ]+$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 
 const RegisterWithFormik = withFormik({
@@ -269,9 +270,19 @@ const RegisterWithFormik = withFormik({
   }),
 
 
-  handleSubmit: (values, { setSubmitting }) => {
+  handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
     console.log("VALUE FORM: ", values);
+    let data = {
+      "user": {
+        "fullname": values.lastName + " " + values.firstName,
+        "email": values.email,
+        "phonenumber": values.phoneNumber,
+        "password": values.password
+      }
+    }
+    console.log("REGISTER DATA: ", data);
+    props.dispatch(registerAction(data));
   },
 
   displayName: 'RegisterWithFormik'
