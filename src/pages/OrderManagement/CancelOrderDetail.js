@@ -1,25 +1,25 @@
 import React from 'react'
 import { Button } from "antd";
 import styles from "./CancelOrderDetail.module.css";
-export default function CancelOrderDetail() {
+export default function CancelOrderDetail(props) {
   return (
     <div className="">
       <div className="">
-        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: 23022001</div>
+        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: {props.cancelDetailInfo.orderNumber}</div>
         <div className="mb-2">
           <div className="text-base font-semibold">Thông tin khách hàng</div>
           <div className="text-base">
-            Họ tên người nhận:<span> Đinh Kông Thành</span>
+            Họ tên người nhận:<span> {props.cancelDetailInfo.fullName}</span>
           </div>
           <div className="text-base">
-            Số điện thoại:<span> 0385010068</span>
+            Số điện thoại:<span> {props.cancelDetailInfo.phoneNumber}</span>
           </div>
           <div className="text-base">
-            Địa chỉ:<span> abcxyz</span>
+            Địa chỉ:<span> {props.cancelDetailInfo.address.addressDetail}</span>
           </div>
 
           <div className="text-base">
-            Ghi chú:<span> tà lằng tà lằng</span>
+            Ghi chú:<span> {props.cancelDetailInfo.notes}</span>
           </div>
         </div>
         <div className="mb-2">
@@ -39,7 +39,7 @@ export default function CancelOrderDetail() {
             </div>
             <div className="text-base">
               Trạng thái đơn hàng:
-              <span className="text-green-700"> Đang giao</span>
+              <span className="text-red-700"> {props.cancelDetailInfo.status}</span>
             </div>
           </div>
           <div className="overflow-y-auto" style={{ height: "30rem" }}>
@@ -162,7 +162,7 @@ export default function CancelOrderDetail() {
               </div>
             </div>
           </div>
-          <div className="flex justify-end items-center mt-3" style={{width:"98%"}}>
+          <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>
             <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white">Xác nhận</Button>
           </div>
         </div>

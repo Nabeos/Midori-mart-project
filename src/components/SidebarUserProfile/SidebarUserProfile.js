@@ -12,10 +12,13 @@ export default function SidebarUserProfile(props) {
     history.push(`/userprofile/${user?.email}`);
   }
   const handleNavigateUserOrderHistory = () => {
-    history.push(`/userorderhistory/${user?.email}`);
+    history.push(`/usersuccessfulorder/${user?.email}`);
   }
   const handleNavigateUserOrderPending = () => {
     history.push(`/userorderpending/${user?.email}`);
+  }
+  const handleNavigateAllUserOrder = () => {
+    history.push(`/alluserorder/${user?.email}`);
   }
 
   return (
@@ -37,16 +40,16 @@ export default function SidebarUserProfile(props) {
 
       <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 2 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderHistory}>
         <NavLink
-          to={`/userorderhistory/${user?.email}`}
+          to={`/usersuccessfulorder/${user?.email}`}
           isActive={(match, location) => {
-            if (location.pathname === `/userorderhistory/${user?.email}`) {
+            if (location.pathname === `/usersuccessfulorder/${user?.email}`) {
               setActive(2);
             }
           }}
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
           onClick={handleNavigateUserOrderHistory}
         >
-          Lịch sử mua hàng
+          Đơn hàng thành công
         </NavLink>
       </div>
       <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 3 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderPending}>
@@ -60,7 +63,22 @@ export default function SidebarUserProfile(props) {
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
           onClick={handleNavigateUserOrderPending}
         >
-          Đơn hàng đang xử lý
+          Đơn hàng đang chờ duyệt
+        </NavLink>
+      </div>
+      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 4 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }}
+        onClick={handleNavigateAllUserOrder}>
+        <NavLink
+          to={`/alluserorder/${user?.email}`}
+          isActive={(match, location) => {
+            if (location.pathname === `/alluserorder/${user?.email}`) {
+              setActive(4);
+            }
+          }}
+          className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
+          onClick={handleNavigateAllUserOrder}
+        >
+          Tất cả đơn hàng
         </NavLink>
       </div>
     </div >

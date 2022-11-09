@@ -34,6 +34,7 @@ import UserDetail from './pages/UserManagement/UserDetail';
 import UserOrderHistory from './pages/UserOrderHistory/UserOrderHistory';
 import UserOrderPending from './pages/UserOrderPending/UserOrderPending';
 import DeliveryManagement from './pages/DeliveryManagement/DeliveryManagement';
+import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
 
 
 export const history = createBrowserHistory();
@@ -51,7 +52,7 @@ function App() {
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
         <Route exact path="/orderpicking/:orderId" component={OrderPicking} />
-        <Route exact path="/product/:id" component={ProductDetail} />
+        <Route exact path="/product/:categoryId/:id" component={ProductDetail} />
         <Route exact path="/productlist/:id" component={ProductList} />
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
         <Route exact path="/blog" component={Blog} />
@@ -64,8 +65,9 @@ function App() {
         <Route exact path="/userdetail" component={UserDetail} />
         <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
         <Route exact path="/userprofile/:userId" component={UserProfile} />
-        <Route exact path="/userorderhistory/:userId" component={UserOrderHistory} />
+        <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
+        <Route exact path="/alluserorder/:userId" component={AllUserOrder} />
         <Route exact path="*" component={PageNotFound} />
       </Switch>
     </Router>

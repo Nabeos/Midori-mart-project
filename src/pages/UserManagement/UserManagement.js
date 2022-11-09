@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin";
 import styles from "./UserManagement.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input } from "antd";
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+import { getAllUserListForAdminAction } from "../../redux/action/user/UserAction";
 
-export default function UserManagement() {
+function UserManagement(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
   // avatar hover
   const content = (
     <div>
@@ -23,6 +35,12 @@ export default function UserManagement() {
   const handleCancel = () => {
     setOpen(false);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllUserListForAdminAction());
+  }, [])
+  const userListForAdmin = useSelector(state => state.UserReducer.userListForAdmin);
+  console.log("USER LIST FOR ADMIN: ", userListForAdmin);
 
   return (
     <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
@@ -75,126 +93,119 @@ export default function UserManagement() {
                 footer={[]}
                 width={800}
               >
-                <Form>
+                <Form onSubmitCapture={handleSubmit}>
                   <div className="flex flex-row">
                     <div style={{ width: "100%" }}>
                       <label
-                        for="last_name"
+                        for="lastName"
                         className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                       >
                         <span className="text-lg">Họ</span>
                       </label>
-                      <Form.Item
-                        name="lastname"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Hãy nhập họ!",
-                          },
-                        ]}
+                      <Form.Item className="mb-0"
                       >
                         <Input
                           type="text"
-                          id="last_name"
+                          id="lastName"
+                          name="lastName"
+                          onChange={e => {
+                            props.setFieldTouched('lastName')
+                            handleChange(e)
+                          }}
                           className={`${styles.register__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5 hover:border-green-700`}
                           placeholder="Họ"
-                          required=""
                           style={{ width: "90%", height: "5vh" }}
                         />
                       </Form.Item>
+                      {errors.lastName && touched.lastName ? <div className='text-red-600'>{errors.lastName}</div> : <div></div>}
                     </div>
                     <div style={{ width: "100%" }}>
                       <label
-                        for="first_name"
+                        for="firstName"
                         className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                       >
                         <span className="text-lg">Tên</span>
                       </label>
 
-                      <Form.Item
-                        name="firstname"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Hãy nhập tên!",
-                          },
-                        ]}
+                      <Form.Item className="mb-0"
                       >
                         <Input
                           type="text"
-                          id="first_name"
+                          id="firstName"
+                          name="firstName"
+                          onChange={e => {
+                            props.setFieldTouched('firstName')
+                            handleChange(e)
+                          }}
                           className={`${styles.register__border__hover} hover:border-green-700 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                           placeholder="Tên"
-                          required=""
                           style={{ width: "100%", height: "5vh" }}
                         />
                       </Form.Item>
+                      {errors.firstName && touched.firstName ? <div className='text-red-600'>{errors.firstName}</div> : <div></div>}
                     </div>
                   </div>
 
-                  <div className="-mt-2">
+                  <div className="mt-2">
                     <label
-                      for="phone"
+                      for="phoneNumber"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
                       <span className="text-lg">Số điện thoại</span>
                     </label>
-                    <Form.Item
-                      name="phone"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Hãy nhập số điện thoại!",
-                        },
-                      ]}
+                    <Form.Item className="mb-0"
                     >
                       <Input
-                        type="tel"
-                        id="phone"
+                        type="text"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        onChange={e => {
+                          props.setFieldTouched('phoneNumber')
+                          handleChange(e)
+                        }}
                         className={`${styles.register__border__hover} hover:border-green-700 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                        placeholder="123-45-678"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                        required=""
+                        placeholder="Nhập số điện thoại tại đây"
                         style={{ width: "100%", height: "5vh" }}
                       />
                     </Form.Item>
+                    {errors.phoneNumber && touched.phoneNumber ? <div className='text-red-600'>{errors.phoneNumber}</div> : <div></div>}
                   </div>
 
-                  <div className="-mt-4">
+                  <div className="mt-2">
                     <label
                       for="email"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
                       <span className="text-lg">Email</span>
                     </label>
-                    <Form.Item
-                      name="username"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Hãy nhập email!",
-                        },
-                      ]}
+                    <Form.Item className="mb-0"
                     >
                       <Input
                         type="email"
                         id="email"
+                        name="email"
+                        onChange={e => {
+                          props.setFieldTouched('email')
+                          handleChange(e)
+                        }}
                         className={`${styles.register__border__hover} hover:border-green-700 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                        placeholder="abc@gmail.com"
-                        required=""
+                        placeholder="Nhập email tại đây"
                         style={{ width: "100%", height: "5vh" }}
                       />
                     </Form.Item>
+                    {errors.email && touched.email ? <div className='text-red-600'>{errors.email}</div> : <div></div>}
                   </div>
-                  <div className="-mt-4">
+                  <div className="mt-2">
                     <label
-                      for="confirm_password"
+                      for="role"
                       className="block mb-2  font-normal text-gray-900 dark:text-gray-300"
                     >
                       <span className="text-lg">Vai trò</span>
                     </label>
-                    <Form.Item name="confirm" dependencies={["password"]}>
+                    <Form.Item className="mb-0">
                       <select
+                        name="role"
+                        id="role"
                         className="border border-black pt-3 pb-3 text-base focus:border-green-900"
                         style={{ width: "100%" }}
                       >
@@ -204,76 +215,60 @@ export default function UserManagement() {
                       </select>
                     </Form.Item>
                   </div>
-                  <div className="-mt-4">
+                  <div className="mt-2">
                     <label
                       for="password"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
                       <span className="text-lg">Mật khẩu</span>
                     </label>
-                    <Form.Item
-                      name="password"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Hãy nhập mật khẩu!",
-                        },
-                      ]}
+                    <Form.Item className="mb-0"
                     >
                       <Input
                         type="password"
                         id="password"
+                        name="password"
+                        onChange={e => {
+                          props.setFieldTouched('password')
+                          handleChange(e)
+                        }}
                         className={`${styles.register__border__hover} hover:border-green-700 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                        placeholder="•••••••••"
-                        required=""
+                        placeholder="Nhập mật khẩu tại đây"
                         style={{ width: "100%", height: "5vh" }}
                       />
                     </Form.Item>
+                    {errors.password && touched.password ? <div className='text-red-600'>{errors.password}</div> : <div></div>}
                   </div>
-                  <div className="-mt-4">
+                  <div className="mt-2">
                     <label
-                      for="confirm_password"
+                      for="confirmPassword"
                       className="block mb-2  font-normal text-gray-900 dark:text-gray-300"
                     >
                       <span className="text-lg">Nhập lại mật khẩu</span>
                     </label>
-                    <Form.Item
-                      name="confirm"
-                      dependencies={["password"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Hãy nhập lại mật khẩu!",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (!value || getFieldValue("password") === value) {
-                              return Promise.resolve();
-                            }
-                            return Promise.reject(
-                              new Error(
-                                "Mật khẩu không trùng với mật khẩu bạn vừa nhập!"
-                              )
-                            );
-                          },
-                        }),
-                      ]}
+                    <Form.Item className="mb-0"
                     >
                       <Input
                         type="password"
-                        id="confirm_password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        onChange={e => {
+                          props.setFieldTouched('confirmPassword')
+                          handleChange(e)
+                        }}
                         className={`${styles.register__border__hover} hover:border-green-700 text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                        placeholder="•••••••••"
-                        required=""
+                        placeholder="Nhập lại mật khẩu tại đây"
                         style={{ width: "100%", height: "5vh" }}
                       />
                     </Form.Item>
+                    {(errors.confirmPassword && touched.confirmPassword) || (values.confirmPassword != values.password && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
                   </div>
 
                   <Button
                     type="default"
                     htmlType="submit"
-                    className={`${styles.register__border__button} pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:border-green-700 focus:text-green-700`}
+                    onSubmitCapture={handleSubmit}
+                    className={`${styles.register__border__button} mt-3 pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:border-green-700 focus:text-green-700`}
                     style={{ width: "100%" }}
                   >
                     Thêm người dùng mới
@@ -655,3 +650,69 @@ export default function UserManagement() {
     </div>
   );
 }
+
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
+const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+
+const UserManagementWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    lastName: "",
+    firstName: "",
+    phoneNumber: "",
+    email: "",
+    role: "",
+    password: "",
+    confirmPassword: ""
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+    lastName: Yup.string()
+      .required("Không được để trống mục họ !!!")
+      .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
+    firstName: Yup.string()
+      .required("Không được để trống mục tên !!!")
+      .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
+    phoneNumber: Yup.string()
+      .required("Không được để trống mục số điện thoại !!!")
+      .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+    email: Yup.string()
+      .required("Không được để trống mục email !!!")
+      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+    role: Yup.string()
+      .required("Không được để trống vai trò !!!"),
+    password: Yup.string()
+      .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
+      .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
+      .required("Không được để trống mục mật khẩu !!!")
+      .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+    confirmPassword: Yup.string()
+      .required("Không được để trống mục nhập lại mật khẩu !!!")
+  }),
+
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT");
+    console.log("VALUE FORM: ", values);
+    let data = {
+      "user": {
+        "fullname": values.lastName + " " + values.firstName,
+        "email": values.email,
+        "phonenumber": values.phoneNumber,
+        "password": values.password
+      }
+    }
+    console.log("REGISTER DATA: ", data);
+  },
+
+  displayName: 'UserManagementWithFormik'
+})(UserManagement);
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, null)(UserManagementWithFormik);

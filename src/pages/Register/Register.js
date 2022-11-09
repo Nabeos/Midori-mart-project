@@ -204,7 +204,7 @@ function Register(props) {
                   style={{ width: "88%", minHeight: "45px" }}
                 />
               </Form.Item>
-              {((values.password !== values.confirmPassword) && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
+              {(errors.confirmPassword && touched.confirmPassword) || (values.confirmPassword != values.password && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
             </div>
 
             <Button
@@ -266,7 +266,9 @@ const RegisterWithFormik = withFormik({
       .min(6, 'Độ dài password tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài password tối đa là 32 ký tự !!!')
       .required("Quý khách vui lòng không được để trống mục password !!!")
-      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!')
+      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+    confirmPassword: Yup.string()
+      .required("Không được để trống mục nhập lại mật khẩu !!!")
   }),
 
 

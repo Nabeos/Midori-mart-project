@@ -1,5 +1,5 @@
 import { productManagementService } from "../../../services/ProductManagementService";
-import { GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
 
 export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
     return async (dispatch) => {
@@ -56,6 +56,51 @@ export const searchProductAction = (keyWord) => {
             })
         } catch (error) {
             console.log('error', error)
+        }
+    }
+}
+
+export const getBestSellerProductListByCategoryIdAction = (categoryId) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getBestSellerProductListByCategoryId(categoryId);
+            console.log("RESULT BEST SELLER: ", result.data.products);
+            dispatch({
+                type: GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID,
+                bestSellerProductListAction: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const sortProductListByPriceAscAction = (categoryId, limit, offset) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.sortProductListByPriceAsc(categoryId, limit, offset);
+            console.log("RESULT PRICE ASC: ", result.data.product);
+            dispatch({
+                type: SORT_PRODUCT_LIST_BY_PRICE_ASC,
+                productListByPriceAscAction: result.data.product
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const sortProductListByPriceDescAction = (categoryId, limit, offset) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.sortProductListByPriceDesc(categoryId, limit, offset);
+            console.log("RESULT PRICE DESC: ", result.data.product);
+            dispatch({
+                type: SORT_PRODUCT_LIST_BY_PRICE_DESC,
+                productListByPriceDescAction: result.data.product
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
         }
     }
 }

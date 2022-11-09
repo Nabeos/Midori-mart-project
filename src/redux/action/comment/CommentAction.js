@@ -12,5 +12,15 @@ export const AddCommentAction = (slug, commentInfo) => {
     }
 }
 
+export const updateCommentAction = (commentId, commentInfo) => {
+    return async (dispatch) => {
+        try {
+            const result = await commentManagementServices.updateComment(commentId, commentInfo);
+            console.log("RESULT UPDATE COMMENT: ", result);
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+}
 
 

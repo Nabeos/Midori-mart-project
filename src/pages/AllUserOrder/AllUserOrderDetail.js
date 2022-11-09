@@ -1,26 +1,13 @@
-import React from "react";
-import styles from "./UserOrderPendingDetail.module.css";
+import React, { Fragment } from 'react'
+import styles from "./AllUserOrderDetail.module.css";
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, notification } from "antd";
-import Item from "antd/lib/list/Item";
-import { cancelInProgressOrderForCustomerAction } from "../../redux/action/order/OrderAction";
-export default function UserOrderPendingDetail() {
-  const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
-  const dispatch = useDispatch();
-  let totalBill = 0;
-  console.log("IN PROGRESS ITEM DETAIL: ", inProgressItem);
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
-  const handleCancelInProgressOrderForCustomer = (orderNumber) => {
-    dispatch(cancelInProgressOrderForCustomerAction(orderNumber));
-    openNotification('bottomRight')
-  }
+import { Button } from "antd";
 
+export default function AllUserOrderDetail() {
+  const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
+  let totalBill = 0;
+  console.log("TOTAL BILL: ", totalBill);
+  console.log("ALL USER ORDER ITEM DETAIL: ", inProgressItem);
   return (
     <div className="">
       <div className="">
@@ -58,12 +45,16 @@ export default function UserOrderPendingDetail() {
             </div>
             <div className="text-base">
               Trạng thái đơn hàng:
-              <span className="text-yellow-600"> {inProgressItem.status}</span>
+              {inProgressItem.status == "Thành Công" ? <span className="text-green-600"> {inProgressItem.status}</span> : <Fragment></Fragment>}
+              {inProgressItem.status == "Hủy Bỏ" ? <span className="text-red-600"> {inProgressItem.status}</span> : <Fragment></Fragment>}
+              {inProgressItem.status == "Đang Xử Lý" ? <span className="text-yellow-600"> {inProgressItem.status}</span> : <Fragment></Fragment>}
+              {inProgressItem.status == "Đang Chờ Xác Nhận" ? <span className="text-yellow-600"> {inProgressItem.status}</span> : <Fragment></Fragment>}
+              {inProgressItem.status == "Hoàn Tiền" ? <span className="text-yellow-600"> {inProgressItem.status}</span> : <Fragment></Fragment>}
             </div>
           </div>
           <div className="overflow-y-auto" style={{ height: "30rem" }}>
             <table
-              className={`${styles.userorderpendingdetail__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-3`}
+              className={`${styles.orderhistoryproduct__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-3`}
             >
               <thead>
                 <tr>
@@ -104,13 +95,16 @@ export default function UserOrderPendingDetail() {
                       {item.sku}
                     </td>
                     <td className="border border-slate-300 text-base text-center">
-                      {item.price}
+                      {item.price.toLocaleString()}đ
                     </td>
                     <td className="border border-slate-300 text-base text-center">
                       {item.quantity}
                     </td>
                   </tr>
+
                 })}
+
+
 
               </tbody>
             </table>
@@ -121,17 +115,20 @@ export default function UserOrderPendingDetail() {
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
               <div>
-                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
+                Thành tiền:<span className="text-red-600">
+                  {totalBill.toLocaleString()}đ
+                </span>
               </div>
             </div>
           </div>
           <div className="flex justify-end mt-3" style={{ width: "98%" }}>
-            {/* <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white mr-2">Đã nhận hàng</Button> */}
-            <Button onClick={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }} className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>
-            {/* <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button> */}
+            {/* {inProgressItem.status == "Thành Công" ? <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button> : <div></div>}
+            {inProgressItem.status == "Đang Chờ Xác Nhận" ? <Button className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button> : <div></div>} */}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+

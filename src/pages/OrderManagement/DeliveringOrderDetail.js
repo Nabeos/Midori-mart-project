@@ -1,24 +1,24 @@
 import React from 'react'
 import styles from "./DeliveringOrderDetail.module.css";
-export default function DeliveringOrderDetail() {
+export default function DeliveringOrderDetail(props) {
   return (
     <div className="">
       <div className="">
-        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: 23022001</div>
+        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: {props.deliveringDetailInfo.orderNumber}</div>
         <div className="mb-2">
           <div className="text-base font-semibold">Thông tin khách hàng</div>
           <div className="text-base">
-            Họ tên người nhận:<span> Đinh Kông Thành</span>
+            Họ tên người nhận:<span> {props.deliveringDetailInfo.fullName}</span>
           </div>
           <div className="text-base">
-            Số điện thoại:<span> 0385010068</span>
+            Số điện thoại:<span> {props.deliveringDetailInfo.phoneNumber}</span>
           </div>
           <div className="text-base">
-            Địa chỉ:<span> abcxyz</span>
+            Địa chỉ:<span> {props.deliveringDetailInfo.address.addressDetail}</span>
           </div>
 
           <div className="text-base">
-            Ghi chú:<span> tà lằng tà lằng</span>
+            Ghi chú:<span> {props.deliveringDetailInfo.notes}</span>
           </div>
         </div>
         <div className="mb-2">
@@ -38,7 +38,7 @@ export default function DeliveringOrderDetail() {
             </div>
             <div className="text-base">
               Trạng thái đơn hàng:
-              <span className="text-green-700"> Đang giao</span>
+              <span className="text-yellow-600"> {props.deliveringDetailInfo.status}</span>
             </div>
           </div>
           <div className="overflow-y-auto" style={{ height: "30rem" }}>

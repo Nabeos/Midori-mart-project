@@ -52,7 +52,14 @@ export default function PaymentMethod() {
             totalBill += item.price * item.quantity;
             return <div className='flex justify-between mb-3' key={index}>
                 <div className='flex'>
-                    <img src={item.image} className="rounded-md mr-2 relative" style={{ height: '80px', width: '80px', border: '1px solid #D3D3D3' }} />
+                    {item?.thumbnails?.map((image, index) => {
+                        if (index == 0) {
+                            return <img key={index} src={image}
+                                className="rounded-md mr-2 relative"
+                                style={{ height: '80px', width: '80px', border: '1px solid #D3D3D3' }} />
+                        }
+                    })}
+
                     <div>
                         <span className='text-sm pr-14'>{item.productName}</span>
                         <p className='text-xs' style={{ color: 'rgb(130, 134, 158)' }}>Số lượng: {item.quantity}</p>

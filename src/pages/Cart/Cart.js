@@ -50,7 +50,8 @@ function Cart(props) {
     let totalBill = 0;
     let flag = 1;
     useEffect(() => {
-
+        localStorage.setItem("deliveryDate", "");
+        localStorage.setItem("deliveryTime", "");
     }, [])
 
     const { cartList } = useSelector(state => state.CartReducer);

@@ -13,7 +13,32 @@ export class baseService {
         })
     }
 
+    putUpdateCustomerOrderForSeller = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    putCancelInProgressOrderForCustomer = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     putUpdateUserProfile = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    putUpdateComment = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'PUT',
@@ -56,6 +81,39 @@ export class baseService {
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
+
+    getAllCustomerOrderForSeller = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getSuccessfulOrderCustomer = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getInProgressOrderCustomer = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getCustomerOrderAll = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
 
     getUserProfileApi = (url) => {
         return Axios({

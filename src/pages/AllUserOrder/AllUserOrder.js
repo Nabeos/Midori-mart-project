@@ -1,25 +1,24 @@
 import React, { Fragment, useEffect, useState } from "react";
-import styles from "./UserOrderHistory.module.css";
+import styles from "./AllUserOrder.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input } from "antd";
 import Header from "../../components/Header/Header";
 import { useSelector, useDispatch } from 'react-redux'
 import SidebarUserProfile from "../../components/SidebarUserProfile/SidebarUserProfile";
 import Footer from "../../components/Footer/Footer";
-import OrderHistoryProduct from "./OrderHistoryProduct";
+import AllUserOrderDetail from "./AllUserOrderDetail";
 import Slogan from "../../components/Slogan/Slogan";
 import { FaEye } from "react-icons/fa";
-import { getAllCustomerSuccessfulOrderAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
+import { getAllCustomerOrderForCustomerAction, getAllCustomerSuccessfulOrderAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL_IN_PROGRESS } from "../../redux/type/order/OrderType";
-export default function UserOrderHistory() {
+export default function AllUserOrder() {
   const dispatch = useDispatch();
-  const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllCustomerSuccessfulOrderAction());
-  }, [openModal])
+    dispatch(getAllCustomerOrderForCustomerAction());
+  }, [])
 
-  const successfulOrderList = useSelector(state => state.OrderReducer.successfulOrderList);
-  console.log("SUCCESSFUL CUSTOMER ORDER LIST FOR CUSTOMER: ", successfulOrderList);
-
+  const allCustomerOrderListForCustomer = useSelector(state => state.OrderReducer.allCustomerOrderListForCustomer);
+  console.log("ALL CUSTOMER ORDER LIST FOR CUSTOMER: ", allCustomerOrderListForCustomer);
+  const openModal = useSelector(state => state.OrderReducer.openModal);
   const showModal = (inProgressItemAction) => {
     dispatch({
       type: SHOW_MODAL_IN_PROGRESS,
@@ -62,9 +61,9 @@ export default function UserOrderHistory() {
               className="text-start mt-2 ml-5 text-xl font-semibold"
               style={{ width: "100%" }}
             >
-              Đơn hàng thành công của bạn
+              Tất cả đơn hàng của bạn
             </div>
-            {(successfulOrderList.length) > 0 ? <div className="flex justify-center p-3" style={{ width: "100%" }}>
+            {(allCustomerOrderListForCustomer.length) > 0 ? <div className="flex justify-center p-3" style={{ width: "100%" }}>
               <table
                 className={`${styles.userorderpending__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
                 style={{ width: '100%', minHeight: "20rem" }}
@@ -91,8 +90,8 @@ export default function UserOrderHistory() {
                   </th>
                 </thead>
                 <tbody>
-                  {successfulOrderList.map((item, index) => {
-                    return <tr key={index}>
+                  {allCustomerOrderListForCustomer.map((item, index) => {
+                    return <tr>
                       <td className="border border-slate-300 text-center">{index + 1}</td>
                       <td className="border border-slate-300 text-center">
                         {item.orderNumber}
@@ -102,9 +101,14 @@ export default function UserOrderHistory() {
                       </td>
                       <td className="border border-slate-300 text-center">
                         <span className="p-2">{item.orderDate}</span>
+
                       </td>
                       <td className="border border-slate-300 text-center ">
-                        <span className="bg-green-600 text-white p-2 rounded-md">{item.status}</span>
+                        {item.status == "Thành Công" ? <span className="bg-green-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                        {item.status == "Hủy Bỏ" ? <span className="bg-red-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                        {item.status == "Đang Xử Lý" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                        {item.status == "Đang Chờ Xác Nhận" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                        {item.status == "Hoàn Tiền" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
                       </td>
                       <td className="border border-slate-300 text-center">
                         {" "}
@@ -124,13 +128,14 @@ export default function UserOrderHistory() {
                             width={900}
                           >
 
-                            <OrderHistoryProduct />
+                            <AllUserOrderDetail allUserDetailInfo={item} />
 
                           </Modal>
                         </div>
                       </td>
                     </tr>
                   })}
+
                 </tbody>
               </table>
             </div> : <div style={{ minHeight: "485px" }}>
@@ -142,12 +147,12 @@ export default function UserOrderHistory() {
                   <img src={require('../../assets/images/cart.png')} style={{ width: '300px' }} />
                 </div>
 
-                <p className='mb-4 text-lg'>Hiện tại chưa có đơn hàng nào thành công</p>
+                <p className='mb-4 text-lg'>Hiện tại chưa có đơn hàng nào</p>
 
               </div>
             </div >}
 
-            {(successfulOrderList.length) > 0 ? <div className="flex justify-center mt-10">
+            {(allCustomerOrderListForCustomer.length) > 0 ? <div className="flex justify-center mt-10">
               <Pagination
                 className="hover:text-green-800 focus:border-green-800"
                 defaultCurrent={1}

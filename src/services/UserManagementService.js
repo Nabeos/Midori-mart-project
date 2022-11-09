@@ -21,6 +21,15 @@ export class UserManagementService extends baseService {
         return this.putUpdateUserProfile(`api/v1/user-management/users/${userId}`, userInfo);
     }
 
+    addNewUserForAdmin = () => {
+        return this.post();
+    }
+
+    getAllUserListForAdmin = () => {
+        return this.get();
+    }
+
+
     // layDanhSachNguoiDung = () => {
     //     return this.get(`api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${GROUPID}`)
     // }

@@ -27,7 +27,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import Comment from "../../components/Comment/Comment";
 import { history } from "../../App";
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
-import { getProductDetailAction } from "../../redux/action/product/ProductAction";
+import { getBestSellerProductListByCategoryIdAction, getProductDetailAction } from "../../redux/action/product/ProductAction";
 import { BUY_NOW } from "../../redux/type/cart/CartType";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -71,8 +71,8 @@ function ProductDetail(props) {
   //related product
   const settings = {
     dots: false,
-    infinite: true,
-    slidesToShow: 5,
+    infinite: false,
+    slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -87,6 +87,8 @@ function ProductDetail(props) {
     handleSubmit,
   } = props;
 
+  // console.log("PROPS PRODUCT DETAIL: ", props?.productDetail?.category?.id);
+
   const openNotification = (placement) => {
     notification.success({
       message: `Thêm sản phẩm vào giỏ hàng thành công`,
@@ -98,18 +100,19 @@ function ProductDetail(props) {
   const [currentValue, setCurrentValue] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+    // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     dispatch(getProductDetailAction(props.match.params.id));
+    dispatch(getBestSellerProductListByCategoryIdAction(props.match.params.categoryId));
   }, [])
-
-
-
   const productDetail = useSelector(state => state.ProductReducer.productDetail);
+  const bestSellerProductList = useSelector(state => state.ProductReducer.bestSellerProductList);
+  // console.log("COMMENT: ", productDetail?.comments);
   console.log("PRODUCT DETAIL: ", productDetail);
-  useEffect(() => {
-    console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
-    dispatch(getProductDetailAction(props.match.params.id));
-  }, [productDetail?.comments])
+  console.log("BEST SELLER LIST: ", bestSellerProductList);
+  // useEffect(() => {
+  //   // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+  //   dispatch(getProductDetailAction(props.match.params.id));
+  // }, [productDetail?.comments])
   // quantity handle
   let [num, setNum] = useState(1);
   let incNum = () => {
@@ -445,225 +448,53 @@ function ProductDetail(props) {
             style={{ width: "80%" }}
           >
             <div className="font-semibold text-xl pl-6 pt-3 ">
-              Các sản phẩm trái cây bán chạy
+              Các sản phẩm {productDetail?.category?.name} bán chạy
             </div>
             <Slider {...settings}>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+              {bestSellerProductList.map((item, index) => {
+                return <div>
+                  <Card
+                    className={`${styles.productdetail__relatedproduct__border} mt-3 mb-3 pr-5 pl-5`}
+                    style={{ width: "80%", minHeight: "430px" }}
+                  >
+                    {item?.thumbnails.map((item, index) => {
+                      if (index == 0) {
+                        return <Card.Img
+                          className=""
+                          key={index}
+                          variant="top"
+                          style={{ width: "90%" }}
+                          src={item}
+                        />
+                      }
+                    })}
+
+                    <Card.Body className="p-0">
+                      <div className="h-28">
+                        <NavLink
+                          to="/login"
+                          className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                        >
+                          {item.title}
+                        </NavLink>
+                        <Card.Text>
+                          <div className="text-xs">SKU: {item.sku}</div>
+                          <div className="text-lg mt-2 font-normal">{item.price.toLocaleString()}đ</div>
+                        </Card.Text>
+                      </div>
+
+                      <Button
+                        style={{ width: "100%" }}
+                        className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
+                        variant="success"
                       >
-                        Thịt nạc vai 1
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
+                        Thêm vào giỏ
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </div>
+              })}
 
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                      >
-                        Thịt nạc vai 2
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
-
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                      >
-                        Thịt nạc vai 3
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
-
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                      >
-                        Thịt nạc vai 4
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
-
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                      >
-                        Thịt nạc vai 5
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
-
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
-              <div>
-                <Card
-                  className={`${styles.productdetail__relatedproduct__border} ml-3 mt-3 mb-3 pr-5 pl-5`}
-                  style={{ width: "80%", minHeight: "430px" }}
-                >
-                  <Card.Img
-                    className=""
-                    variant="top"
-                    style={{ width: "100%" }}
-                    src="/images/meat.jpg"
-                  />
-                  <Card.Body className="p-0">
-                    <div className="h-28">
-                      <NavLink
-                        to="/login"
-                        className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
-                      >
-                        Thịt nạc vai 6
-                      </NavLink>
-                      <Card.Text>
-                        <div className="text-xs">SKU: 23022001</div>
-                        <div className="text-lg mt-2 font-normal">23.000đ</div>
-                      </Card.Text>
-                    </div>
-
-                    <Button
-                      style={{ width: "100%" }}
-                      className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
-                      variant="success"
-                    >
-                      Thêm vào giỏ
-                    </Button>
-                  </Card.Body>
-
-                </Card>
-              </div>
             </Slider>
           </div>
         </div>
