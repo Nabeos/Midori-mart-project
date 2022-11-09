@@ -38,20 +38,7 @@ export default function SidebarUserProfile(props) {
         </NavLink>
       </div>
 
-      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 2 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderHistory}>
-        <NavLink
-          to={`/usersuccessfulorder/${user?.email}`}
-          isActive={(match, location) => {
-            if (location.pathname === `/usersuccessfulorder/${user?.email}`) {
-              setActive(2);
-            }
-          }}
-          className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
-          onClick={handleNavigateUserOrderHistory}
-        >
-          Đơn hàng thành công
-        </NavLink>
-      </div>
+
       <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 3 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderPending}>
         <NavLink
           to={`/userorderpending/${user?.email}`}
@@ -66,6 +53,22 @@ export default function SidebarUserProfile(props) {
           Đơn hàng đang chờ duyệt
         </NavLink>
       </div>
+
+      <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 2 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserOrderHistory}>
+        <NavLink
+          to={`/usersuccessfulorder/${user?.email}`}
+          isActive={(match, location) => {
+            if (location.pathname === `/usersuccessfulorder/${user?.email}`) {
+              setActive(2);
+            }
+          }}
+          className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
+          onClick={handleNavigateUserOrderHistory}
+        >
+          Đơn hàng thành công
+        </NavLink>
+      </div>
+
       <div className={`${styles.sidebaruserprofile__sidebaritem} ${active == 4 ? `${styles.sidebaruserprofile__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }}
         onClick={handleNavigateAllUserOrder}>
         <NavLink
