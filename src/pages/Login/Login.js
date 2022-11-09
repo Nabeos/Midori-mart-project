@@ -25,7 +25,7 @@ function Login(props) {
     <div className="grid grid-cols-3">
       <div className="col-span-2 flex items-center justify-center">
         <img
-          src="./images/signin.jpg"
+          src="./images/login.jpg"
           style={{ width: "73%", minHeight: "100vh" }}
         />
       </div>

@@ -12,9 +12,32 @@ import {
   Checkbox,
 } from "antd";
 import { NavLink } from "react-router-dom";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaFilter } from "react-icons/fa";
 import AddNewProduct from "./AddNewProduct";
 export default function InventoryManagement() {
+  //product filter
+  const text = <span>Lọc sản phẩm</span>;
+  const content = (
+    <div
+    className="col-span-2 mt-3 pl-3"
+    style={{
+      minHeight: "20rem",
+    }}
+  >
+    <div className="mb-2">
+      <div className="font-semibold">Danh mục sản phẩm</div>
+      <Checkbox>Rau</Checkbox>
+      <Checkbox>Thịt</Checkbox>
+      <Checkbox>Đồ uống</Checkbox>
+    </div>
+    <div>
+      <div className="font-semibold">Trạng thái hàng trong kho</div>
+      <Checkbox>Còn hàng</Checkbox>
+      <Checkbox>Sắp hết hàng</Checkbox>
+      <Checkbox>Hết hàng</Checkbox>
+    </div>
+  </div>
+  );
   // popup
   const [open, setOpen] = useState(false);
   const showModal = () => {
@@ -50,18 +73,35 @@ export default function InventoryManagement() {
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
-            <div className="rounded-md mt-3 flex justify-end mr-3">
-              <Form>
-                <Input
-                  placeholder="Tìm kiếm"
-                  className="shadow-none hover:border-green-700 focus:border-green-700"
-                  style={{ width: "100%", height: "2.5rem" }}
-                />
-              </Form>
+            <div className="flex">
+              <div className="mt-3 ml-3">
+                {/* Product Filter Button */}
+                <Popover
+                  placement="bottomLeft"
+                  title={text}
+                  content={content}
+                  trigger="click"
+                >
+                  <Button className={`${styles.inventorymanagement__filter__button} flex no-shadow`}><FaFilter className="mt-1 mr-1"/> <span className="text-base font-medium"> Bộ lọc</span></Button>
+                </Popover>
+              </div>
+              <div
+                className="rounded-md mt-3 flex items-end justify-end mr-3"
+                style={{ width: "100%" }}
+              >
+                <Form>
+                  <Input
+                    placeholder="Tìm kiếm"
+                    className="shadow-none hover:border-green-700 focus:border-green-700"
+                    style={{ width: "100%", height: "2.5rem" }}
+                  />
+                </Form>
+              </div>
             </div>
+
             <hr className="border border-gray-400" />
             {/* popup add more users */}
-            <div className="mt-3 ml-2" style={{ width: "" }}>
+            <div className="mt-3 ml-2">
               <Button
                 type=""
                 className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
@@ -81,8 +121,7 @@ export default function InventoryManagement() {
             </div>
 
             {/* table for product Management */}
-            <div className="grid grid-cols-12">
-              <div className="col-span-10">
+              <div>
                 <div className="flex justify-center">
                   <table
                     className={`${styles.inventorymanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
@@ -196,28 +235,6 @@ export default function InventoryManagement() {
                     defaultCurrent={1}
                     total={50}
                   />
-                </div>
-              </div>
-              {/* Product Filter */}
-              <div
-                className="col-span-2 mt-3 pl-3"
-                style={{
-                  minHeight: "20rem",
-                  borderLeft: "1px solid lightgray",
-                }}
-              >
-                <div className="mb-2">
-                  <div className="font-semibold">Danh mục sản phẩm</div>
-                  <Checkbox>Rau</Checkbox>
-                  <Checkbox>Thịt</Checkbox>
-                  <Checkbox>Đồ uống</Checkbox>
-                </div>
-                <div>
-                  <div className="font-semibold">Trạng thái hàng trong kho</div>
-                  <Checkbox>Còn hàng</Checkbox>
-                  <Checkbox>Sắp hết hàng</Checkbox>
-                  <Checkbox>Hết hàng</Checkbox>
-                </div>
               </div>
             </div>
           </div>

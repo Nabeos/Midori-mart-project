@@ -34,7 +34,7 @@ function Register(props) {
     <div className="grid grid-cols-3">
       <div className="col-span-2 flex items-center justify-center">
         <img
-          src="./images/signup.jpg"
+          src="./images/register.jpg"
           style={{ width: "73%", minHeight: "100vh" }}
         />
       </div>

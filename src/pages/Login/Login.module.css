@@ -8,13 +8,13 @@
 }
 
 .login__border__radius:hover {
-  border-color: #5ae4a8 !important;
+  border-color: #006523 !important;
 }
 
 .login__border__button:hover {
-  border-color: #5ae4a8 !important;
+  border-color: #006523 !important;
   color: white;
-  background-color: #5ae4a8 !important;
+  background-color: #006523 !important;
 }
 
 .login__border__button {
@@ -26,7 +26,7 @@
 }
 
 .login__register__button {
-  color: #5ae4a8 !important;
+  color: #006523 !important;
 }
 
 .login__logo__m1 {

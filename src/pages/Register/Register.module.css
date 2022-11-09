@@ -4,17 +4,17 @@
 }
 
 .register__border__hover:hover {
-  border-color: #5ae4a8 !important;
+  border-color: #006523 !important;
 }
 
 .register__border__hover:focus {
-  border-color: #5ae4a8 !important;
+  border-color: #006523 !important;
 }
 
 .register__border__button:hover {
-  border-color: #5ae4a8 !important;
+  border-color: #006523 !important;
   color: white;
-  background-color: #5ae4a8 !important;
+  background-color: #006523!important;
 }
 
 .register__border__button {
@@ -27,11 +27,11 @@
 
 
 .register__confirm__button {
-  color: #5ae4a8 !important;
+  color: #006523 !important;
 }
 
 .register__confirm__button:focus {
-  color: #5ae4a8 !important;
+  color: #006523 !important;
 }
 
 .register__logo__m1 {

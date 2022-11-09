@@ -1,3 +1,16 @@
 .inventorymanagement__table__striped tr:nth-child(even){
     background: #f2f2f2;
 }
+.inventorymanagement__filter__button{
+    border: 1px solid lightgray!important;
+    height: 2.2rem;
+}
+
+.inventorymanagement__filter__button:hover{
+    background: lightgray!important;
+    color: white;
+}
+
+.inventorymanagement__filter__button:focus{
+    color: black;
+}

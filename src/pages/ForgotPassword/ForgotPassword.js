@@ -22,8 +22,8 @@ function ForgotPassword(props) {
     <div className="grid grid-cols-3 " style={{ minHeight: "100vh" }}>
       <div className="col-span-2 flex items-center justify-center">
         <img
-          src="./images/resetPassword.jpg"
-          style={{ width: "100%", minHeight: "90vh" }}
+          src="./images/forgot_password.jpg"
+          style={{ width: "73%", minHeight: "90vh" }}
         />
       </div>
       <div className="flex justify-center flex-col col-span-1 -ml-16 -mt-10">
