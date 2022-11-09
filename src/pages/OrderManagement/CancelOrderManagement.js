@@ -6,19 +6,27 @@ import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import CancelOrderDetail from "./CancelOrderDetail";
 import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
+import { CLOSE_MODAL_SELLER_CANCEL_ORDER, SHOW_MODAL_SELLER_CANCEL_ORDER } from "../../redux/type/order/OrderType";
 
 export default function CancelOrderManagement() {
-  const [open, setOpen] = useState(false);
+  const openModalSellerCancelOrder = useSelector(state => state.OrderReducer.openModalSellerCancelOrder);
+  console.log("openModalSellerCancelOrder", openModalSellerCancelOrder);
   const dispatch = useDispatch();
-  const showModal = () => {
-    setOpen(true);
+  const showModal = (sellerCancelOrderItemAction) => {
+    dispatch({
+      type: SHOW_MODAL_SELLER_CANCEL_ORDER,
+      sellerCancelOrderItemAction
+    })
   };
   const handleCancel = () => {
-    setOpen(false);
+    dispatch({
+      type: CLOSE_MODAL_SELLER_CANCEL_ORDER
+    })
+
   };
   useEffect(() => {
     dispatch(getAllCustomerOrderForSellerAction(1000, 0, 4));
-  }, [])
+  }, [openModalSellerCancelOrder])
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("CANCEL CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
   return (
@@ -97,12 +105,12 @@ export default function CancelOrderManagement() {
                   <Button
                     type=""
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                    onClick={showModal}
+                    onClick={() => { showModal(item) }}
                   >
                     <FaEye />
                   </Button>
                   <Modal
-                    open={open}
+                    open={openModalSellerCancelOrder}
                     title="Chi tiết đơn hàng của khách hàng"
                     onCancel={handleCancel}
                     footer={[]}

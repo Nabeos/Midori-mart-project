@@ -74,7 +74,7 @@ export default function OrderManagement() {
                 <Tabs.TabPane tab="Đơn hàng mới" key="1" >
                   <NewOrderManagement />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng đã duyệt và đang xử lí" key="2">
+                <Tabs.TabPane tab="Đơn hàng đã duyệt và chờ giao" key="2">
                   <PendingOrderManagement />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Đơn hàng đang giao" key="3">

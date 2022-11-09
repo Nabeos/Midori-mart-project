@@ -6,18 +6,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import DeliveringOrderDetail from './DeliveringOrderDetail';
 import { getAllCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
+import { CLOSE_MODAL_DELIVERING_SELLER, SHOW_MODAL_DELIVERING_SELLER } from '../../redux/type/order/OrderType';
 export default function DeliveringOrderManagement() {
-  const [open, setOpen] = useState(false);
+  const openModalDeliveringSeller = useSelector(state => state.OrderReducer.openModalDeliveringSeller);
+  console.log("openModalDeliveringSeller", openModalDeliveringSeller);
   const dispatch = useDispatch();
-  const showModal = () => {
-    setOpen(true);
+  const showModal = (deliveringSellerItemAction) => {
+    dispatch({
+      type: SHOW_MODAL_DELIVERING_SELLER,
+      deliveringSellerItemAction
+    })
   };
   const handleCancel = () => {
-    setOpen(false);
+    dispatch({
+      type: CLOSE_MODAL_DELIVERING_SELLER
+    })
+
   };
   useEffect(() => {
     dispatch(getAllCustomerOrderForSellerAction(1000, 0, 2));
-  }, [])
+  }, [openModalDeliveringSeller])
+
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("DELIVERING CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
   return (
@@ -96,12 +105,12 @@ export default function DeliveringOrderManagement() {
                   <Button
                     type=""
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                    onClick={showModal}
+                    onClick={() => { showModal(item) }}
                   >
                     <FaEye />
                   </Button>
                   <Modal
-                    open={open}
+                    open={openModalDeliveringSeller}
                     title="Chi tiết đơn hàng của khách hàng"
                     onCancel={handleCancel}
                     footer={[]}

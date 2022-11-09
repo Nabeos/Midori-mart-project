@@ -6,18 +6,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import PendingOrderDetail from './PendingOrderDetail';
 import { getAllCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
+import { CLOSE_MODAL_PENDING_SELLER, SHOW_MODAL_PENDING_SELLER } from '../../redux/type/order/OrderType';
 export default function PendingOrderManagement() {
-  const [open, setOpen] = useState(false);
+  const openModalPendingSeller = useSelector(state => state.OrderReducer.openModalPendingSeller);
   const dispatch = useDispatch();
-  const showModal = () => {
-    setOpen(true);
+  const showModal = (pendingItemAction) => {
+    dispatch({
+      type: SHOW_MODAL_PENDING_SELLER,
+      pendingItemAction
+    })
   };
   const handleCancel = () => {
-    setOpen(false);
+    dispatch({
+      type: CLOSE_MODAL_PENDING_SELLER
+    })
+
   };
   useEffect(() => {
     dispatch(getAllCustomerOrderForSellerAction(1000, 0, 1));
-  }, [])
+  }, [openModalPendingSeller])
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("PENDING CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
 
@@ -98,12 +105,12 @@ export default function PendingOrderManagement() {
                   <Button
                     type=""
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                    onClick={showModal}
+                    onClick={() => { showModal(item) }}
                   >
                     <FaEye />
                   </Button>
                   <Modal
-                    open={open}
+                    open={openModalPendingSeller}
                     title="Chi tiết đơn hàng của khách hàng"
                     onCancel={handleCancel}
                     footer={[]}
