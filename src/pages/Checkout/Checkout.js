@@ -6,6 +6,8 @@ import { history } from '../../App';
 import { Checkbox } from 'antd';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import { getUserProfileInformationAction } from '../../redux/action/user/UserAction';
+import { SET_HOME_DELIVERY_CHANGE, SET_PICK_UP_CHANGE } from '../../redux/type/order/OrderType';
 
 function Checkout(props) {
     const {
@@ -16,21 +18,35 @@ function Checkout(props) {
         handleBlur,
         handleSubmit,
     } = props;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserProfileInformationAction());
+    }, [])
+
+    const userProfileInfo = useSelector(state => state.UserReducer.userProfileInfo);
+    console.log("USER PROFILE INFO CHECKOUT: ", userProfileInfo);
+
 
     console.log("INITIAL VALUES CHECKOUT: ", values);
     let totalBill = 0;
     let transferCost = 30000;
-    let [flag, setFlag] = useState(1);
+    // let [flag, setFlag] = useState(state.OrderReducer.flag);
+    const flag = useSelector(state => state.OrderReducer.flag);
     const { cartList } = useSelector(state => state.CartReducer);
 
     const handleReturnToHomePage = () => {
         history.push("/");
     }
     const handleHomeDeliveryChange = () => {
-        setFlag(1);
+        dispatch({
+            type: SET_HOME_DELIVERY_CHANGE
+        })
     }
     const handlePickUpChange = () => {
-        setFlag(0);
+        dispatch({
+            type: SET_PICK_UP_CHANGE
+        })
     }
     // const handleNavigateToPaymentMethodPage = () => {
     //     history.push("/payment/1000");
@@ -38,6 +54,9 @@ function Checkout(props) {
     const handleRenderProductsInCart = () => {
         return cartList.map((item, index) => {
             totalBill += item.price * item.quantity;
+            if (index == cartList.length - 1) {
+                localStorage.setItem("totalBill", totalBill + transferCost);
+            }
             return <div className='flex justify-between mb-3' key={index}>
                 <div className='flex'>
                     {item?.thumbnails?.map((image, index) => {
@@ -57,7 +76,11 @@ function Checkout(props) {
             </div >
         })
     }
+
+
+
     return (
+
         <div style={{ width: '75%', margin: '0 auto' }}>
             <div className='grid grid-cols-12 gap-16'>
                 <div className='col-span-7'>
@@ -81,6 +104,7 @@ function Checkout(props) {
                     <form className="mb-3" onSubmit={handleSubmit}>
                         <div className="form-group mb-2">
                             <input type="text"
+                                value={values.fullName}
                                 onChange={e => {
                                     props.setFieldTouched('fullName')
                                     handleChange(e)
@@ -90,7 +114,7 @@ function Checkout(props) {
                         {errors.fullName && touched.fullName ? <div className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
                         <div className='form-group grid grid-cols-12 mb-2 flex'>
                             <div className='col-span-6 mr-2'>
-                                <input type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
+                                <input value={values.email} type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
                                     props.setFieldTouched('email')
                                     handleChange(e)
                                 }} name="email" />
@@ -98,7 +122,7 @@ function Checkout(props) {
                             </div>
 
                             <div className='col-span-6'>
-                                <input type="tel" className={`${styles.checkout__field} form-control shadow-none`} id="phoneNumber" onChange={e => {
+                                <input type="text" value={values.phoneNumber} className={`${styles.checkout__field} form-control shadow-none`} id="phoneNumber" onChange={e => {
                                     props.setFieldTouched('phoneNumber')
                                     handleChange(e)
                                 }} name="phoneNumber" placeholder="Số điện thoại/Phone *" />
@@ -117,13 +141,14 @@ function Checkout(props) {
                                 </div>
                                 {flag == 1 ? <div className="card-body p-3">
                                     <div className=''>
-                                        <input type="text" placeholder='Địa chỉ giao hàng/Address *' onChange={e => {
+                                        <input type="text" value={values.address} placeholder='Địa chỉ giao hàng/Address *' onChange={e => {
                                             props.setFieldTouched('address')
                                             handleChange(e)
                                         }} className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="address" />
                                     </div>
                                     {errors.address && touched.address ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.address}</span> : <span></span>}
-                                    <div className='grid grid-cols-3 gap-3 mt-3'>
+
+                                    {/* <div className='grid grid-cols-3 gap-3 mt-3'>
                                         <div className={styles.province__container}>
                                             <div className={styles.province__label__container}>
                                                 <label className={`${styles.checkout__shipping__province} field-label`} for="checkout__shipping__province"> Tỉnh /Province</label>
@@ -172,7 +197,7 @@ function Checkout(props) {
                                             {errors.ward && touched.ward ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.ward}</span> : <span></span>}
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div> : <div></div>}
                                 <div className="flex items-center card-footer bg-white h-12">
                                     {flag == 0 ? <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox> : <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox>}
@@ -227,30 +252,32 @@ function Checkout(props) {
                             <span className='flex'>
                                 <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
                                 <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
+
                             </span>
 
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
         </div >
     )
 }
 
 const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-const regexAllLetter = /^[a-zA-Z ]+$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 
 const CheckoutWithFormik = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => ({
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        address: "",
-        province: "",
-        district: "",
-        ward: ""
+        fullName: props.userProfileInfo.fullname,
+        phoneNumber: props.userProfileInfo.phonenumber,
+        email: props.userProfileInfo.email,
+        address: props.flag == 1 ? props?.userProfileInfo?.address?.addressDetail : "Khách tự đến cửa hàng lấy đồ",
+        flag: props.flag
+        // province: "",
+        // district: "",
+        // ward: ""
     }),
 
     // Custom sync validation
@@ -266,18 +293,34 @@ const CheckoutWithFormik = withFormik({
             .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
         address: Yup.string()
             .required("Quý khách vui lòng không được để trống mục địa chỉ nhận hàng !!!"),
-        province: Yup.string()
-            .required("Quý khách vui lòng lựa chọn tỉnh !!!"),
-        district: Yup.string()
-            .required("Quý khách vui lòng lựa chọn quận/huyện !!!"),
-        ward: Yup.string()
-            .required("Quý khách vui lòng lựa chọn phường/xã !!!")
+        // province: Yup.string()
+        //     .required("Quý khách vui lòng lựa chọn tỉnh !!!"),
+        // district: Yup.string()
+        //     .required("Quý khách vui lòng lựa chọn quận/huyện !!!"),
+        // ward: Yup.string()
+        //     .required("Quý khách vui lòng lựa chọn phường/xã !!!")
     }),
 
 
     handleSubmit: (values, { setSubmitting }) => {
-        console.log("CÓ VÀO HANDLE SUBMIT");
-        console.log("VALUE FORM: ", values);
+        console.log("CÓ VÀO HANDLE SUBMIT CHECKOUT");
+        console.log("VALUE FORM CHECKOUT: ", values);
+        // let addressArr = [];
+        let address = {
+            "provinceId": "Hà Nội",
+            "districtId": "Ba Đình",
+            "wardId": "Ngọc Khánh",
+            "addressDetail": values.address
+        }
+        // addressArr.push("Hà Nội");
+        // addressArr.push("Ba Đình");
+        // addressArr.push("Ngọc Khánh");
+        // addressArr.push(values.address);
+        localStorage.setItem("address", JSON.stringify(address));
+        localStorage.setItem("email", values.email);
+        localStorage.setItem("fullName", values.fullName);
+        localStorage.setItem("phoneNumber", values.phoneNumber);
+        localStorage.setItem("receiveProductsMethod", values.flag);
         history.push("/payment/1000");
     },
 
@@ -286,6 +329,8 @@ const CheckoutWithFormik = withFormik({
 
 const mapStateToProps = (state) => {
     return {
+        userProfileInfo: state.UserReducer.userProfileInfo,
+        flag: state.OrderReducer.flag
     }
 }
 

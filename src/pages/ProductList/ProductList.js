@@ -1,6 +1,6 @@
 import { Button } from "bootstrap";
 import React, { Component } from "react";
-import { ButtonToolbar, Card } from "react-bootstrap";
+import { ButtonToolbar, Card, ListGroup } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -11,7 +11,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import { Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction, getProductListLengthByCategoryIdAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, getProductListLengthByCategoryIdAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
 import { useStateCallback } from "use-state-callback";
 import { Rate } from 'antd';
 const { useCallback, useEffect, useState } = React;
@@ -19,8 +19,8 @@ const { useCallback, useEffect, useState } = React;
 function Product(props) {
   const { product } = props;
   console.log("PROPS PRODUCT LIST: ", product);
-  const handleNavigate = (slug) => {
-    history.push(`/product/${slug}`);
+  const handleNavigate = (categoryId, slug) => {
+    history.push(`/product/${categoryId}/${slug}`);
   };
   return (
     <div className="">
@@ -57,7 +57,7 @@ function Product(props) {
           </div>
           <button
             style={{ width: "100%" }}
-            onClick={() => { handleNavigate(product.slug) }}
+            onClick={() => { handleNavigate(product.category.id, product.slug) }}
             className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
           >
             Xem chi tiết
@@ -68,28 +68,40 @@ function Product(props) {
   );
 }
 
-function ProductsList(props) {
-  const { products } = props;
-  return (
-    <div className="products grid grid-cols-5 mb-5">
-      {products?.map((product, index) => (
-        <div>
-          <Product key={index} className="col-span-1" product={product} />
-        </div>
-      ))}
-    </div>
-  );
-}
+
 
 
 export default function ProductList(props) {
+  const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
+  console.log("PRODUCT LIST BY CATE ID: ", productListByCategoryId);
+  let merchantArr = [];
+  for (let index = 0; index < productListByCategoryId.length; index++) {
+    console.log("KHÓ VL: ", productListByCategoryId[index].merchant.country.name)
+    merchantArr.push(productListByCategoryId[index].merchant.country);
+  }
+  let merchant = merchantArr.filter((ele, ind) => ind === merchantArr.findIndex(elem => elem.code === ele.code && elem.name === ele.name));
+  console.log("LENGTH: ", merchant);
+  console.log("merchant: ", merchant.length);
+
   useEffect(() => {
     dispatch(getAllCategoriesAction());
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
     dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
   }, [])
+
+  useEffect(() => {
+    setCheckedState(new Array(merchant.length).fill(false));
+  }, [merchant.length != 0])
+
+
+
+  // useEffect(() => {
+  //   // dispatch(getAllCategoriesAction());
+  //   dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
+  //   dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
+  // }, [productListByCategoryId])
   const maxCustom = 100000;
-  const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
+
   const productOrigin = [
     { id: 1, image: "https://cdn.britannica.com/78/6078-004-77AF7322/Flag-Australia.jpg", nationName: "Úc" },
     { id: 2, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png", nationName: "Việt Nam" },
@@ -133,16 +145,68 @@ export default function ProductList(props) {
     dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
   }
 
+
+
+
+  const [checkedState, setCheckedState] = useState(
+    merchant.length != 0 ? new Array(merchant.length).fill(false) : merchant.length
+  );
+
+
+
+
+
+
+  console.log("CHECKED STATE: ", checkedState);
+  const handleOnChange = (itemMerchant, position) => {
+
+    console.log("POSITION", position);
+    console.log("ITEM MERCHANT CHECKED: ", itemMerchant);
+
+    const updatedCheckedState = checkedState.map((item, index) =>
+      // console.log("CHECKED STATE: ", item);
+      index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
+
+
+
+  };
+
+
+
+
+  let countryArr = [];
   const renderProductOrigin = () => {
-    return productOrigin.map((item, index) => {
-      return <Checkbox key={index} className="mb-1">
+    return merchant.map((itemMerchant, indexMerchant) => {
+      return <Checkbox
+        key={indexMerchant}
+        checked={checkedState[indexMerchant]}
+        onChange={() => handleOnChange(itemMerchant, indexMerchant)}
+        className="mb-1">
         <div className="flex items-end" style={{ height: '100%' }}>
-          <img src={item.image} style={{ width: '30px' }} />
-          <span className="ml-1">{item.nationName}</span>
+          <img src={itemMerchant?.thumbnail} style={{ width: '30px' }} />
+          <span className="ml-1">{itemMerchant?.name}</span>
         </div>
       </Checkbox>
     })
   }
+
+  function ProductsList(props) {
+    const { products } = props;
+    console.log("PRODUCTS ĐANG CẦN: ", products);
+    return (
+      <div className="products grid grid-cols-5 mb-5">
+        {products?.map((product, index) => (
+          <div>
+            <Product key={index} className="col-span-1" product={product} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+
 
 
   return (
@@ -153,12 +217,13 @@ export default function ProductList(props) {
         style={{ width: "100%" }}
       >
         <div
-          className={`${styles.productlist__border} justify-center flex ml-10 bg-white`}
+          className={`${styles.productlist__border} grid grid-cols-12 justify-center flex ml-10 bg-white`}
           style={{ width: "80%" }}
         >
           <div
-            className={`${styles.productlist__border__filter} `}
-            style={{ width: "70%", borderBottom: "" }}
+            className={`${styles.productlist__border__filter} col-span-3 `}
+          // style={{ width: "70%", borderBottom: "" }}
+          // style={{ width: '300px' }}
           >
             <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
             {renderProductOrigin()}
@@ -178,8 +243,8 @@ export default function ProductList(props) {
             <Checkbox className="mb-1">
               <Rate disabled defaultValue={1} style={{ color: '#febb02', fontSize: '1rem' }} />
             </Checkbox>
-            <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div>
-            <Slider
+            {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
+            {/* <Slider
               style={{ marginTop: '50px' }}
               className="productlist__slider"
               range={{ draggableTrack: true }}
@@ -190,24 +255,35 @@ export default function ProductList(props) {
               defaultValue={[0, 100000]}
               min={0}
               max={maxCustom}
-            />
+            /> */}
 
           </div>
-          <div>
+          <div className="col-span-9">
             <div
               className={`${styles.productlist__border__general} flex justify-end `} style={{ width: "99%" }}
             >
               <select
                 className={`${styles.productlist__border__weight} mr-3 mt-3`}
+                onChange={(e) => {
+                  if (e.target.value == 1) {
+                    dispatch(sortProductListByPriceAscAction(props.match.params.id, 1000, 0));
+                  } else if (e.target.value == 2) {
+                    dispatch(sortProductListByPriceDescAction(props.match.params.id, 1000, 0));
+                  }
+                }}
                 defaultValue="Sắp xếp"
+                style={{ width: "150px" }}
               >
                 <option disabled>Sắp xếp</option>
-                <option>Giá: tăng dần</option>
-                <option>Giá: giảm dần</option>
+                <option value="1">Giá: tăng dần</option>
+                <option value="2">Giá: giảm dần</option>
               </select>
             </div>
             <ProductsList className={`${styles.productlist__border__general}`} products={productListByCategoryId} />
-
+            {/* <Checkbox.Group
+              options={merchant.map(itemMerchant => ({ label: itemMerchant.name, value: itemMerchant.name }))}
+              onChange={handleChangeCountry}
+            /> */}
             {/* <div className={`${styles.productlist__border__general} products grid grid-cols-5 mb-5`}>
               {productListByCategoryId?.map((product) => (
                 <div>

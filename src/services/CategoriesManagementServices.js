@@ -6,7 +6,11 @@ export class CategoriesManagementServices extends baseService {
     }
 
     getAllCategories = () => {
-        return this.get(`api/productManagement/getAllCategories`);
+        return this.get(`category-management/categories`);
+    }
+
+    getBestSellerCategories = () => {
+        return this.get();
     }
 
 }

@@ -18,6 +18,7 @@ import Header from "../../components/Header/Header";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useSelector } from 'react-redux'
+import { registerAction } from "../../redux/action/user/UserAction";
 
 function Register(props) {
   const {
@@ -60,7 +61,7 @@ function Register(props) {
           </span>
         </div>
         <div className="">
-          <Form>
+          <Form onSubmitCapture={handleSubmit}>
             <div className="flex mb-2">
               <div style={{ width: "100%" }}>
                 <label
@@ -203,7 +204,7 @@ function Register(props) {
                   style={{ width: "88%", minHeight: "45px" }}
                 />
               </Form.Item>
-              {((values.password !== values.confirmPassword) && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
+              {(errors.confirmPassword && touched.confirmPassword) || (values.confirmPassword != values.password && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
             </div>
 
             <Button
@@ -233,7 +234,7 @@ function Register(props) {
 }
 
 const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-const regexAllLetter = /^[a-zA-Z ]+$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 
 const RegisterWithFormik = withFormik({
@@ -265,13 +266,25 @@ const RegisterWithFormik = withFormik({
       .min(6, 'Độ dài password tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài password tối đa là 32 ký tự !!!')
       .required("Quý khách vui lòng không được để trống mục password !!!")
-      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!')
+      .matches(regexPassword, 'Password phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+    confirmPassword: Yup.string()
+      .required("Không được để trống mục nhập lại mật khẩu !!!")
   }),
 
 
-  handleSubmit: (values, { setSubmitting }) => {
+  handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
     console.log("VALUE FORM: ", values);
+    let data = {
+      "user": {
+        "fullname": values.lastName + " " + values.firstName,
+        "email": values.email,
+        "phonenumber": values.phoneNumber,
+        "password": values.password
+      }
+    }
+    console.log("REGISTER DATA: ", data);
+    props.dispatch(registerAction(data));
   },
 
   displayName: 'RegisterWithFormik'

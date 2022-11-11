@@ -1,16 +1,72 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./UserDetailInformation.module.css";
 import { Button, Form, Input, message, Upload } from "antd";
-export default function UserDetailInformation() {
-  const props = {
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { getUserProfileInformationAction, updateUserProfileInformationAction } from "../../redux/action/user/UserAction";
+import { history } from "../../App";
+import { getAllDistrictsByProvinceIdAction, getAllDistrictsDefaultByProvinceIdAction, getAllProvincesAction, getAllProvincesDesiredAction, getAllWardsByDistrictIdAction, getAllWardsDefaultByDistrictIdAction } from "../../redux/action/address/AddressAction";
+import { USER } from "../../redux/type/user/UserType";
+
+function UserDetailInformation(props) {
+  const {
+    values,
+    setFieldValue,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+  const userProfileInfo = useSelector(state => state.UserReducer.userProfileInfo);
+  let provinceId = useSelector(state => state.AddressReducer.provinceId);
+  console.log("PROVINCE ID LẤY TỪ USER PROFILE: ", provinceId);
+  let districtId = useSelector(state => state.AddressReducer.districtId);
+  let wardId = useSelector(state => state.AddressReducer.wardId);
+  const provinces = useSelector(state => state.AddressReducer.provinces);
+  const districts = useSelector(state => state.AddressReducer.districts);
+  const wards = useSelector(state => state.AddressReducer.wards);
+  const dispatch = useDispatch();
+
+  // console.log("USERPROFILE.ADDRESS: ", userProfileInfo.address);
+
+  console.log("VALUES.PROVINCE: ", values.provinces);
+  console.log("VALUES.DISTRICTS: ", values.districts);
+  console.log("DISTRICTS LIST: ", districts);
+  console.log("USER PROFILE.ADDRESS: ", userProfileInfo?.address);
+  console.log("DISTRICT USER PROFILE: ", userProfileInfo?.address?.districtId);
+  console.log("VALUES.WARDS: ", values.wards);
+  console.log("WARD ID STATE: ", wardId);
+  console.log("DISTRICT ID STATE: ", districtId);
+  console.log("VALUES USER PROFILE: ", values);
+  console.log("USER PROFILE INFO: ", userProfileInfo);
+
+
+
+  useEffect(() => {
+    dispatch(getUserProfileInformationAction());
+    dispatch(getAllProvincesAction());
+  }, [])
+
+  useEffect(() => {
+    dispatch(getAllDistrictsByProvinceIdAction(provinceId));
+  }, [provinceId])
+
+  useEffect(() => {
+    dispatch(getAllWardsByDistrictIdAction(districtId));
+  }, [districtId]);
+
+  const props1 = {
     name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: getAllProvincesAction(),
     headers: {
       authorization: "authorization-text",
     },
     onChange(info) {
+      console.log("UPLOAD IMAGE: ", info);
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        console.log("HELLO NHÉ: ", info.file, info.fileList);
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -21,16 +77,17 @@ export default function UserDetailInformation() {
   };
   return (
     <div className="flex justify-center">
-      <Form className="" style={{ width: "80%" }}>
+      <form style={{ width: "80%" }} onSubmit={handleSubmit}>
         <div className="text-xl font-bold mt-3 mb-3">Thông tin người dùng</div>
         <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
           <img
-            src="https://static.vecteezy.com/system/resources/previews/002/400/532/original/young-happy-businessman-character-avatar-wearing-business-outfit-isolated-free-vector.jpg"
-            className="mr-2"
-            style={{ width: "20%" }}
+            name="thumbnail"
+            src={values.thumbnail}
+            className="mr-5"
+            style={{ width: "150px", height: "150px", borderRadius: "50%" }}
           />
           <div className="flex items-end mb-3 -ml-3">
-            <Upload {...props}>
+            <Upload {...props1}>
               <Button className="focus:bg-white focus:text-black focus:border-gray-200 hover:bg-green-700 no-shadow hover:text-white hover:border-green-700">
                 Tải ảnh lên
               </Button>
@@ -38,174 +95,278 @@ export default function UserDetailInformation() {
           </div>
         </div>
         <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
+          <div style={{ width: "100%" }} className="mr-2">
             <label
-              for="last_name"
+              for="lastName"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg ">Họ</span>
             </label>
-            <Form.Item name="lastname">
-              <Input
-                type="text"
-                id="last_name"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="Họ"
-                style={{ width: "90%", height: "6vh" }}
-              />
-            </Form.Item>
+            <div>
+              <input type="text"
+                onChange={handleChange}
+                value={values.lastName}
+                id="lastName"
+                name="lastName"
+                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                placeholder="Họ" />
+            </div>
           </div>
           <div style={{ width: "100%" }}>
             <label
-              for="first_name"
+              for="firstName"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Tên</span>
             </label>
-
-            <Form.Item name="firstname">
-              <Input
-                type="text"
-                id="first_name"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="Tên"
-                style={{ width: "100%", height: "6vh" }}
-              />
-            </Form.Item>
+            <div>
+              <input type="text"
+                id="firstName"
+                name="firstName"
+                value={values.firstName}
+                onChange={handleChange}
+                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900`}
+                placeholder="Tên" />
+            </div>
           </div>
         </div>
 
-        <div className="-mt-2">
+        <div className="my-2">
           <label
-            for="phone"
+            for="phoneNumber"
             className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
           >
             <span className="text-lg">Số điện thoại</span>
           </label>
-          <Form.Item name="phone">
-            <Input
-              type="tel"
-              id="phone"
-              className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="123-45-678"
-              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              style={{ width: "100%", height: "6vh" }}
-            />
-          </Form.Item>
+          <div>
+            <input type="text"
+              value={values.phoneNumber}
+              id="phoneNumber"
+              name="phoneNumber"
+              className={`${styles.userdetailInformation__border__hover} form-control text-gray-900 text-base rounded-lg shadow-none focus:border-green-900`}
+              placeholder="Quý khách nhập số điện thoại tại đây"
+              onChange={handleChange} />
+          </div>
+
         </div>
 
-        <div className="-mt-4">
+        <div className="">
           <label
             for="email"
             className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
           >
             <span className="text-lg">Email</span>
           </label>
-          <Form.Item name="username">
-            <Input
-              type="email"
+          <div>
+            <input type="text"
+              value={values.email}
+              disabled
               id="email"
-              className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="abc@gmail.com"
-              required=""
-              style={{ width: "100%", height: "6vh" }}
-            />
-          </Form.Item>
-        </div>
-        <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
-            <label
-              for="join_date"
-              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-            >
-              <span className="text-lg">Ngày tham gia</span>
-            </label>
-            <Form.Item name="join_date">
-              <Input
-                type="text"
-                id="join_date"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="Ngày tham gia"
-                style={{ width: "100%", height: "6vh" }}
-              />
-            </Form.Item>
+              name="email"
+              className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base form-control rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+              placeholder="Quý khách nhập email tại đây"
+              onChange={handleChange} />
           </div>
         </div>
         <div className="text-2xl font-bold mt-3 mb-3">Thông tin địa chỉ</div>
         <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
+          {/* <div style={{ width: "100%" }} className="mr-2 mb-2">
             <label
-              for="city"
+              for="provinces"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Tỉnh/Thành phố</span>
             </label>
-            <Form.Item name="city">
-              <select className="pl-1 text-base" style={{height:" 3.6rem",width:"90%", border:"1px solid lightgray", borderRadius:"5px"}}>
-                <option >Hà Đông</option>
+            <div>
+              <select className="pl-1 text-base form-select shadow-none"
+                value={(values.provinces == "null" || values.provinces == null) ? values.provincesDefault : values.provinces} //Nếu chưa có thì load mặc định
+                onChange={(e) => {
+                  dispatch(getAllDistrictsByProvinceIdAction(e.target.value))
+                  setFieldValue("provinces", e.target.value)
+                  setFieldValue("provincesDefault", e.target.value);
+                }}
+                name="provinces"
+                id="provinces"
+                style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
+                <option value="0" disabled>Chọn tỉnh/thành phố</option>
+                {provinces.map((item, index) => {
+                  return <option selected={values.provinces == item.id ? true : false} key={index} value={item.id}>{item.name}</option>
+                })}
               </select>
-            </Form.Item>
+            </div>
+
           </div>
-          <div style={{ width: "100%" }}>
+
+          <div style={{ width: "100%" }} className="mb-2">
             <label
-              for="district"
+              for="districts"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Quận/Huyện</span>
             </label>
-
-            <Form.Item name="district">
-            <select className="pl-1 text-base" style={{height:" 3.6rem",width:"100%", border:"1px solid lightgray", borderRadius:"5px"}}>
-                <option >Hà Đông</option>
+            <div>
+              <select
+                name="districts"
+                id="districts"
+                value={(values.districts == "null" || values.districts == null) ? 0 : values.districts}
+                onChange={(e) => {
+                  dispatch(getAllWardsByDistrictIdAction(e.target.value))
+                  setFieldValue("districts", e.target.value)
+                }} className="pl-1 text-base form-select shadow-none"
+                style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
+                <option value="0" disabled>Chọn quận/huyện</option>
+                {districts.map((item, index) => {
+                  return <option key={index} value={item.id}>{item.name}</option>
+                })}
               </select>
-            </Form.Item>
-          </div>
+            </div>
+
+          </div> */}
         </div>
-        <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
+        <div className="flex flex-row">
+          {/* <div style={{ width: "100%" }} className="mr-2">
             <label
-              for="ward"
+              for="wards"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Phường/Xã</span>
             </label>
-            <Form.Item name="ward">
-            <select className="pl-1 text-base" style={{height:" 3.6rem",width:"90%", border:"1px solid lightgray", borderRadius:"5px"}}>
-                <option >Hà Đông</option>
+            <div>
+              <select
+                name="wards"
+                id="wards"
+                value={(values.wards == "null" || values.wards == null) ? 0 : values.wards}
+                onChange={handleChange}
+                className="pl-1 text-base form-select shadow-none" style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
+                <option value="0" disabled>Chọn phường/xã</option>
+                {wards.map((item, index) => {
+                  return <option value={item.id} key={index}>{item.name}</option>
+                })}
               </select>
-            </Form.Item>
-          </div>
+            </div>
+          </div> */}
           <div style={{ width: "100%" }}>
             <label
-              for="detail_address"
+              for="detailAddress"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Địa chỉ cụ thể</span>
             </label>
-
-            <Form.Item name="detail_address">
-              <Input
-                type="text"
-                id="detail_address"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+            <div>
+              <input type="text"
+                onChange={handleChange}
+                value={values.detailAddress}
+                //value này ko phải dạng mảng mà nó là string và ta findIndex dấu "," thứ 3 rồi sau đó lấy sau đó
+                id="detailAddress"
+                name="detailAddress"
+                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                 placeholder="Địa chỉ cụ thể"
-                style={{ width: "100%", height: "6vh" }}
               />
-            </Form.Item>
+
+            </div>
           </div>
         </div>
 
         {/* delete and update button section */}
-        <div className="flex justify-end mb-4" style={{ width: "100%" }}>
-          <Button
-            type="default"
-            htmlType="submit"
-            className={`${styles.userdetailInformation__border__button} flex justify-center items-center py-4 px-3 font-semibold text-lg focus:border-green-900 focus:text-green-900`}
+        <div className="flex justify-end mb-4 mt-3" style={{ width: "100%" }}>
+          <button
+            type="submit"
+            onSubmit={handleSubmit}
+            className={`${styles.userdetailInformation__border__button} bg-green-800 text-white flex justify-center items-center p-2 font-semibold text-base focus:border-green-900 focus:text-green-900`}
           >
             CẬP NHẬT
-          </Button>
+          </button>
         </div>
-      </Form>
-    </div>
+      </form >
+    </div >
   );
 }
+
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
+const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+
+const UserDetailInformationWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    userProfileInfo: props?.userProfileInfo,
+    userLocalStorageInfo: JSON.parse(localStorage.getItem(USER)).id,
+    thumbnail: props?.userProfileInfo?.thumbnail,
+    lastName: props?.userProfileInfo?.lastName,
+    firstName: props?.userProfileInfo?.firstName,
+    phoneNumber: props?.userProfileInfo?.phonenumber,
+    email: props?.userProfileInfo?.email,
+    // provinces: ((props?.userProfileInfo.address?.provinceId) == "null" || props?.userProfileInfo.address?.provinceId == null) ? props.provinceDefault : props.provinceId,
+    // districts: ((props?.userProfileInfo.address?.districtId) == "null" || props?.userProfileInfo.address?.districtId == null) ? props.districtDefault : props.districtId,
+    // wards: ((props?.userProfileInfo.address?.wardId) == "null" || props?.userProfileInfo.address?.wardId == null) ? props.wardDefault : props.wardId,
+    // provinces: props?.userProfileInfo.address?.provinceId,
+    // provincesDefault: 1,
+    // districts: props?.userProfileInfo.address?.districtId,
+    // districtsDefault: props?.districtDefault,
+    // wards: props?.userProfileInfo.address?.wardId,
+    detailAddress: props.addressDetail,
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+    // lastName: Yup.string()
+    //   .required("Quý khách không được để trống mục họ !!!")
+    //   .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
+    // firstName: Yup.string()
+    //   .required("Quý khách không được để trống mục tên !!!")
+    //   .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
+    // phoneNumber: Yup.string()
+    //   .required("Quý khách không được để trống mục số điện thoại !!!")
+    //   .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+    // email: Yup.string()
+    //   .required("Quý khách không được để trống mục email !!!")
+    //   .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+    // provinces: Yup.string()
+    //   .required("Quý khách không được để trống tỉnh/thành phố !!!"),
+    // districts: Yup.string()
+    //   .required("Quý khách không được để trống quận/huyện !!!"),
+    // wards: Yup.string()
+    //   .required("Quý khách không được để trống phường/xã !!!"),
+    // detailAddress: Yup.string()
+    //   .required("Quý khách không được để trống địa chỉ đầy đủ !!!")
+
+  }),
+
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT USER DETAIL");
+    console.log("VALUES HANDLE SUBMIT: ", values);
+    let userInfo = {
+      "user": {
+        email: values.email,
+        fullname: values.lastName + " " + values.firstName,
+        phoneNumber: values.phoneNumber,
+        thumbnail: values.thumbnail,
+        address: {
+          // provinceId: values.provinces,
+          // districtId: values.districts,
+          // districtId: values.districtsDefault,
+          // wardId: values.wards,
+          addressDetail: values.detailAddress
+        }
+      }
+    }
+    console.log("USER INFO HANDLE SUBMIT: ", userInfo);
+    props.dispatch(updateUserProfileInformationAction(values.userLocalStorageInfo, userInfo));
+  },
+  displayName: 'UserDetailInformationWithFormik'
+})(UserDetailInformation);
+
+const mapStateToProps = (state) => {
+  return {
+    userProfileInfo: state.UserReducer.userProfileInfo,
+    provinceId: state.UserReducer.userProfileInfo?.address?.provinceId,
+    districtId: state.UserReducer.userProfileInfo?.address?.districtId,
+    wardId: state.UserReducer.userProfileInfo?.address?.wardId,
+    addressDetail: state.UserReducer.userProfileInfo?.address?.addressDetail,
+    provinceDefault: state.AddressReducer.provinceId,
+    districtDefault: state.AddressReducer.districtId,
+    wardDefault: state.AddressReducer.wardId
+  }
+}
+
+export default connect(mapStateToProps, null)(UserDetailInformationWithFormik);

@@ -39,6 +39,9 @@ import ProductDetailManagement from './pages/InventoryManagement/ProductDetailMa
 import CustomerManagement from './pages/CustomerManagement/CustomerManagement';
 import CustomerDetailManagement from './pages/CustomerManagement/CustomerDetailManagement';
 import ShipperDetailManagement from './pages/ShipperManagement/ShipperDetailManagement';
+import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
+import UploadPractice from './pages/UploadPractice/UploadPractice';
+
 
 
 export const history = createBrowserHistory();
@@ -57,7 +60,7 @@ function App() {
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
         <Route exact path="/orderpicking/:orderId" component={OrderPicking} />
-        <Route exact path="/product/:id" component={ProductDetail} />
+        <Route exact path="/product/:categoryId/:id" component={ProductDetail} />
         <Route exact path="/productlist/:id" component={ProductList} />
         <Route exact path="/purchasehistory" component={PurchaseHistory} />
         <Route exact path="/blog" component={Blog} />
@@ -74,8 +77,10 @@ function App() {
         <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
         <Route exact path="/userprofile/:userId" component={UserProfile} />
         <Route exact path="/managerprofile/:userId" component={ManagerProfile} />
-        <Route exact path="/userorderhistory/:userId" component={UserOrderHistory} />
+        <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
+        <Route exact path="/alluserorder/:userId" component={AllUserOrder} />
+        <Route exact path="/uploadpractice" component={UploadPractice} />
         <Route exact path="*" component={PageNotFound} />
       </Switch>
     </Router>

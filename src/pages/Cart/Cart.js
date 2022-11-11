@@ -24,7 +24,7 @@ function Cart(props) {
         handleBlur,
         handleSubmit,
     } = props;
-
+    console.log("VALUES CART: ", values);
     const text = 'Quý khách muốn xóa sản phẩm này khỏi giỏ hàng?';
     const messageDeleteAllProducts = 'Quý khách muốn xóa tất cả sản phẩm khỏi giỏ hàng?'
     let productItemLocal = localStorage.getItem("productItem");
@@ -51,7 +51,8 @@ function Cart(props) {
     let totalBill = 0;
     let flag = 1;
     useEffect(() => {
-
+        localStorage.setItem("deliveryDate", "");
+        localStorage.setItem("deliveryTimeRange", "");
     }, [])
 
     const { cartList } = useSelector(state => state.CartReducer);
@@ -181,28 +182,29 @@ function Cart(props) {
                             <form className="container-fluid" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-2 gap-3 mb-3">
                                     <div className="form-group">
-                                        <input type="date" onChange={e => {
+                                        <input type="date" value={values.deliveryDate} onChange={e => {
                                             handleChange(e)
                                         }} placeholder='Chọn ngày giao' className={`${styles.cart__deliveryDate} form-control shadow-none`} name="deliveryDate" min={moment().format("YYYY-MM-DD")} />
                                         {errors.deliveryDate && touched.deliveryDate ? <div className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryDate}</div> : <div></div>}
                                     </div>
 
                                     <div className="form-group">
-                                        <select onChange={e => {
+                                        <select value={values.deliveryTime} onChange={e => {
+                                            localStorage.setItem("deliveryTimeRange", values.deliveryTime);
                                             handleChange(e)
                                         }} className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
                                             <option value="" selected disabled>Chọn giờ giao</option>
-                                            <option value="1">9:00 - 10:00</option>
-                                            <option value="2">10:00 - 11:00</option>
-                                            <option value="3">11:00 - 12:00</option>
-                                            <option value="4">12:00 - 13:00</option>
-                                            <option value="5">13:00 - 14:00</option>
-                                            <option value="6">14:00 - 15:00</option>
-                                            <option value="7">15:00 - 16:00</option>
-                                            <option value="8">16:00 - 17:00</option>
-                                            <option value="9">17:00 - 18:00</option>
-                                            <option value="10">18:00 - 19:00</option>
-                                            <option value="11">19:00 - 20:00</option>
+                                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                                            <option value="19:00 - 20:00">19:00 - 20:00</option>
                                         </select>
                                         {errors.deliveryTime && touched.deliveryTime ? <span className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryTime}</span> : <span></span>}
                                     </div>
@@ -215,7 +217,7 @@ function Cart(props) {
                                 </div>
                                 <div className='mb-3'>
                                     <span className=''>Ghi chú</span>
-                                    <textarea className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="w3review" name="w3review" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
+                                    <textarea onChange={handleChange} className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="notes" name="notes" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
                                 </div>
                                 <div className='d-flex justify-center'>
                                     <button type="submit" className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onSubmit={handleSubmit}>
@@ -251,22 +253,26 @@ function Cart(props) {
 const CartWithFormik = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => ({
-        deliveryDate: "",
-        deliveryTime: ""
+        deliveryDate: localStorage.getItem("deliveryDate"),
+        deliveryTime: localStorage.getItem("deliveryTimeRange"),
+        notes: ""
     }),
 
     // Custom sync validation
     validationSchema: Yup.object().shape({
         deliveryDate: Yup.string()
-            .required("Quý khách vui lòng lựa chọn ngày nhận hàng!!!"),
+            .required("Quý khách vui lòng lựa chọn ngày nhận hàng!!!").nullable(),
         deliveryTime: Yup.string()
-            .required("Quý khách vui lòng lựa chọn giờ nhận hàng !!!")
+            .required("Quý khách vui lòng lựa chọn giờ nhận hàng !!!").nullable()
     }),
 
 
     handleSubmit: (values, { setSubmitting }) => {
         console.log("CÓ VÀO HANDLE SUBMIT");
         console.log("VALUE FORM: ", values);
+        localStorage.setItem("deliveryDate", values.deliveryDate);
+        localStorage.setItem("deliveryTimeRange", values.deliveryTime);
+        localStorage.setItem("note", values.notes);
         history.push("/checkout/1000");
     },
 

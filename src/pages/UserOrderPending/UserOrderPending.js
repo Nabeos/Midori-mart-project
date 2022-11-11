@@ -1,24 +1,50 @@
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import SidebarUserProfile from "../../components/SidebarUserProfile/SidebarUserProfile";
 import Slogan from "../../components/Slogan/Slogan";
+import { useSelector, useDispatch } from 'react-redux'
 import OrderHistoryProduct from "../UserOrderHistory/OrderHistoryProduct";
 import styles from "./UserOrderPending.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input } from "antd";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import UserOrderPendingDetail from "./UserOrderPendingDetail";
+import { getAllInProgressOrderAction } from "../../redux/action/order/OrderAction";
+import { CLOSE_MODAL, SHOW_MODAL_IN_PROGRESS } from "../../redux/type/order/OrderType";
 
 export default function UserOrderPending() {
-  // popup
-  const [open, setOpen] = useState(false);
-  const showModal = () => {
-    setOpen(true);
+  const dispatch = useDispatch();
+  const openModal = useSelector(state => state.OrderReducer.openModal);
+  useEffect(() => {
+    dispatch(getAllInProgressOrderAction());
+  }, [openModal])
+
+  const inProgressOrderList = useSelector(state => state.OrderReducer.inProgressOrderList);
+  console.log("IN PROGRESS ORDER LIST: ", inProgressOrderList);
+
+
+  const showModal = (inProgressItemAction) => {
+    dispatch({
+      type: SHOW_MODAL_IN_PROGRESS,
+      inProgressItemAction
+    })
   };
   const handleCancel = () => {
-    setOpen(false);
+    dispatch({
+      type: CLOSE_MODAL
+    })
+
   };
+
+  // popup
+  // const [open, setOpen] = useState(false);
+  // const showModal = () => {
+  //   setOpen(true);
+  // };
+  // const handleCancel = () => {
+  //   setOpen(false);
+  // };
   return (
     <div className="bg-gray-100">
       <Header />
@@ -49,9 +75,9 @@ export default function UserOrderPending() {
               className="text-start mt-2 ml-5 text-xl font-semibold"
               style={{ width: "100%" }}
             >
-              Đơn hàng đang xử lý của bạn
+              Đơn hàng đang chờ duyệt của bạn
             </div>
-            <div className="flex justify-center p-3" style={{ width: "100%" }}>
+            {(inProgressOrderList.length) > 0 ? <div className="flex justify-center p-3" style={{ width: "100%" }}>
               <table
                 className={`${styles.userorderpending__table__striped} p-3 table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
                 style={{ width: '100%', minHeight: "20rem" }}
@@ -69,9 +95,7 @@ export default function UserOrderPending() {
                   <th className="border border-slate-300 p-4 text-lg text-center">
                     Thời gian đặt
                   </th>
-                  <th className="border border-slate-300 p-4 text-lg text-center">
-                    Tổng tiền
-                  </th>
+
                   <th className="border border-slate-300 p-4 text-lg text-center">
                     Trạng thái đơn hàng
                   </th>
@@ -80,53 +104,68 @@ export default function UserOrderPending() {
                   </th>
                 </thead>
                 <tbody>
-                  <td className="border border-slate-300 text-center">1</td>
-                  <td className="border border-slate-300 text-center">
-                    23022001
-                  </td>
-                  <td className="border border-slate-300 text-center">
-                    Đinh Kông Thành
-                  </td>
-                  <td className="border border-slate-300 text-center">
-                    23/02/2001
-                  </td>
-                  <td className="border border-slate-300 text-center">23.000đ</td>
-                  <td className="border border-slate-300 text-center ">
-                    <span className="bg-green-600 text-white p-2 rounded-md">Đã hoàn tất</span>
-                  </td>
-                  <td className="border border-slate-300 text-center">
-                    {" "}
-                    <div className="mt-3 ml-2" style={{ width: "" }}>
-                      <Button
-                        type=""
-                        className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                        onClick={showModal}
-                      >
-                        <FaEye />
-                      </Button>
-                      <Modal
-                        open={open}
-                        title="Chi tiết đơn hàng của bạn"
-                        onCancel={handleCancel}
-                        footer={[]}
-                        width={900}
-                      >
-
-                        <UserOrderPendingDetail />
-
-                      </Modal>
-                    </div>
-                  </td>
+                  {inProgressOrderList.map((item, index) => {
+                    return <tr key={index}>
+                      <td className="border border-slate-300 text-center">{index + 1}</td>
+                      <td className="border border-slate-300 text-center">
+                        {item.orderNumber}
+                      </td>
+                      <td className="border border-slate-300 text-center">
+                        <span className="p-2 whitespace-nowrap">{item.fullName}</span>
+                      </td>
+                      <td className="border border-slate-300 text-center">
+                        <span className="p-2">{item.orderDate}</span>
+                      </td>
+                      <td className="border border-slate-300 p-3 text-center ">
+                        <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span>
+                      </td>
+                      <td className="border border-slate-300 text-center">
+                        {" "}
+                        <div className="mt-3 ml-2" style={{ width: "" }}>
+                          <Button
+                            type=""
+                            className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
+                            onClick={() => { showModal(item) }}
+                          >
+                            <FaEye />
+                          </Button>
+                          <Modal
+                            open={openModal}
+                            title="Chi tiết đơn hàng của bạn"
+                            onCancel={handleCancel}
+                            footer={[]}
+                            width={900}
+                          >
+                            <UserOrderPendingDetail inProgressDetailInfo={item} />
+                          </Modal>
+                        </div>
+                      </td>
+                    </tr>
+                  })}
                 </tbody>
               </table>
             </div>
-            <div className="flex justify-center mt-10">
+              : <div style={{ minHeight: "485px" }}>
+                <div className="text-center" style={{
+                  width: "80%",
+                  margin: "30px auto 0 auto",
+                }}>
+                  <div className='flex justify-center items-center mb-3'>
+                    <img src={require('../../assets/images/cart.png')} style={{ width: '300px' }} />
+                  </div>
+
+                  <p className='mb-4 text-lg'>Hiện tại chưa có đơn hàng nào chờ duyệt</p>
+
+                </div>
+              </div >}
+            {(inProgressOrderList.length) > 0 ? <div className="flex justify-center mt-10">
               <Pagination
                 className="hover:text-green-800 focus:border-green-800"
                 defaultCurrent={1}
                 total={50}
               />
-            </div>
+            </div> : <Fragment></Fragment>}
+
           </div>
         </div>
       </div>
@@ -140,6 +179,6 @@ export default function UserOrderPending() {
         </div>
       </div>
       <Footer />
-    </div>
+    </div >
   );
 }

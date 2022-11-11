@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Comment.module.css";
-import { Card, Avatar } from "antd";
+import { Card, Avatar, Rate } from "antd";
 import {
   FaBullseye,
   FaClock,
@@ -11,76 +11,52 @@ import {
   FaUser,
 } from "react-icons/fa";
 const { Meta } = Card;
-export default function Comment() {
+export default function Comment(props) {
+  const { content, starRate, thumbnail, updateTime, userName } = props;
+  console.log("PROPS COMMENT: ", props);
   return (
     <div>
       <div styles={{ width: "100%" }} className="mb-3">
         <div
           className={`${styles.comment__border} flex`}
-          style={{ width: "87%", height: "25vh" }}
+          style={{ width: "87%", margin: "0 auto", height: "auto" }}
         >
           <div
             className="flex-col ml-5 mt-3 text-2xl "
-            style={{ width: "60%", height: "50%" }}
+            style={{ height: "50%" }}
           >
             {/* <img className={`${styles.comment__avatar__circle}` } style={{width:"100%"}} src="./images/homelander.png"/> */}
             <Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              className="mr-3"
+              avatar={<Avatar src={thumbnail} />}
             />
           </div>
           <div className="flex">
             <div className="flex">
-              <div className="flex-col -ml-4 mt-2 mb-3 mr-4">
-                <div className="flex" style={{ width: "100%" }}>
+              <div className="flex-col mb-3 mr-4">
+                <div className="flex mt-2" style={{ width: "950px" }}>
                   <div
                     className="text-start text-lg font-medium"
                     style={{ width: "100%" }}
                   >
-                    Đinh Kông Thành
+                    {userName}
                   </div>
                   <div className="text-end" style={{ width: "100%" }}>
-                    23/02/2001
+                    {updateTime}
                   </div>
                 </div>
 
                 <div className="flex">
-                  <FaStar className="text-yellow-400 text-lg" />
-                  <FaStar className="text-yellow-400 text-lg" />
-                  <FaStar className="text-yellow-400 text-lg" />
-                  <FaStar className="text-yellow-400 text-lg" />
-                  <FaStar className="text-yellow-400 text-lg" />
+                  <Rate
+                    className="text-base"
+                    value={starRate}
+                  />
                 </div>
                 <div
-                  style={{ height: "76%", width: "100%" }}
+                  style={{ width: "100%" }}
                   className={`${styles.comment__overflow} overflow-y-hidden text-justify mt-2`}
                 >
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney College in Virginia,
-                  looked up one of the more obscure Latin words, consectetur,
-                  from a Lorem Ipsum passage, and going through the cites of the
-                  word in classical literature, discovered the undoubtable
-                  source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of
-                  "de Finibus Bonorum et Malorum" (The Extremes of Good and
-                  Evil) by Cicero, written in 45 BC. This book is a treatise on
-                  the theory of ethics, very popular during the Renaissance. The
-                  first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-                  comes from a line in section 1.10.32. The standard chunk of
-                  Lorem Ipsum used since the 1500s is reproduced below for those
-                  interested. Sections 1.10.32 and 1.10.33 from "de Finibus
-                  Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form, accompanied by English versions from the
-                  1914 translation by H. Rackham. Contrary to popular belief,
-                  Lorem Ipsum is not simply random text. It has roots in a piece
-                  of classical Latin literature from 45 BC, making it over 2000
-                  years old. Richard McClintock, a Latin professor at
-                  Hampden-Sydney College in Virginia, looked up one of the more
-                  obscure Latin words, consectetur, from a Lorem Ipsum passage,
-                  and going through the cites of the word in classical
-                  literature, discovered the undoubtable source. Lorem Ipsum
-                  comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum
-                  et Malorum" (The
+                  {content}
                 </div>
               </div>
             </div>

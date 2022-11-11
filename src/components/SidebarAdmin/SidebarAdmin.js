@@ -5,21 +5,15 @@ import { history } from '../../App';
 import styles from "./SidebarAdmin.module.css";
 
 export default function SidebarAdmin() {
-  const [active, setActive] = useStateCallback(1);
-  // const [active, setActive] = useState(1);
-  console.log("active: ", active);
-  // active = 1 ? "active" : "";
+  const [active, setActive] = useState(1);
   const handleNavigateUserMngt = () => {
     history.push("/usermanagement");
-    setActive(1);
   }
   const handleNavigateAuthorizationMngt = () => {
     history.push("/authorizationmanagement");
-    setActive(2);
   }
   const handleNavigateRevenueMngt = () => {
-    history.push("/revenuemanagement");
-    setActive(3);
+    history.push("/usermanagement");
   }
 
   return (
@@ -41,13 +35,26 @@ export default function SidebarAdmin() {
       </div>
       <div className='flex flex-col items-start'>
         <div className={`${styles.sidebaradmin__sidebaritem} ${active == 1 ? `${styles.sidebaradmin__sidebaritemActive}` : ''}  mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateUserMngt}>
-          <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí người dùng</NavLink>
+          <NavLink to={"/usermanagement"}
+            className={`${styles.sidebaradmin__text} no-underline text-xl`}
+            onClick={handleNavigateUserMngt}
+            isActive={(match, location) => {
+              if (location.pathname === "/usermanagement") {
+                setActive(1);
+              }
+            }}>Quản lí người dùng</NavLink>
         </div>
         <div className={`${styles.sidebaradmin__sidebaritem} ${active == 2 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateAuthorizationMngt}>
-          <NavLink to={"/authorizationmanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí phân quyền</NavLink>
+          <NavLink to={"/authorizationmanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}
+            onClick={handleNavigateAuthorizationMngt}
+            isActive={(match, location) => {
+              if (location.pathname === "/authorizationmanagement") {
+                setActive(2);
+              }
+            }}>Quản lí phân quyền</NavLink>
         </div>
         <div className={`${styles.sidebaradmin__sidebaritem} ${active == 3 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateRevenueMngt}>
-          <NavLink to={"/revenuemanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí doanh thu</NavLink>
+          <NavLink to={"/usermanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}>Quản lí doanh thu</NavLink>
         </div>
       </div>
     </div >

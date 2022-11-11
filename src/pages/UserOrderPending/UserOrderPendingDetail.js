@@ -1,45 +1,65 @@
 import React from "react";
 import styles from "./UserOrderPendingDetail.module.css";
-import { Button } from "antd";
+import { useSelector, useDispatch } from 'react-redux'
+import { Button, notification, Popconfirm } from "antd";
+import Item from "antd/lib/list/Item";
+import { cancelInProgressOrderForCustomerAction } from "../../redux/action/order/OrderAction";
 export default function UserOrderPendingDetail() {
+  const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
+  const textCancelOrder = 'Quý khách có chắc chắn muốn hủy đơn hàng này ?';
+  const dispatch = useDispatch();
+  let totalBill = 0;
+  console.log("IN PROGRESS ITEM DETAIL: ", inProgressItem);
+  const openNotification = (placement) => {
+    notification.success({
+      message: `Cập nhật trạng thái đơn hàng thành công`,
+      placement,
+      duration: 2
+    });
+  };
+  const handleCancelInProgressOrderForCustomer = (orderNumber) => {
+    dispatch(cancelInProgressOrderForCustomerAction(orderNumber));
+    openNotification('bottomRight')
+  }
+
   return (
     <div className="">
       <div className="">
-        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: 23022001</div>
+        <div className="text-2xl font-bold mb-2">Mã Đơn hàng: {inProgressItem.orderNumber}</div>
         <div className="mb-2">
           <div className="text-base font-semibold">Thông tin khách hàng</div>
           <div className="text-base">
-            Họ tên người nhận:<span> Đinh Kông Thành</span>
+            Họ tên người nhận:<span> {inProgressItem.fullName}</span>
           </div>
           <div className="text-base">
-            Số điện thoại:<span> 0385010068</span>
+            Số điện thoại:<span> {inProgressItem.phoneNumber}</span>
           </div>
           <div className="text-base">
-            Địa chỉ:<span> abcxyz</span>
+            Địa chỉ:<span> {inProgressItem.address.addressDetail}</span>
           </div>
 
           <div className="text-base">
-            Ghi chú:<span> tà lằng tà lằng</span>
+            Ghi chú:<span> {inProgressItem.notes}</span>
           </div>
         </div>
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <div className="text-base font-semibold">Thông tin shipper</div>
           <div className="text-base">
             Shipper: <span> Nguyen Van A</span>
           </div>
-        </div>
+        </div> */}
         <div>
           <div className="text-base font-semibold">Thông tin đơn hàng</div>
           <div>
             <div className="text-base">
-              Thời gian tạo:<span> 8:45 23/02/2001</span>
+              Thời gian tạo:<span> {inProgressItem.orderDate}</span>
             </div>
             <div className="text-base">
-              Thời gian nhận hàng:<span> 8:45 23/02/2001</span>
+              Thời gian nhận hàng:<span> {inProgressItem.deliveryDate} - {inProgressItem.deliveryTimeRange}</span>
             </div>
             <div className="text-base">
               Trạng thái đơn hàng:
-              <span className="text-green-700"> Đang giao</span>
+              <span className="text-yellow-600"> {inProgressItem.status}</span>
             </div>
           </div>
           <div className="overflow-y-auto" style={{ height: "30rem" }}>
@@ -69,103 +89,55 @@ export default function UserOrderPendingDetail() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border border-slate-300 text-base text-center">
-                    1
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    Nạc heo hảo hạng
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23022001
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23.000đ
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-slate-300 text-base text-center">
-                    2
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    Nạc heo hảo hạng
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23022001
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23.000đ
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-slate-300 text-base text-center">
-                    3
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    Nạc heo hảo hạng
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23022001
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23.000đ
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-slate-300 text-base text-center">
-                    4
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    Nạc heo hảo hạng
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23022001
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23.000đ
-                  </td>
-                  <td className="border border-slate-300 text-base text-center">
-                    23
-                  </td>
-                </tr>
+                {inProgressItem.orderDetail.map((item, index) => {
+                  totalBill += item.price * item.quantity;
+                  return <tr>
+                    <td className="border border-slate-300 text-base text-center">
+                      {index + 1}
+                    </td>
+                    <td className="border border-slate-300 text-base text-center">
+                      <img src={item.thumbnails} />
+                    </td>
+                    <td className="border border-slate-300 text-base text-center">
+                      {item.productName}
+                    </td>
+                    <td className="border border-slate-300 text-base text-center">
+                      {item.sku}
+                    </td>
+                    <td className="border border-slate-300 text-base text-center">
+                      {item.price}
+                    </td>
+                    <td className="border border-slate-300 text-base text-center">
+                      {item.quantity}
+                    </td>
+                  </tr>
+                })}
+
               </tbody>
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
               <div>
-                Phí vận chuyển:<span> 23tr</span>
+                {/* Phí vận chuyển:<span> 23tr</span> */}
               </div>
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
               <div>
-                Thành tiền:<span className="text-red-600"> 23tr</span>
+                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
               </div>
             </div>
           </div>
-          <div className="flex justify-end mt-3" style={{width:"98%"}}>
-            <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white mr-2">Xác nhận</Button>
-            <Button className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>
-            <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button>
+          <div className="flex justify-end mt-3" style={{ width: "98%" }}>
+
+            {/* <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white mr-2">Đã nhận hàng</Button> */}
+            <Popconfirm placement="top"
+              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }}
+              title={textCancelOrder}
+              okText="Yes" cancelText="No">
+              <Button className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>
+            </Popconfirm>
+
+
+            {/* <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button> */}
           </div>
         </div>
       </div>
