@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./UserOrderPendingDetail.module.css";
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, notification } from "antd";
+import { Button, notification, Popconfirm } from "antd";
 import Item from "antd/lib/list/Item";
 import { cancelInProgressOrderForCustomerAction } from "../../redux/action/order/OrderAction";
 export default function UserOrderPendingDetail() {
   const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
+  const textCancelOrder = 'Quý khách có chắc chắn muốn hủy đơn hàng này ?';
   const dispatch = useDispatch();
   let totalBill = 0;
   console.log("IN PROGRESS ITEM DETAIL: ", inProgressItem);
@@ -126,8 +127,16 @@ export default function UserOrderPendingDetail() {
             </div>
           </div>
           <div className="flex justify-end mt-3" style={{ width: "98%" }}>
+
             {/* <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white mr-2">Đã nhận hàng</Button> */}
-            <Button onClick={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }} className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>
+            <Popconfirm placement="top"
+              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }}
+              title={textCancelOrder}
+              okText="Yes" cancelText="No">
+              <Button className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>
+            </Popconfirm>
+
+
             {/* <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button> */}
           </div>
         </div>

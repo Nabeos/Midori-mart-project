@@ -1,11 +1,12 @@
 import React from 'react'
 import styles from "./OrderHistoryProduct.module.css";
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, notification } from "antd";
+import { Button, notification, Popconfirm } from "antd";
 import { cancelInProgressOrderForCustomerAction } from '../../redux/action/order/OrderAction';
 
 export default function OrderHistoryProduct() {
   const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
+  const textRefundOrder = 'Quý khách có chắc chắn muốn trả lại đơn hàng này ?';
   console.log("SUCCESSFUL ORDER ITEM DETAIL: ", inProgressItem);
   const dispatch = useDispatch();
   let totalBill = 0;
@@ -125,9 +126,12 @@ export default function OrderHistoryProduct() {
             </div>
           </div>
           <div className="flex justify-end mt-3" style={{ width: "98%" }}>
-            <Button onClick={() => {
-              handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber)
-            }} className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button>
+            <Popconfirm placement="top"
+              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }}
+              title={textRefundOrder}
+              okText="Yes" cancelText="No">
+              <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button>
+            </Popconfirm>
           </div>
 
         </div>

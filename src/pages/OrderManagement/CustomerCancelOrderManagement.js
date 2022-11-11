@@ -7,15 +7,23 @@ import { FaEye } from "react-icons/fa";
 import CancelOrderDetail from "./CancelOrderDetail";
 import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
 import CustomerCancelOrderDetail from "./CustomerCancelOrderDetail";
+import { CLOSE_MODAL_CUSTOMER_CANCEL_ORDER_SELLER, SHOW_MODAL_CUSTOMER_CANCEL_ORDER_SELLER } from "../../redux/type/order/OrderType";
 
 export default function CustomerCancelOrderManagement() {
-    const [open, setOpen] = useState(false);
+    const openModalCustomerCancelOrderSeller = useSelector(state => state.OrderReducer.openModalCustomerCancelOrderSeller);
+    console.log("openModalCustomerCancelOrderSeller", openModalCustomerCancelOrderSeller);
     const dispatch = useDispatch();
-    const showModal = () => {
-        setOpen(true);
+    const showModal = (customerCancelOrderItemAction) => {
+        dispatch({
+            type: SHOW_MODAL_CUSTOMER_CANCEL_ORDER_SELLER,
+            customerCancelOrderItemAction
+        })
     };
     const handleCancel = () => {
-        setOpen(false);
+        dispatch({
+            type: CLOSE_MODAL_CUSTOMER_CANCEL_ORDER_SELLER
+        })
+
     };
     useEffect(() => {
         dispatch(getAllCustomerOrderForSellerAction(1000, 0, 6));
@@ -98,12 +106,12 @@ export default function CustomerCancelOrderManagement() {
                                     <Button
                                         type=""
                                         className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                                        onClick={showModal}
+                                        onClick={() => { showModal(item) }}
                                     >
                                         <FaEye />
                                     </Button>
                                     <Modal
-                                        open={open}
+                                        open={openModalCustomerCancelOrderSeller}
                                         title="Chi tiết đơn hàng của khách hàng"
                                         onCancel={handleCancel}
                                         footer={[]}

@@ -35,6 +35,7 @@ import UserOrderHistory from './pages/UserOrderHistory/UserOrderHistory';
 import UserOrderPending from './pages/UserOrderPending/UserOrderPending';
 import DeliveryManagement from './pages/DeliveryManagement/DeliveryManagement';
 import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
+import UploadPractice from './pages/UploadPractice/UploadPractice';
 
 
 export const history = createBrowserHistory();
@@ -68,6 +69,7 @@ function App() {
         <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
         <Route exact path="/alluserorder/:userId" component={AllUserOrder} />
+        <Route exact path="/uploadpractice" component={UploadPractice} />
         <Route exact path="*" component={PageNotFound} />
       </Switch>
     </Router>

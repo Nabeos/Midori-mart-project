@@ -21,6 +21,10 @@ export class OrderManagementForCustomerService extends baseService {
         return this.putCancelInProgressOrderForCustomer(`api/user/purchases/${orderNumber}`);
     }
 
+    createNewOrder = (newOrderInfo) => {
+        return this.post(`api/payment-management/finishOrder`, newOrderInfo);
+    }
+
 }
 
 export const orderManagementForCustomerService = new OrderManagementForCustomerService;

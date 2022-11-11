@@ -135,7 +135,7 @@ code {
 }
 
 .ant-tooltip-placement-top {
-  top: 700px !important;
+  top: 500px !important;
 }
 
 .ant-tooltip-arrow {
@@ -192,8 +192,8 @@ code {
 
 .ant-btn-primary {
   color: white !important;
-  background-color: #991b1b !important;
-  border-color: #991b1b !important;
+  background-color: #1890ff!important;
+  border-color: #1890ff !important;
 }
 
 .ant-modal {

@@ -24,6 +24,7 @@ function Cart(props) {
         handleBlur,
         handleSubmit,
     } = props;
+    console.log("VALUES CART: ", values);
     const text = 'Quý khách muốn xóa sản phẩm này khỏi giỏ hàng?';
     const messageDeleteAllProducts = 'Quý khách muốn xóa tất cả sản phẩm khỏi giỏ hàng?'
     let productItemLocal = localStorage.getItem("productItem");
@@ -51,7 +52,7 @@ function Cart(props) {
     let flag = 1;
     useEffect(() => {
         localStorage.setItem("deliveryDate", "");
-        localStorage.setItem("deliveryTime", "");
+        localStorage.setItem("deliveryTimeRange", "");
     }, [])
 
     const { cartList } = useSelector(state => state.CartReducer);
@@ -189,7 +190,7 @@ function Cart(props) {
 
                                     <div className="form-group">
                                         <select value={values.deliveryTime} onChange={e => {
-                                            localStorage.setItem("deliveryTime", values.deliveryTime);
+                                            localStorage.setItem("deliveryTimeRange", values.deliveryTime);
                                             handleChange(e)
                                         }} className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
                                             <option value="" selected disabled>Chọn giờ giao</option>
@@ -216,7 +217,7 @@ function Cart(props) {
                                 </div>
                                 <div className='mb-3'>
                                     <span className=''>Ghi chú</span>
-                                    <textarea className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="w3review" name="w3review" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
+                                    <textarea onChange={handleChange} className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="notes" name="notes" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
                                 </div>
                                 <div className='d-flex justify-center'>
                                     <button type="submit" className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onSubmit={handleSubmit}>
@@ -251,21 +252,18 @@ function Cart(props) {
 
 const CartWithFormik = withFormik({
     enableReinitialize: true,
-    initialValues: {
-        deliveryDate: localStorage.getItem("deliveryDate"),
-        deliveryTime: localStorage.getItem("deliveryTime")
-    },
     mapPropsToValues: (props) => ({
         deliveryDate: localStorage.getItem("deliveryDate"),
-        deliveryTime: localStorage.getItem("deliveryTime")
+        deliveryTime: localStorage.getItem("deliveryTimeRange"),
+        notes: ""
     }),
 
     // Custom sync validation
     validationSchema: Yup.object().shape({
         deliveryDate: Yup.string()
-            .required("Quý khách vui lòng lựa chọn ngày nhận hàng!!!"),
+            .required("Quý khách vui lòng lựa chọn ngày nhận hàng!!!").nullable(),
         deliveryTime: Yup.string()
-            .required("Quý khách vui lòng lựa chọn giờ nhận hàng !!!")
+            .required("Quý khách vui lòng lựa chọn giờ nhận hàng !!!").nullable()
     }),
 
 
@@ -273,7 +271,8 @@ const CartWithFormik = withFormik({
         console.log("CÓ VÀO HANDLE SUBMIT");
         console.log("VALUE FORM: ", values);
         localStorage.setItem("deliveryDate", values.deliveryDate);
-        localStorage.setItem("deliveryTime", values.deliveryTime);
+        localStorage.setItem("deliveryTimeRange", values.deliveryTime);
+        localStorage.setItem("note", values.notes);
         history.push("/checkout/1000");
     },
 

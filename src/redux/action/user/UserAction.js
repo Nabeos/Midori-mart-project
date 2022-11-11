@@ -1,7 +1,7 @@
 import { history } from "../../../App";
 import { userManagementService } from "../../../services/UserManagementService";
 import { TOKEN } from "../../../utils/settings/config";
-import { GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, UPDATE_USER_PROFILE_INFORMATION, USER } from "../../type/user/UserType";
+import { CHANGE_PASSWORD, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, UPDATE_USER_PROFILE_INFORMATION, USER } from "../../type/user/UserType";
 import Swal from 'sweetalert2'
 
 export const loginAction = (userInfo) => {
@@ -107,6 +107,34 @@ export const getAllUserListForAdminAction = () => {
             dispatch({
                 type: GET_ALL_USER_LIST_FOR_ADMIN,
                 userListForAdminAction: result
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const resetPasswordAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.resetPassword();
+            console.log("RESULT RESET PASSWORD: ", result);
+            dispatch({
+                type: RESET_PASSWORD
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const changePasswordAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.changePassword();
+            console.log("RESULT CHANGE PASSWORD: ", result);
+            dispatch({
+                type: CHANGE_PASSWORD
             })
         } catch (error) {
             console.log('error', error.response.data);

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { orderManagementForCustomerService } from '../../../services/OrderManagementForCustomerService';
 import { orderManagementForSellerService } from '../../../services/OrderManagementForSellerService';
-import { CLOSE_MODAL, CLOSE_MODAL_DELIVERING_SELLER, CLOSE_MODAL_PENDING_SELLER, GET_ALL_CUSTOMER_ORDERS_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_FOR_SELLER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER, GET_ALL_IN_PROGRESS_ORDER, GET_ALL_PURCHASE_HISTORY_ORDER } from '../../type/order/OrderType';
+import { CLOSE_MODAL, CLOSE_MODAL_DELIVERING_SELLER, CLOSE_MODAL_PENDING_SELLER, CREATE_NEW_ORDER, GET_ALL_CUSTOMER_ORDERS_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_FOR_SELLER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER, GET_ALL_IN_PROGRESS_ORDER, GET_ALL_PURCHASE_HISTORY_ORDER } from '../../type/order/OrderType';
 
 export const getAllCustomerOrderForSellerAction = (limit, offset, statusOrder) => {
     return async (dispatch) => {
@@ -119,3 +119,16 @@ export const cancelInProgressOrderForCustomerAction = (orderNumber) => {
     }
 }
 
+export const createNewOrderAction = (newOrderInfo) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
+            console.log("RESULT CREATE NEW ORDER: ", result);
+            dispatch({
+                type: CREATE_NEW_ORDER
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}

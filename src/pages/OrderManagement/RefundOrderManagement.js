@@ -6,14 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import RefundOrderDetail from './RefundOrderDetail';
 import { getAllCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
+import { CLOSE_MODAL_REFUND_SELLER_ORDER, SHOW_MODAL_REFUND_SELLER_ORDER } from '../../redux/type/order/OrderType';
 export default function RefundOrderManagement() {
-    const [open, setOpen] = useState(false);
+    const openModalRefundSellerOrder = useSelector(state => state.OrderReducer.openModalRefundSellerOrder);
+    console.log("openModalRefundSellerOrder", openModalRefundSellerOrder);
     const dispatch = useDispatch();
-    const showModal = () => {
-        setOpen(true);
+    const showModal = (sellerRefundOrderItemAction) => {
+        dispatch({
+            type: SHOW_MODAL_REFUND_SELLER_ORDER,
+            sellerRefundOrderItemAction
+        })
     };
     const handleCancel = () => {
-        setOpen(false);
+        dispatch({
+            type: CLOSE_MODAL_REFUND_SELLER_ORDER
+        })
+
     };
     useEffect(() => {
         dispatch(getAllCustomerOrderForSellerAction(1000, 0, 5));
@@ -97,12 +105,12 @@ export default function RefundOrderManagement() {
                                     <Button
                                         type=""
                                         className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
-                                        onClick={showModal}
+                                        onClick={() => { showModal(item) }}
                                     >
                                         <FaEye />
                                     </Button>
                                     <Modal
-                                        open={open}
+                                        open={openModalRefundSellerOrder}
                                         title="Chi tiết đơn hàng của khách hàng"
                                         onCancel={handleCancel}
                                         footer={[]}

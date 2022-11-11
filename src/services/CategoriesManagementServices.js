@@ -9,6 +9,10 @@ export class CategoriesManagementServices extends baseService {
         return this.get(`category-management/categories`);
     }
 
+    getBestSellerCategories = () => {
+        return this.get();
+    }
+
 }
 
 export const categoriesManagementServices = new CategoriesManagementServices();

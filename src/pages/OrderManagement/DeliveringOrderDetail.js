@@ -1,12 +1,14 @@
 import React from 'react'
 import styles from "./DeliveringOrderDetail.module.css";
-import { Button, notification } from "antd";
+import { Button, notification, Popconfirm } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFinishDeliveringCustomerOrderAction } from '../../redux/action/order/OrderAction';
 
 export default function DeliveringOrderDetail(props) {
   const dispatch = useDispatch();
   let totalBill = 0;
+  const textFinishDelivering = 'Bạn có chắc chắn đơn hàng này đã được giao ?';
+
   const deliveringSellerItem = useSelector(state => state.OrderReducer.deliveringSellerItem);
   console.log(" deliveringSellerItem: ", deliveringSellerItem);
   const openNotification = (placement) => {
@@ -125,10 +127,16 @@ export default function DeliveringOrderDetail(props) {
             </div>
           </div>
           <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>
-            <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
-              onClick={() => { handleFinishDeliveringCustomerOrder(deliveringSellerItem.orderNumber) }}>
-              Đã giao hàng
-            </Button>
+            <Popconfirm placement="top"
+              onConfirm={() => { handleFinishDeliveringCustomerOrder(deliveringSellerItem.orderNumber) }}
+              title={textFinishDelivering}
+              okText="Yes" cancelText="No">
+              <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+              >
+                Đã giao hàng
+              </Button>
+            </Popconfirm>
+
           </div>
         </div>
       </div>

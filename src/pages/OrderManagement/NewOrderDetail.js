@@ -1,4 +1,4 @@
-import { Button, notification } from "antd";
+import { Button, notification, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import styles from "./NewOrderDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,8 @@ export default function NewOrderDetail(props) {
   console.log("NEW ORDER DETAIL INFO: ", props.newDetailInfo);
   const item = useSelector(state => state.OrderReducer.item);
   const dispatch = useDispatch();
+  const textAccept = 'Bạn có chắc chắn muốn duyệt đơn hàng này ?';
+  const textReject = 'Bạn có chắc chắn muốn hủy đơn hàng này ?';
   const openNotification = (placement) => {
     notification.success({
       message: `Cập nhật trạng thái đơn hàng thành công`,
@@ -141,14 +143,26 @@ export default function NewOrderDetail(props) {
             </div>
           </div>
           <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>
-            <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
-              onClick={() => { handleAcceptNewOrder(item.orderNumber) }}>
-              Xác nhận
-            </Button>
-            <Button className='round-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow'
-              onClick={() => { handleRejectNewOrder(item.orderNumber) }}>
-              Hủy đơn
-            </Button>
+            <Popconfirm placement="top"
+              onConfirm={() => { handleAcceptNewOrder(item.orderNumber) }}
+              title={textAccept}
+              okText="Yes" cancelText="No">
+              <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+              >
+                Xác nhận
+              </Button>
+            </Popconfirm>
+
+            <Popconfirm placement="top"
+              onConfirm={() => { handleRejectNewOrder(item.orderNumber) }}
+              title={textReject}
+              okText="Yes" cancelText="No">
+
+              <Button className='round-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow'
+              >
+                Hủy đơn
+              </Button>
+            </Popconfirm>
           </div>
         </div>
       </div>

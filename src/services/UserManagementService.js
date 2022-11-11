@@ -29,6 +29,14 @@ export class UserManagementService extends baseService {
         return this.get();
     }
 
+    resetPassword = () => {
+        return this.post();
+    }
+
+    changePassword = () => {
+        return this.put();
+    }
+
 
     // layDanhSachNguoiDung = () => {
     //     return this.get(`api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${GROUPID}`)

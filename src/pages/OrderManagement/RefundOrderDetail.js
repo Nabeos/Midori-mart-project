@@ -1,44 +1,51 @@
 import React from 'react'
 import styles from "./RefundOrderDetail.module.css";
+import { Button, notification } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function RefundOrderDetail(props) {
+    let totalBill = 0;
+    const dispatch = useDispatch();
+    const sellerRefundOrderItem = useSelector(state => state.OrderReducer.sellerRefundOrderItem);
+    console.log("sellerRefundOrderItem: ", sellerRefundOrderItem);
     return (
         <div className="">
             <div className="">
-                <div className="text-2xl font-bold mb-2">Mã Đơn hàng: {props.refundDetailInfo.orderNumber}</div>
+                <div className="text-2xl font-bold mb-2">Mã Đơn hàng: {sellerRefundOrderItem.orderNumber}</div>
                 <div className="mb-2">
                     <div className="text-base font-semibold">Thông tin khách hàng</div>
                     <div className="text-base">
-                        Họ tên người nhận:<span> {props.refundDetailInfo.fullName}</span>
+                        Họ tên người nhận:<span> {sellerRefundOrderItem.fullName}</span>
                     </div>
                     <div className="text-base">
-                        Số điện thoại:<span> {props.refundDetailInfo.phoneNumber}</span>
+                        Số điện thoại:<span> {sellerRefundOrderItem.phoneNumber}</span>
                     </div>
                     <div className="text-base">
-                        Địa chỉ:<span> {props.refundDetailInfo.address.addressDetail}</span>
+                        Địa chỉ:<span> {sellerRefundOrderItem.address.addressDetail}</span>
                     </div>
 
                     <div className="text-base">
-                        Ghi chú:<span> {props.refundDetailInfo.notes}</span>
+                        Ghi chú:<span> {sellerRefundOrderItem.notes}</span>
                     </div>
                 </div>
-                <div className="mb-2">
+                {/* <div className="mb-2">
                     <div className="text-base font-semibold">Thông tin shipper</div>
                     <div className="text-base">
                         Shipper: <span> Nguyen Van A</span>
                     </div>
-                </div>
+                </div> */}
                 <div>
                     <div className="text-base font-semibold">Thông tin đơn hàng</div>
                     <div>
                         <div className="text-base">
-                            Thời gian tạo:<span> 8:45 23/02/2001</span>
+                            Thời gian tạo:<span> {sellerRefundOrderItem.orderDate}</span>
                         </div>
                         <div className="text-base">
-                            Thời gian nhận hàng:<span> 8:45 23/02/2001</span>
+                            Thời gian nhận hàng:<span> {sellerRefundOrderItem.deliveryDate} - {sellerRefundOrderItem.deliveryTimeRange}</span>
                         </div>
                         <div className="text-base">
                             Trạng thái đơn hàng:
-                            <span className="text-yellow-600"> {props.refundDetailInfo.status}</span>
+                            <span className="text-yellow-600"> {sellerRefundOrderItem.status}</span>
                         </div>
                     </div>
                     <div className="overflow-y-auto" style={{ height: "30rem" }}>
@@ -68,96 +75,40 @@ export default function RefundOrderDetail(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        1
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        Nạc heo hảo hạng
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23022001
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23.000đ
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        2
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        Nạc heo hảo hạng
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23022001
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23.000đ
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        3
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        Nạc heo hảo hạng
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23022001
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23.000đ
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        4
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        <img src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-KG-Thit-dui-heo-MeatDeli-(S).jpg" />
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        Nạc heo hảo hạng
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23022001
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23.000đ
-                                    </td>
-                                    <td className="border border-slate-300 text-base text-center">
-                                        23
-                                    </td>
-                                </tr>
+                                {sellerRefundOrderItem?.orderDetail.map((item, index) => {
+                                    totalBill += item.price * item.quantity;
+                                    return <tr key={index}>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            {index + 1}
+                                        </td>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            <img src={item.thumbnails} />
+                                        </td>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            {item.productName}
+                                        </td>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            {item.sku}
+                                        </td>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            {item.price.toLocaleString()}đ
+                                        </td>
+                                        <td className="border border-slate-300 text-base text-center">
+                                            {item.quantity}
+                                        </td>
+                                    </tr>
+                                })}
+
                             </tbody>
                         </table>
-                        <div className="flex justify-end mr-5 text-lg font-medium mb-2">
+                        {/* <div className="flex justify-end mr-5 text-lg font-medium mb-2">
                             <div>
                                 Phí vận chuyển:<span> 23tr</span>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="flex justify-end mr-5 text-xl font-semibold">
                             <div>
-                                Thành tiền:<span className="text-red-600"> 23tr</span>
+                                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
                             </div>
                         </div>
                     </div>

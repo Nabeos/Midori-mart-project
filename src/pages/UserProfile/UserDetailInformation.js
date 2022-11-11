@@ -20,20 +20,17 @@ function UserDetailInformation(props) {
     handleSubmit,
   } = props;
   const userProfileInfo = useSelector(state => state.UserReducer.userProfileInfo);
-  const provinceId = useSelector(state => state.AddressReducer.provinceId);
+  let provinceId = useSelector(state => state.AddressReducer.provinceId);
+  console.log("PROVINCE ID LẤY TỪ USER PROFILE: ", provinceId);
   let districtId = useSelector(state => state.AddressReducer.districtId);
   let wardId = useSelector(state => state.AddressReducer.wardId);
   const provinces = useSelector(state => state.AddressReducer.provinces);
   const districts = useSelector(state => state.AddressReducer.districts);
   const wards = useSelector(state => state.AddressReducer.wards);
   const dispatch = useDispatch();
-  const useRefProvince = useRef(null);
-  const useRefDistrict = useRef(null);
-  const useRefWard = useRef(null);
-  console.log("USE REF DISTRICT: ", useRefDistrict.current);
 
   // console.log("USERPROFILE.ADDRESS: ", userProfileInfo.address);
-  console.log("PROVINCE ID STATE: ", provinceId);
+
   console.log("VALUES.PROVINCE: ", values.provinces);
   console.log("VALUES.DISTRICTS: ", values.districts);
   console.log("DISTRICTS LIST: ", districts);
@@ -44,7 +41,7 @@ function UserDetailInformation(props) {
   console.log("DISTRICT ID STATE: ", districtId);
   console.log("VALUES USER PROFILE: ", values);
   console.log("USER PROFILE INFO: ", userProfileInfo);
-  console.log("USER PROFILE INFO LENGTH: ", (Object.keys(userProfileInfo).length));
+
 
 
   useEffect(() => {
@@ -53,124 +50,12 @@ function UserDetailInformation(props) {
   }, [])
 
   useEffect(() => {
-    if (typeof values.provinces == typeof undefined) {
-      setFieldValue("provinces", "01TTT");
-      useRefProvince.current = "01TTT";
-    }
-
-  }, [values.provinces])
-
-  useEffect(() => {
-    if (typeof values.districts == typeof undefined && districts.length > 0) {
-      // setFieldValue("districts", districts[0].id);
-      setFieldValue("districts", useRefDistrict.current);
-    } else {
-      // setFieldValue("districts", districtId);
-      setFieldValue("districts", useRefDistrict.current);
-    }
-  }, [provinceId, values.districts, districts.length])
-
-  useEffect(() => {
-    if (typeof values.wards == typeof undefined && wards.length > 0) {
-      console.log("CÓ VÀO UNDEFINED");
-      setFieldValue("wards", wards[0].id);
-      useRefWard.current = wards[0].id;
-    }
-    // else {
-    //   console.log("CÓ VÀO KHÁC UNDEFINED");
-    //   setFieldValue("wards", values.wards);
-    // }
-  }, [values.wards, wards.length])
-
-  useEffect(() => {
-    //ĐANG ĐÁNH NHAU VỚI CÁI TRÊN
-    if (typeof wardId != typeof undefined && typeof values.wards != typeof undefined && values.wards != 0 && wardId != 0) {
-      console.log("SO SÁNH WARD: ", wardId == values.wards);
-      console.log("CÓ VÀO ĐK ĐẦY ĐỦ");
-      if (!(wardId == values.wards)) {
-        setFieldValue("wards", values.wards);
-        useRefWard.current = values.wards;
-
-      }
-    }
-  }, [wardId])
-
-  // useEffect(() => {
-  //   if (typeof values.wards != typeof undefined) {
-  //     setFieldValue("wards", values.wards);
-  //   }
-  // }, [values.wards])
-
-
-
-  useEffect(() => {
-    if (provinceId != 0 && (typeof userProfileInfo.address == typeof undefined || typeof userProfileInfo.address == typeof null)) {
-      console.log("CÓ VÀO NULL GET ALL DISTRICTS");
-      dispatch(getAllDistrictsByProvinceIdAction(provinceId));
-      useRefDistrict.current = userProfileInfo?.address?.districtId;
-      setFieldValue("districts", useRefDistrict.current);
-    }
-
+    dispatch(getAllDistrictsByProvinceIdAction(provinceId));
   }, [provinceId])
 
   useEffect(() => {
-    if (typeof userProfileInfo.address != typeof undefined) {
-      console.log("CÓ VÀO KHÁC UNDEFINED");
-      dispatch(getAllDistrictsByProvinceIdAction(userProfileInfo?.address?.provinceId));
-      // useRefDistrict.current = values.districts;
-      setFieldValue("districts", useRefDistrict.current);
-
-    }
-  }, [userProfileInfo.address])
-
-
-  useEffect(() => {
-    if (typeof values.districts != typeof undefined) {
-      setFieldValue("districts", values.districts);
-      useRefDistrict.current = values.districts;
-
-    }
-  }, [values.districts])
-
-  useEffect(() => {
-    //Trường hợp ko chọn initial values của từng select
-    if (typeof userProfileInfo.address != typeof undefined) {
-      console.log("CÓ VÀO HÀ NỘI USER PROFILE");
-      dispatch(getAllWardsByDistrictIdAction(userProfileInfo?.address?.districtId));
-    }
-  }, [userProfileInfo.address])
-
-  //ĐANG THIẾU 1 TRƯỜNG HỢP GET ALL WARDS
-
-  useEffect(() => {
-    if (typeof userProfileInfo?.address?.districtId != typeof undefined && typeof values.districts != typeof undefined && values.districts != 0) {
-      console.log("CÓ VÀO HÀ NỘI VALUES.DISTRICTS");
-      if (values.provinces == "01TTT") {
-        dispatch(getAllWardsByDistrictIdAction("001HH"));
-      }
-      else if (!(userProfileInfo?.address?.districtId == values.districts)) {
-        dispatch(getAllWardsByDistrictIdAction(values.districts));
-      }
-    }
-  }, [values.districts])
-
-  useEffect(() => {
-    //Trường hợp address là NULL mới đầu
-    if (districtId != 0 && (typeof userProfileInfo.address == typeof undefined || typeof userProfileInfo.address == typeof null)) {
-      console.log("CÓ VÀO HÀ NỘI DISTRICT ID STATE");
-      dispatch(getAllWardsByDistrictIdAction(districtId));
-      // console.log("VALUES.WARDS ĐANG CẦN: ", values.wards);
-    }
-  }, [districtId])
-
-
-
-
-
-
-
-
-
+    dispatch(getAllWardsByDistrictIdAction(districtId));
+  }, [districtId]);
 
   const props1 = {
     name: "file",
@@ -284,8 +169,8 @@ function UserDetailInformation(props) {
           </div>
         </div>
         <div className="text-2xl font-bold mt-3 mb-3">Thông tin địa chỉ</div>
-        {/* <div className="flex flex-row ">
-          <div style={{ width: "100%" }} className="mr-2 mb-2">
+        <div className="flex flex-row ">
+          {/* <div style={{ width: "100%" }} className="mr-2 mb-2">
             <label
               for="provinces"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -294,23 +179,24 @@ function UserDetailInformation(props) {
             </label>
             <div>
               <select className="pl-1 text-base form-select shadow-none"
-                ref={useRefProvince}
-                value={values.provinces} //Nếu chưa có thì load mặc định
+                value={(values.provinces == "null" || values.provinces == null) ? values.provincesDefault : values.provinces} //Nếu chưa có thì load mặc định
                 onChange={(e) => {
                   dispatch(getAllDistrictsByProvinceIdAction(e.target.value))
                   setFieldValue("provinces", e.target.value)
+                  setFieldValue("provincesDefault", e.target.value);
                 }}
                 name="provinces"
+                id="provinces"
                 style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
-                <option disabled>Chọn tỉnh/thành phố</option>
+                <option value="0" disabled>Chọn tỉnh/thành phố</option>
                 {provinces.map((item, index) => {
                   return <option selected={values.provinces == item.id ? true : false} key={index} value={item.id}>{item.name}</option>
                 })}
-
               </select>
             </div>
 
           </div>
+
           <div style={{ width: "100%" }} className="mb-2">
             <label
               for="districts"
@@ -321,22 +207,22 @@ function UserDetailInformation(props) {
             <div>
               <select
                 name="districts"
-                ref={useRefDistrict}
-                value={values.districts}
+                id="districts"
+                value={(values.districts == "null" || values.districts == null) ? 0 : values.districts}
                 onChange={(e) => {
                   dispatch(getAllWardsByDistrictIdAction(e.target.value))
                   setFieldValue("districts", e.target.value)
                 }} className="pl-1 text-base form-select shadow-none"
                 style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
-                <option disabled>Chọn quận/huyện</option>
+                <option value="0" disabled>Chọn quận/huyện</option>
                 {districts.map((item, index) => {
-                  return <option selected={values.districts == item.id ? true : false} key={index} value={item.id}>{item.name}</option>
+                  return <option key={index} value={item.id}>{item.name}</option>
                 })}
               </select>
             </div>
 
-          </div>
-        </div> */}
+          </div> */}
+        </div>
         <div className="flex flex-row">
           {/* <div style={{ width: "100%" }} className="mr-2">
             <label
@@ -348,13 +234,13 @@ function UserDetailInformation(props) {
             <div>
               <select
                 name="wards"
-                ref={useRefWard}
-                value={values.wards}
+                id="wards"
+                value={(values.wards == "null" || values.wards == null) ? 0 : values.wards}
                 onChange={handleChange}
                 className="pl-1 text-base form-select shadow-none" style={{ border: "1px solid lightgray", borderRadius: "5px" }}>
-                <option disabled>Chọn phường/xã</option>
+                <option value="0" disabled>Chọn phường/xã</option>
                 {wards.map((item, index) => {
-                  return <option selected={values.wards == item.id ? true : false} value={item.id} key={index}>{item.name}</option>
+                  return <option value={item.id} key={index}>{item.name}</option>
                 })}
               </select>
             </div>
@@ -402,15 +288,21 @@ const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689
 const UserDetailInformationWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
+    userProfileInfo: props?.userProfileInfo,
     userLocalStorageInfo: JSON.parse(localStorage.getItem(USER)).id,
     thumbnail: props?.userProfileInfo?.thumbnail,
     lastName: props?.userProfileInfo?.lastName,
     firstName: props?.userProfileInfo?.firstName,
     phoneNumber: props?.userProfileInfo?.phonenumber,
     email: props?.userProfileInfo?.email,
-    // provinces: props.provinceId,
-    // districts: props.districtId,
-    // wards: props.wardId,
+    // provinces: ((props?.userProfileInfo.address?.provinceId) == "null" || props?.userProfileInfo.address?.provinceId == null) ? props.provinceDefault : props.provinceId,
+    // districts: ((props?.userProfileInfo.address?.districtId) == "null" || props?.userProfileInfo.address?.districtId == null) ? props.districtDefault : props.districtId,
+    // wards: ((props?.userProfileInfo.address?.wardId) == "null" || props?.userProfileInfo.address?.wardId == null) ? props.wardDefault : props.wardId,
+    // provinces: props?.userProfileInfo.address?.provinceId,
+    // provincesDefault: 1,
+    // districts: props?.userProfileInfo.address?.districtId,
+    // districtsDefault: props?.districtDefault,
+    // wards: props?.userProfileInfo.address?.wardId,
     detailAddress: props.addressDetail,
   }),
 
@@ -443,7 +335,6 @@ const UserDetailInformationWithFormik = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT USER DETAIL");
     console.log("VALUES HANDLE SUBMIT: ", values);
-    alert("CÓ VÀO NHÉ");
     let userInfo = {
       "user": {
         email: values.email,
@@ -453,6 +344,7 @@ const UserDetailInformationWithFormik = withFormik({
         address: {
           // provinceId: values.provinces,
           // districtId: values.districts,
+          // districtId: values.districtsDefault,
           // wardId: values.wards,
           addressDetail: values.detailAddress
         }
@@ -467,14 +359,13 @@ const UserDetailInformationWithFormik = withFormik({
 const mapStateToProps = (state) => {
   return {
     userProfileInfo: state.UserReducer.userProfileInfo,
-    // provinceId: state.UserReducer.userProfileInfo?.address?.provinceId,
-    // districtId: state.UserReducer.userProfileInfo?.address?.districtId,
-    // wardId: state.UserReducer.userProfileInfo?.address?.wardId,
-    addressDetail: state.UserReducer.userProfileInfo?.address?.addressDetail
-    // address: state.UserReducer.userProfileInfo.address,
-    // provinceId: state.AddressReducer.provinceId,
-    // districtId: state.AddressReducer.districtId,
-    // wards: state.AddressReducer.wards
+    provinceId: state.UserReducer.userProfileInfo?.address?.provinceId,
+    districtId: state.UserReducer.userProfileInfo?.address?.districtId,
+    wardId: state.UserReducer.userProfileInfo?.address?.wardId,
+    addressDetail: state.UserReducer.userProfileInfo?.address?.addressDetail,
+    provinceDefault: state.AddressReducer.provinceId,
+    districtDefault: state.AddressReducer.districtId,
+    wardDefault: state.AddressReducer.wardId
   }
 }
 

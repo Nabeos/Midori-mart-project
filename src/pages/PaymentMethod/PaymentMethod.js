@@ -6,28 +6,34 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Checkbox } from 'antd';
 import { Alert } from 'antd';
 import Swal from 'sweetalert2'
+import { SET_PAYMENT_BY_COD, SET_PAYMENT_BY_MOMO } from '../../redux/type/order/OrderType';
+import { createNewOrderAction } from '../../redux/action/order/OrderAction';
 
 export default function PaymentMethod() {
     let totalBill = 0;
     let transferCost = 30000;
     const { cartList } = useSelector(state => state.CartReducer);
+    const dispatch = useDispatch();
+    const flagPayment = useSelector(state => state.OrderReducer.flagPayment);
+    console.log("FLAG PAYMENT: ", flagPayment);
+    // const handleSubmit = () => {
 
-    let [flag, setFlag] = useState(1);
-    console.log("FLAG: ", flag);
-    const handleSubmit = () => {
-
-    }
+    // }
     const handleReturnToHomePage = () => {
         history.push("/");
     }
     const handlePaymentByCODChange = () => {
-        setFlag(1);
+        dispatch({
+            type: SET_PAYMENT_BY_COD
+        })
     }
     const handlePaymentByMomoChange = () => {
-        setFlag(0);
+        dispatch({
+            type: SET_PAYMENT_BY_MOMO
+        })
     }
     const handleFinishOrder = () => {
-        if (flag == 1) {
+        if (flagPayment == 1) {
             Swal.fire({
                 title: 'Cảm ơn quý khách đã đặt hàng',
                 width: '700px',
@@ -42,8 +48,28 @@ export default function PaymentMethod() {
                     history.push("/");
                 }
             })
+            localStorage.setItem("paymentMethod", flagPayment);
+            let data = {
+                "orderinformation": {
+                    "fullName": localStorage.getItem("fullName"),
+                    "email": localStorage.getItem("email"),
+                    "phoneNumber": localStorage.getItem("phoneNumber"),
+                    "receiveProductsMethod": localStorage.getItem("receiveProductsMethod"),
+                    "address": JSON.parse(localStorage.getItem("address")),
+                    "paymentMethod": localStorage.getItem("paymentMethod"),
+                    "deliveryDate": localStorage.getItem("deliveryDate"),
+                    "deliveryTimeRange": localStorage.getItem("deliveryTimeRange"),
+                    "cart": JSON.parse(localStorage.getItem("cart")),
+                    "note": localStorage.getItem("note"),
+                    "totalBill": localStorage.getItem("totalBill")
+                }
+
+            }
+            console.log("data create new order: ", data);
+            dispatch(createNewOrderAction(data));
 
         } else {
+            localStorage.setItem("paymentMethod", flagPayment);
             history.push("/paymentByMomo/1000");
         }
     }
@@ -109,7 +135,7 @@ export default function PaymentMethod() {
                     <p className='font-bold mb-3 text-lg'>Phương thức thanh toán/Payment method</p>
                     <div class="card text-black mb-3">
                         <div className='flex items-center card-header bg-white h-16'>
-                            {flag == 1 ? <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flag}></Checkbox> : <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flag}></Checkbox>}
+                            {flagPayment == 1 ? <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox> : <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox>}
 
                             <div className='flex mb-0 items-center'>
                                 <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=1" style={{ width: '50px' }} />
@@ -118,7 +144,7 @@ export default function PaymentMethod() {
                         </div>
 
                         <div className="flex items-center card-footer bg-white h-16">
-                            {flag == 0 ? <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flag}></Checkbox> : <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flag}></Checkbox>}
+                            {flagPayment == 0 ? <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox> : <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox>}
                             <div className='flex items-center'>
                                 <img src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=1" style={{ width: '50px' }} />
                                 <p className='mb-0 ml-3'>Thanh toán online qua ví MoMo (Pay with MoMo E-Wallet)</p>
@@ -144,7 +170,7 @@ export default function PaymentMethod() {
                         </div>
                         <div className='flex justify-between mb-3'>
                             <div className='flex-grow mr-2'>
-                                <form className="mb-3" onSubmit={handleSubmit}>
+                                <form className="mb-3">
                                     <div className="form-group mb-3">
                                         <input type="text" placeholder='Mã giảm giá/Voucher' className={`${styles.payment__voucher} form-control pl-0 shadow-none`} name="voucher" />
                                     </div>
