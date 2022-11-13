@@ -41,6 +41,7 @@ import CustomerDetailManagement from './pages/CustomerManagement/CustomerDetailM
 import ShipperDetailManagement from './pages/ShipperManagement/ShipperDetailManagement';
 import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
 import UploadPractice from './pages/UploadPractice/UploadPractice';
+import AuthorizationManagementTabPane from './pages/AuthorizationManagement/AuthorizationManagementTabPane';
 
 
 
@@ -55,6 +56,7 @@ function App() {
         <Route exact path="/payment/:orderId" component={PaymentMethod} />
         <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
+        {/* <Route exact path="/inventorymanagement" component={InventoryManagementTabPane} /> */}
         <Route exact path="/productdetailmanagement" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
@@ -75,6 +77,7 @@ function App() {
         <Route exact path="/shipperdetailmanagement" component={ShipperDetailManagement} />
         <Route exact path="/userdetail" component={UserDetail} />
         <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
+        {/* <Route exact path="/authorizationmanagement" component={AuthorizationManagementTabPane} /> */}
         <Route exact path="/userprofile/:userId" component={UserProfile} />
         <Route exact path="/managerprofile/:userId" component={ManagerProfile} />
         <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />

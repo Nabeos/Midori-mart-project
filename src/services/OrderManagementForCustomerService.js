@@ -22,7 +22,7 @@ export class OrderManagementForCustomerService extends baseService {
     }
 
     createNewOrder = (newOrderInfo) => {
-        return this.post(`api/payment-management/finishOrder`, newOrderInfo);
+        return this.postCreateNewOrder(`api/payment-management/finishOrder`, newOrderInfo);
     }
 
 }

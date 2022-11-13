@@ -21,8 +21,8 @@ export class UserManagementService extends baseService {
         return this.putUpdateUserProfile(`api/v1/user-management/users/${userId}`, userInfo);
     }
 
-    addNewUserForAdmin = () => {
-        return this.post();
+    addNewUserForAdmin = (userInfo) => {
+        return this.postAddNewUserForAdmin(`api/v1/user-management/users`, userInfo);
     }
 
     getAllUserListForAdmin = () => {
@@ -35,6 +35,10 @@ export class UserManagementService extends baseService {
 
     changePassword = () => {
         return this.put();
+    }
+
+    getAllRoleInMidori = () => {
+        return this.getAllRole();
     }
 
 

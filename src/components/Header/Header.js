@@ -50,6 +50,7 @@ function Header(props) {
     localStorage.removeItem("totalBill");
     localStorage.removeItem("paymentMethod");
     localStorage.removeItem("receiveProductsMethod");
+    history.push("/");
     window.location.reload();
   }
   let user = JSON.parse(localStorage.getItem(USER));

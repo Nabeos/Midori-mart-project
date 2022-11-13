@@ -45,10 +45,21 @@ export default function PaymentMethod() {
                 focusConfirm: false
             }).then((result) => {
                 if (result.isConfirmed) {
+                    localStorage.removeItem("cart");
                     history.push("/");
                 }
             })
             localStorage.setItem("paymentMethod", flagPayment);
+            let cartListPaymentMethod = JSON.parse(localStorage.getItem("cart"));
+            let cartListPaymentMethodCustom = cartListPaymentMethod.map((item, index) => {
+                return item = {
+                    "productId": item.id,
+                    "quantity": item.quantity,
+                    "price": item.price,
+                    "totalPrice": item.quantity * item.price
+                }
+            })
+            console.log("CART LIST PAYMENT METHOD CUSTOM: ", cartListPaymentMethodCustom);
             let data = {
                 "orderinformation": {
                     "fullName": localStorage.getItem("fullName"),
@@ -59,7 +70,7 @@ export default function PaymentMethod() {
                     "paymentMethod": localStorage.getItem("paymentMethod"),
                     "deliveryDate": localStorage.getItem("deliveryDate"),
                     "deliveryTimeRange": localStorage.getItem("deliveryTimeRange"),
-                    "cart": JSON.parse(localStorage.getItem("cart")),
+                    "cart": cartListPaymentMethodCustom,
                     "note": localStorage.getItem("note"),
                     "totalBill": localStorage.getItem("totalBill")
                 }

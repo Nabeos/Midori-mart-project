@@ -31,17 +31,18 @@ function UserManagement(props) {
   );
 
   // popup
-  const [open, setOpen] = useState(false);
+  const [openAddUser, setOpenAddUser] = useState(false);
   const showModal = () => {
-    setOpen(true);
+    setOpenAddUser(true);
   };
   const handleCancel = () => {
-    setOpen(false);
+    setOpenAddUser(false);
   };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUserListForAdminAction());
   }, [])
+
   const userListForAdmin = useSelector(state => state.UserReducer.userListForAdmin);
   console.log("USER LIST FOR ADMIN: ", userListForAdmin);
 
@@ -90,14 +91,14 @@ function UserManagement(props) {
                 + Thêm người dùng
               </Button>
               <Modal
-                open={open}
+                open={openAddUser}
                 title="Thêm người dùng mới"
                 onCancel={handleCancel}
                 footer={[]}
                 width={800}
               >
                 <AddNewUser />
-                <Form onSubmitCapture={handleSubmit}>
+                {/* <Form onSubmitCapture={handleSubmit}>
                   <div className="flex flex-row">
                     <div style={{ width: "100%" }}>
                       <label
@@ -277,7 +278,7 @@ function UserManagement(props) {
                   >
                     Thêm người dùng mới
                   </Button>
-                </Form>
+                </Form> */}
               </Modal >
             </div >
             {/* table for Authorization Management */}

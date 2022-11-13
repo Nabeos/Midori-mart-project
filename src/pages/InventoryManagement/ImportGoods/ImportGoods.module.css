@@ -1,0 +1,16 @@
+.importgoods__table__striped tr:nth-child(even){
+    background: #f2f2f2;
+}
+.importgoods__filter__button{
+    border: 1px solid lightgray!important;
+    height: 2.2rem;
+}
+
+.importgoods__filter__button:hover{
+    background: lightgray!important;
+    color: white;
+}
+
+.importgoods__filter__button:focus{
+    color: black;
+}

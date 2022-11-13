@@ -1,0 +1,16 @@
+.productmanagement__table__striped tr:nth-child(even){
+    background: #f2f2f2;
+}
+.productmanagement__filter__button{
+    border: 1px solid lightgray!important;
+    height: 2.2rem;
+}
+
+.productmanagement__filter__button:hover{
+    background: lightgray!important;
+    color: white;
+}
+
+.productmanagement__filter__button:focus{
+    color: black;
+}

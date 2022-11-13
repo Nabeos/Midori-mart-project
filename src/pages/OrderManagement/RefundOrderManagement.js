@@ -95,9 +95,11 @@ export default function RefundOrderManagement() {
                                     {item.address.addressDetail}
                                 </td>
                                 <td className="border border-slate-300 text-center">
-                                    8:45 23/02/2001
+                                    <span className='p-2'>{item.orderDate}</span>
                                 </td>
-                                <td className="border border-slate-300 text-center">8:45 23/02/2001</td>
+                                <td className="border border-slate-300 text-center">
+                                    <span className='p-2'>{item.deliveryDate}</span>
+                                </td>
                                 <td className="border border-slate-300 text-center"><span className="p-2 bg-yellow-600 rounded-md text-white">{item.status}</span></td>
 
                                 <td className="border border-slate-300 text-center">

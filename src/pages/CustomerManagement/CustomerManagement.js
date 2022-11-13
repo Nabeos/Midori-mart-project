@@ -79,7 +79,7 @@ export default function CustomerManagement() {
                   <tr>
                     <td className="border border-slate-300 text-center">1</td>
                     <td className="border border-slate-300 text-center">
-                      Đinh Kông Thành
+                      Nguyễn Khánh Toàn
                     </td>
                     <td className="border border-slate-300 text-center">
                       thanhdkhe150032@fpt.edu.vn
@@ -91,7 +91,7 @@ export default function CustomerManagement() {
                       Customer
                     </td>
                     <td className="border border-slate-300 text-center">
-                      Available
+                      <span className="bg-green-600 text-white p-2 rounded-sm">Đang hoạt động</span>
                     </td>
 
                     <td className="border border-slate-300 text-center">
@@ -118,7 +118,7 @@ export default function CustomerManagement() {
                       Customer
                     </td>
                     <td className="border border-slate-300 text-center">
-                      Available
+                      <span className="bg-red-600 rounded-sm p-2 text-white">Đã ngừng hoạt động</span>
                     </td>
 
                     <td className="border border-slate-300 text-center">

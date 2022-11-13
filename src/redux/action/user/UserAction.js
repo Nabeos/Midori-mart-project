@@ -1,8 +1,10 @@
 import { history } from "../../../App";
 import { userManagementService } from "../../../services/UserManagementService";
 import { TOKEN } from "../../../utils/settings/config";
-import { CHANGE_PASSWORD, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, UPDATE_USER_PROFILE_INFORMATION, USER } from "../../type/user/UserType";
+import { CHANGE_PASSWORD, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
 import Swal from 'sweetalert2'
+import { imageManagementServices } from "../../../services/ImageManagementService";
+import { notification } from "antd";
 
 export const loginAction = (userInfo) => {
     return async (dispatch) => {
@@ -68,26 +70,35 @@ export const getUserProfileInformationAction = () => {
     }
 }
 
+const openNotification = (placement) => {
+    notification.success({
+        message: `Cập nhật thông tin cá nhân thành công`,
+        placement,
+        duration: 2
+    });
+};
+
 export const updateUserProfileInformationAction = (userId, userInfo) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.updateUserProfile(userId, userInfo);
             console.log("RESULT UPDATE USER PROFILE: ", result);
-            alert("Thành công !!!");
+            // alert("Thành công !!!");
             // dispatch({
             //     type: UPDATE_USER_PROFILE_INFORMATION,
             //     updatedUserInfo: ""
             // })
+            openNotification('bottomRight')
         } catch (error) {
             console.log('error', error.response.data);
         }
     }
 }
 
-export const addNewUserForAdminAction = () => {
+export const addNewUserForAdminAction = (userInfo) => {
     return async (dispatch) => {
         try {
-            const result = await userManagementService.addNewUserForAdmin();
+            const result = await userManagementService.addNewUserForAdmin(userInfo);
             console.log("RESULT ADD NEW USER FOR ADMIN: ", result);
             // dispatch({
             //     type: UPDATE_USER_PROFILE_INFORMATION,
@@ -135,6 +146,36 @@ export const changePasswordAction = () => {
             console.log("RESULT CHANGE PASSWORD: ", result);
             dispatch({
                 type: CHANGE_PASSWORD
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const uploadImageAction = (filesName) => {
+    return async (dispatch) => {
+        try {
+            const result = await imageManagementServices.uploadAvatar(filesName);
+            console.log("RESULT UPLOAD IMAGE: ", result.data.images[0].url);
+            dispatch({
+                type: UPLOAD_IMAGE,
+                uploadAvatarAction: result.data.images[0].url
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const getAllRoleInMidoriAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.getAllRoleInMidori();
+            console.log("RESULT GET ALL ROLE IN MIDORI: ", result);
+            dispatch({
+                type: GET_ALL_ROLE,
+                roleListAction: result
             })
         } catch (error) {
             console.log('error', error.response.data);

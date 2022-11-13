@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useSelector } from 'react-redux'
+import { resetPasswordAction } from "../../redux/action/user/UserAction";
 
 function ForgotPassword(props) {
   const {
@@ -122,9 +123,10 @@ const ForgotPasswordWithFormik = withFormik({
   }),
 
 
-  handleSubmit: (values, { setSubmitting }) => {
+  handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
     console.log("VALUE FORM: ", values);
+    // props.dispatch(resetPasswordAction());
   },
 
   displayName: 'FormatPasswordWithFormik'

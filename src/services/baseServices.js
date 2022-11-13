@@ -56,6 +56,24 @@ export class baseService {
         })
     }
 
+    postAddNewUserForAdmin = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    postCreateNewOrder = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     postComment = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -74,11 +92,28 @@ export class baseService {
         })
     }
 
+    postUploadImage = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     get = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllRole = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

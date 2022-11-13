@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin";
 import styles from "./AuthorizationManagement.module.css";
-import { Button, Form, Modal, Pagination } from "antd";
+import { Button, Form, Modal, Pagination, Tabs } from "antd";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddAuthenticationPage from "./AddAuthenticationPage";
+import ProvideAccessToRole from "./ProvideAccessToRole";
+import AllRoleInMidori from "./AllRoleInMidori";
 
 export default function AuthorizationManagement() {
   // popup
@@ -24,6 +26,16 @@ export default function AuthorizationManagement() {
     setIsPageModalOpen(false);
     setIsRoleModalOpen(false);
   };
+
+  const handleSelectTabPane = (key) => {
+    console.log("KEY TỔNG: ", key);
+    if (key == 1) {
+    } else if (key == 2) {
+    } else if (key == 3) {
+    }
+    //   dispatch(getAllCustomerOrderForSellerAction(1000, 0, 0));
+    // }
+  }
 
   return (
     <div className="bg-gray-200 grid grid-cols-6" style={{ height: "100%" }}>
@@ -46,299 +58,28 @@ export default function AuthorizationManagement() {
             className="bg-white rounded-md mt-3"
             style={{
               width: "99%",
-              boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
+              boxShadow: "red",
             }}
           >
             {/* popup add more pages */}
             <div className="mt-3 ml-2">
-              <Button
-                type=""
-                className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base mr-2"
-                onClick={showPageModal}
-              >
-                + Thêm trang
-              </Button>
-              <Modal
-                title="Thêm trang mới"
-                open={isPageModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                footer={[]}
-                width={500}
-              >
-                <AddAuthenticationPage/>
-              </Modal>
-              {/* popup add more roles */}
-              <Button
-                type=""
-                className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
-                onClick={showRoleModal}
-              >
-                + Thêm vai trò
-              </Button>
-              <Modal
-                title="Basic Modal"
-                open={isRoleModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-              >
-                <Form>
-                  <p>Some contents roles...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </Form>
-              </Modal>
-            </div>
-            {/* table for Authorization Management */}
-            <div className="flex justify-center">
-              <table
-                className={`${styles.authorizationmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                style={{ width: "80%", minHeight: "80rem" }}
-              >
-                <thead>
-                  <tr>
-                    <th className="border border-slate-300 p-4 text-lg text-center">STT</th>
-                    <th className="border border-slate-300 p-4 text-lg text-center">Tên trang</th>
-                    <th className="border border-slate-300 p-4 text-lg text-center">
-                      Khách hàng
-                    </th>
-                    <th className="border border-slate-300 p-4 text-center">
-                      Admin
-                    </th>
-                    <th className="border border-slate-300 p-4 text-center">
-                      Quản lí khách hàng
-                    </th>
-                    <th className="border border-slate-300 p-4 text-center">
-                      Shipper
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border border-slate-300 text-center">1</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">2</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">3</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">4</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">5</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">6</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">7</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">8</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">9</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">10</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">11</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border border-slate-300 text-center">12</td>
-                    <td className="border border-slate-300 font-semibold">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      <input type={"checkbox"} />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-end mb-4" style={{ width: "90%" }}>
-              <Pagination
-                className="hover:text-green-800 focus:border-green-800"
-                defaultCurrent={1}
-                total={50}
-              />
+              <div className="">
+
+                <Tabs defaultActiveKey="1" className='ml-3' onChange={handleSelectTabPane}>
+                  <Tabs.TabPane tab="Các chức năng" key="1" >
+
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Các vai trò" key="2">
+                    <AllRoleInMidori />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Phân quyền" key="3">
+                    <ProvideAccessToRole />
+                  </Tabs.TabPane>
+
+                </Tabs>
+
+              </div>
+
             </div>
           </div>
         </div>
