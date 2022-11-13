@@ -70,7 +70,7 @@ function App() {
         <Route exact path="/searchresult/:keyWord" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
-        <Route exact path="/deliverymanagement" component={DeliveryManagement} />
+        {/* <Route exact path="/deliverymanagement" component={DeliveryManagement} /> */}
         <Route exact path="/usermanagement" component={UserManagement} />
         <Route exact path="/customermanagement" component={CustomerManagement} />
         <Route exact path="/customerdetailmanagement" component={CustomerDetailManagement} />

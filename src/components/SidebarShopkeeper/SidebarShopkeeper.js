@@ -7,18 +7,18 @@ import { history } from "../../App";
 export default function SidebarShopkeeper() {
 
   const [active, setActive] = useState(1);
-  const handleNavigateCustomerMngt = () => {
-    history.push();
-  }
+  // const handleNavigateCustomerMngt = () => {
+  //   history.push();
+  // }
   const handleNavigateOrderMngt = () => {
     history.push("/ordermanagement");
   }
   const handleNavigateInventoryMngt = () => {
     history.push("/inventorymanagement");
   }
-  const handleNavigateShipperMngt = () => {
-    history.push("/shippermanagement");
-  }
+  // const handleNavigateShipperMngt = () => {
+  //   history.push("/shippermanagement");
+  // }
 
   return (
     <div style={{ height: "100%" }}>
@@ -50,7 +50,7 @@ export default function SidebarShopkeeper() {
           <hr className="border-2 border-gray-200" />
         </div>
         <div className="flex flex-col items-start" >
-          <div
+          {/* <div
             className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 1 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
               }  mb-2 p-2`}
             style={{ width: "100%" }}
@@ -68,9 +68,9 @@ export default function SidebarShopkeeper() {
             >
               Quản lí khách hàng
             </NavLink>
-          </div>
+          </div> */}
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 2 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 1 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
               } mb-2 p-2`}
             style={{ width: "100%" }}
             onClick={handleNavigateOrderMngt}
@@ -79,7 +79,7 @@ export default function SidebarShopkeeper() {
               to={"/ordermanagement"}
               isActive={(match, location) => {
                 if (location.pathname === "/ordermanagement") {
-                  setActive(2);
+                  setActive(1);
                 }
               }}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
@@ -89,7 +89,7 @@ export default function SidebarShopkeeper() {
             </NavLink>
           </div>
           <div
-            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 3 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
+            className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 2 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
               } mb-2 p-2`}
             style={{ width: "100%" }}
             onClick={handleNavigateInventoryMngt}
@@ -98,7 +98,7 @@ export default function SidebarShopkeeper() {
               to={"/inventorymanagement"}
               isActive={(match, location) => {
                 if (location.pathname === "/inventorymanagement") {
-                  setActive(3);
+                  setActive(2);
                 }
               }}
               className={`${styles.sidebarshopkeeper__text} no-underline text-xl`}
@@ -107,7 +107,7 @@ export default function SidebarShopkeeper() {
               Quản lí kho
             </NavLink>
           </div>
-          <div
+          {/* <div
             className={`${styles.sidebarshopkeeper__sidebaritem} ${active == 4 ? `${styles.sidebarshopkeeper__sidebaritemActive}` : ""
               } mb-2 p-2`}
             style={{ width: "100%" }}
@@ -125,7 +125,7 @@ export default function SidebarShopkeeper() {
             >
               Quản lí shipper
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

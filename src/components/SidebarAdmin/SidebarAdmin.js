@@ -12,9 +12,9 @@ export default function SidebarAdmin() {
   const handleNavigateAuthorizationMngt = () => {
     history.push("/authorizationmanagement");
   }
-  const handleNavigateRevenueMngt = () => {
-    history.push("/revenuemanagement");
-  }
+  // const handleNavigateRevenueMngt = () => {
+  //   history.push("/revenuemanagement");
+  // }
 
   return (
     <div className='bg-white mr-2' style={{ minHeight: "100%", boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)" }}>
@@ -53,7 +53,7 @@ export default function SidebarAdmin() {
               }
             }}>Quản lí phân quyền</NavLink>
         </div>
-        <div className={`${styles.sidebaradmin__sidebaritem} ${active == 3 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateRevenueMngt}>
+        {/* <div className={`${styles.sidebaradmin__sidebaritem} ${active == 3 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateRevenueMngt}>
           <NavLink to={"/usermanagement"}
             onClick={handleNavigateRevenueMngt}
             className={`${styles.sidebaradmin__text} no-underline text-xl`}
@@ -62,7 +62,7 @@ export default function SidebarAdmin() {
                 setActive(3);
               }
             }}>Quản lí doanh thu</NavLink>
-        </div>
+        </div> */}
       </div>
     </div >
   )
