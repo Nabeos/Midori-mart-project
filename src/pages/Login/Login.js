@@ -175,7 +175,7 @@ const LoginWithFormik = withFormik({
         "password": values.password
       }
     }
-    console.log("data login: ", data);
+    // console.log("data login: ", data);
     props.dispatch(loginAction(data));
   },
 

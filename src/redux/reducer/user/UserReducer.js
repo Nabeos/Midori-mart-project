@@ -1,4 +1,4 @@
-import { GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
+import { ADD_NEW_USER_DEMO, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
 
 let defaultUser = {};
 if (localStorage.getItem(USER)) {
@@ -7,6 +7,7 @@ if (localStorage.getItem(USER)) {
 const initialState = {
     user: defaultUser,
     userProfileInfo: {},
+    userListDemo: [],
     uploadAvatar: "",
     userListForAdmin: [],
     roleList: []
@@ -54,6 +55,12 @@ export const UserReducer = (state = initialState, action) => {
             let roleListUpdate = { ...state.roleList };
             roleListUpdate = action.roleListAction;
             state.roleList = roleListUpdate;
+            return { ...state }
+
+        case ADD_NEW_USER_DEMO:
+            let userListDemoUpdate = [...state.userListDemo];
+            userListDemoUpdate.push(action.newUserDemoAction);
+            state.userListDemo = userListDemoUpdate;
             return { ...state }
 
         default:

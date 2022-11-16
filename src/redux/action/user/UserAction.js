@@ -17,7 +17,17 @@ export const loginAction = (userInfo) => {
                 type: LOGIN,
                 userInfo: result
             })
-            history.push("/");
+            if (result.data.user.roleId == 1) {
+                console.log("CÓ VÀO 1");
+                history.push("/usermanagement");
+            } else if (result.data.user.roleId == 2) {
+                console.log("CÓ VÀO 2");
+                history.push("/");
+            } else if (result.data.user.roleId == 4) {
+                console.log("CÓ VÀO 4");
+                history.push("/ordermanagement");
+            }
+
         } catch (error) {
             console.log('error', error.response.data);
             Swal.fire({

@@ -14,6 +14,8 @@ import { getAllCategoriesAction } from "../../redux/action/categories/Categories
 import { getProductListByCategoryIdAction, getProductListLengthByCategoryIdAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
 import { useStateCallback } from "use-state-callback";
 import { Rate } from 'antd';
+import { USER } from '../../redux/type/user/UserType';
+import { Redirect } from 'react-router-dom';
 const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
@@ -74,6 +76,8 @@ function Product(props) {
 export default function ProductList(props) {
   const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
   console.log("PRODUCT LIST BY CATE ID: ", productListByCategoryId);
+  let user = JSON.parse(localStorage.getItem(USER));
+  console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   let merchantArr = [];
   for (let index = 0; index < productListByCategoryId.length; index++) {
     console.log("KHÓ VL: ", productListByCategoryId[index].merchant.country.name)
@@ -210,41 +214,42 @@ export default function ProductList(props) {
 
 
   return (
-    <div className="bg-gray-100">
-      <Header />
-      <div
-        className="bg-gray-100 flex justify-center mt-3"
-        style={{ width: "100%" }}
-      >
+    (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
+      <div className="bg-gray-100">
+        <Header />
         <div
-          className={`${styles.productlist__border} grid grid-cols-12 justify-center flex ml-10 bg-white`}
-          style={{ width: "80%" }}
+          className="bg-gray-100 flex justify-center mt-3"
+          style={{ width: "100%" }}
         >
           <div
-            className={`${styles.productlist__border__filter} col-span-3 `}
-          // style={{ width: "70%", borderBottom: "" }}
-          // style={{ width: '300px' }}
+            className={`${styles.productlist__border} grid grid-cols-12 justify-center flex ml-10 bg-white`}
+            style={{ width: "80%" }}
           >
-            <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
-            {renderProductOrigin()}
-            <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Đánh giá</div>
-            <Checkbox className="mb-1">
-              <Rate disabled defaultValue={5} style={{ color: '#febb02', fontSize: '1rem' }} />
-            </Checkbox>
-            <Checkbox className="mb-1">
-              <Rate disabled defaultValue={4} style={{ color: '#febb02', fontSize: '1rem' }} />
-            </Checkbox>
-            <Checkbox className="mb-1">
-              <Rate disabled defaultValue={3} style={{ color: '#febb02', fontSize: '1rem' }} />
-            </Checkbox>
-            <Checkbox className="mb-1">
-              <Rate disabled defaultValue={2} style={{ color: '#febb02', fontSize: '1rem' }} />
-            </Checkbox>
-            <Checkbox className="mb-1">
-              <Rate disabled defaultValue={1} style={{ color: '#febb02', fontSize: '1rem' }} />
-            </Checkbox>
-            {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
-            {/* <Slider
+            <div
+              className={`${styles.productlist__border__filter} col-span-3 `}
+            // style={{ width: "70%", borderBottom: "" }}
+            // style={{ width: '300px' }}
+            >
+              <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
+              {renderProductOrigin()}
+              <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Đánh giá</div>
+              <Checkbox className="mb-1">
+                <Rate disabled defaultValue={5} style={{ color: '#febb02', fontSize: '1rem' }} />
+              </Checkbox>
+              <Checkbox className="mb-1">
+                <Rate disabled defaultValue={4} style={{ color: '#febb02', fontSize: '1rem' }} />
+              </Checkbox>
+              <Checkbox className="mb-1">
+                <Rate disabled defaultValue={3} style={{ color: '#febb02', fontSize: '1rem' }} />
+              </Checkbox>
+              <Checkbox className="mb-1">
+                <Rate disabled defaultValue={2} style={{ color: '#febb02', fontSize: '1rem' }} />
+              </Checkbox>
+              <Checkbox className="mb-1">
+                <Rate disabled defaultValue={1} style={{ color: '#febb02', fontSize: '1rem' }} />
+              </Checkbox>
+              {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
+              {/* <Slider
               style={{ marginTop: '50px' }}
               className="productlist__slider"
               range={{ draggableTrack: true }}
@@ -257,34 +262,34 @@ export default function ProductList(props) {
               max={maxCustom}
             /> */}
 
-          </div>
-          <div className="col-span-9">
-            <div
-              className={`${styles.productlist__border__general} flex justify-end `} style={{ width: "99%" }}
-            >
-              <select
-                className={`${styles.productlist__border__weight} mr-3 mt-3`}
-                onChange={(e) => {
-                  if (e.target.value == 1) {
-                    dispatch(sortProductListByPriceAscAction(props.match.params.id, 1000, 0));
-                  } else if (e.target.value == 2) {
-                    dispatch(sortProductListByPriceDescAction(props.match.params.id, 1000, 0));
-                  }
-                }}
-                defaultValue="Sắp xếp"
-                style={{ width: "150px" }}
-              >
-                <option disabled>Sắp xếp</option>
-                <option value="1">Giá: tăng dần</option>
-                <option value="2">Giá: giảm dần</option>
-              </select>
             </div>
-            <ProductsList className={`${styles.productlist__border__general}`} products={productListByCategoryId} />
-            {/* <Checkbox.Group
+            <div className="col-span-9">
+              <div
+                className={`${styles.productlist__border__general} flex justify-end `} style={{ width: "99%" }}
+              >
+                <select
+                  className={`${styles.productlist__border__weight} mr-3 mt-3`}
+                  onChange={(e) => {
+                    if (e.target.value == 1) {
+                      dispatch(sortProductListByPriceAscAction(props.match.params.id, 1000, 0));
+                    } else if (e.target.value == 2) {
+                      dispatch(sortProductListByPriceDescAction(props.match.params.id, 1000, 0));
+                    }
+                  }}
+                  defaultValue="Sắp xếp"
+                  style={{ width: "150px" }}
+                >
+                  <option disabled>Sắp xếp</option>
+                  <option value="1">Giá: tăng dần</option>
+                  <option value="2">Giá: giảm dần</option>
+                </select>
+              </div>
+              <ProductsList className={`${styles.productlist__border__general}`} products={productListByCategoryId} />
+              {/* <Checkbox.Group
               options={merchant.map(itemMerchant => ({ label: itemMerchant.name, value: itemMerchant.name }))}
               onChange={handleChangeCountry}
             /> */}
-            {/* <div className={`${styles.productlist__border__general} products grid grid-cols-5 mb-5`}>
+              {/* <div className={`${styles.productlist__border__general} products grid grid-cols-5 mb-5`}>
               {productListByCategoryId?.map((product) => (
                 <div>
                   <Product className="col-span-1" product={product} />
@@ -292,33 +297,33 @@ export default function ProductList(props) {
               ))}
             </div> */}
 
-            <div className="flex justify-center mb-4">
-              <Pagination
-                className="hover:text-green-800 focus:border-green-800"
-                current={currentCustom}
-                defaultCurrent={1}
-                pageSize={pageSizeCustom}
-                pageSizeOptions={[3, 5, 10]}
-                onChange={(page) => { handlePaginationChange(page) }}
-                showSizeChanger
-                onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
-                total={totalCustom.length}
-              />
+              <div className="flex justify-center mb-4">
+                <Pagination
+                  className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
+                  defaultCurrent={1}
+                  pageSize={pageSizeCustom}
+                  pageSizeOptions={[3, 5, 10]}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  showSizeChanger
+                  onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={totalCustom.length}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <hr className="border-2 border-green-800 mt-14" />
+        <hr className="border-2 border-green-800 mt-14" />
 
-      <div className="flex justify-center">
-        <div
-          className={`${styles.productlist__slogan__border} `}
-          style={{ width: "100%" }}
-        >
-          <Slogan />
+        <div className="flex justify-center">
+          <div
+            className={`${styles.productlist__slogan__border} `}
+            style={{ width: "100%" }}
+          >
+            <Slogan />
+          </div>
         </div>
-      </div>
-      <Footer />
-    </div>
+        <Footer />
+      </div> : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
   );
 }

@@ -5,6 +5,7 @@ import { connect, useSelector, useDispatch } from 'react-redux'
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { addNewUserForAdminAction } from "../../redux/action/user/UserAction";
+import { ADD_NEW_USER_DEMO } from "../../redux/type/user/UserType";
 
 function AddNewUser(props) {
   const {
@@ -224,27 +225,27 @@ const AddNewUserWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-    lastName: Yup.string()
-      .required("Không được để trống mục họ !!!")
-      .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
-    firstName: Yup.string()
-      .required("Không được để trống mục tên !!!")
-      .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
-    phoneNumber: Yup.string()
-      .required("Không được để trống mục số điện thoại !!!")
-      .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
-    email: Yup.string()
-      .required("Không được để trống mục email !!!")
-      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
-    role: Yup.string()
-      .required("Không được để trống vai trò !!!"),
-    password: Yup.string()
-      .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
-      .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-      .required("Không được để trống mục mật khẩu !!!")
-      .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
-    confirmPassword: Yup.string()
-      .required("Không được để trống mục nhập lại mật khẩu !!!")
+    // lastName: Yup.string()
+    //   .required("Không được để trống mục họ !!!")
+    //   .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
+    // firstName: Yup.string()
+    //   .required("Không được để trống mục tên !!!")
+    //   .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
+    // phoneNumber: Yup.string()
+    //   .required("Không được để trống mục số điện thoại !!!")
+    //   .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+    // email: Yup.string()
+    //   .required("Không được để trống mục email !!!")
+    //   .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+    // role: Yup.string()
+    //   .required("Không được để trống vai trò !!!"),
+    // password: Yup.string()
+    //   .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
+    //   .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
+    //   .required("Không được để trống mục mật khẩu !!!")
+    //   .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+    // confirmPassword: Yup.string()
+    //   .required("Không được để trống mục nhập lại mật khẩu !!!")
   }),
 
 
@@ -255,12 +256,17 @@ const AddNewUserWithFormik = withFormik({
       "user": {
         "fullname": values.lastName + " " + values.firstName,
         "email": values.email,
-        "role": values.role,
+        // "role": values.role,
+        "role": "Shopkeeper",
         "phonenumber": values.phoneNumber,
         "password": values.password
       }
     }
     console.log("REGISTER DATA: ", data);
+    props.dispatch({
+      type: ADD_NEW_USER_DEMO,
+      newUserDemoAction: data
+    })
     // props.dispatch(addNewUserForAdminAction(data));
   },
 

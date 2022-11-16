@@ -88,7 +88,7 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'POST',
             data: model,
-            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

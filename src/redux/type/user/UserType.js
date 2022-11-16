@@ -9,3 +9,4 @@ export const RESET_PASSWORD = "RESET_PASSWORD";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const GET_ALL_ROLE = "GET_ALL_ROLE";
+export const ADD_NEW_USER_DEMO = "ADD_NEW_USER_DEMO";

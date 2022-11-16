@@ -61,29 +61,29 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
-        <Route exact path="/orderpicking/:orderId" component={OrderPicking} />
+        {/* <Route exact path="/orderpicking/:orderId" component={OrderPicking} /> */}
         <Route exact path="/product/:categoryId/:id" component={ProductDetail} />
         <Route exact path="/productlist/:id" component={ProductList} />
-        <Route exact path="/purchasehistory" component={PurchaseHistory} />
-        <Route exact path="/blog" component={Blog} />
+        {/* <Route exact path="/purchasehistory" component={PurchaseHistory} /> */}
+        {/* <Route exact path="/blog" component={Blog} /> */}
         <Route exact path="/register" component={Register} />
         <Route exact path="/searchresult/:keyWord" component={SearchResult} />
-        <Route exact path="/revenuemanagement" component={RevenueManagement} />
-        <Route exact path="/shippermanagement" component={ShipperManagement} />
+        {/* <Route exact path="/revenuemanagement" component={RevenueManagement} /> */}
+        {/* <Route exact path="/shippermanagement" component={ShipperManagement} /> */}
         {/* <Route exact path="/deliverymanagement" component={DeliveryManagement} /> */}
         <Route exact path="/usermanagement" component={UserManagement} />
-        <Route exact path="/customermanagement" component={CustomerManagement} />
-        <Route exact path="/customerdetailmanagement" component={CustomerDetailManagement} />
-        <Route exact path="/shipperdetailmanagement" component={ShipperDetailManagement} />
+        {/* <Route exact path="/customermanagement" component={CustomerManagement} /> */}
+        {/* <Route exact path="/customerdetailmanagement" component={CustomerDetailManagement} /> */}
+        {/* <Route exact path="/shipperdetailmanagement" component={ShipperDetailManagement} /> */}
         <Route exact path="/userdetail" component={UserDetail} />
-        <Route exact path="/authorizationmanagement" component={AuthorizationManagement} />
+        {/* <Route exact path="/authorizationmanagement" component={AuthorizationManagement} /> */}
         {/* <Route exact path="/authorizationmanagement" component={AuthorizationManagementTabPane} /> */}
         <Route exact path="/userprofile/:userId" component={UserProfile} />
         <Route exact path="/managerprofile/:userId" component={ManagerProfile} />
         <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
         <Route exact path="/alluserorder/:userId" component={AllUserOrder} />
-        <Route exact path="/uploadpractice" component={UploadPractice} />
+        {/* <Route exact path="/uploadpractice" component={UploadPractice} /> */}
         <Route exact path="*" component={PageNotFound} />
       </Switch>
     </Router>

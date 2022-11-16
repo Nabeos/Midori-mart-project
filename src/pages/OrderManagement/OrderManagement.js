@@ -14,10 +14,15 @@ import CancelOrderManagement from "./CancelOrderManagement";
 import RefundOrderManagement from "./RefundOrderManagement";
 import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
 import CustomerCancelOrderManagement from "./CustomerCancelOrderManagement";
+import { Redirect } from 'react-router-dom';
+import { USER } from "../../redux/type/user/UserType";
 
 export default function OrderManagement() {
   // popup
   const dispatch = useDispatch();
+  // const user = useSelector(state => state.UserReducer.user);
+  let user = JSON.parse(localStorage.getItem(USER));
+  console.log("ROLE ID IN ORDER MANAGEMENT FOR SELLER: ", user?.roleId);
   const handleSelectTabPane = (key) => {
     console.log("KEY TỔNG: ", key);
     if (key == 1) {
@@ -40,63 +45,65 @@ export default function OrderManagement() {
     // }
   }
   return (
-    <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
-      <div className="col-span-2">
-        <SidebarShopkeeper />
-      </div>
-      <div className="col-span-10" style={{ height: "100%" }}>
-        <div className="flex items-center flex-col">
-          {/* header */}
-          <div
-            className="bg-white rounded-md flex mt-3"
-            style={{
-              width: "99%",
-              boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
-            }}
-          >
-            <HeaderManagement />
-          </div>
-          <div
-            className="bg-white rounded-md mt-3"
-            style={{
-              width: "99%",
-              height: "500%",
-              boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
-            }}
-          >
+    user?.roleId == 4 ?
+      <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
+        <div className="col-span-2">
+          <SidebarShopkeeper />
+        </div>
+        <div className="col-span-10" style={{ height: "100%" }}>
+          <div className="flex items-center flex-col">
+            {/* header */}
+            <div
+              className="bg-white rounded-md flex mt-3"
+              style={{
+                width: "99%",
+                boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
+              }}
+            >
+              <HeaderManagement />
+            </div>
+            <div
+              className="bg-white rounded-md mt-3"
+              style={{
+                width: "99%",
+                height: "500%",
+                boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
+              }}
+            >
 
-            {/* table for order Management */}
-            <div className="">
+              {/* table for order Management */}
+              <div className="">
 
-              <Tabs defaultActiveKey="1" className='ml-3' onChange={handleSelectTabPane}>
-                <Tabs.TabPane tab="Đơn hàng mới" key="1" >
-                  <NewOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng đã duyệt và chờ giao" key="2">
-                  <PendingOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng đang giao" key="3">
-                  <DeliveringOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng thành công" key="4">
-                  <SuccessfulOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng người bán hủy" key="5">
-                  <CancelOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng trả lại" key="6">
-                  <RefundOrderManagement />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng người mua hủy" key="7">
-                  <CustomerCancelOrderManagement />
-                </Tabs.TabPane>
-              </Tabs>
+                <Tabs defaultActiveKey="1" className='ml-3' onChange={handleSelectTabPane}>
+                  <Tabs.TabPane tab="Đơn hàng mới" key="1" >
+                    <NewOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng đã duyệt và chờ giao" key="2">
+                    <PendingOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng đang giao" key="3">
+                    <DeliveringOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng thành công" key="4">
+                    <SuccessfulOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng người bán hủy" key="5">
+                    <CancelOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng trả lại" key="6">
+                    <RefundOrderManagement />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Đơn hàng người mua hủy" key="7">
+                    <CustomerCancelOrderManagement />
+                  </Tabs.TabPane>
+                </Tabs>
+
+              </div>
 
             </div>
-
           </div>
         </div>
-      </div>
-    </div >
+      </div > : <Redirect to="/" />
+
   );
 }
