@@ -23,28 +23,28 @@ import ExportGoods from "./ExportGoods/ExportGoods";
 
 export default function InventoryManagement() {
   //product filter
-  const text = <span>Lọc sản phẩm</span>;
-  const content = (
-    <div
-      className="col-span-2 mt-3 pl-3"
-      style={{
-        minHeight: "20rem",
-      }}
-    >
-      <div className="mb-2">
-        <div className="font-semibold">Danh mục sản phẩm</div>
-        <Checkbox>Rau</Checkbox>
-        <Checkbox>Thịt</Checkbox>
-        <Checkbox>Đồ uống</Checkbox>
-      </div>
-      <div>
-        <div className="font-semibold">Trạng thái hàng trong kho</div>
-        <Checkbox>Còn hàng</Checkbox>
-        <Checkbox>Sắp hết hàng</Checkbox>
-        <Checkbox>Hết hàng</Checkbox>
-      </div>
-    </div>
-  );
+  // const text = <span>Lọc sản phẩm</span>;
+  // const content = (
+  //   <div
+  //     className="col-span-2 mt-3 pl-3"
+  //     style={{
+  //       minHeight: "20rem",
+  //     }}
+  //   >
+  //     <div className="mb-2">
+  //       <div className="font-semibold">Danh mục sản phẩm</div>
+  //       <Checkbox>Rau</Checkbox>
+  //       <Checkbox>Thịt</Checkbox>
+  //       <Checkbox>Đồ uống</Checkbox>
+  //     </div>
+  //     <div>
+  //       <div className="font-semibold">Trạng thái hàng trong kho</div>
+  //       <Checkbox>Còn hàng</Checkbox>
+  //       <Checkbox>Sắp hết hàng</Checkbox>
+  //       <Checkbox>Hết hàng</Checkbox>
+  //     </div>
+  //   </div>
+  // );
   // popup
   const [open, setOpen] = useState(false);
   const showModal = () => {

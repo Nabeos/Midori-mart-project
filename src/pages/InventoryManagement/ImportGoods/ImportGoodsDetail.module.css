@@ -1,0 +1,50 @@
+.importgoodsdetail__table__striped tr:nth-child(even){
+    background: #f2f2f2;
+}
+
+  
+  .importgoodsdetail__border__confirm:focus {
+    border-color: lightgray !important;
+    color: black !important;
+  }
+  
+  .importgoodsdetail__border__confirm:hover {
+    border-color: #166534 !important;
+    color: white;
+    background-color: #166534 !important;
+  }
+  
+  .importgoodsdetail__border__confirm {
+    border-radius: 5px !important;
+  }
+
+  
+  .importgoodsdetail__border__cancel:focus {
+    border-color: lightgray !important;
+    color: black !important;
+  }
+  
+  .importgoodsdetail__border__cancel:hover {
+    border-color: #c71606!important;
+    color: white;
+    background-color: #c71606 !important;
+  }
+  
+  .importgoodsdetail__border__cancel {
+    border-radius: 5px !important;
+  }
+
+  .importgoodsdetail__border__edit:focus {
+    border-color: lightgray !important;
+    color: black !important;
+  }
+  
+  .importgoodsdetail__border__edit:hover {
+    border-color: #ca7806!important;
+    color: white;
+    background-color: #ca7806 !important;
+  }
+  
+  .importgoodsdetail__border__edit {
+    border-radius: 5px !important;
+  }

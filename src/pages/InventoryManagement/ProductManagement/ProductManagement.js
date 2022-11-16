@@ -16,28 +16,28 @@ import AddNewProduct from '../AddNewProduct';
 
 
 export default function ProductManagement() {
-    const text = <span>Lọc sản phẩm</span>;
-    const content = (
-        <div
-            className="col-span-2 mt-3 pl-3"
-            style={{
-                minHeight: "20rem",
-            }}
-        >
-            <div className="mb-2">
-                <div className="font-semibold">Danh mục sản phẩm</div>
-                <Checkbox>Rau</Checkbox>
-                <Checkbox>Thịt</Checkbox>
-                <Checkbox>Đồ uống</Checkbox>
-            </div>
-            <div>
-                <div className="font-semibold">Trạng thái hàng trong kho</div>
-                <Checkbox>Còn hàng</Checkbox>
-                <Checkbox>Sắp hết hàng</Checkbox>
-                <Checkbox>Hết hàng</Checkbox>
-            </div>
-        </div>
-    );
+    // const text = <span>Lọc sản phẩm</span>;
+    // const content = (
+    //     <div
+    //         className="col-span-2 mt-3 pl-3"
+    //         style={{
+    //             minHeight: "20rem",
+    //         }}
+    //     >
+    //         <div className="mb-2">
+    //             <div className="font-semibold">Danh mục sản phẩm</div>
+    //             <Checkbox>Rau</Checkbox>
+    //             <Checkbox>Thịt</Checkbox>
+    //             <Checkbox>Đồ uống</Checkbox>
+    //         </div>
+    //         <div>
+    //             <div className="font-semibold">Trạng thái hàng trong kho</div>
+    //             <Checkbox>Còn hàng</Checkbox>
+    //             <Checkbox>Sắp hết hàng</Checkbox>
+    //             <Checkbox>Hết hàng</Checkbox>
+    //         </div>
+    //     </div>
+    // );
 
     const [open, setOpen] = useState(false);
     const showModal = () => {
@@ -52,16 +52,12 @@ export default function ProductManagement() {
     return (
         <div>
             <div className="flex">
-                <div className="mt-3 ml-3">
-                    {/* Product Filter Button */}
-                    <Popover
-                        placement="bottomLeft"
-                        title={text}
-                        content={content}
-                        trigger="click"
-                    >
-                        <Button className={`${styles.productmanagement__filter__button} flex no-shadow`}><FaFilter className="mt-1 mr-1" /> <span className="text-base font-medium"> Bộ lọc</span></Button>
-                    </Popover>
+                <div className="mt-3 ml-3" style={{ width: "100%" }}>
+                  <select className='rounded-md' style={{ border:"1px solid lightgray", minWidth: "10%", height: "2.5rem" }}>
+                    <option>Danh mục sản phẩm</option>
+                    <option>Thịt</option>
+                    <option>Hải sản</option>
+                  </select>
                 </div>
                 <div
                     className="rounded-md mt-3 flex items-end justify-end mr-3"
@@ -164,7 +160,7 @@ export default function ProductManagement() {
                                 <td className="border border-slate-300 text-center">
                                     <NavLink
                                         to={"/productdetailmanagement"}
-                                        className="flex justify-center text-green-700"
+                                        className="flex justify-center text-green-700 hover:text-green-700 "
                                     >
                                         <FaEye />
                                     </NavLink>
@@ -198,7 +194,7 @@ export default function ProductManagement() {
                                 <td className="border border-slate-300 text-center">
                                     <NavLink
                                         to={"/productdetailmanagement"}
-                                        className="flex justify-center text-green-700"
+                                        className="flex justify-center text-green-700 hover:text-green-700 "
                                     >
                                         <FaEye />
                                     </NavLink>

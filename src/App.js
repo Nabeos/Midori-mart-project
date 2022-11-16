@@ -42,6 +42,8 @@ import ShipperDetailManagement from './pages/ShipperManagement/ShipperDetailMana
 import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
 import UploadPractice from './pages/UploadPractice/UploadPractice';
 import AuthorizationManagementTabPane from './pages/AuthorizationManagement/AuthorizationManagementTabPane';
+import ImportSheet from './pages/InventoryManagement/ImportGoods/ImportSheet';
+import ImportGoodsDetail from './pages/InventoryManagement/ImportGoods/ImportGoodsDetail';
 
 
 
@@ -56,6 +58,8 @@ function App() {
         <Route exact path="/payment/:orderId" component={PaymentMethod} />
         <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
+        <Route exact path="/importsheet" component={ImportSheet} />
+        <Route exact path="/importgoodsdetail" component={ImportGoodsDetail} />
         {/* <Route exact path="/inventorymanagement" component={InventoryManagementTabPane} /> */}
         <Route exact path="/productdetailmanagement" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />

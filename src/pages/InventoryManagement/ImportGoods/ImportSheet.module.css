@@ -1,0 +1,35 @@
+.importsheet__table__striped tr:nth-child(even){
+    background: #f2f2f2;
+}
+
+  
+  .importsheet__border__confirm:focus {
+    border-color: lightgray !important;
+    color: black !important;
+  }
+  
+  .importsheet__border__confirm:hover {
+    border-color: #166534 !important;
+    color: white;
+    background-color: #166534 !important;
+  }
+  
+  .importsheet__border__confirm {
+    border-radius: 5px !important;
+  }
+
+  
+  .importsheet__border__cancel:focus {
+    border-color: lightgray !important;
+    color: black !important;
+  }
+  
+  .importsheet__border__cancel:hover {
+    border-color: #c71606!important;
+    color: white;
+    background-color: #c71606 !important;
+  }
+  
+  .importsheet__border__cancel {
+    border-radius: 5px !important;
+  }

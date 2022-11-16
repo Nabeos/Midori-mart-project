@@ -60,7 +60,7 @@ export default function OrderManagement() {
             className="bg-white rounded-md mt-3"
             style={{
               width: "99%",
-              height: "500%",
+              height: "52rem",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
             }}
           >
@@ -72,7 +72,7 @@ export default function OrderManagement() {
                 <Tabs.TabPane tab="Đơn hàng mới" key="1" >
                   <NewOrderManagement />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Đơn hàng đã duyệt và chờ giao" key="2">
+                <Tabs.TabPane tab="Đơn hàng đang xử lý" key="2">
                   <PendingOrderManagement />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Đơn hàng đang giao" key="3">

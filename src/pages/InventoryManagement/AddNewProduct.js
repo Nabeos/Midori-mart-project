@@ -205,7 +205,7 @@ export default function AddNewProduct() {
                     type="number"
                     id="quantity_in_stock"
                     className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                    placeholder="Giá tiền"
+                    placeholder="Số lượng hàng trong kho"
                     style={{ width: "100%", height: "3.6rem" }}
                   />
                 </Form.Item>

@@ -12,32 +12,35 @@ import {
 import { FaEye, FaFilter } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import styles from "./ImportGoods.module.css";
-import AddNewProduct from '../AddNewProduct';
+import { history } from '../../../App';
 
 
 export default function ImportGoods() {
-    const text = <span>Lọc sản phẩm</span>;
-    const content = (
-        <div
-            className="col-span-2 mt-3 pl-3"
-            style={{
-                minHeight: "20rem",
-            }}
-        >
-            <div className="mb-2">
-                <div className="font-semibold">Danh mục sản phẩm</div>
-                <Checkbox>Rau</Checkbox>
-                <Checkbox>Thịt</Checkbox>
-                <Checkbox>Đồ uống</Checkbox>
-            </div>
-            <div>
-                <div className="font-semibold">Trạng thái hàng trong kho</div>
-                <Checkbox>Còn hàng</Checkbox>
-                <Checkbox>Sắp hết hàng</Checkbox>
-                <Checkbox>Hết hàng</Checkbox>
-            </div>
-        </div>
-    );
+    const handleNavigateToImportSheet = () => {
+        history.push("/importsheet");
+      }
+    // const text = <span>Lọc sản phẩm</span>;
+    // const content = (
+    //     <div
+    //         className="col-span-2 mt-3 pl-3"
+    //         style={{
+    //             minHeight: "20rem",
+    //         }}
+    //     >
+    //         <div className="mb-2">
+    //             <div className="font-semibold">Danh mục sản phẩm</div>
+    //             <Checkbox>Rau</Checkbox>
+    //             <Checkbox>Thịt</Checkbox>
+    //             <Checkbox>Đồ uống</Checkbox>
+    //         </div>
+    //         <div>
+    //             <div className="font-semibold">Trạng thái hàng trong kho</div>
+    //             <Checkbox>Còn hàng</Checkbox>
+    //             <Checkbox>Sắp hết hàng</Checkbox>
+    //             <Checkbox>Hết hàng</Checkbox>
+    //         </div>
+    //     </div>
+    // );
 
     const [open, setOpen] = useState(false);
     const showModal = () => {
@@ -52,16 +55,12 @@ export default function ImportGoods() {
     return (
         <div>
             <div className="flex">
-                <div className="mt-3 ml-3">
-                    {/* Product Filter Button */}
-                    <Popover
-                        placement="bottomLeft"
-                        title={text}
-                        content={content}
-                        trigger="click"
-                    >
-                        <Button className={`${styles.importgoods__filter__button} flex no-shadow`}><FaFilter className="mt-1 mr-1" /> <span className="text-base font-medium"> Bộ lọc</span></Button>
-                    </Popover>
+            <div className="mt-3 ml-3" style={{ width: "100%" }}>
+                  <select className='rounded-md' style={{ border:"1px solid lightgray", minWidth: "10%", height: "2.5rem" }}>
+                    <option>Người tạo đơn</option>
+                    <option>Nguyen Van A</option>
+                    <option>Pham Thi B</option>
+                  </select>
                 </div>
                 <div
                     className="rounded-md mt-3 flex items-end justify-end mr-3"
@@ -83,19 +82,10 @@ export default function ImportGoods() {
                 <Button
                     type=""
                     className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
-                    onClick={showModal}
+                    onClick={handleNavigateToImportSheet}
                 >
-                    + Thêm sản phẩm mới
+                    + Tạo phiếu nhập kho
                 </Button>
-                <Modal
-                    open={open}
-                    title="Thêm sản phẩm mới"
-                    onCancel={handleCancel}
-                    footer={[]}
-                    width={900}
-                >
-                    <AddNewProduct />
-                </Modal>
             </div>
 
             {/* table for product Management */}
@@ -163,8 +153,8 @@ export default function ImportGoods() {
 
                                 <td className="border border-slate-300 text-center">
                                     <NavLink
-                                        to={"/productdetailmanagement"}
-                                        className="flex justify-center text-green-700"
+                                        to={"/importgoodsdetail"}
+                                        className="flex justify-center hover:text-green-700 text-green-700"
                                     >
                                         <FaEye />
                                     </NavLink>
@@ -197,8 +187,8 @@ export default function ImportGoods() {
 
                                 <td className="border border-slate-300 text-center">
                                     <NavLink
-                                        to={"/productdetailmanagement"}
-                                        className="flex justify-center text-green-700"
+                                        to={"/importgoodsdetail"}
+                                        className="flex justify-center text-green-700 hover:text-green-700 text-green-700"
                                     >
                                         <FaEye />
                                     </NavLink>
