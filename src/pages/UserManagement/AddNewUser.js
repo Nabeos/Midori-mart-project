@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./AddNewUser.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input } from "antd";
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import { addNewUserForAdminAction } from "../../redux/action/user/UserAction";
+import { addNewUserForAdminAction, getAllRoleInMidoriAction } from "../../redux/action/user/UserAction";
+import { ADD_NEW_USER_DEMO } from "../../redux/type/user/UserType";
 
 function AddNewUser(props) {
   const {
@@ -15,6 +16,11 @@ function AddNewUser(props) {
     handleBlur,
     handleSubmit,
   } = props;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllRoleInMidoriAction());
+  }, [])
 
   let roleList = useSelector(state => state.UserReducer.roleList);
   console.log("ROLE LIST: ", roleList);
@@ -42,7 +48,7 @@ function AddNewUser(props) {
                 }}
                 className='  text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5 hover:border-green-700'
                 placeholder="Nhập họ tại đây"
-                style={{ width: "90%", height: "5vh" }}
+                style={{ width: "90%", height: "40px" }}
               />
             </Form.Item>
             {errors.lastName && touched.lastName ? <div className='text-red-600'>{errors.lastName}</div> : <div></div>}
@@ -67,7 +73,7 @@ function AddNewUser(props) {
                   props.setFieldTouched('firstName')
                   handleChange(e)
                 }}
-                style={{ width: "100%", height: "5vh" }}
+                style={{ width: "100%", height: "40px" }}
               />
             </Form.Item>
             {errors.firstName && touched.firstName ? <div className='text-red-600'>{errors.firstName}</div> : <div></div>}
@@ -94,7 +100,7 @@ function AddNewUser(props) {
                 props.setFieldTouched('phoneNumber')
                 handleChange(e)
               }}
-              style={{ width: "100%", height: "5vh" }}
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {errors.phoneNumber && touched.phoneNumber ? <div className='text-red-600'>{errors.phoneNumber}</div> : <div></div>}
@@ -119,7 +125,7 @@ function AddNewUser(props) {
                 props.setFieldTouched('email')
                 handleChange(e)
               }}
-              style={{ width: "100%", height: "5vh" }}
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {errors.email && touched.email ? <div className='text-red-600'>{errors.email}</div> : <div></div>}
@@ -134,12 +140,21 @@ function AddNewUser(props) {
           <Form.Item className="mb-1">
             <select
               name="role"
-              className="border border-black pt-3 pb-3 text-base focus:border-green-900"
-              style={{ width: "100%", paddingLeft: '5px' }}
+              defaultValue={0}
+              onChange={e => {
+                props.setFieldTouched('role')
+                handleChange(e)
+              }}
+              className="border border-black rounded-md text-base focus:border-green-900"
+              style={{ width: "100%", paddingLeft: '5px', height: "40px" }}
             >
-              <option disabled>Chọn vai trò</option>
-              <option>Quản lí của hàng</option>
-              <option>Shipper</option>
+              <option value="0" disabled>Chọn vai trò</option>
+              {roleList.map((item, index) => {
+                return <option key={index} value={item.id}>
+                  {item.name}
+                </option>
+              })}
+
             </select>
           </Form.Item>
         </div>
@@ -157,12 +172,12 @@ function AddNewUser(props) {
               id="password"
               name="password"
               className='  text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5 hover:border-green-700'
-              placeholder="•••••••••"
+              placeholder="Nhập mật khẩu tại đây"
               onChange={e => {
                 props.setFieldTouched('password')
                 handleChange(e)
               }}
-              style={{ width: "100%", height: "5vh" }}
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {errors.password && touched.password ? <div className='text-red-600'>{errors.password}</div> : <div></div>}
@@ -185,8 +200,8 @@ function AddNewUser(props) {
                 handleChange(e)
               }}
               className='  text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5 hover:border-green-700'
-              placeholder="•••••••••"
-              style={{ width: "100%", height: "5vh" }}
+              placeholder="Nhập lại mật khẩu tại đây"
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {(errors.confirmPassword && touched.confirmPassword) || (values.confirmPassword != values.password && touched.confirmPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
@@ -251,6 +266,7 @@ const AddNewUserWithFormik = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
     console.log("VALUE FORM: ", values);
+    // alert("CÓ VÀO ADD NEW USER FOR ADMIN");
     let data = {
       "user": {
         "fullname": values.lastName + " " + values.firstName,
@@ -260,8 +276,8 @@ const AddNewUserWithFormik = withFormik({
         "password": values.password
       }
     }
-    console.log("REGISTER DATA: ", data);
-    // props.dispatch(addNewUserForAdminAction(data));
+    console.log("ADD NEW USER FOR ADMIN DATA: ", data);
+    props.dispatch(addNewUserForAdminAction(data));
   },
 
   displayName: 'AddNewUserWithFormik'

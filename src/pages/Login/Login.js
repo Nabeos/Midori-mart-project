@@ -160,8 +160,8 @@ const LoginWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     email: Yup.string()
-      .required("Quý khách không được để trống mục email !!!"),
-
+      .required("Quý khách không được để trống mục email !!!")
+      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
     password: Yup.string()
       .required("Quý khách vui lòng không được để trống mục password !!!")
   }),
@@ -175,7 +175,7 @@ const LoginWithFormik = withFormik({
         "password": values.password
       }
     }
-    console.log("data login: ", data);
+    // console.log("data login: ", data);
     props.dispatch(loginAction(data));
   },
 

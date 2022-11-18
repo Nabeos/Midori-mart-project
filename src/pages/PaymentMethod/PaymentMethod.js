@@ -8,10 +8,14 @@ import { Alert } from 'antd';
 import Swal from 'sweetalert2'
 import { SET_PAYMENT_BY_COD, SET_PAYMENT_BY_MOMO } from '../../redux/type/order/OrderType';
 import { createNewOrderAction } from '../../redux/action/order/OrderAction';
+import { USER } from '../../redux/type/user/UserType';
+import { Redirect } from 'react-router-dom';
 
 export default function PaymentMethod() {
     let totalBill = 0;
     let transferCost = 30000;
+    let user = JSON.parse(localStorage.getItem(USER));
+    console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
     const { cartList } = useSelector(state => state.CartReducer);
     const dispatch = useDispatch();
     const flagPayment = useSelector(state => state.OrderReducer.flagPayment);
@@ -46,7 +50,10 @@ export default function PaymentMethod() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     localStorage.removeItem("cart");
+                    localStorage.removeItem("deliveryDate");
+                    localStorage.removeItem("deliveryTimeRange");
                     history.push("/");
+                    window.location.reload();
                 }
             })
             localStorage.setItem("paymentMethod", flagPayment);
@@ -110,112 +117,113 @@ export default function PaymentMethod() {
     }
 
     return (
-        <div style={{ width: '75%', margin: '0 auto' }}>
-            <div className='grid grid-cols-12 gap-16'>
-                <div className='col-span-7'>
-                    <h3 className="font-normal mt-5 mb-3 cursor-pointer" onClick={handleReturnToHomePage}>Midori Mart</h3>
-                    <ul className="breadcrumb mb-3" style={{ fontSize: '0.8rem' }}>
-                        <li className={styles.payment__breadcrumb_item}>
-                            <NavLink to="/cart" className="text-black no-underline">Giỏ hàng/Cart</NavLink>
-                        </li>
-                        <li className={`${styles.payment__breadcrumb_item} breadcrumb-item-current`}>
-                            <NavLink to="/checkout/1000" className="text-black no-underline">Thông tin giao hàng/Information</NavLink>
+        (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
+            <div style={{ width: '75%', margin: '0 auto' }}>
+                <div className='grid grid-cols-12 gap-16'>
+                    <div className='col-span-7'>
+                        <h3 className="font-normal mt-5 mb-3 cursor-pointer" onClick={handleReturnToHomePage}>Midori Mart</h3>
+                        <ul className="breadcrumb mb-3" style={{ fontSize: '0.8rem' }}>
+                            <li className={styles.payment__breadcrumb_item}>
+                                <NavLink to="/cart" className="text-black no-underline">Giỏ hàng/Cart</NavLink>
+                            </li>
+                            <li className={`${styles.payment__breadcrumb_item} breadcrumb-item-current`}>
+                                <NavLink to="/checkout/1000" className="text-black no-underline">Thông tin giao hàng/Information</NavLink>
 
-                        </li>
-                        <li className="">
-                            Phương thức thanh toán/Payment method
-                        </li>
+                            </li>
+                            <li className="">
+                                Phương thức thanh toán/Payment method
+                            </li>
 
-                    </ul>
-                    <p className='font-bold mb-3 text-lg'>Phương thức vận chuyển/Transportation method</p>
-                    <div class="card text-black mb-5">
-                        <div className="card-body p-3">
-                            <div className='flex justify-between grid grid-cols-4'>
-                                <div className='col-span-3' style={{ fontSize: '0.9rem' }}>
-                                    <Checkbox className={`${styles.payment__checkbox} mr-2`} checked></Checkbox>
-                                    <span>Phí ship tạm tính - Midori Mart sẽ gọi xác nhận lại với quý khách</span><br />
-                                    <span>(Temporary shipping fee - Midori Mart will call to confirm with you)</span>
+                        </ul>
+                        <p className='font-bold mb-3 text-lg'>Phương thức vận chuyển/Transportation method</p>
+                        <div class="card text-black mb-5">
+                            <div className="card-body p-3">
+                                <div className='flex justify-between grid grid-cols-4'>
+                                    <div className='col-span-3' style={{ fontSize: '0.9rem' }}>
+                                        <Checkbox className={`${styles.payment__checkbox} mr-2`} checked></Checkbox>
+                                        <span>Phí ship tạm tính - Midori Mart sẽ gọi xác nhận lại với quý khách</span><br />
+                                        <span>(Temporary shipping fee - Midori Mart will call to confirm with you)</span>
+                                    </div>
+                                    <div className='text-right'>{transferCost.toLocaleString()}<span className='underline'>đ</span></div>
                                 </div>
-                                <div className='text-right'>{transferCost.toLocaleString()}<span className='underline'>đ</span></div>
                             </div>
+
+
                         </div>
 
+                        <p className='font-bold mb-3 text-lg'>Phương thức thanh toán/Payment method</p>
+                        <div class="card text-black mb-3">
+                            <div className='flex items-center card-header bg-white h-16'>
+                                {flagPayment == 1 ? <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox> : <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox>}
 
-                    </div>
+                                <div className='flex mb-0 items-center'>
+                                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=1" style={{ width: '50px' }} />
+                                    <p className='ml-3 mb-0'>Thanh toán khi giao hàng (Cash On Delivery)</p>
+                                </div>
+                            </div>
 
-                    <p className='font-bold mb-3 text-lg'>Phương thức thanh toán/Payment method</p>
-                    <div class="card text-black mb-3">
-                        <div className='flex items-center card-header bg-white h-16'>
-                            {flagPayment == 1 ? <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox> : <Checkbox className={`${styles.payment__checkbox} mr-2`} onChange={handlePaymentByCODChange} checked={flagPayment}></Checkbox>}
+                            <div className="flex items-center card-footer bg-white h-16">
+                                {flagPayment == 0 ? <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox> : <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox>}
+                                <div className='flex items-center'>
+                                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=1" style={{ width: '50px' }} />
+                                    <p className='mb-0 ml-3'>Thanh toán online qua ví MoMo (Pay with MoMo E-Wallet)</p>
+                                </div>
 
-                            <div className='flex mb-0 items-center'>
-                                <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=1" style={{ width: '50px' }} />
-                                <p className='ml-3 mb-0'>Thanh toán khi giao hàng (Cash On Delivery)</p>
                             </div>
                         </div>
-
-                        <div className="flex items-center card-footer bg-white h-16">
-                            {flagPayment == 0 ? <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox> : <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox>}
+                        <div className='grid grid-cols-2'>
                             <div className='flex items-center'>
-                                <img src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=1" style={{ width: '50px' }} />
-                                <p className='mb-0 ml-3'>Thanh toán online qua ví MoMo (Pay with MoMo E-Wallet)</p>
+                                <NavLink to="/checkout/1000" className="text-black no-underline" style={{ fontSize: '0.95rem' }}>Quay lại thông tin giao hàng/Back information</NavLink>
                             </div>
+                            <div className='text-right'>
+                                <button className='bg-green-700 text-white p-3 rounded-md hover:bg-green-800' onClick={handleFinishOrder}>
+                                    Hoàn tất đơn hàng/Finished
+                                </button>
+                            </div>
+                        </div>
+                    </div >
+                    <div className={`${styles.payment__right} col-span-5`}>
+                        <div className='flex flex-col'>
+                            <div className='mb-3 mt-5'>
+                                {handleRenderProductsInCart()}
+                            </div>
+                            <div className='flex justify-between mb-3'>
+                                <div className='flex-grow mr-2'>
+                                    <form className="mb-3">
+                                        <div className="form-group mb-3">
+                                            <input type="text" placeholder='Mã giảm giá/Voucher' className={`${styles.payment__voucher} form-control pl-0 shadow-none`} name="voucher" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div>
+                                    <button className='bg-green-700 text-white p-2 rounded-md hover:bg-green-800'>
+                                        Sử dụng/Use
+                                    </button>
+                                </div>
 
-                        </div>
-                    </div>
-                    <div className='grid grid-cols-2'>
-                        <div className='flex items-center'>
-                            <NavLink to="/checkout/1000" className="text-black no-underline" style={{ fontSize: '0.95rem' }}>Quay lại thông tin giao hàng/Back information</NavLink>
-                        </div>
-                        <div className='text-right'>
-                            <button className='bg-green-700 text-white p-3 rounded-md hover:bg-green-800' onClick={handleFinishOrder}>
-                                Hoàn tất đơn hàng/Finished
-                            </button>
+
+                            </div>
+                            <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
+                                <p className='mb-0'>Tạm tính/Notional price</p>
+                                <p className='mb-0'>{totalBill.toLocaleString()}<span className='underline'>đ</span></p>
+                            </div>
+                            <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
+                                <p className='pr-5 mb-0'>Phí vận chuyển tạm tính/Transfer costs</p>
+                                <p className='mb-0'>{transferCost.toLocaleString()}<span className='underline'>đ</span></p>
+                            </div>
+                            <div className={`flex justify-between ${styles.payment__totalBill}`}>
+                                <span className='flex items-center'>
+                                    <p className='pr-5'>Tổng cộng/Total</p>
+                                </span>
+                                <span className='flex'>
+                                    <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
+                                    <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
+                                </span>
+
+                            </div>
                         </div>
                     </div>
                 </div >
-                <div className={`${styles.payment__right} col-span-5`}>
-                    <div className='flex flex-col'>
-                        <div className='mb-3 mt-5'>
-                            {handleRenderProductsInCart()}
-                        </div>
-                        <div className='flex justify-between mb-3'>
-                            <div className='flex-grow mr-2'>
-                                <form className="mb-3">
-                                    <div className="form-group mb-3">
-                                        <input type="text" placeholder='Mã giảm giá/Voucher' className={`${styles.payment__voucher} form-control pl-0 shadow-none`} name="voucher" />
-                                    </div>
-                                </form>
-                            </div>
-                            <div>
-                                <button className='bg-green-700 text-white p-2 rounded-md hover:bg-green-800'>
-                                    Sử dụng/Use
-                                </button>
-                            </div>
-
-
-                        </div>
-                        <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
-                            <p className='mb-0'>Tạm tính/Notional price</p>
-                            <p className='mb-0'>{totalBill.toLocaleString()}<span className='underline'>đ</span></p>
-                        </div>
-                        <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
-                            <p className='pr-5 mb-0'>Phí vận chuyển tạm tính/Transfer costs</p>
-                            <p className='mb-0'>{transferCost.toLocaleString()}<span className='underline'>đ</span></p>
-                        </div>
-                        <div className={`flex justify-between ${styles.payment__totalBill}`}>
-                            <span className='flex items-center'>
-                                <p className='pr-5'>Tổng cộng/Total</p>
-                            </span>
-                            <span className='flex'>
-                                <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
-                                <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
-                            </span>
-
-                        </div>
-                    </div>
-                </div>
-            </div >
-        </div >
+            </div > : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
     )
 }

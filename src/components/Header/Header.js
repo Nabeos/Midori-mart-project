@@ -50,6 +50,9 @@ function Header(props) {
     localStorage.removeItem("totalBill");
     localStorage.removeItem("paymentMethod");
     localStorage.removeItem("receiveProductsMethod");
+    localStorage.removeItem("userDetailedInfoAdmin");
+    localStorage.removeItem("firstNameUserDetailedAdmin");
+    localStorage.removeItem("lastNameUserDetailedAdmin");
     history.push("/");
     window.location.reload();
   }
@@ -121,7 +124,7 @@ function Header(props) {
                   placeholder="Tìm kiếm sản phẩm"
                   onChange={handleChange}
                 />
-                <InputGroup.Text>
+                <InputGroup.Text className="text-white">
                   <SearchOutlined className="cursor-pointer" onClick={handleSubmit} />
                 </InputGroup.Text>
               </InputGroup>
@@ -137,7 +140,7 @@ function Header(props) {
                   placeholder="Tìm kiếm sản phẩm"
                   onChange={handleChange}
                 />
-                <InputGroup.Text>
+                <InputGroup.Text className="text-white">
                   <SearchOutlined className="cursor-pointer" onClick={handleSubmit} />
                 </InputGroup.Text>
               </InputGroup>

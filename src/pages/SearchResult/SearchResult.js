@@ -6,6 +6,8 @@ import styles from "./SearchResult.module.css";
 import { history } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "antd";
+import { USER } from '../../redux/type/user/UserType';
+import { Redirect } from 'react-router-dom';
 const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
@@ -76,6 +78,8 @@ function ProductsList(props) {
 }
 
 export default function SearchResult(props) {
+  let user = JSON.parse(localStorage.getItem(USER));
+  console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const returnSearchProductList = useSelector(state => state.ProductReducer.returnSearchProductList);
   const [state, setState] = useState({
     //Tạo ProductListReducer rồi dùng useSelector lấy về
@@ -86,46 +90,47 @@ export default function SearchResult(props) {
 
 
   return (
-    <div className="bg-gray-100">
-      <Header />
-      <div
-        className="bg-gray-100 flex justify-center mt-3"
-        style={{ width: "100%" }}
-      >
+    (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
+      <div className="bg-gray-100">
+        <Header />
         <div
-          className={`${styles.searchresult__border} flex flex-col ml-10 bg-white`}
-          style={{ width: "80%" }}
-        >
-          <div className="flex justify-start-start text-xl ml-2 mt-2 font-semibold">
-            Có <span className="text-green-700 mr-1 ml-1 font-bold">{returnSearchProductList.length}</span>{" "} sản phẩm cho{" "}
-            <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
-          </div>
-          <div>
-            <ProductsList
-              className={`${styles.searchresult__border__general}`}
-              products={returnSearchProductList}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            <Pagination
-              className="hover:text-green-800 focus:border-green-800"
-              defaultCurrent={1}
-              total={50}
-            />
-          </div>
-        </div>
-      </div>
-      <hr className="border-2 border-green-800 mt-14" />
-
-      <div className="flex justify-center">
-        <div
-          className={`${styles.searchresult__slogan__border} `}
+          className="bg-gray-100 flex justify-center mt-3"
           style={{ width: "100%" }}
         >
-          <Slogan />
+          <div
+            className={`${styles.searchresult__border} flex flex-col ml-10 bg-white`}
+            style={{ width: "80%" }}
+          >
+            <div className="flex justify-start-start text-xl ml-2 mt-2 font-semibold">
+              Có <span className="text-green-700 mr-1 ml-1 font-bold">{returnSearchProductList.length}</span>{" "} sản phẩm cho{" "}
+              <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
+            </div>
+            <div>
+              <ProductsList
+                className={`${styles.searchresult__border__general}`}
+                products={returnSearchProductList}
+              />
+            </div>
+            <div className="flex justify-center mb-4">
+              <Pagination
+                className="hover:text-green-800 focus:border-green-800"
+                defaultCurrent={1}
+                total={50}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </div>
+        <hr className="border-2 border-green-800 mt-14" />
+
+        <div className="flex justify-center">
+          <div
+            className={`${styles.searchresult__slogan__border} `}
+            style={{ width: "100%" }}
+          >
+            <Slogan />
+          </div>
+        </div>
+        <Footer />
+      </div> : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
   );
 }

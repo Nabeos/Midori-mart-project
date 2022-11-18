@@ -13,6 +13,22 @@ export class baseService {
         })
     }
 
+    putActivateUserAccount = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    putDeactivateUserAccount = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     putUpdateCustomerOrderForSeller = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -88,7 +104,7 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'POST',
             data: model,
-            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+            // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 
@@ -106,6 +122,14 @@ export class baseService {
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllUserListForAdminApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

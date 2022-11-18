@@ -65,7 +65,7 @@ export default function SidebarUserProfile(props) {
           className={`${styles.sidebaruserprofile__text} no-underline text-lg`}
           onClick={handleNavigateUserOrderHistory}
         >
-          Đơn hàng thành công
+          Đơn hàng đã giao thành công
         </NavLink>
       </div>
 

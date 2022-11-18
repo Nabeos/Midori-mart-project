@@ -13,7 +13,8 @@ import { handleQuantity } from '../../redux/action/cart/CartAction';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { DELETE_ALL_PRODUCTS_FROM_CART, REMOVE_PRODUCT_FROM_CART } from '../../redux/type/cart/CartType';
-
+import { Redirect } from 'react-router-dom';
+import { USER } from "../../redux/type/user/UserType";
 
 function Cart(props) {
     const {
@@ -25,6 +26,8 @@ function Cart(props) {
         handleSubmit,
     } = props;
     console.log("VALUES CART: ", values);
+    let user = JSON.parse(localStorage.getItem(USER));
+    console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
     const text = 'Quý khách muốn xóa sản phẩm này khỏi giỏ hàng?';
     const messageDeleteAllProducts = 'Quý khách muốn xóa tất cả sản phẩm khỏi giỏ hàng?'
     let productItemLocal = localStorage.getItem("productItem");
@@ -144,109 +147,110 @@ function Cart(props) {
         })
     }
     return (
-        (cartList?.length > 0 && cartList[0].quantity !== undefined && cartList[0].quantity !== NaN) ? <div>
-            <Header />
-            <div className='bg-gray-100 p-5'>
-                <div className={styles.cart__contains__items}>
-                    <div className='grid grid-cols-3 gap-12'>
-                        <div className='col-span-2 bg-white p-3 h-fit' style={{ border: '1px solid rgba(0, 0, 0, 0.1)', boxShadow: '3px 4px 9px 0 rgba(0, 0, 0, 0.4)' }}>
-                            <div className='d-flex justify-between mb-3'>
-                                <h3 className='text-black mb-3'>
-                                    Giỏ hàng
-                                </h3>
-                                <Popconfirm placement="top"
-                                    onConfirm={handleDeleteAllProductsFromCart}
-                                    title={messageDeleteAllProducts}
-                                    okText="Yes" cancelText="No">
-                                    <button className='bg-red-800 text-white p-2 w-24 rounded-md hover:bg-red-900'>Xóa tất cả</button>
-                                </Popconfirm>
+        (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
+            ((cartList?.length > 0 && cartList[0].quantity !== undefined && cartList[0].quantity !== NaN) ? <div>
+                <Header />
+                <div className='bg-gray-100 p-5'>
+                    <div className={styles.cart__contains__items}>
+                        <div className='grid grid-cols-3 gap-12'>
+                            <div className='col-span-2 bg-white p-3 h-fit' style={{ border: '1px solid rgba(0, 0, 0, 0.1)', boxShadow: '3px 4px 9px 0 rgba(0, 0, 0, 0.4)' }}>
+                                <div className='d-flex justify-between mb-3'>
+                                    <h3 className='text-black mb-3'>
+                                        Giỏ hàng
+                                    </h3>
+                                    <Popconfirm placement="top"
+                                        onConfirm={handleDeleteAllProductsFromCart}
+                                        title={messageDeleteAllProducts}
+                                        okText="Yes" cancelText="No">
+                                        <button className='bg-red-800 text-white p-2 w-24 rounded-md hover:bg-red-900'>Xóa tất cả</button>
+                                    </Popconfirm>
+
+                                </div>
+                                <Table className={styles.cart__table}>
+                                    <thead className='bg-green-700'>
+                                        <tr>
+                                            <th className={styles.cart__table__title}>Sản phẩm</th>
+                                            <th className={styles.cart__table__title} style={{ whiteSpace: 'nowrap' }}>Giá bán lẻ</th>
+                                            <th className={styles.cart__table__title}>Số lượng</th>
+                                            <th className={styles.cart__table__title} style={{ whiteSpace: 'nowrap' }}>Tổng tiền</th>
+                                            <th className={styles.cart__table__title}>Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {handleDisplayProductsInCart()}
+                                    </tbody>
+                                </Table>
+                            </div>
+                            <div className='p-3 bg-white h-fit' style={{ border: '1px solid rgba(0, 0, 0, 0.1)', boxShadow: '3px 4px 9px 0 rgba(0, 0, 0, 0.4)' }}>
+                                <p>Thời gian giao hàng</p>
+                                <form className="container-fluid" onSubmit={handleSubmit}>
+                                    <div className="grid grid-cols-2 gap-3 mb-3">
+                                        <div className="form-group">
+                                            <input type="date" value={values.deliveryDate} onChange={e => {
+                                                handleChange(e)
+                                            }} placeholder='Chọn ngày giao' className={`${styles.cart__deliveryDate} form-control shadow-none`} name="deliveryDate" min={moment().format("YYYY-MM-DD")} />
+                                            {errors.deliveryDate && touched.deliveryDate ? <div className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryDate}</div> : <div></div>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <select value={values.deliveryTime} onChange={e => {
+                                                localStorage.setItem("deliveryTimeRange", values.deliveryTime);
+                                                handleChange(e)
+                                            }} className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
+                                                <option value="" selected disabled>Chọn giờ giao</option>
+                                                <option value="9:00 - 10:00">9:00 - 10:00</option>
+                                                <option value="10:00 - 11:00">10:00 - 11:00</option>
+                                                <option value="11:00 - 12:00">11:00 - 12:00</option>
+                                                <option value="12:00 - 13:00">12:00 - 13:00</option>
+                                                <option value="13:00 - 14:00">13:00 - 14:00</option>
+                                                <option value="14:00 - 15:00">14:00 - 15:00</option>
+                                                <option value="15:00 - 16:00">15:00 - 16:00</option>
+                                                <option value="16:00 - 17:00">16:00 - 17:00</option>
+                                                <option value="17:00 - 18:00">17:00 - 18:00</option>
+                                                <option value="18:00 - 19:00">18:00 - 19:00</option>
+                                                <option value="19:00 - 20:00">19:00 - 20:00</option>
+                                            </select>
+                                            {errors.deliveryTime && touched.deliveryTime ? <span className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryTime}</span> : <span></span>}
+                                        </div>
+                                    </div>
+                                    <div className='d-flex justify-between mb-3'>
+                                        <span>Thành tiền</span>
+                                        <span>
+                                            <span className='text-black text-xl'>{totalBill.toLocaleString()}</span><span className='underline text-black text-xl'>đ</span>
+                                        </span>
+                                    </div>
+                                    <div className='mb-3'>
+                                        <span className=''>Ghi chú</span>
+                                        <textarea onChange={handleChange} className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="notes" name="notes" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
+                                    </div>
+                                    <div className='d-flex justify-center'>
+                                        <button type="submit" className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onSubmit={handleSubmit}>
+                                            Thanh toán
+                                        </button>
+                                    </div>
+                                </form>
 
                             </div>
-                            <Table className={styles.cart__table}>
-                                <thead className='bg-green-700'>
-                                    <tr>
-                                        <th className={styles.cart__table__title}>Sản phẩm</th>
-                                        <th className={styles.cart__table__title} style={{ whiteSpace: 'nowrap' }}>Giá bán lẻ</th>
-                                        <th className={styles.cart__table__title}>Số lượng</th>
-                                        <th className={styles.cart__table__title} style={{ whiteSpace: 'nowrap' }}>Tổng tiền</th>
-                                        <th className={styles.cart__table__title}>Xóa</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {handleDisplayProductsInCart()}
-                                </tbody>
-                            </Table>
-                        </div>
-                        <div className='p-3 bg-white h-fit' style={{ border: '1px solid rgba(0, 0, 0, 0.1)', boxShadow: '3px 4px 9px 0 rgba(0, 0, 0, 0.4)' }}>
-                            <p>Thời gian giao hàng</p>
-                            <form className="container-fluid" onSubmit={handleSubmit}>
-                                <div className="grid grid-cols-2 gap-3 mb-3">
-                                    <div className="form-group">
-                                        <input type="date" value={values.deliveryDate} onChange={e => {
-                                            handleChange(e)
-                                        }} placeholder='Chọn ngày giao' className={`${styles.cart__deliveryDate} form-control shadow-none`} name="deliveryDate" min={moment().format("YYYY-MM-DD")} />
-                                        {errors.deliveryDate && touched.deliveryDate ? <div className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryDate}</div> : <div></div>}
-                                    </div>
-
-                                    <div className="form-group">
-                                        <select value={values.deliveryTime} onChange={e => {
-                                            localStorage.setItem("deliveryTimeRange", values.deliveryTime);
-                                            handleChange(e)
-                                        }} className={`form-select ${styles.cart__deliveryDate} shadow-none`} name="deliveryTime" style={{ padding: '6px' }}>
-                                            <option value="" selected disabled>Chọn giờ giao</option>
-                                            <option value="9:00 - 10:00">9:00 - 10:00</option>
-                                            <option value="10:00 - 11:00">10:00 - 11:00</option>
-                                            <option value="11:00 - 12:00">11:00 - 12:00</option>
-                                            <option value="12:00 - 13:00">12:00 - 13:00</option>
-                                            <option value="13:00 - 14:00">13:00 - 14:00</option>
-                                            <option value="14:00 - 15:00">14:00 - 15:00</option>
-                                            <option value="15:00 - 16:00">15:00 - 16:00</option>
-                                            <option value="16:00 - 17:00">16:00 - 17:00</option>
-                                            <option value="17:00 - 18:00">17:00 - 18:00</option>
-                                            <option value="18:00 - 19:00">18:00 - 19:00</option>
-                                            <option value="19:00 - 20:00">19:00 - 20:00</option>
-                                        </select>
-                                        {errors.deliveryTime && touched.deliveryTime ? <span className='text-red-600' style={{ fontSize: '0.8rem' }}>{errors.deliveryTime}</span> : <span></span>}
-                                    </div>
-                                </div>
-                                <div className='d-flex justify-between mb-3'>
-                                    <span>Thành tiền</span>
-                                    <span>
-                                        <span className='text-black text-xl'>{totalBill.toLocaleString()}</span><span className='underline text-black text-xl'>đ</span>
-                                    </span>
-                                </div>
-                                <div className='mb-3'>
-                                    <span className=''>Ghi chú</span>
-                                    <textarea onChange={handleChange} className={`${styles.cart__deliveryDate} form-control mt-3 shadow-none`} id="notes" name="notes" rows="4" cols="50" placeholder='Quý khách vui lòng ghi chú thêm về đơn hàng nếu có thêm yêu cầu'></textarea>
-                                </div>
-                                <div className='d-flex justify-center'>
-                                    <button type="submit" className='bg-green-700 hover:bg-green-800 text-white p-2 rounded-md' onSubmit={handleSubmit}>
-                                        Thanh toán
-                                    </button>
-                                </div>
-                            </form>
 
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <Footer className="mt-5" />
-        </div > : <div>
-            <Header />
-            <div className={`${styles.cart__no__items} text-center`}>
-                <div className='flex justify-center items-center mb-3'>
-                    <img src={require('../../assets/images/cart.png')} style={{ width: '25%' }} />
+                <Footer className="mt-5" />
+            </div > : <div>
+                <Header />
+                <div className={`${styles.cart__no__items} text-center`}>
+                    <div className='flex justify-center items-center mb-3'>
+                        <img src={require('../../assets/images/cart.png')} style={{ width: '25%' }} />
+                    </div>
+
+                    <p className='mb-4'>Giỏ hàng chưa có sản phẩm nào</p>
+
+                    <button className='bg-green-700 text-white p-2 mb-3 rounded-md hover:bg-green-800' onClick={handleReturnHomepage}>
+                        Mua sắm ngay
+                    </button>
                 </div>
-
-                <p className='mb-4'>Giỏ hàng chưa có sản phẩm nào</p>
-
-                <button className='bg-green-700 text-white p-2 mb-3 rounded-md hover:bg-green-800' onClick={handleReturnHomepage}>
-                    Mua sắm ngay
-                </button>
-            </div>
-            <Footer />
-        </div>
+                <Footer />
+            </div>) : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
     )
 }
 

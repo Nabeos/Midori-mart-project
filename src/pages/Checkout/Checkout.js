@@ -8,6 +8,8 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { getUserProfileInformationAction } from '../../redux/action/user/UserAction';
 import { SET_HOME_DELIVERY_CHANGE, SET_PICK_UP_CHANGE } from '../../redux/type/order/OrderType';
+import { USER } from '../../redux/type/user/UserType';
+import { Redirect } from 'react-router-dom';
 
 function Checkout(props) {
     const {
@@ -19,7 +21,8 @@ function Checkout(props) {
         handleSubmit,
     } = props;
     const dispatch = useDispatch();
-
+    let user = JSON.parse(localStorage.getItem(USER));
+    console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
     useEffect(() => {
         dispatch(getUserProfileInformationAction());
     }, [])
@@ -80,75 +83,75 @@ function Checkout(props) {
 
 
     return (
-
-        <div style={{ width: '75%', margin: '0 auto' }}>
-            <div className='grid grid-cols-12 gap-16'>
-                <div className='col-span-7'>
-                    <h3 className="font-normal mt-5 mb-3 cursor-pointer" onClick={handleReturnToHomePage}>Midori Mart</h3>
-                    <ul className="breadcrumb mb-3" style={{ fontSize: '0.8rem' }}>
-                        <li className={styles.breadcrumb_item}>
-                            <NavLink to="/cart" className="text-black no-underline">Giỏ hàng/Cart</NavLink>
-                        </li>
-                        <li className={`${styles.breadcrumb_item} breadcrumb-item-current`}>
-                            Thông tin giao hàng/Information
-                        </li>
-                        <li className={`${styles.breadcrumb_item_inactive}`}>
-                            Phương thức thanh toán/Payment method
-                        </li>
-                    </ul>
-                    <h6 className='font-bold mb-3'>Thông tin/Information</h6>
-                    <p>
-                        <span className='mr-1'>Bạn đã có tài khoản?(Do you have account?)</span>
-                        <NavLink to="/login" className="text-black no-underline">Đăng nhập/Login</NavLink>
-                    </p>
-                    <form className="mb-3" onSubmit={handleSubmit}>
-                        <div className="form-group mb-2">
-                            <input type="text"
-                                value={values.fullName}
-                                onChange={e => {
-                                    props.setFieldTouched('fullName')
-                                    handleChange(e)
-                                }} placeholder='Họ và tên/Fullname *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="fullName" />
-                        </div>
-
-                        {errors.fullName && touched.fullName ? <div className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
-                        <div className='form-group grid grid-cols-12 mb-2 flex'>
-                            <div className='col-span-6 mr-2'>
-                                <input value={values.email} type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
-                                    props.setFieldTouched('email')
-                                    handleChange(e)
-                                }} name="email" />
-                                {errors.email && touched.email ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.email}</span> : <span></span>}
+        (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
+            <div style={{ width: '75%', margin: '0 auto' }}>
+                <div className='grid grid-cols-12 gap-16'>
+                    <div className='col-span-7'>
+                        <h3 className="font-normal mt-5 mb-3 cursor-pointer" onClick={handleReturnToHomePage}>Midori Mart</h3>
+                        <ul className="breadcrumb mb-3" style={{ fontSize: '0.8rem' }}>
+                            <li className={styles.breadcrumb_item}>
+                                <NavLink to="/cart" className="text-black no-underline">Giỏ hàng/Cart</NavLink>
+                            </li>
+                            <li className={`${styles.breadcrumb_item} breadcrumb-item-current`}>
+                                Thông tin giao hàng/Information
+                            </li>
+                            <li className={`${styles.breadcrumb_item_inactive}`}>
+                                Phương thức thanh toán/Payment method
+                            </li>
+                        </ul>
+                        <h6 className='font-bold mb-3'>Thông tin/Information</h6>
+                        <p>
+                            <span className='mr-1'>Bạn đã có tài khoản?(Do you have account?)</span>
+                            <NavLink to="/login" className="text-black no-underline">Đăng nhập/Login</NavLink>
+                        </p>
+                        <form className="mb-3" onSubmit={handleSubmit}>
+                            <div className="form-group mb-2">
+                                <input type="text"
+                                    value={values.fullName}
+                                    onChange={e => {
+                                        props.setFieldTouched('fullName')
+                                        handleChange(e)
+                                    }} placeholder='Họ và tên/Fullname *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="fullName" />
                             </div>
 
-                            <div className='col-span-6'>
-                                <input type="text" value={values.phoneNumber} className={`${styles.checkout__field} form-control shadow-none`} id="phoneNumber" onChange={e => {
-                                    props.setFieldTouched('phoneNumber')
-                                    handleChange(e)
-                                }} name="phoneNumber" placeholder="Số điện thoại/Phone *" />
-                                {errors.phoneNumber && touched.phoneNumber ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.phoneNumber}</span> : <span></span>}
-                            </div>
-
-                        </div>
-                        <div className="form-group">
-                            <div class="card text-black">
-                                <div className='flex items-center card-header bg-white h-12'>
-                                    {flag == 1 ? <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox> : <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox>}
-
-                                    <p className='mb-0'>
-                                        Giao tận nơi/Home delivery: Biểu phí giao hàng
-                                    </p>
+                            {errors.fullName && touched.fullName ? <div className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
+                            <div className='form-group grid grid-cols-12 mb-2 flex'>
+                                <div className='col-span-6 mr-2'>
+                                    <input value={values.email} type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
+                                        props.setFieldTouched('email')
+                                        handleChange(e)
+                                    }} name="email" />
+                                    {errors.email && touched.email ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.email}</span> : <span></span>}
                                 </div>
-                                {flag == 1 ? <div className="card-body p-3">
-                                    <div className=''>
-                                        <input type="text" value={values.address} placeholder='Địa chỉ giao hàng/Address *' onChange={e => {
-                                            props.setFieldTouched('address')
-                                            handleChange(e)
-                                        }} className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="address" />
-                                    </div>
-                                    {errors.address && touched.address ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.address}</span> : <span></span>}
 
-                                    {/* <div className='grid grid-cols-3 gap-3 mt-3'>
+                                <div className='col-span-6'>
+                                    <input type="text" value={values.phoneNumber} className={`${styles.checkout__field} form-control shadow-none`} id="phoneNumber" onChange={e => {
+                                        props.setFieldTouched('phoneNumber')
+                                        handleChange(e)
+                                    }} name="phoneNumber" placeholder="Số điện thoại/Phone *" />
+                                    {errors.phoneNumber && touched.phoneNumber ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.phoneNumber}</span> : <span></span>}
+                                </div>
+
+                            </div>
+                            <div className="form-group">
+                                <div class="card text-black">
+                                    <div className='flex items-center card-header bg-white h-12'>
+                                        {flag == 1 ? <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox> : <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox>}
+
+                                        <p className='mb-0'>
+                                            Giao tận nơi/Home delivery: Biểu phí giao hàng
+                                        </p>
+                                    </div>
+                                    {flag == 1 ? <div className="card-body p-3">
+                                        <div className=''>
+                                            <input type="text" value={values.address} placeholder='Địa chỉ giao hàng/Address *' onChange={e => {
+                                                props.setFieldTouched('address')
+                                                handleChange(e)
+                                            }} className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="address" />
+                                        </div>
+                                        {errors.address && touched.address ? <span className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.address}</span> : <span></span>}
+
+                                        {/* <div className='grid grid-cols-3 gap-3 mt-3'>
                                         <div className={styles.province__container}>
                                             <div className={styles.province__label__container}>
                                                 <label className={`${styles.checkout__shipping__province} field-label`} for="checkout__shipping__province"> Tỉnh /Province</label>
@@ -198,68 +201,68 @@ function Checkout(props) {
                                         </div>
 
                                     </div> */}
-                                </div> : <div></div>}
-                                <div className="flex items-center card-footer bg-white h-12">
-                                    {flag == 0 ? <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox> : <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox>}
-                                    <p className='mb-0'>Nhận tại cửa hàng/pick up at the store</p>
+                                    </div> : <div></div>}
+                                    <div className="flex items-center card-footer bg-white h-12">
+                                        {flag == 0 ? <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox> : <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox>}
+                                        <p className='mb-0'>Nhận tại cửa hàng/pick up at the store</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='grid grid-cols-4'>
-                            <div></div>
-                            <div className='col-span-3 text-right'>
-                                <button type="submit" onSubmit={handleSubmit} className='bg-green-700 mt-2 text-white p-3 rounded-md hover:bg-green-800'>
-                                    Tiếp tục đến phương thức thanh toán/Go payment method
-                                </button>
+                            <div className='grid grid-cols-4'>
+                                <div></div>
+                                <div className='col-span-3 text-right'>
+                                    <button type="submit" onSubmit={handleSubmit} className='bg-green-700 mt-2 text-white p-3 rounded-md hover:bg-green-800'>
+                                        Tiếp tục đến phương thức thanh toán/Go payment method
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
 
-                </div >
-                <div className={`${styles.checkout__right} col-span-5`}>
-                    <div className='flex flex-col'>
-                        <div className='mb-3 mt-5'>
-                            {handleRenderProductsInCart()}
-                        </div>
-                        <div className='flex justify-between mb-3'>
-                            <div className='flex-grow mr-2'>
-                                <form className="mb-3" onSubmit={handleSubmit}>
-                                    <div className="form-group mb-3">
-                                        <input type="text" placeholder='Mã giảm giá/Voucher' className={`${styles.checkout__voucher} form-control pl-0 shadow-none`} name="voucher" />
-                                    </div>
-                                </form>
+                    </div >
+                    <div className={`${styles.checkout__right} col-span-5`}>
+                        <div className='flex flex-col'>
+                            <div className='mb-3 mt-5'>
+                                {handleRenderProductsInCart()}
                             </div>
-                            <div className='text-right'>
-                                <button className='bg-green-700 text-white p-2 rounded-md hover:bg-green-800'>
-                                    Sử dụng/Use
-                                </button>
+                            <div className='flex justify-between mb-3'>
+                                <div className='flex-grow mr-2'>
+                                    <form className="mb-3" onSubmit={handleSubmit}>
+                                        <div className="form-group mb-3">
+                                            <input type="text" placeholder='Mã giảm giá/Voucher' className={`${styles.checkout__voucher} form-control pl-0 shadow-none`} name="voucher" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className='text-right'>
+                                    <button className='bg-green-700 text-white p-2 rounded-md hover:bg-green-800'>
+                                        Sử dụng/Use
+                                    </button>
+                                </div>
+
+
                             </div>
+                            <div className={`flex justify-between h-12 items-center mb-3 ${styles.checkout__totalBill}`}>
+                                <p className='mb-0'>Tạm tính/Notional price</p>
+                                <p className='mb-0'>{totalBill.toLocaleString()}<span className='underline'>đ</span></p>
+                            </div>
+                            <div className={`flex justify-between h-12 items-center mb-3 ${styles.checkout__totalBill}`}>
+                                <p className='pr-5 mb-0'>Phí vận chuyển tạm tính/Transfer costs</p>
+                                <p className='mb-0'>{transferCost.toLocaleString()}<span className='underline'>đ</span></p>
+                            </div>
+                            <div className={`flex justify-between ${styles.checkout__totalBill}`}>
+                                <span className='flex items-center'>
+                                    <p className='pr-5'>Tổng cộng/Total</p>
+                                </span>
+                                <span className='flex'>
+                                    <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
+                                    <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
 
+                                </span>
 
-                        </div>
-                        <div className={`flex justify-between h-12 items-center mb-3 ${styles.checkout__totalBill}`}>
-                            <p className='mb-0'>Tạm tính/Notional price</p>
-                            <p className='mb-0'>{totalBill.toLocaleString()}<span className='underline'>đ</span></p>
-                        </div>
-                        <div className={`flex justify-between h-12 items-center mb-3 ${styles.checkout__totalBill}`}>
-                            <p className='pr-5 mb-0'>Phí vận chuyển tạm tính/Transfer costs</p>
-                            <p className='mb-0'>{transferCost.toLocaleString()}<span className='underline'>đ</span></p>
-                        </div>
-                        <div className={`flex justify-between ${styles.checkout__totalBill}`}>
-                            <span className='flex items-center'>
-                                <p className='pr-5'>Tổng cộng/Total</p>
-                            </span>
-                            <span className='flex'>
-                                <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
-                                <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
-
-                            </span>
-
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div > : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
     )
 }
 

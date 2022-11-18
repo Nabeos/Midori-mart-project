@@ -8,6 +8,7 @@ import { getUserProfileInformationAction, updateUserProfileInformationAction, up
 import { history } from "../../App";
 import { getAllDistrictsByProvinceIdAction, getAllDistrictsDefaultByProvinceIdAction, getAllProvincesAction, getAllProvincesDesiredAction, getAllWardsByDistrictIdAction, getAllWardsDefaultByDistrictIdAction } from "../../redux/action/address/AddressAction";
 import { USER } from "../../redux/type/user/UserType";
+import { Redirect } from 'react-router-dom';
 
 function UserDetailInformation(props) {
   const {
@@ -19,6 +20,8 @@ function UserDetailInformation(props) {
     handleBlur,
     handleSubmit,
   } = props;
+  let user = JSON.parse(localStorage.getItem(USER));
+  console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const userProfileInfo = useSelector(state => state.UserReducer.userProfileInfo);
   let provinceId = useSelector(state => state.AddressReducer.provinceId);
   console.log("PROVINCE ID LẤY TỪ USER PROFILE: ", provinceId);
@@ -71,112 +74,113 @@ function UserDetailInformation(props) {
 
 
   return (
-    <div className="flex justify-center">
-      <form style={{ width: "80%" }} onSubmit={handleSubmit}>
-        <div className="text-xl font-bold mt-3 mb-3">Thông tin người dùng</div>
-        <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
-          <img
-            name="thumbnail"
-            src={values.thumbnail}
-            className="mr-5"
-            style={{ width: "150px", height: "150px", borderRadius: "50%" }}
-          />
-          <div className="flex whitespace-nowrap items-end">
-            <label htmlFor="filePicker" className="bg-green-700 text-white p-2" style={{ fontSize: '15px' }}>
-              Upload ảnh
-            </label>
-            <input type="file" id="filePicker" style={{ visibility: "hidden" }} name="file" placeholder='Upload an image'
-              onChange={uploadImage} />
+    (user?.roleId == 2) ?
+      <div className="flex justify-center">
+        <form style={{ width: "80%" }} onSubmit={handleSubmit}>
+          <div className="text-xl font-bold mt-3 mb-3">Thông tin người dùng</div>
+          <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
+            <img
+              name="thumbnail"
+              src={values.thumbnail}
+              className="mr-5"
+              style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+            />
+            <div className="flex whitespace-nowrap items-end">
+              <label htmlFor="filePicker" className="bg-green-700 text-white p-2" style={{ fontSize: '15px' }}>
+                Upload ảnh
+              </label>
+              <input type="file" id="filePicker" style={{ visibility: "hidden" }} name="file" placeholder='Upload an image'
+                onChange={uploadImage} />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-row ">
-          <div style={{ width: "100%" }} className="mr-2">
+          <div className="flex flex-row ">
+            <div style={{ width: "100%" }} className="mr-2">
+              <label
+                for="lastName"
+                className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+              >
+                <span className="text-lg ">Họ</span>
+              </label>
+              <div>
+                <input type="text"
+                  onChange={e => {
+                    props.setFieldTouched('lastName')
+                    handleChange(e)
+                  }}
+                  value={values.lastName}
+                  id="lastName"
+                  name="lastName"
+                  className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                  placeholder="Họ" />
+              </div>
+              {errors.lastName && touched.lastName ? <div className='text-red-600'>{errors.lastName}</div> : <div></div>}
+            </div>
+            <div style={{ width: "100%" }}>
+              <label
+                for="firstName"
+                className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+              >
+                <span className="text-lg">Tên</span>
+              </label>
+              <div>
+                <input type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={values.firstName}
+                  onChange={e => {
+                    props.setFieldTouched('firstName')
+                    handleChange(e)
+                  }}
+                  className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900`}
+                  placeholder="Tên" />
+              </div>
+              {errors.firstName && touched.firstName ? <div className='text-red-600'>{errors.firstName}</div> : <div></div>}
+            </div>
+          </div>
+
+          <div className="my-2">
             <label
-              for="lastName"
+              for="phoneNumber"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
-              <span className="text-lg ">Họ</span>
+              <span className="text-lg">Số điện thoại</span>
             </label>
             <div>
               <input type="text"
+                value={values.phoneNumber}
+                id="phoneNumber"
+                name="phoneNumber"
+                className={`${styles.userdetailInformation__border__hover} form-control text-gray-900 text-base rounded-lg shadow-none focus:border-green-900`}
+                placeholder="Quý khách nhập số điện thoại tại đây"
                 onChange={e => {
-                  props.setFieldTouched('lastName')
+                  props.setFieldTouched('phoneNumber')
                   handleChange(e)
-                }}
-                value={values.lastName}
-                id="lastName"
-                name="lastName"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="Họ" />
+                }} />
             </div>
-            {errors.lastName && touched.lastName ? <div className='text-red-600'>{errors.lastName}</div> : <div></div>}
+            {errors.phoneNumber && touched.phoneNumber ? <div className='text-red-600'>{errors.phoneNumber}</div> : <div></div>}
           </div>
-          <div style={{ width: "100%" }}>
+
+          <div className="">
             <label
-              for="firstName"
+              for="email"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
-              <span className="text-lg">Tên</span>
+              <span className="text-lg">Email</span>
             </label>
             <div>
               <input type="text"
-                id="firstName"
-                name="firstName"
-                value={values.firstName}
-                onChange={e => {
-                  props.setFieldTouched('firstName')
-                  handleChange(e)
-                }}
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900`}
-                placeholder="Tên" />
+                value={values.email}
+                disabled
+                id="email"
+                name="email"
+                className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base form-control rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                placeholder="Quý khách nhập email tại đây"
+                onChange={handleChange} />
             </div>
-            {errors.firstName && touched.firstName ? <div className='text-red-600'>{errors.firstName}</div> : <div></div>}
           </div>
-        </div>
-
-        <div className="my-2">
-          <label
-            for="phoneNumber"
-            className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-          >
-            <span className="text-lg">Số điện thoại</span>
-          </label>
-          <div>
-            <input type="text"
-              value={values.phoneNumber}
-              id="phoneNumber"
-              name="phoneNumber"
-              className={`${styles.userdetailInformation__border__hover} form-control text-gray-900 text-base rounded-lg shadow-none focus:border-green-900`}
-              placeholder="Quý khách nhập số điện thoại tại đây"
-              onChange={e => {
-                props.setFieldTouched('phoneNumber')
-                handleChange(e)
-              }} />
-          </div>
-          {errors.phoneNumber && touched.phoneNumber ? <div className='text-red-600'>{errors.phoneNumber}</div> : <div></div>}
-        </div>
-
-        <div className="">
-          <label
-            for="email"
-            className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-          >
-            <span className="text-lg">Email</span>
-          </label>
-          <div>
-            <input type="text"
-              value={values.email}
-              disabled
-              id="email"
-              name="email"
-              className={`${styles.userdetailInformation__border__hover} text-gray-900 text-base form-control rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="Quý khách nhập email tại đây"
-              onChange={handleChange} />
-          </div>
-        </div>
-        <div className="text-2xl font-bold mt-3 mb-3">Thông tin địa chỉ</div>
-        <div className="flex flex-row ">
-          {/* <div style={{ width: "100%" }} className="mr-2 mb-2">
+          <div className="text-2xl font-bold mt-3 mb-3">Thông tin địa chỉ</div>
+          <div className="flex flex-row ">
+            {/* <div style={{ width: "100%" }} className="mr-2 mb-2">
             <label
               for="provinces"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -228,9 +232,9 @@ function UserDetailInformation(props) {
             </div>
 
           </div> */}
-        </div>
-        <div className="flex flex-row">
-          {/* <div style={{ width: "100%" }} className="mr-2">
+          </div>
+          <div className="flex flex-row">
+            {/* <div style={{ width: "100%" }} className="mr-2">
             <label
               for="wards"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -251,40 +255,40 @@ function UserDetailInformation(props) {
               </select>
             </div>
           </div> */}
-          <div style={{ width: "100%" }}>
-            <label
-              for="detailAddress"
-              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-            >
-              <span className="text-lg">Địa chỉ cụ thể</span>
-            </label>
-            <div>
-              <input type="text"
-                onChange={handleChange}
-                value={values.detailAddress}
-                //value này ko phải dạng mảng mà nó là string và ta findIndex dấu "," thứ 3 rồi sau đó lấy sau đó
-                id="detailAddress"
-                name="detailAddress"
-                className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="Địa chỉ cụ thể"
-              />
+            <div style={{ width: "100%" }}>
+              <label
+                for="detailAddress"
+                className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+              >
+                <span className="text-lg">Địa chỉ cụ thể</span>
+              </label>
+              <div>
+                <input type="text"
+                  onChange={handleChange}
+                  value={values.detailAddress}
+                  //value này ko phải dạng mảng mà nó là string và ta findIndex dấu "," thứ 3 rồi sau đó lấy sau đó
+                  id="detailAddress"
+                  name="detailAddress"
+                  className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                  placeholder="Địa chỉ cụ thể"
+                />
 
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* delete and update button section */}
-        <div className="flex justify-end mb-4 mt-3" style={{ width: "100%" }}>
-          <button
-            type="submit"
-            onSubmit={handleSubmit}
-            className={`${styles.userdetailInformation__border__button} bg-green-800 text-white flex justify-center items-center p-2 font-semibold text-base focus:border-green-900 focus:text-green-900`}
-          >
-            CẬP NHẬT
-          </button>
-        </div>
-      </form >
-    </div >
+          {/* delete and update button section */}
+          <div className="flex justify-end mb-4 mt-3" style={{ width: "100%" }}>
+            <button
+              type="submit"
+              onSubmit={handleSubmit}
+              className={`${styles.userdetailInformation__border__button} bg-green-800 text-white flex justify-center items-center p-2 font-semibold text-base focus:border-green-900 focus:text-green-900`}
+            >
+              CẬP NHẬT
+            </button>
+          </div>
+        </form >
+      </div > : <Redirect to="/" />
   );
 }
 

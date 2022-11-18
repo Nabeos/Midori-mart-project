@@ -13,11 +13,11 @@ import {
 import { NavLink } from "react-router-dom";
 export default function EmailVerification() {
   return (
-    <div className="flex items-center flex-col justify-center" style={{height:"900px"}}>
+    <div className="flex items-center justify-center" style={{ height: "500px" }}>
       <div
-        className="bg-white rounded-md flex mt-3 flex-col justify-center"
+        className="bg-white rounded-md flex mt-36 flex-col items-center justify-center"
         style={{
-            height:"30rem",
+          height: "500px",
           width: "90%",
           boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
         }}
@@ -40,16 +40,19 @@ export default function EmailVerification() {
             </div>
           </NavLink>
         </div>
-        <div className="text-2xl font-bold text-center">
+        <div className="text-xl font-bold mb-2 text-center">
           Xác nhận địa chỉ email của bạn
         </div>
-        <div className="text-lg font-medium text-center">
-          Hãy xác nhận rằng bạn muốn sử dụng email này làm tài khoản để truy cập MidoriMart.<br/> Một khi hoàn thành xác nhận bạn sẽ được chuyển tiếp đến MidoriMart!
+        <div className="text-lg font-medium mb-2 text-center">
+          Hãy xác nhận để chúng tôi biết rằng bạn là người yêu cầu reset mật khẩu .<br /> Một khi hoàn thành xác nhận bạn sẽ nhận được email kèm mật khẩu mới từ chúng tôi!
+        </div>
+        <div className="text-lg font-medium mb-2 text-center font-bold">
+          Thân ái !
         </div>
         <div className="flex justify-center">
-            <Button className={`${styles.emailverification__verify__button} text-xl`} style={{width:"90%"}}>Xác nhận email</Button>
+          <Button className={`${styles.emailverification__verify__button} p-4 text-lg flex justify-center items-center`} style={{ width: "100%" }}>Xác nhận email</Button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

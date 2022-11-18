@@ -29,6 +29,26 @@ export class ProductManagementService extends baseService {
         return this.get(`product-management/products?category=${categoryId}&priceDesc=desc&limit=${limit}&offset=${offset}`);
     }
 
+    getBestSellerProductsInHomePage = () => {
+        return this.get(`products/best-sellers`);
+    }
+
+    getTopThreeBestSellerCategoriesInHomePage = () => {
+        return this.get(`category-management/categories/bestseller`);
+    }
+
+    getTopTwentyBestSellerProductOfBestSellerCategories = (categoryId) => {
+        return this.get(`product-management/products/best-seller?category=${categoryId}`);
+    }
+
+    getTopTwentyBestSellerProductOfSecondBestSellerCategories = (categoryId) => {
+        return this.get(`product-management/products/best-seller?category=${categoryId}`);
+    }
+
+    getTopTwentyBestSellerProductOfThirdBestSellerCategories = (categoryId) => {
+        return this.get(`product-management/products/best-seller?category=${categoryId}`);
+    }
+
 }
 
 export const productManagementService = new ProductManagementService();

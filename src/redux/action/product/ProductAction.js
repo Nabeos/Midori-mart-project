@@ -1,5 +1,5 @@
 import { productManagementService } from "../../../services/ProductManagementService";
-import { GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
 
 export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
     return async (dispatch) => {
@@ -104,6 +104,82 @@ export const sortProductListByPriceDescAction = (categoryId, limit, offset) => {
         }
     }
 }
+
+export const getBestSellerProductInHomepageAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getBestSellerProductsInHomePage();
+            console.log("RESULT BEST SELLER PRODUCTS IN HOMEPAGE: ", result.data.products);
+            dispatch({
+                type: GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE,
+                bestSellerProductsInHomepageAction: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const getTopThreeBestSellerCategoriesInHomepageAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getTopThreeBestSellerCategoriesInHomePage();
+            console.log("RESULT TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.categories);
+            dispatch({
+                type: GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE,
+                topThreeBestSellerCategoriesAction: result.data.categories
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const getTopTwentyBestSellerProductsOfBestSellerCategoriesAction = (categoryId) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getTopTwentyBestSellerProductOfBestSellerCategories(categoryId);
+            console.log("RESULT TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.products);
+            dispatch({
+                type: GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES,
+                topTwentyBestSellerProductOfBestSellerCategoriesListUpdateAction: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const getTopTwentyBestSellerProductsOfSecondBestSellerCategoriesAction = (categoryId) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getTopTwentyBestSellerProductOfSecondBestSellerCategories(categoryId);
+            console.log("RESULT SECOND TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.products);
+            dispatch({
+                type: GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES,
+                topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdateAction: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const getTopTwentyBestSellerProductsOfThirdBestSellerCategoriesAction = (categoryId) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getTopTwentyBestSellerProductOfThirdBestSellerCategories(categoryId);
+            console.log("RESULT THIRD TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.products);
+            dispatch({
+                type: GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES,
+                topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdateAction: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
 
 
 
