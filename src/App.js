@@ -46,6 +46,7 @@ import ImportSheet from './pages/InventoryManagement/ImportGoods/ImportSheet';
 import ImportGoodsDetail from './pages/InventoryManagement/ImportGoods/ImportGoodsDetail';
 import ExportSheet from './pages/InventoryManagement/ExportGoods/ExportSheet';
 import ExportGoodsDetail from './pages/InventoryManagement/ExportGoods/ExportGoodsDetail';
+import EmailVerification from './pages/EmailVerification/EmailVerification';
 
 
 
@@ -78,6 +79,7 @@ function App() {
         <Route exact path="/searchresult/:keyWord" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
+        <Route exact path="/emailverification" component={EmailVerification} />
         {/* <Route exact path="/deliverymanagement" component={DeliveryManagement} /> */}
         <Route exact path="/usermanagement" component={UserManagement} />
         <Route exact path="/customermanagement" component={CustomerManagement} />

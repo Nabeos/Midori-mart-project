@@ -1,0 +1,29 @@
+.emailverification__logo__m1{
+    color: #17782C
+}
+
+.emailverification__logo__m2{
+    color: #349275
+}
+.emailverification__logo {
+    object-fit: contain;
+    width: 100%;
+}
+.emailverification__verify__button{
+    background: #15803d!important;
+    border: 1px solid #15803d!important;
+    border-radius: 5px;
+    color: white!important;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 3.4rem;
+}
+
+.emailverification__verify__button:hover{
+    background: white!important;
+    border: 1px solid #15803d!important;
+    border-radius: 5px;
+    color: #15803d!important;
+}
