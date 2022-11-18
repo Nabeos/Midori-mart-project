@@ -14,7 +14,9 @@ body {
     sans-serif; */
   font-family: "Helvetica Neue", sans-serif !important;
   font-size: 16px;
+  box-sizing: border-box;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -235,4 +237,44 @@ code {
 
 .ant-modal-mask{
   background-color: rgba(0,0,0,0.1);
+}
+
+.ant-input[disabled]{
+  color: rgba(0,0,0,0.5);
+  background: #dddddd;
+}
+
+.input-group-text{
+  background-color: #15803d!important;
+  color: white;
+}
+
+.form-control:focus{
+  border-color: #15803d!important;
+}
+
+.slick-slider .slick-track, .slick-slider .slick-list{
+  /* width: 950px; */
+  /* transform:translate3d(0px, 0px, 0px)!important; */
+  min-width: 950px;
+  /* min-height: 0; */
+}
+
+.slick-next,.slick-prev{
+  background: transparent!important;
+  font-size: 30px!important;
+}
+
+.slick-prev:before, .slick-next:before{
+  color: green!important;
+  font-size: 30px!important;
+
+}
+
+.slick-prev{
+  left: -50px!important;
+}
+
+.slick-next{
+  right: -30px!important;
 }

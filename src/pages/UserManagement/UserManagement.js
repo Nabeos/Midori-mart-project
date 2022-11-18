@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin";
 import styles from "./UserManagement.module.css";
@@ -8,21 +8,26 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+
 import AddNewUser from "./AddNewUser";
 import { getAllUserListForAdminAction } from "../../redux/action/user/UserAction";
 import { Redirect } from 'react-router-dom';
-import { USER } from "../../redux/type/user/UserType";
+import { CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, USER } from "../../redux/type/user/UserType";
+import InputGroup from "react-bootstrap/InputGroup";
+import { SearchOutlined } from "@ant-design/icons";
+import { FormControl } from "react-bootstrap";
 
 
-function UserManagement(props) {
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = props;
+
+export default function UserManagement(props) {
+  // const {
+  //   values,
+  //   touched,
+  //   errors,
+  //   handleChange,
+  //   handleBlur,
+  //   handleSubmit,
+  // } = props;
   // const user = useSelector(state => state.UserReducer.user);
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN USER MANAGEMENT FOR ADMIN: ", user?.roleId);
@@ -35,16 +40,20 @@ function UserManagement(props) {
       <p>Log out</p>
     </div>
   );
-
+  const dispatch = useDispatch();
   // popup
-  const [openAddUser, setOpenAddUser] = useState(false);
+  const openAddNewUserForAdminPopup = useSelector(state => state.UserReducer.openAddNewUserForAdminPopup);
   const showModal = () => {
-    setOpenAddUser(true);
+    dispatch({
+      type: SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP
+    });
   };
   const handleCancel = () => {
-    setOpenAddUser(false);
+    dispatch({
+      type: CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP
+    })
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllUserListForAdminAction());
   }, [])
@@ -80,11 +89,17 @@ function UserManagement(props) {
             >
               <div className="rounded-md mt-3 flex justify-end mr-3">
                 <Form>
-                  <Input
-                    placeholder="Tìm kiếm"
-                    className="shadow-none hover:border-green-700 focus:border-green-700"
-                    style={{ width: "100%", height: "2.5rem" }}
-                  />
+                  <InputGroup className={` `} >
+                    <FormControl
+                      name="header__search"
+                      className={` form-control shadow-none outline-none `}
+                      placeholder="Tìm kiếm người dùng"
+                      style={{ width: '300px' }}
+                    />
+                    <InputGroup.Text className="text-white">
+                      <SearchOutlined className="cursor-pointer" />
+                    </InputGroup.Text>
+                  </InputGroup>
                 </Form>
               </div>
               <hr className="border border-gray-400" />
@@ -98,7 +113,7 @@ function UserManagement(props) {
                   + Thêm người dùng
                 </Button>
                 <Modal
-                  open={openAddUser}
+                  open={openAddNewUserForAdminPopup}
                   title="Thêm người dùng mới"
                   onCancel={handleCancel}
                   footer={[]}
@@ -292,7 +307,7 @@ function UserManagement(props) {
               <div className="flex justify-center" >
                 <table
                   className={`${styles.usermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                  style={{ width: "80%", minHeight: "60rem" }}
+                  style={{ width: "90%", minHeight: "780px" }}
                 >
                   <thead>
                     <tr>
@@ -300,17 +315,17 @@ function UserManagement(props) {
                         {" "}
                         STT
                       </th>
-                      <th className="border border-slate-300 p-4 text-lg text-center">
+                      <th className="border border-slate-300 p-4 text-lg text-center" style={{ width: '140px' }}>
                         {" "}
                         Họ và tên
                       </th>
-                      <th className="border border-slate-300 p-4 text-center">
+                      <th className="border border-slate-300 p-4 text-center" style={{ width: '100px' }}>
                         Email
                       </th>
-                      <th className="border border-slate-300 p-4 text-center">
+                      <th className="border border-slate-300 p-4 text-center" style={{ width: '120px' }}>
                         Số điện thoại
                       </th>
-                      <th className="border border-slate-300 p-4 text-center">
+                      <th className="border border-slate-300 p-4 text-center" style={{ width: '140px' }}>
                         Vai trò
                       </th>
                       <th className="border border-slate-300 p-4 text-center">
@@ -322,30 +337,41 @@ function UserManagement(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {userListDemo.map((item, index) => {
+                    {userListForAdmin.map((item, index) => {
                       console.log("ITEM USER MNGT: ", item);
                       return <tr>
-                        <td className="border border-slate-300 text-center">{index + 1}</td>
-                        <td className="border border-slate-300 text-center">
-                          {item.user.fullname}
+                        <td className="border border-slate-300 text-center p-2">{index + 1}</td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <span className="p-2">{item.fullname}</span>
                         </td>
-                        <td className="border border-slate-300 text-center">
-                          thanhdkhe150032@fpt.edu.vn
+                        <td className="border border-slate-300 text-center p-2">
+                          <span className="p-2">{item.email}</span>
                         </td>
-                        <td className="border border-slate-300 text-center">
-                          0385010068
+                        <td className="border border-slate-300 text-center p-2">
+                          {item.phonenumber}
                         </td>
-                        <td className="border border-slate-300 text-center">
-                          Admin
+                        <td className="border border-slate-300 text-center p-2">
+                          <span className="">{item.roleId == 1 ? "Quản trị viên" : ""}</span>
+                          <span className="">{item.roleId == 2 ? "Khách hàng có tài khoản" : ""}</span>
+                          <span className="">{item.roleId == 4 ? "Quản lý cửa hàng" : ""}</span>
                         </td>
-                        <td className="border border-slate-300 text-center">
-                          Available
+                        <td className="border border-slate-300 text-center p-2">
+                          {item.status == "Đang hoạt động" ? <span className="p-2 rounded-md bg-green-600 text-white">{item.status}</span> : <Fragment></Fragment>}
+                          {item.status == "Ngừng hoạt động" ? <span className="p-2 rounded-md bg-red-600 text-white">{item.status}</span> : <Fragment></Fragment>}
+
                         </td>
 
                         <td className="border border-slate-300 text-center">
                           <NavLink
-                            to={"/userdetail"}
+                            to={`/userdetail/${item.email}`}
                             className="flex justify-center text-green-700"
+                            onClick={() => {
+                              localStorage.setItem("userDetailedInfoAdmin", JSON.stringify(item));
+                              dispatch({
+                                type: GET_USER_DETAILED_INFORMATION_FOR_ADMIN,
+                                userDetailedInfoForAdminAction: item
+                              })
+                            }}
                           >
                             <FaEye />
                           </NavLink>
@@ -370,68 +396,68 @@ function UserManagement(props) {
       </div > : <Redirect to="/" />
   );
 }
-const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
-const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+// const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+// const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
+// const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 
-const UserManagementWithFormik = withFormik({
-  enableReinitialize: true,
-  mapPropsToValues: (props) => ({
-    lastName: "",
-    firstName: "",
-    phoneNumber: "",
-    email: "",
-    role: "",
-    password: "",
-    confirmPassword: ""
-  }),
+// const UserManagementWithFormik = withFormik({
+//   enableReinitialize: true,
+//   mapPropsToValues: (props) => ({
+//     lastName: "",
+//     firstName: "",
+//     phoneNumber: "",
+//     email: "",
+//     role: "",
+//     password: "",
+//     confirmPassword: ""
+//   }),
 
-  // Custom sync validation
-  validationSchema: Yup.object().shape({
-    lastName: Yup.string()
-      .required("Không được để trống mục họ !!!")
-      .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
-    firstName: Yup.string()
-      .required("Không được để trống mục tên !!!")
-      .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
-    phoneNumber: Yup.string()
-      .required("Không được để trống mục số điện thoại !!!")
-      .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
-    email: Yup.string()
-      .required("Không được để trống mục email !!!")
-      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
-    role: Yup.string()
-      .required("Không được để trống vai trò !!!"),
-    password: Yup.string()
-      .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
-      .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-      .required("Không được để trống mục mật khẩu !!!")
-      .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
-    confirmPassword: Yup.string()
-      .required("Không được để trống mục nhập lại mật khẩu !!!")
-  }),
+//   // Custom sync validation
+//   validationSchema: Yup.object().shape({
+//     lastName: Yup.string()
+//       .required("Không được để trống mục họ !!!")
+//       .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
+//     firstName: Yup.string()
+//       .required("Không được để trống mục tên !!!")
+//       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
+//     phoneNumber: Yup.string()
+//       .required("Không được để trống mục số điện thoại !!!")
+//       .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+//     email: Yup.string()
+//       .required("Không được để trống mục email !!!")
+//       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+//     role: Yup.string()
+//       .required("Không được để trống vai trò !!!"),
+//     password: Yup.string()
+//       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
+//       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
+//       .required("Không được để trống mục mật khẩu !!!")
+//       .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+//     confirmPassword: Yup.string()
+//       .required("Không được để trống mục nhập lại mật khẩu !!!")
+//   }),
 
 
-  handleSubmit: (values, { props, setSubmitting }) => {
-    console.log("CÓ VÀO HANDLE SUBMIT");
-    console.log("VALUE FORM: ", values);
-    let data = {
-      "user": {
-        "fullname": values.lastName + " " + values.firstName,
-        "email": values.email,
-        "phonenumber": values.phoneNumber,
-        "password": values.password
-      }
-    }
-    console.log("REGISTER DATA: ", data);
-  },
+//   handleSubmit: (values, { props, setSubmitting }) => {
+//     console.log("CÓ VÀO HANDLE SUBMIT");
+//     console.log("VALUE FORM: ", values);
+//     let data = {
+//       "user": {
+//         "fullname": values.lastName + " " + values.firstName,
+//         "email": values.email,
+//         "phonenumber": values.phoneNumber,
+//         "password": values.password
+//       }
+//     }
+//     console.log("REGISTER DATA: ", data);
+//   },
 
-  displayName: 'UserManagementWithFormik'
-})(UserManagement);
+//   displayName: 'UserManagementWithFormik'
+// })(UserManagement);
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//   }
+// }
 
-export default connect(mapStateToProps, null)(UserManagementWithFormik);
+// export default connect(mapStateToProps, null)(UserManagementWithFormik);

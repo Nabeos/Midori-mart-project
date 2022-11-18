@@ -1,5 +1,21 @@
 import axios from 'axios'
 import { inventoryManagementService } from '../../../services/InventoryManagementService';
+import { GET_ALL_PRODUCT_LIST_FOR_SELLER } from '../../type/inventory/InventoryType';
+
+export const getAllProductListForSellerAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.getAllProductListForSeller();
+            console.log("RESULT ALL PRODUCT LIST FOR SELLER: ", result);
+            dispatch({
+                type: GET_ALL_PRODUCT_LIST_FOR_SELLER,
+                allProductListForSellerAction: result
+            })
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+}
 
 export const getProductListByCategoryIdForSellerAction = () => {
     return async (dispatch) => {

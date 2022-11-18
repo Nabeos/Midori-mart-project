@@ -1,4 +1,4 @@
-import { GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
 
 const initialState = {
     productListByCategoryId: [
@@ -9,8 +9,14 @@ const initialState = {
     ],
     productDetail: {},
     returnSearchProductList: [],
-    bestSellerProductList: [],
-    starRate: 0
+    bestSellerProductList: [
+    ],
+    starRate: 0,
+    bestSellerProductsInHomepage: [],
+    topThreeBestSellerCategories: [],
+    topTwentyBestSellerProductOfBestSellerCategoriesList: [],
+    topTwentyBestSellerProductOfSecondBestSellerCategoriesList: [],
+    topTwentyBestSellerProductOfThirdBestSellerCategoriesList: []
 }
 
 export const ProductReducer = (state = initialState, action) => {
@@ -42,6 +48,7 @@ export const ProductReducer = (state = initialState, action) => {
         case GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID:
             let bestSellerProductListUpdate = [...state.bestSellerProductList];
             bestSellerProductListUpdate = action.bestSellerProductListAction;
+            // bestSellerProductListUpdate.push(action.bestSellerProductListAction);
             state.bestSellerProductList = bestSellerProductListUpdate;
             return { ...state }
         case SORT_PRODUCT_LIST_BY_PRICE_ASC:
@@ -53,6 +60,31 @@ export const ProductReducer = (state = initialState, action) => {
             let productListSortDescUpdate = [...state.productListByCategoryId];
             productListSortDescUpdate = action.productListByPriceDescAction;
             state.productListByCategoryId = productListSortDescUpdate;
+            return { ...state }
+        case GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE:
+            let bestSellerProductsInHomepageUpdate = [...state.bestSellerProductsInHomepage];
+            bestSellerProductsInHomepageUpdate = action.bestSellerProductsInHomepageAction;
+            state.bestSellerProductsInHomepage = bestSellerProductsInHomepageUpdate;
+            return { ...state }
+        case GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE:
+            let topThreeBestSellerCategoriesUpdate = [...state.topThreeBestSellerCategories];
+            topThreeBestSellerCategoriesUpdate = action.topThreeBestSellerCategoriesAction;
+            state.topThreeBestSellerCategories = topThreeBestSellerCategoriesUpdate;
+            return { ...state }
+        case GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES:
+            let topTwentyBestSellerProductOfBestSellerCategoriesListUpdate = [...state.topTwentyBestSellerProductOfBestSellerCategoriesList];
+            topTwentyBestSellerProductOfBestSellerCategoriesListUpdate = action.topTwentyBestSellerProductOfBestSellerCategoriesListUpdateAction;
+            state.topTwentyBestSellerProductOfBestSellerCategoriesList = topTwentyBestSellerProductOfBestSellerCategoriesListUpdate;
+            return { ...state }
+        case GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES:
+            let topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdate = [...state.topTwentyBestSellerProductOfSecondBestSellerCategoriesList];
+            topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdate = action.topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdateAction;
+            state.topTwentyBestSellerProductOfSecondBestSellerCategoriesList = topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdate;
+            return { ...state }
+        case GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES:
+            let topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdate = [...state.topTwentyBestSellerProductOfThirdBestSellerCategoriesList];
+            topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdate = action.topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdateAction;
+            state.topTwentyBestSellerProductOfThirdBestSellerCategoriesList = topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdate;
             return { ...state }
         default:
             return { ...state }

@@ -5,6 +5,10 @@ export class InventoryManagementService extends baseService {
         super();
     }
 
+    getAllProductListForSeller = () => {
+        return this.get(`product-management/products?limit=1000&offset=0`);
+    }
+
     getProductListByCategoryIdForSeller = () => {
         return this.get();
     }

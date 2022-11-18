@@ -50,7 +50,10 @@ export default function PaymentMethod() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     localStorage.removeItem("cart");
+                    localStorage.removeItem("deliveryDate");
+                    localStorage.removeItem("deliveryTimeRange");
                     history.push("/");
+                    window.location.reload();
                 }
             })
             localStorage.setItem("paymentMethod", flagPayment);

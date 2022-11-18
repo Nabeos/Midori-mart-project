@@ -1,0 +1,84 @@
+main {
+    display: grid;
+    gap: 50px;
+    padding: 50px;
+  }
+  
+  .filters {
+    border: 1px solid black;
+    padding: 10px;
+    position: sticky;
+    top: 50px;
+  }
+  
+  .bestseller {
+    display: grid;
+    gap: 50px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .bestseller {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bestseller__image{
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+  }
+  .bestseller-details {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .bestseller__slogan__border {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+    background-color: white;
+    margin-top: 2rem!important;
+  }
+  
+  .bestseller__border__weight {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 0.5rem;
+    padding-top: 0.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.2rem;
+    border-radius: 5px;
+  }
+  
+  .bestseller__border__general {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 0.5rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  
+  }
+  
+  .bestseller__border__filter{
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    margin-left: 1rem;
+  }
+  
+  .bestseller__cardtitle {
+    color: black;
+  }
+  
+  .bestseller__relatedproduct__border:hover{
+    box-shadow: 3px 4px 9px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
+  
+  .bestseller__relatedproduct__border{
+    border: lightgray
+  }
+  
+  .bestseller__addtocart__button{
+    margin-top: .2rem;
+    border: 1px solid #166534
+  }

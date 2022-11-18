@@ -16,18 +16,20 @@ function ForgotPassword(props) {
     handleChange,
     handleBlur,
     handleSubmit,
+    setFieldValue
   } = props;
 
-  console.log("INITIAL VALUES: ", values);
+  console.log("VALUES.EMAIL: ", values.email);
+
   return (
-    <div className="grid grid-cols-3 " style={{ minHeight: "100vh" }}>
+    <div className="grid grid-cols-3">
       <div className="col-span-2 flex items-center justify-center">
         <img
           src="./images/forgot_password.jpg"
           style={{ width: "73%", minHeight: "90vh" }}
         />
       </div>
-      <div className="flex justify-center flex-col col-span-1 -ml-16 -mt-10">
+      <div className="flex justify-center flex-col col-span-1 -ml-28 -mt-10">
         <div className="flex flex-col mb-4">
           <div className="flex ml-20">
             <NavLink
@@ -53,34 +55,35 @@ function ForgotPassword(props) {
         <Form
           name="normal_login"
           initialValues={{
+            remember: true,
           }}
           onSubmitCapture={handleSubmit}
         >
-          <div className="">
+          <div className="-mt-5">
             <label
               for="email"
               className="block mb-1 font-normal text-gray-900 dark:text-gray-300"
             >
               <span className="text-lg">Email</span>
             </label>
-            <Form.Item className="mb-1">
+            <Form.Item className="mb-1"
+            >
               <Input
                 type="text"
                 id="email"
                 name="email"
                 onChange={e => {
                   props.setFieldTouched('email')
-                  handleChange(e)
+                  // handleChange(e)
+                  setFieldValue('email', e.target.value)
                 }}
                 className={`${styles.forgotpassword__border__radius} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-                placeholder="abc@cgmail.com"
-                required=""
+                placeholder="abc@gmail.com"
                 style={{ width: "88%", minHeight: "40px" }}
               />
             </Form.Item>
             {errors.email && touched.email ? <div className='text-red-600'>{errors.email}</div> : <div></div>}
           </div>
-
           <div className="flex flex-col">
             <Form.Item>
               <Button
@@ -103,35 +106,48 @@ function ForgotPassword(props) {
               </NavLink>
             </div>
           </div>
+
+
         </Form>
       </div>
     </div>
   );
 }
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
 
 const ForgotPasswordWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
     email: "",
+    // password: "abc"
   }),
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
     email: Yup.string()
+      .email("Quý khách vui lòng nhập đúng định dạng email !!!")
       .required("Quý khách không được để trống mục email !!!")
-      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+    ,
+    // password: Yup.string()
+    // .matches(regexPassword, "abc")
+    // .required("Quý khách vui lòng không được để trống mục password !!!")
   }),
 
 
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
-    console.log("VALUE FORM: ", values);
-    // props.dispatch(resetPasswordAction());
+    alert("CÓ VÀO HANDLE SUBMIT");
+    let data = {
+      "information": {
+        "email": values.email,
+      }
+    }
+    console.log("data login: ", data);
+    props.dispatch(resetPasswordAction(data));
   },
 
-  displayName: 'FormatPasswordWithFormik'
+  displayName: 'LoginWithFormik'
 })(ForgotPassword);
-
 
 const mapStateToProps = (state) => {
   return {

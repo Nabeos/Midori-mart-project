@@ -42,6 +42,8 @@ import ShipperDetailManagement from './pages/ShipperManagement/ShipperDetailMana
 import AllUserOrder from './pages/AllUserOrder/AllUserOrder';
 import UploadPractice from './pages/UploadPractice/UploadPractice';
 import AuthorizationManagementTabPane from './pages/AuthorizationManagement/AuthorizationManagementTabPane';
+import MultipleRow from './components/MultipleRows/MultipleRow';
+import AllBestSellerProductsInHomepageInWeek from './pages/Homepage/AllBestSellerProductsInHomepageInWeek/AllBestSellerProductsInHomepageInWeek';
 
 
 
@@ -51,6 +53,7 @@ function App() {
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={Homepage} />
+        <Route exact path="/productlist/best-sellers" component={AllBestSellerProductsInHomepageInWeek} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/checkout/:orderId" component={Checkout} />
         <Route exact path="/payment/:orderId" component={PaymentMethod} />
@@ -75,7 +78,7 @@ function App() {
         {/* <Route exact path="/customermanagement" component={CustomerManagement} /> */}
         {/* <Route exact path="/customerdetailmanagement" component={CustomerDetailManagement} /> */}
         {/* <Route exact path="/shipperdetailmanagement" component={ShipperDetailManagement} /> */}
-        <Route exact path="/userdetail" component={UserDetail} />
+        <Route exact path="/userdetail/:userId" component={UserDetail} />
         {/* <Route exact path="/authorizationmanagement" component={AuthorizationManagement} /> */}
         {/* <Route exact path="/authorizationmanagement" component={AuthorizationManagementTabPane} /> */}
         <Route exact path="/userprofile/:userId" component={UserProfile} />
@@ -83,6 +86,7 @@ function App() {
         <Route exact path="/usersuccessfulorder/:userId" component={UserOrderHistory} />
         <Route exact path="/userorderpending/:userId" component={UserOrderPending} />
         <Route exact path="/alluserorder/:userId" component={AllUserOrder} />
+        <Route exact path="/multiplerow" component={MultipleRow} />
         {/* <Route exact path="/uploadpractice" component={UploadPractice} /> */}
         <Route exact path="*" component={PageNotFound} />
       </Switch>

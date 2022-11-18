@@ -91,6 +91,7 @@ export default function ProductList(props) {
     dispatch(getAllCategoriesAction());
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
     dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
+    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
