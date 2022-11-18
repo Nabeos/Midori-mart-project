@@ -162,7 +162,7 @@ export default function ProductManagement() {
                                         to={"/productdetailmanagement"}
                                         className="flex justify-center text-green-700 hover:text-green-700 "
                                     >
-                                        <FaEye />
+                                        <FaEye className='text-xl'/>
                                     </NavLink>
                                 </td>
                             </tr>
@@ -196,7 +196,7 @@ export default function ProductManagement() {
                                         to={"/productdetailmanagement"}
                                         className="flex justify-center text-green-700 hover:text-green-700 "
                                     >
-                                        <FaEye />
+                                        <FaEye className='text-xl'/>
                                     </NavLink>
                                 </td>
                             </tr>

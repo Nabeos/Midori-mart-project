@@ -338,7 +338,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -365,7 +365,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -392,7 +392,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -419,7 +419,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -446,7 +446,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -473,7 +473,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -500,7 +500,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -527,7 +527,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -554,7 +554,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -581,7 +581,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -608,7 +608,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>
@@ -635,7 +635,7 @@ function UserManagement(props) {
                         to={"/userdetail"}
                         className="flex justify-center text-green-700"
                       >
-                        <FaEye />
+                        <FaEye className='text-xl'/>
                       </NavLink>
                     </td>
                   </tr>

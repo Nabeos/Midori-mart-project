@@ -169,7 +169,7 @@ export default function ImportGoodsDetail() {
                         <tr>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             {" "}
-                            Đây là Import goods
+                            STT
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             {" "}
@@ -182,13 +182,13 @@ export default function ImportGoodsDetail() {
                             Danh mục sản phẩm
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
+                            Số lượng
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
                             Giá tiền
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
-                            Số lượng trong kho
-                          </th>
-                          <th className="border border-slate-300 p-4 text-base text-center">
-                            Trạng thái trong kho
+                            Thành tiền
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Xem chi tiết
@@ -210,15 +210,13 @@ export default function ImportGoodsDetail() {
                             Thịt
                           </td>
                           <td className="border border-slate-300 text-center">
-                            230000đ
-                          </td>
-                          <td className="border border-slate-300 text-center">
                             230
                           </td>
-                          <td className="border border-slate-300 text-center ">
-                            <span className="p-2 bg-green-700 rounded-md text-white">
-                              Còn hàng
-                            </span>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
                           </td>
 
                           <td className="border border-slate-300 text-center">
@@ -227,7 +225,7 @@ export default function ImportGoodsDetail() {
                               className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
                               onClick={showModalEdit}
                             >
-                              <FaEye />
+                              <FaEye className="text-xl" />
                             </Button>
                             <Modal
                               open={openEdit}
@@ -255,15 +253,13 @@ export default function ImportGoodsDetail() {
                             Thịt
                           </td>
                           <td className="border border-slate-300 text-center">
-                            230000đ
+                            230
                           </td>
                           <td className="border border-slate-300 text-center">
-                            0
+                            23.000đ
                           </td>
-                          <td className="border border-slate-300 text-center ">
-                            <span className="p-2 bg-red-700 rounded-md text-white">
-                              Hết hàng
-                            </span>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
                           </td>
 
                           <td className="border border-slate-300 text-center">
@@ -272,7 +268,7 @@ export default function ImportGoodsDetail() {
                               className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
                               onClick={showModalEdit}
                             >
-                              <FaEye />
+                              <FaEye className="text-xl" />
                             </Button>
                             <Modal
                               open={openEdit}

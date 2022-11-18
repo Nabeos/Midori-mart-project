@@ -109,7 +109,7 @@ export default function PendingOrderManagement() {
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
                     onClick={() => { showModal(item) }}
                   >
-                    <FaEye />
+                    <FaEye className='text-xl'/>
                   </Button>
                   <Modal
                     open={openModalPendingSeller}

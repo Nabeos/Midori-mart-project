@@ -167,60 +167,58 @@ export default function ExportSheet() {
                         style={{ width: "95%", minHeight: "10rem" }}
                       >
                         <thead>
-                          <tr>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              {" "}
-                              Đây là Import goods
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              {" "}
-                              Tên sản phẩm
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Mã SKU
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Danh mục sản phẩm
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Giá tiền
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Số lượng trong kho
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Trạng thái trong kho
-                            </th>
-                            <th className="border border-slate-300 p-4 text-base text-center">
-                              Xem chi tiết
-                            </th>
-                          </tr>
+                        <tr>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            {" "}
+                            STT
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            {" "}
+                            Tên sản phẩm
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Mã SKU
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Danh mục sản phẩm
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Số lượng
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Giá tiền
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Thành tiền
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
+                            Xem chi tiết
+                          </th>
+                        </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td className="border border-slate-300 text-center">
-                              1
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              Thịt nạc hảo hạng
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              23022001
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              Thịt
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              230000đ
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              230
-                            </td>
-                            <td className="border border-slate-300 text-center ">
-                              <span className="p-2 bg-green-700 rounded-md text-white">
-                                Còn hàng
-                              </span>
-                            </td>
+                          <td className="border border-slate-300 text-center">
+                            1
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            Thịt nạc hảo hạng
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23022001
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            Thịt
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            230
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
+                          </td>
   
                             <td className="border border-slate-300 text-center">
                               <Button
@@ -228,7 +226,7 @@ export default function ExportSheet() {
                                 className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
                                 onClick={showModalEdit}
                               >
-                                <FaEye />
+                                <FaEye className="text-xl"/>
                               </Button>
                               <Modal
                                 open={openEdit}
@@ -243,29 +241,27 @@ export default function ExportSheet() {
                           </tr>
   
                           <tr>
-                            <td className="border border-slate-300 text-center">
-                              2
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              Thịt nạc hảo hạng
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              23022001
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              Thịt
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              230000đ
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              0
-                            </td>
-                            <td className="border border-slate-300 text-center ">
-                              <span className="p-2 bg-red-700 rounded-md text-white">
-                                Hết hàng
-                              </span>
-                            </td>
+                          <td className="border border-slate-300 text-center">
+                            2
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            Thịt nạc hảo hạng
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23022001
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            Thịt
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            230
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
+                          </td>
+                          <td className="border border-slate-300 text-center">
+                            23.000đ
+                          </td>
   
                             <td className="border border-slate-300 text-center">
                               <Button
@@ -273,7 +269,7 @@ export default function ExportSheet() {
                                 className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
                                 onClick={showModalEdit}
                               >
-                                <FaEye />
+                                <FaEye className="text-xl"/>
                               </Button>
                               <Modal
                                 open={openEdit}
