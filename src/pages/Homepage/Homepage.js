@@ -35,7 +35,7 @@ export default function Homepage() {
       <CarouselBanner />
       <div style={{ width: "100%" }}>
 
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <div
             className={`${styles.homepage__dealhot__general} relative rounded-md bg-green-800 mt-20 flex justify-center`}
             style={{
@@ -68,7 +68,7 @@ export default function Homepage() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* best-seller product */}
 
         <div className="flex flex-col items-center -mt-10">

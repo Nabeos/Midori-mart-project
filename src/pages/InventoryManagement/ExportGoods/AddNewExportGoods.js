@@ -34,24 +34,7 @@ export default function AddNewExportGoods() {
     return (
         <div>
           <Form>
-            <div>
-            <div className="text-lg font-semibold">Ảnh sản phẩm</div>
-                  <div className="text-2xl font-bold mb-3 flex flex-row">
-                    <img
-                      src="https://cdn-crownx.winmart.vn/images/prod/162428206978510617958-kg-thit-dui-heo-meatdeli-(s)-og.jpg"
-                      className="mr-2"
-                      style={{ width: "30%" }}
-                    />
-                    <div className="flex items-end mb-3 -ml-3">
-                      <Upload {...props}>
-                        <Button className="focus:bg-white focus:text-black focus:border-gray-200 hover:bg-green-700 no-shadow hover:text-white hover:border-green-700">
-                          Tải ảnh lên
-                        </Button>
-                      </Upload>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row ">
+          <div className="flex flex-row ">
                   <div style={{ width: "100%" }}>
                     <label
                       for="product_name"
@@ -88,46 +71,7 @@ export default function AddNewExportGoods() {
                   </div>
                 </div>
     
-                <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="weight_unit"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Đơn vị tính</span>
-                    </label>
-                    <Form.Item name="weight_unit">
-                      <select
-                        className="border border-black text-lg rounded-md"
-                        id="weight_unit"
-                        style={{ width: "90%", height: "3.6rem" }}
-                      >
-                        <option>Đơn vị tính</option>
-                        <option id="gram">G</option>
-                        <option id="kilogram">KG</option>
-                        <option id="bottle">Chai</option>
-                      </select>
-                    </Form.Item>
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="weight_package"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Quy cách đóng gói</span>
-                    </label>
-    
-                    <Form.Item name="weight_package">
-                      <Input
-                        type="number"
-                        id="weight_package"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Quy cách đóng gói"
-                        style={{ width: "100%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                </div>
+          
     
                 <div className="flex flex-row ">
                   <div style={{ width: "100%" }}>
@@ -143,54 +87,30 @@ export default function AddNewExportGoods() {
                         id="price"
                         className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
                         placeholder="Giá tiền"
-                        style={{ width: "90%", height: "3.6rem" }}
+                        style={{ width: "45%", height: "3.6rem" }}
                       />
                     </Form.Item>
                   </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="product_discount"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Khuyến mãi</span>
-                    </label>
-    
-                    <Form.Item name="product_discount">
-                      <select
-                        className='border border-black text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        id="product_discount"
-                        style={{ width: "100%", height: "3.6rem" }}
-                      >
-                        <option>Khuyến mãi</option>
-                        <option id="">5%</option>
-                        <option id="kilogram">10%</option>
-                        <option id="bottle">15%</option>
-                      </select>
-                    </Form.Item>
-                  </div>
+               
                 </div>
     
                 <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
+                <div style={{ width: "100%" }}>
                     <label
-                      for="quantity_status"
+                      for="quantity_in_stock"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
-                      <span className="text-lg font-semibold">Trạng thái trong kho</span>
+                      <span className="text-lg font-semibold">Số lượng xuất kho</span>
                     </label>
-                    <Form.Item name="quantity_status">
-                      <select
-                        className="border border-black text-lg rounded-md"
-                        id="quantity_status"
+    
+                    <Form.Item name="quantity_in_stock">
+                      <Input
+                        type="number"
+                        id="quantity_in_stock"
+                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
+                        placeholder="Số lượng xuất kho"
                         style={{ width: "90%", height: "3.6rem" }}
-                      >
-                        <option className="text-opacity-10">
-                          Trạng thái trong kho
-                        </option>
-                        <option id="full">Còn hàng</option>
-                        <option id="low">Sắp hết hàng</option>
-                        <option id="empty">Hết hàng</option>
-                      </select>
+                      />
                     </Form.Item>
                   </div>
                   <div style={{ width: "100%" }}>
@@ -219,7 +139,7 @@ export default function AddNewExportGoods() {
                       for="product_origin"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
-                      <span className="text-lg font-semibold">Xuất sứ</span>
+                      <span className="text-lg font-semibold">Xuất xứ</span>
                     </label>
                     <Form.Item name="product_origin">
                       <select
@@ -227,7 +147,7 @@ export default function AddNewExportGoods() {
                         id="product_origin"
                         style={{ width: "90%", height: "3.6rem" }}
                       >
-                        <option className="text-opacity-10">Xuất sứ</option>
+                        <option className="text-opacity-10">Xuất xứ</option>
                         <option id="vietnam">Việt Nam</option>
                         <option id="russia">Nga</option>
                         <option id="germany">Đức</option>
@@ -265,7 +185,7 @@ export default function AddNewExportGoods() {
                       for="imported_date"
                       className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
                     >
-                      <span className="text-lg font-semibold">Ngày nhập kho</span>
+                      <span className="text-lg font-semibold">Ngày xuất kho</span>
                     </label>
                     <Form.Item name="imported_date">
                       <Input
@@ -296,48 +216,7 @@ export default function AddNewExportGoods() {
                     </Form.Item>
                   </div>
                 </div>
-    
-                <div className="mb-3">
-                  <label
-                    for="product_description"
-                    className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                  >
-                    <span className="text-lg font-semibold">Mô tả sản phẩm</span>
-                  </label>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data="<p>Hello from CKEditor 5!</p>"
-                    config={{
-                      toolbar: [
-                        "heading",
-                        "|",
-                        "bold",
-                        "italic",
-                        "blockQuote",
-                        "link",
-                        "numberedList",
-                        "bulletedList",
-                        "|",
-                        "undo",
-                        "redo",
-                      ],
-                    }}
-                    onReady={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
-                  />
-                </div>
+               
     
             <Button
               type="default"
