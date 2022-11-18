@@ -188,7 +188,7 @@ export default function ImportGoods() {
                                 <td className="border border-slate-300 text-center">
                                     <NavLink
                                         to={"/importgoodsdetail"}
-                                        className="flex justify-center text-green-700 hover:text-green-700 text-green-700"
+                                        className="flex justify-center text-green-700 hover:text-green-700 "
                                     >
                                         <FaEye />
                                     </NavLink>

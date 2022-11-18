@@ -44,6 +44,8 @@ import UploadPractice from './pages/UploadPractice/UploadPractice';
 import AuthorizationManagementTabPane from './pages/AuthorizationManagement/AuthorizationManagementTabPane';
 import ImportSheet from './pages/InventoryManagement/ImportGoods/ImportSheet';
 import ImportGoodsDetail from './pages/InventoryManagement/ImportGoods/ImportGoodsDetail';
+import ExportSheet from './pages/InventoryManagement/ExportGoods/ExportSheet';
+import ExportGoodsDetail from './pages/InventoryManagement/ExportGoods/ExportGoodsDetail';
 
 
 
@@ -60,6 +62,8 @@ function App() {
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
         <Route exact path="/importsheet" component={ImportSheet} />
         <Route exact path="/importgoodsdetail" component={ImportGoodsDetail} />
+        <Route exact path="/exportsheet" component={ExportSheet} />
+        <Route exact path="/exportgoodsdetail" component={ExportGoodsDetail} />
         {/* <Route exact path="/inventorymanagement" component={InventoryManagementTabPane} /> */}
         <Route exact path="/productdetailmanagement" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />
