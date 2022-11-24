@@ -49,7 +49,7 @@ export default function OrderManagement() {
   }
   return (
     user?.roleId == 4 ?
-      <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
+      <div className="bg-gray-200 grid grid-cols-12" style={{ minHeight: "970px" }}>
         <div className="col-span-2">
           <SidebarShopkeeper />
         </div>

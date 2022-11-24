@@ -62,11 +62,11 @@ function UserManagement(props) {
 
   return (
     user?.roleId == 1 ?
-      <div className="bg-gray-200 grid grid-cols-12" style={{ height: "100%" }}>
+      <div className="bg-gray-200 grid grid-cols-12" style={{ height: "1220px" }}>
         <div className="col-span-2">
           <SidebarAdmin />
         </div>
-        <div className="col-span-10" style={{ height: "100%" }}>
+        <div className="col-span-10" style={{ height: "1000px" }}>
           <div className="flex items-center flex-col">
             {/* header */}
             <div
@@ -315,7 +315,7 @@ function UserManagement(props) {
               <div className="flex justify-center" style={{ minHeight: "440px" }}>
                 <table
                   className={`${styles.usermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                  style={{ width: "90%", minHeight: userListForAdmin.length < 7 ? "300px" : "780px" }}
+                  style={{ width: "90%", minHeight: userListForAdmin.length < 7 ? "400px" : "780px" }}
                 >
                   <thead>
                     <tr>

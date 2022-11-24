@@ -16,9 +16,9 @@ export default function HeaderManagement() {
   // avatar hover
   const content = (
     <div className="flex flex-col mr-8" style={{ width: "5rem" }}>
-      <NavLink to={"/"} style={{ width: "50rem" }} className="text-black no-underline">Management page</NavLink>
-      <NavLink to={`/managerprofile/${user.email}`} className="text-black no-underline" style={{ width: "50rem" }}>Setting</NavLink>
-      <p className="cursor-pointer" onClick={handleLogOut}>Log out</p>
+      <NavLink to={"/"} style={{ width: "7.5rem" }} className="text-black no-underline hover:bg-gray-300">Management page</NavLink>
+      <NavLink to={`/managerprofile/${user.email}`} className="text-black no-underline hover:bg-gray-300" style={{ width: "7.5rem" }}>Setting</NavLink>
+      <p className="cursor-pointer hover:bg-gray-300" style={{ width: "7.5rem" }} onClick={handleLogOut}>Log out</p>
     </div>
   );
   return (

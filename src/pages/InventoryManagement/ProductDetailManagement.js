@@ -79,7 +79,7 @@ function ProductDetailManagement(props) {
         style={{ width: "100%" }}
       >
         <div
-          className="bg-white rounded-md flex mt-3"
+          className="bg-white rounded-md flex mt-3 justify-end"
           style={{
             width: "90%",
             boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
