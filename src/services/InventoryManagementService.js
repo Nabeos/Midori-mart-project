@@ -49,8 +49,12 @@ export class InventoryManagementService extends baseService {
         return this.get(`api/merchants`);
     }
 
-    searchImportGoodsFormForSellerByTimeRange = () => {
-        return this.get();
+    searchImportGoodsFormForSellerByTimeRange = (firstDate, secondDate) => {
+        return this.getSearchImportGoodsFormForSellerByTimeRange(`api/v1/received-notes?firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
+    }
+
+    searchImportGoodsFormForSellerByTimeRangeAndSeller = (userId, firstDate, secondDate) => {
+        return this.getSearchImportGoodsFormForSellerByTimeRangeAndSeller(`api/v1/received-notes?user=${userId}&firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
     }
 
     searchExportGoodsFormForSeller = (keyWord) => {
@@ -69,8 +73,12 @@ export class InventoryManagementService extends baseService {
         return this.putDeleteImportGoodsOrder(`api/v1/received-notes?id=${formId}`);
     }
 
-    getAllImportGoodsOrderListByCreator = () => {
-        return this.get();
+    getAllSellers = () => {
+        return this.getAllSellersApi(`api/v1/user-management/users/sellers`);
+    }
+
+    getAllImportGoodsOrderListByCreator = (userId) => {
+        return this.getAllImportGoodsOrderListByCreatorApi(`api/v1/received-notes/users?id=${userId}&offset=0&limit=1000`);
     }
 
     getImportGoodsOrderDetailedInformation = () => {

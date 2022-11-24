@@ -1,4 +1,4 @@
-import { Button, Modal, Pagination, Form, Input } from "antd";
+import { Button, Modal, Pagination, Form, Input, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaEye } from "react-icons/fa";
 import HeaderManagement from "../../../components/HeaderManagement/HeaderManagement";
@@ -9,7 +9,7 @@ import EditImportGoods from "./EditImportGoods";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { getAllMerchantAction } from "../../../redux/action/inventory/InventoryAction";
+import { deleteImportGoodsOrderAction, getAllMerchantAction } from "../../../redux/action/inventory/InventoryAction";
 import { USER } from "../../../redux/type/user/UserType";
 
 function ImportGoodsDetail(props) {
@@ -22,7 +22,11 @@ function ImportGoodsDetail(props) {
     handleSubmit,
     setFieldValue
   } = props;
+  let totalBill = 0;
   console.log("PROPS.MATCH.PARAMS.formId: ", props.match.params.formId);
+  const textDeleteImportGoodsForm = "Bạn có chắc chắn muốn xóa phiếu nhập kho này ?"
+  const importGoodsOrderDetailedInformation = JSON.parse(localStorage.getItem("importGoodsDetailInfo"));
+  console.log("importGoodsOrderDetailedInformation: ", importGoodsOrderDetailedInformation);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   let user = JSON.parse(localStorage.getItem(USER));
@@ -47,7 +51,8 @@ function ImportGoodsDetail(props) {
   const handleCancelEdit = () => {
     setOpenEdit(false);
   };
-  const importGoodsOrderDetailedInformation = useSelector(state => state.InventoryReducer.importGoodsOrderDetailedInformation);
+  // const importGoodsOrderDetailedInformation = useSelector(state => state.InventoryReducer.importGoodsOrderDetailedInformation);
+  let { name, createdAt, createdBy, merchant, note, receivedDetail } = importGoodsOrderDetailedInformation;
   console.log("importGoodsOrderDetailedInformation: ", importGoodsOrderDetailedInformation);
   const importProductList = useSelector(state => state.InventoryReducer.importProductList);
   console.log("importProductList: ", importProductList);
@@ -84,6 +89,7 @@ function ImportGoodsDetail(props) {
                     <Input
                       type="text"
                       id="product_name"
+                      value={name}
                       className=" text-gray-900 ml-2 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
                       style={{ width: "200px", height: "35px" }}
@@ -95,11 +101,18 @@ function ImportGoodsDetail(props) {
                     >
                       Cập nhật phiếu
                     </Button> */}
-                    <Button
-                      className={`${styles.importgoodsdetail__border__cancel}  mr-5`}
-                    >
-                      Hủy phiếu
-                    </Button>
+
+                    <Popconfirm placement="top"
+                      onConfirm={() => { dispatch(deleteImportGoodsOrderAction(props.match.params.formId)) }}
+                      title={textDeleteImportGoodsForm}
+                      okText="Yes" cancelText="No">
+                      <Button
+                        className={`${styles.importgoodsdetail__border__cancel}  mr-5`}
+                      >
+                        Hủy phiếu
+                      </Button>
+                    </Popconfirm>
+
                   </div>
                 </div>
                 {/* warehouse info */}
@@ -110,6 +123,7 @@ function ImportGoodsDetail(props) {
                   <div>
                     <select
                       defaultValue={0}
+                      value={merchant?.id}
                       onChange={e => {
                         // props.setFieldTouched('manufactureCompany')
                         // handleChange(e)
@@ -140,8 +154,18 @@ function ImportGoodsDetail(props) {
                     <Input
                       type="text"
                       id="product_name"
-                      disabled
-                      value={user?.fullname}
+                      value={createdBy}
+                      className="my-1 text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
+                      placeholder="Điền người nhập đơn"
+                      style={{ width: "250px", height: "35px" }}
+                    />
+                  </div>
+                  <div>
+                    <span className="text-base">Ngày tạo đơn:</span>{" "}
+                    <Input
+                      type="text"
+                      id="product_name"
+                      value={createdAt}
                       className="my-1 text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Điền người nhập đơn"
                       style={{ width: "250px", height: "35px" }}
@@ -153,6 +177,8 @@ function ImportGoodsDetail(props) {
                   <span className="text-lg font-semibold">Ghi chú</span>
                   <div>
                     <textarea
+                      className="p-2 text-base"
+                      value={note}
                       style={{
                         border: "1px solid lightgray",
                         borderRadius: "3px",
@@ -164,7 +190,7 @@ function ImportGoodsDetail(props) {
                 </div>
                 {/* goods table */}
                 <div>
-                  <div className="mt-3 ">
+                  {/* <div className="mt-3 ">
                     <Button
                       type=""
                       className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
@@ -181,7 +207,7 @@ function ImportGoodsDetail(props) {
                     >
                       <AddNewImportGoods />
                     </Modal>
-                  </div>
+                  </div> */}
                   <div className="">
                     <table
                       className={`${styles.importgoodsdetail__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
@@ -197,9 +223,9 @@ function ImportGoodsDetail(props) {
                             {" "}
                             Tên sản phẩm
                           </th>
-                          <th className="border border-slate-300 p-4 text-base text-center">
+                          {/* <th className="border border-slate-300 p-4 text-base text-center">
                             Mã SKU
-                          </th>
+                          </th> */}
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Số lượng nhập kho
                           </th>
@@ -212,13 +238,13 @@ function ImportGoodsDetail(props) {
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Hạn sử dụng
                           </th>
-                          <th className="border border-slate-300 p-4 text-base text-center">
+                          {/* <th className="border border-slate-300 p-4 text-base text-center">
                             Xem chi tiết
-                          </th>
+                          </th> */}
                         </tr>
                       </thead>
                       <tbody>
-                        {importProductList.length == 0 ?
+                        {receivedDetail?.length == 0 ?
                           <tr style={{ minHeight: "300px" }}>
                             <td colSpan={8}>
                               <div className="text-center" style={{
@@ -236,48 +262,54 @@ function ImportGoodsDetail(props) {
                             </td>
                           </tr>
                           :
-                          <tr>
-                            <td className="border border-slate-300 text-center">
-                              1
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              Thịt nạc hảo hạng
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              23022001
-                            </td>
+                          receivedDetail?.map((item, index) => {
+                            totalBill += item.totalPrice;
+                            return <tr>
+                              <td className="border border-slate-300 text-center">
+                                {index + 1}
+                              </td>
+                              <td className="border border-slate-300 text-center">
+                                {item.title}
+                              </td>
+                              {/* <td className="border border-slate-300 text-center">
+                                23022001
+                              </td> */}
 
-                            <td className="border border-slate-300 text-center">
-                              20
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              23.000đ
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              460.000đ
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              30/11/2022
-                            </td>
-                            <td className="border border-slate-300 text-center">
-                              <Button
-                                type=""
-                                className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
-                                onClick={showModalEdit}
-                              >
-                                <FaEye className="text-xl" />
-                              </Button>
-                              <Modal
-                                open={openEdit}
-                                title="Chỉnh sửa sản phẩm nhập kho"
-                                onCancel={handleCancelEdit}
-                                footer={[]}
-                                width={900}
-                              >
-                                <EditImportGoods />
-                              </Modal>
-                            </td>
-                          </tr>}
+                              <td className="border border-slate-300 text-center">
+                                {item.quantityImport}
+                              </td>
+                              <td className="border border-slate-300 text-center">
+                                {item.price.toLocaleString()}đ
+                              </td>
+                              <td className="border border-slate-300 text-center">
+                                {item.totalPrice.toLocaleString()}đ
+                              </td>
+                              <td className="border border-slate-300 text-center">
+                                {item.expiryDate}
+                              </td>
+                              {/* <td className="border border-slate-300 text-center">
+                                <Button
+                                  type=""
+                                  className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
+                                  onClick={showModalEdit}
+                                >
+                                  <FaEye className="text-xl" />
+                                </Button>
+                                <Modal
+                                  open={openEdit}
+                                  title="Chỉnh sửa sản phẩm nhập kho"
+                                  onCancel={handleCancelEdit}
+                                  footer={[]}
+                                  width={900}
+                                >
+                                  <EditImportGoods />
+                                </Modal>
+                              </td> */}
+                            </tr>
+
+                          })
+                        }
+
                       </tbody>
                     </table>
                   </div>
@@ -299,7 +331,7 @@ function ImportGoodsDetail(props) {
                       <span className="font-semibold">
                         Tổng giá trị đơn hàng:{" "}
                       </span>{" "}
-                      23000000đ
+                      {totalBill.toLocaleString()}đ
                     </div>
                   </div>
                   <div

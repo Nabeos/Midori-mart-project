@@ -188,6 +188,38 @@ export class baseService {
         })
     }
 
+    getSearchImportGoodsFormForSellerByTimeRange = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getSearchImportGoodsFormForSellerByTimeRangeAndSeller = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllImportGoodsOrderListByCreatorApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllSellersApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     getAllImportGoodsOrderListApi = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,

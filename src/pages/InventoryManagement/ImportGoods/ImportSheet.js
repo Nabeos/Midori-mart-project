@@ -242,7 +242,7 @@ function ImportSheet(props) {
                         <tr>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             {" "}
-                            STT Tạo phiếu
+                            STT
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             {" "}

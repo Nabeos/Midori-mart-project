@@ -65,6 +65,7 @@ export default function InventoryManagement() {
     console.log("KEY TỔNG: ", key);
     if (key == 1) {
     } else if (key == 2) {
+      localStorage.setItem("sellerIdFilter", 0);
     } else if (key == 3) {
     }
     // else {

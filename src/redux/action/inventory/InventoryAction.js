@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { inventoryManagementService } from '../../../services/InventoryManagementService';
-import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
+import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
 import { notification } from "antd";
 
 export const getAllProductListForSellerAction = () => {
@@ -174,26 +174,56 @@ export const getAllImportGoodsOrderListAction = () => {
         }
     }
 }
-
+const openNotificationDeleteImportGoodsForm = (placement) => {
+    notification.success({
+        message: `Xóa phiếu nhập kho thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationDeleteImportGoodsFormError = (placement) => {
+    notification.error({
+        message: `Xóa phiếu nhập kho thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const deleteImportGoodsOrderAction = (formId) => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.deleteImportGoodsOrder(formId);
+            openNotificationDeleteImportGoodsForm('bottomRight');
             console.log("RESULT DELETE IMPORT GOODS ORDER: ", result);
+        } catch (error) {
+            openNotificationDeleteImportGoodsFormError('bottomRight');
+            console.log('error', error)
+        }
+    }
+}
+
+export const getAllImportGoodsOrderListByCreatorAction = (userId) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.getAllImportGoodsOrderListByCreator(userId);
+            console.log("RESULT ALL IMPORT GOODS ORDER LIST BY CREATOR: ", result.data.receivedNote);
+            dispatch({
+                type: GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR,
+                importedGoodsOrderListByCreatorAction: result.data.receivedNote
+            })
         } catch (error) {
             console.log('error', error)
         }
     }
 }
 
-export const getAllImportGoodsOrderListByCreatorAction = () => {
+export const getAllSellersAction = () => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.getAllImportGoodsOrderListByCreator();
-            console.log("RESULT ALL IMPORT GOODS ORDER LIST BY CREATOR: ", result);
+            const result = await inventoryManagementService.getAllSellers();
+            console.log("RESULT GET ALL SELLERS: ", result.data.user);
             dispatch({
-                type: GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR,
-                importedGoodsOrderListByCreatorAction: result
+                type: GET_ALL_SELLERS,
+                sellerListAction: result.data.user
             })
         } catch (error) {
             console.log('error', error)
@@ -350,14 +380,29 @@ export const getAllMerchantAction = () => {
     }
 }
 
-export const searchImportGoodsFormForSellerByTimeRangeAction = () => {
+export const searchImportGoodsFormForSellerByTimeRangeAction = (firstDate, secondDate) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.searchImportGoodsFormForSellerByTimeRange();
-            console.log("RESULT SEARCH IMPORTED GOODS FORM LIST BY TIME RANGE: ", result);
+            const result = await inventoryManagementService.searchImportGoodsFormForSellerByTimeRange(firstDate, secondDate);
+            console.log("RESULT SEARCH IMPORTED GOODS FORM LIST BY TIME RANGE: ", result.data.receivedNote);
             dispatch({
                 type: SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE,
-                searchedImportedGoodsFormListByTimeRangeAction: result
+                searchedImportedGoodsFormListByTimeRangeAction: result.data.receivedNote
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const searchImportGoodsFormForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.searchImportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate);
+            console.log("RESULT SEARCH IMPORTED GOODS FORM LIST BY TIME RANGE AND SELLER: ", result.data.receivedNote);
+            dispatch({
+                type: SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER,
+                searchedImportedGoodsFormListByTimeRangeAndSellerAction: result.data.receivedNote
             })
         } catch (error) {
             console.log('error', error.response.data);

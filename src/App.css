@@ -282,3 +282,15 @@ code {
 .ck-editor__editable {
   min-height: 200px;
 }
+
+.ant-picker:hover, .ant-picker-focused{
+  border-color: #0c6e21!important;
+}
+
+.ant-picker-range .ant-picker-active-bar{
+  background: #0c6e21!important;
+}
+
+.ant-picker-focused{
+  box-shadow: none;
+}
