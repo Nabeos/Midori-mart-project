@@ -1,3 +1,4 @@
+import { SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from "../../type/inventory/InventoryType";
 import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
     topThreeBestSellerCategories: [],
     topTwentyBestSellerProductOfBestSellerCategoriesList: [],
     topTwentyBestSellerProductOfSecondBestSellerCategoriesList: [],
-    topTwentyBestSellerProductOfThirdBestSellerCategoriesList: []
+    topTwentyBestSellerProductOfThirdBestSellerCategoriesList: [],
+    productUploadImage: ""
 }
 
 export const ProductReducer = (state = initialState, action) => {
@@ -34,12 +36,23 @@ export const ProductReducer = (state = initialState, action) => {
         case GET_PRODUCT_DETAIL:
             let productDetailUpdate = { ...state.productDetail };
             productDetailUpdate = action.productDetail;
+            state.productUploadImage = action.productDetail.thumbnails[0];
             state.productDetail = productDetailUpdate;
+            return { ...state }
+        case UPLOAD_PRODUCT_IMAGE_FOR_SELLER:
+            let productUploadImageUpdate = { ...state.productUploadImage }
+            productUploadImageUpdate = action.productUploadImageAction;
+            state.productUploadImage = action.productUploadImageAction;
             return { ...state }
         case SEARCH_PRODUCT:
             let returnSearchProductListUpdate = [...state.returnSearchProductList];
             returnSearchProductListUpdate = action.searchProductList;
             state.returnSearchProductList = returnSearchProductListUpdate;
+            return { ...state }
+        case SEARCH_PRODUCT_FOR_SELLER:
+            let searchProductListForSellerUpdate = [...state.productListByCategoryId];
+            searchProductListForSellerUpdate = action.searchProductListForSellerAction;
+            state.productListByCategoryId = searchProductListForSellerUpdate;
             return { ...state }
         case UPDATE_STAR_RATE:
             console.log("CÓ VÀO UPDATE_STAR_RATE");

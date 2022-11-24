@@ -119,6 +119,7 @@ function ProductDetail(props) {
   // }, [productDetail?.comments])
   // quantity handle
   let [num, setNum] = useState(1);
+  let totalInStock = 0;
   let incNum = () => {
     setNum(Number(num) + 1);
   };
@@ -193,13 +194,57 @@ function ProductDetail(props) {
                       ĐVT: <span>{productDetail?.unit?.name}</span>
                     </div>
                     <div>
-                      Tình trạng: <span>{productDetail?.status}</span>
+                      {productDetail?.productQuantityInStock?.map((item, index) => {
+                        totalInStock += item.quantity
+                      })}
+                      <span className="mr-1">Tình trạng:</span>
+                      {totalInStock == 0 ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
+                      {totalInStock > 20 ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
+                      {totalInStock < 20 && totalInStock > 0 ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
+                      {/* <span>{productDetail?.status}</span> */}
+                    </div>
+                    <div>
+                      <span className="">Số lượng hàng trong kho:</span> {totalInStock}
                     </div>
                     <div className="mt-1">
                       <label>Quy cách đóng gói:</label>
                       <span className="ml-1">{productDetail?.amount}{productDetail?.unit?.name}</span>
                     </div>
-                    <div className="flex flex-row mt-2">
+                    {totalInStock == 0 ? <div className="flex flex-row mt-2">
+                      <label>Số lượng</label>
+                      <div className="ml-2">
+                        <div className="input-group">
+                          <div className="">
+                            <button
+                              disabled
+                              className={`${styles.productdetail__decrease__button} btn btn-outline-secondary`}
+                              type="button"
+                              onClick={decNum}
+                            >
+                              -
+                            </button>
+                          </div>
+                          <Input
+                            type="text"
+                            disabled
+                            className={`${styles.productdetail__quantity} text-center shadow-none text-base`}
+                            value={num}
+                            onChange={handleChangeNumber}
+                            style={{ width: "20%" }}
+                          />
+                          <div className="input-group-prepend">
+                            <button
+                              disabled
+                              className={`${styles.productdetail__increase__button} btn btn-outline-secondary`}
+                              type="button"
+                              onClick={incNum}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> : <div className="flex flex-row mt-2">
                       <label>Số lượng</label>
                       <div className="ml-2">
                         <div className="input-group">
@@ -230,9 +275,33 @@ function ProductDetail(props) {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>}
+
+
                     <div className="text-3xl font-bold my-2">{(productDetail?.price * num).toLocaleString()}đ</div>
-                    <div className="mt-1">
+                    {totalInStock == 0 ? <div className="mt-1">
+
+                      <Button
+                        disabled
+                        className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
+                        onClick={() => {
+                          handleNavigateToCartPage(productDetail, num)
+                        }}
+                      >
+                        Mua ngay
+                      </Button>
+                      <Button
+                        disabled
+                        className={`${styles.productdetail__addtocart__button} text-center text-base font-medium focus:bg-green-800 focus:text-white focus:border-green-800`}
+                        onClick={() => {
+                          handleAddToCart(productDetail, num)
+                          openNotification('bottomRight')
+                        }}
+                      >
+                        Thêm vào giỏ
+                      </Button>
+                    </div> : <div className="mt-1">
+
                       <Button
                         className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
                         onClick={() => {
@@ -250,7 +319,8 @@ function ProductDetail(props) {
                       >
                         Thêm vào giỏ
                       </Button>
-                    </div>
+                    </div>}
+
                   </div>
                 </div>
               </div>
@@ -332,7 +402,7 @@ function ProductDetail(props) {
                     className="flex font-medium justify-start"
                     style={{ width: "100%" }}
                   >
-                    Xuất sứ
+                    Xuất xứ
                   </div>{" "}
                   <div
                     className="flex justify-end font-medium"

@@ -41,13 +41,13 @@ export default function EditExportGoods() {
             >
               <span className="text-lg font-semibold">Tên sản phẩm</span>
             </label>
-            <Form.Item name="product_name">
+            <Form.Item className="mb-1">
               <Input
                 type="text"
                 id="product_name"
                 className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                placeholder="Tên sản phẩm"
-                style={{ width: "90%", height: "3.6rem" }}
+                placeholder="Nhập tên sản phẩm"
+                style={{ width: "90%", height: "45px" }}
               />
             </Form.Item>
           </div>
@@ -59,12 +59,13 @@ export default function EditExportGoods() {
               <span className="text-lg font-semibold">Mã SKU</span>
             </label>
 
-            <Form.Item name="sku_code">
+            <Form.Item className="mb-1">
               <Input
-                type="number"
+                type="text"
                 id="sku_code"
                 className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                style={{ width: "100%", height: "3.6rem" }}
+                placeholder="Nhập mã sku"
+                style={{ width: "100%", height: "45px" }}
               />
             </Form.Item>
           </div>
@@ -78,19 +79,17 @@ export default function EditExportGoods() {
             >
               <span className="text-lg font-semibold">Giá tiền</span>
             </label>
-            <Form.Item name="price">
+            <Form.Item className="mb-1">
               <Input
-                type="number"
+                type="text"
                 id="price"
                 className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                placeholder="Giá tiền"
-                style={{ width: "45%", height: "3.6rem" }}
+                placeholder="Nhập giá tiền sản phẩm"
+                style={{ width: "90%", height: "45px" }}
               />
             </Form.Item>
           </div>
-        </div>
 
-        <div className="flex flex-row ">
           <div style={{ width: "100%" }}>
             <label
               for="quantity_in_stock"
@@ -99,17 +98,21 @@ export default function EditExportGoods() {
               <span className="text-lg font-semibold">Số lượng xuất kho</span>
             </label>
 
-            <Form.Item name="quantity_in_stock">
+            <Form.Item className="mb-1">
               <Input
-                type="number"
+                type="text"
                 id="quantity_in_stock"
                 className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                placeholder="Số lượng xuất kho"
-                style={{ width: "90%", height: "3.6rem" }}
+                placeholder="Nhập số lượng xuất kho"
+                style={{ width: "100%", height: "45px" }}
               />
             </Form.Item>
           </div>
-          <div style={{ width: "100%" }}>
+        </div>
+
+        <div className="flex flex-row ">
+
+          {/* <div style={{ width: "100%" }}>
             <label
               for="quantity_in_stock"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -128,11 +131,11 @@ export default function EditExportGoods() {
                 style={{ width: "100%", height: "3.6rem" }}
               />
             </Form.Item>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
+          {/* <div style={{ width: "100%" }}>
             <label
               for="product_origin"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -151,8 +154,8 @@ export default function EditExportGoods() {
                 <option id="germany">Đức</option>
               </select>
             </Form.Item>
-          </div>
-          <div style={{ width: "100%" }}>
+          </div> */}
+          {/* <div style={{ width: "100%" }}>
             <label
               for="quantity_in_stock"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -172,11 +175,11 @@ export default function EditExportGoods() {
                 <option id="beverage">Nước</option>
               </select>
             </Form.Item>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-row ">
-          <div style={{ width: "100%" }}>
+          {/* <div style={{ width: "100%" }}>
             <label
               for="imported_date"
               className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
@@ -192,7 +195,7 @@ export default function EditExportGoods() {
                 style={{ width: "90%", height: "3.6rem" }}
               />
             </Form.Item>
-          </div>
+          </div> */}
           <div style={{ width: "100%" }}>
             <label
               for="expired_date"
@@ -201,13 +204,13 @@ export default function EditExportGoods() {
               <span className="text-lg font-semibold">Hạn sử dụng</span>
             </label>
 
-            <Form.Item name="expired_date">
+            <Form.Item className="mb-1">
               <Input
                 type="date"
                 id="expired_date"
                 className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                placeholder="Hạn sử dụng"
-                style={{ width: "100%", height: "3.6rem" }}
+                placeholder="Nhập hạn sử dụng"
+                style={{ width: "100%", height: "45px" }}
               />
             </Form.Item>
           </div>
@@ -216,7 +219,7 @@ export default function EditExportGoods() {
           <Button
             type="default"
             htmlType="submit"
-            className=" pt-3 pb-11 mr-3 font-semibold text-xl rounded-md hover:bg-orange-500 hover:text-white hover:border-orange-500 focus:border-orange-500 focus:text-orange-500"
+            className="mt-3 pt-3 pb-11 mr-3 font-semibold text-xl rounded-md hover:bg-orange-500 hover:text-white hover:border-orange-500 focus:border-orange-500 focus:text-orange-500"
             style={{ width: "80%" }}
           >
             Chỉnh sửa sản phẩm
@@ -224,7 +227,7 @@ export default function EditExportGoods() {
           <Button
             type="default"
             htmlType="submit"
-            className=" pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:border-red-700 focus:text-red-700"
+            className="mt-3 pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:border-red-700 focus:text-red-700"
             style={{ width: "80%" }}
           >
             Xóa sản phẩm

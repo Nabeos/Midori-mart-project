@@ -40,8 +40,8 @@ function ChangePassword(props) {
                 handleChange(e)
               }}
               className={`${styles.changepassword__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="•••••••••"
-              style={{ width: "100%", height: "6vh" }}
+              placeholder="Nhập mật khẩu hiện tại"
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {errors.currentPassword && touched.currentPassword ? <div className='text-red-600'>{errors.currentPassword}</div> : <div></div>}
@@ -63,8 +63,8 @@ function ChangePassword(props) {
                 handleChange(e)
               }}
               className={`${styles.changepassword__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="•••••••••"
-              style={{ width: "100%", height: "6vh" }}
+              placeholder="Nhập mật khẩu mới"
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {errors.newPassword && touched.newPassword ? <div className='text-red-600'>{errors.newPassword}</div> : <div></div>}
@@ -86,8 +86,8 @@ function ChangePassword(props) {
                 handleChange(e)
               }}
               className={`${styles.changepassword__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
-              placeholder="•••••••••"
-              style={{ width: "100%", height: "6vh" }}
+              placeholder="Nhập lại mật khẩu mới"
+              style={{ width: "100%", height: "40px" }}
             />
           </Form.Item>
           {(errors.confirmNewPassword && touched.confirmNewPassword) || (values.confirmNewPassword != values.newPassword && touched.confirmNewPassword) ? <div className='text-red-600'>Mật khẩu xác nhận quý khách vừa nhập không đúng. Quý khách vui lòng nhập lại !!!</div> : <div></div>}
@@ -126,15 +126,15 @@ const ChangePasswordWithFormik = withFormik({
     currentPassword: Yup.string()
       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-      .required("Quý khách vui lòng không được để trống mục mật khẩu !!!")
+      .required("Quý khách vui lòng không được để trống mật khẩu hiện tại !!!")
       .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
     newPassword: Yup.string()
       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-      .required("Quý khách vui lòng không được để trống mục mật khẩu !!!")
+      .required("Quý khách vui lòng không được để trống mật khẩu mới !!!")
       .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
     confirmNewPassword: Yup.string()
-      .required("Không được để trống mục nhập lại mật khẩu !!!")
+      .required("Không được để trống mục nhập lại mật khẩu mới !!!")
   }),
 
 
@@ -142,15 +142,14 @@ const ChangePasswordWithFormik = withFormik({
     console.log("CÓ VÀO HANDLE SUBMIT CHANGE PASSWORD");
     console.log("VALUE FORM CHANGE PASSWORD: ", values);
     let data = {
-      // "user": {
-      //   "fullname": values.lastName + " " + values.firstName,
-      //   "email": values.email,
-      //   "phonenumber": values.phoneNumber,
-      //   "password": values.password
-      // }
+      "information": {
+        "currentPassword": values.currentPassword,
+        "password": values.newPassword,
+        "repassword": values.confirmNewPassword
+      }
     }
     console.log("CHANGE PASSWORD DATA SEND: ", data);
-    // props.dispatch(changePasswordAction());
+    props.dispatch(changePasswordAction(data));
   },
 
   displayName: 'ChangePasswordWithFormik'

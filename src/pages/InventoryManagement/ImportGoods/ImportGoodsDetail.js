@@ -1,14 +1,38 @@
 import { Button, Modal, Pagination, Form, Input } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaEye } from "react-icons/fa";
 import HeaderManagement from "../../../components/HeaderManagement/HeaderManagement";
 import styles from "./ImportGoodsDetail.module.css";
 import { NavLink } from "react-router-dom";
 import AddNewImportGoods from "./AddNewImportGoods";
 import EditImportGoods from "./EditImportGoods";
-export default function ImportGoodsDetail() {
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { connect, useDispatch, useSelector } from "react-redux";
+import { getAllMerchantAction } from "../../../redux/action/inventory/InventoryAction";
+import { USER } from "../../../redux/type/user/UserType";
+
+function ImportGoodsDetail(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue
+  } = props;
+  console.log("PROPS.MATCH.PARAMS.formId: ", props.match.params.formId);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  let user = JSON.parse(localStorage.getItem(USER));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllMerchantAction());
+    window.scrollTo(0, 0);
+  }, [])
+
+  const merchantList = useSelector(state => state.InventoryReducer.merchantList);
   const showModalAdd = () => {
     setOpenAdd(true);
   };
@@ -23,6 +47,10 @@ export default function ImportGoodsDetail() {
   const handleCancelEdit = () => {
     setOpenEdit(false);
   };
+  const importGoodsOrderDetailedInformation = useSelector(state => state.InventoryReducer.importGoodsOrderDetailedInformation);
+  console.log("importGoodsOrderDetailedInformation: ", importGoodsOrderDetailedInformation);
+  const importProductList = useSelector(state => state.InventoryReducer.importProductList);
+  console.log("importProductList: ", importProductList);
   return (
     <div className="bg-gray-200 " style={{ height: "100%" }}>
       <div className="" style={{ height: "100%" }}>
@@ -32,7 +60,7 @@ export default function ImportGoodsDetail() {
         >
           {/* header */}
           <div
-            className="bg-white rounded-md flex mt-3"
+            className="bg-white rounded-md flex mt-3 justify-end"
             style={{
               width: "90%",
               boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
@@ -58,15 +86,15 @@ export default function ImportGoodsDetail() {
                       id="product_name"
                       className=" text-gray-900 ml-2 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
-                      style={{ width: "20%", height: "2rem" }}
+                      style={{ width: "200px", height: "35px" }}
                     />
                   </div>
                   <div className="flex justify-end" style={{ width: "90%" }}>
-                    <Button
+                    {/* <Button
                       className={`${styles.importgoodsdetail__border__confirm}  mr-2`}
                     >
                       Cập nhật phiếu
-                    </Button>
+                    </Button> */}
                     <Button
                       className={`${styles.importgoodsdetail__border__cancel}  mr-5`}
                     >
@@ -77,28 +105,30 @@ export default function ImportGoodsDetail() {
                 {/* warehouse info */}
                 <div className="mt-3">
                   <span className="text-lg font-semibold">
-                    Thông tin lưu kho
+                    Thông tin nhà cung cấp
                   </span>
                   <div>
-                    Vị trí:{" "}
-                    <Input
-                      type="text"
-                      id="product_name"
-                      className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "20%", height: "2rem" }}
-                    />
+                    <select
+                      defaultValue={0}
+                      onChange={e => {
+                        // props.setFieldTouched('manufactureCompany')
+                        // handleChange(e)
+                      }}
+                      className="border border-black text-base rounded-md"
+                      id="manufactureCompany"
+                      name="manufactureCompany"
+                      style={{ width: "250px", height: "35px" }}
+                    >
+                      <option value="0" disabled>Chọn nhà cung cấp</option>
+                      {merchantList.map((item, index) => {
+                        if (item.id != 0) {
+                          return <option value={item.id}>{item.name}</option>
+                        }
+                      })}
+                    </select>
                   </div>
-                  <div>
-                    Địa chỉ:{" "}
-                    <Input
-                      type="text"
-                      id="product_name"
-                      className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "20%", height: "2rem" }}
-                    />
-                  </div>
+
+
                 </div>
                 {/* confirmation info */}
                 <div className="mt-2 mb-2">
@@ -106,23 +136,15 @@ export default function ImportGoodsDetail() {
                     Thông tin xác nhận
                   </span>
                   <div>
-                    Người tạo đơn:{" "}
+                    <span className="text-base">Người tạo đơn:</span>{" "}
                     <Input
                       type="text"
                       id="product_name"
-                      className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "20%", height: "2rem" }}
-                    />
-                  </div>
-                  <div>
-                    Ngày tạo đơn:{" "}
-                    <Input
-                      type="date"
-                      id="product_name"
-                      className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "20%", height: "2rem" }}
+                      disabled
+                      value={user?.fullname}
+                      className="my-1 text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
+                      placeholder="Điền người nhập đơn"
+                      style={{ width: "250px", height: "35px" }}
                     />
                   </div>
                 </div>
@@ -179,10 +201,7 @@ export default function ImportGoodsDetail() {
                             Mã SKU
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
-                            Danh mục sản phẩm
-                          </th>
-                          <th className="border border-slate-300 p-4 text-base text-center">
-                            Số lượng
+                            Số lượng nhập kho
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Giá tiền
@@ -191,100 +210,78 @@ export default function ImportGoodsDetail() {
                             Thành tiền
                           </th>
                           <th className="border border-slate-300 p-4 text-base text-center">
+                            Hạn sử dụng
+                          </th>
+                          <th className="border border-slate-300 p-4 text-base text-center">
                             Xem chi tiết
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="border border-slate-300 text-center">
-                            1
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            Thịt nạc hảo hạng
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23022001
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            Thịt
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            230
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23.000đ
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23.000đ
-                          </td>
+                        {importProductList.length == 0 ?
+                          <tr style={{ minHeight: "300px" }}>
+                            <td colSpan={8}>
+                              <div className="text-center" style={{
+                                width: "80%",
+                                marginLeft: "130px"
+                                // margin: "30px auto 0 auto",
+                              }}>
+                                <div className='flex justify-center items-center mb-3'  >
+                                  <img src={require('../../../assets/images/cart.png')} style={{ width: '200px' }} />
+                                </div>
 
-                          <td className="border border-slate-300 text-center">
-                            <Button
-                              type=""
-                              className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
-                              onClick={showModalEdit}
-                            >
-                              <FaEye className="text-xl" />
-                            </Button>
-                            <Modal
-                              open={openEdit}
-                              title="Chỉnh sửa sản phẩm nhập kho"
-                              onCancel={handleCancelEdit}
-                              footer={[]}
-                              width={900}
-                            >
-                              <EditImportGoods />
-                            </Modal>
-                          </td>
-                        </tr>
+                                <p className='mb-4 text-lg'>Hiện tại chưa sản phẩm nào trong phiếu nhập hàng</p>
 
-                        <tr>
-                          <td className="border border-slate-300 text-center">
-                            2
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            Thịt nạc hảo hạng
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23022001
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            Thịt
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            230
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23.000đ
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23.000đ
-                          </td>
+                              </div>
+                            </td>
+                          </tr>
+                          :
+                          <tr>
+                            <td className="border border-slate-300 text-center">
+                              1
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              Thịt nạc hảo hạng
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              23022001
+                            </td>
 
-                          <td className="border border-slate-300 text-center">
-                            <Button
-                              type=""
-                              className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
-                              onClick={showModalEdit}
-                            >
-                              <FaEye className="text-xl" />
-                            </Button>
-                            <Modal
-                              open={openEdit}
-                              title="Chỉnh sửa sản phẩm nhập kho"
-                              onCancel={handleCancelEdit}
-                              footer={[]}
-                              width={900}
-                            >
-                              <EditImportGoods />
-                            </Modal>
-                          </td>
-                        </tr>
+                            <td className="border border-slate-300 text-center">
+                              20
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              23.000đ
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              460.000đ
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              30/11/2022
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              <Button
+                                type=""
+                                className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
+                                onClick={showModalEdit}
+                              >
+                                <FaEye className="text-xl" />
+                              </Button>
+                              <Modal
+                                open={openEdit}
+                                title="Chỉnh sửa sản phẩm nhập kho"
+                                onCancel={handleCancelEdit}
+                                footer={[]}
+                                width={900}
+                              >
+                                <EditImportGoods />
+                              </Modal>
+                            </td>
+                          </tr>}
                       </tbody>
                     </table>
                   </div>
-                  <div
+                  {/* <div
                     className="flex justify-end mb-4"
                     style={{ width: "95%" }}
                   >
@@ -293,7 +290,7 @@ export default function ImportGoodsDetail() {
                       defaultCurrent={1}
                       total={50}
                     />
-                  </div>
+                  </div> */}
                   <div
                     className="flex justify-end mb-4"
                     style={{ width: "95%" }}
@@ -322,7 +319,61 @@ export default function ImportGoodsDetail() {
             </Form>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
+
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
+const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+const regexAllNumber = /^[0-9]+$/;
+const regexSelect = /^[1-9]$/;
+
+const ImportGoodsDetailWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    importCode: "",
+    manufactureCompany: 0,
+    createdDate: "",
+    createdBy: JSON.parse(localStorage.getItem(USER))?.id,
+    note: "",
+    importedProductInForm: props.importProductListProps
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+
+  }),
+
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    // console.log("CÓ VÀO HANDLE SUBMIT");
+    alert("CÓ VÀO ADD NEW PRODUCT HANDLE SUBMIT");
+    // console.log("VALUE FORM ADD NEW PRODUCT FOR SELLER: ", values);
+    let data = {
+      "receivedNote": {
+        "name": values.importCode,
+        // "createdAt": values.createdDate,
+        // "createdBy": values.createdBy,
+        "merchant": values.manufactureCompany,
+        "note": values.note,
+        "receivedDetail": values.importedProductInForm
+      }
+    }
+
+
+    console.log("DATA ADD NEW IMPORT GOODS FORM: ", data);
+    // props.dispatch();
+  },
+
+  displayName: 'ImportGoodsDetailWithFormik'
+})(ImportGoodsDetail);
+
+const mapStateToProps = (state) => {
+  return {
+    importProductListProps: JSON.parse(localStorage.getItem("importProductList"))
+  }
+}
+
+export default connect(mapStateToProps, null)(ImportGoodsDetailWithFormik);

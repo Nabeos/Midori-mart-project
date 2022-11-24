@@ -14,6 +14,9 @@ import { NavLink } from "react-router-dom";
 import styles from "./ExportGoods.module.css";
 import AddNewProduct from "../AddNewProduct";
 import { history } from "../../../App";
+import { SearchOutlined } from "@ant-design/icons";
+import { FormControl } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function ExportGoods() {
   const handleNavigateToExportSheet = () => {
@@ -72,13 +75,28 @@ export default function ExportGoods() {
           className="rounded-md mt-3 flex items-end justify-end mr-3"
           style={{ width: "100%" }}
         >
-          <Form>
+          {/* <Form>
             <Input
               placeholder="Tìm kiếm"
               className="shadow-none hover:border-green-700 focus:border-green-700"
               style={{ width: "100%", height: "2.5rem" }}
             />
-          </Form>
+          </Form> */}
+          <div className="rounded-md mt-3 flex justify-end mr-3">
+            <Form>
+              <InputGroup className={` `} >
+                <FormControl
+                  name="header__search"
+                  className={` form-control shadow-none outline-none `}
+                  placeholder="Tìm kiếm đơn hàng"
+                  style={{ width: '300px' }}
+                />
+                <InputGroup.Text className="text-white">
+                  <SearchOutlined className="cursor-pointer" />
+                </InputGroup.Text>
+              </InputGroup>
+            </Form>
+          </div>
         </div>
       </div>
 

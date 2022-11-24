@@ -82,7 +82,7 @@ export default function InventoryManagement() {
           <div className="flex items-center flex-col">
             {/* header */}
             <div
-              className="bg-white rounded-md flex mt-3"
+              className="bg-white rounded-md flex mt-3 justify-end"
               style={{
                 width: "99%",
                 boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",

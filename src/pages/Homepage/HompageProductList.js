@@ -63,7 +63,7 @@ function ProductsList(props) {
   return (
     <div className="products grid grid-cols-3">
       {products?.map((product, index) => {
-        if (index < 6) {
+        if (index < 6 && product.deleted == 0) {
           return <div>
             <Product className="col-span-1" product={product} />
           </div>

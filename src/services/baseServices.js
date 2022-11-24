@@ -13,6 +13,33 @@ export class baseService {
         })
     }
 
+    putDeleteImportGoodsOrder = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    putUpdateProductDetailedInformationForSeller = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    putDeleteProductForSeller = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+
+
     putActivateUserAccount = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -72,6 +99,33 @@ export class baseService {
         })
     }
 
+    postCreateNewImportGoodsForm = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    postAddNewProductForSeller = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    postUploadProductImageForSeller = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     postAddNewUserForAdmin = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -117,11 +171,36 @@ export class baseService {
         })
     }
 
+    postChangePassword = (url, model) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            data: model,
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     get = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllImportGoodsOrderListApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getSearchUserForAdmin = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

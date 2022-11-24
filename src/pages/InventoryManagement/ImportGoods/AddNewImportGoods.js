@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./AddNewImportGoods.module.css";
 import {
   Button,
@@ -12,219 +12,201 @@ import {
 } from "antd";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-export default function AddNewImportGoods() {
-    const props = {
-        name: "file",
-        action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-        headers: {
-          authorization: "authorization-text",
-        },
-        onChange(info) {
-          if (info.file.status !== "uploading") {
-            console.log(info.file, info.fileList);
-          }
-          if (info.file.status === "done") {
-            message.success(`${info.file.name} file uploaded successfully`);
-          } else if (info.file.status === "error") {
-            message.error(`${info.file.name} file upload failed.`);
-          }
-        },
-      };
-    return (
-        <div>
-          <Form>
-          <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="product_name"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Tên sản phẩm</span>
-                    </label>
-                    <Form.Item name="product_name">
-                      <Input
-                        type="text"
-                        id="product_name"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Tên sản phẩm"
-                        style={{ width: "90%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="sku_code"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Mã SKU</span>
-                    </label>
-    
-                    <Form.Item name="sku_code">
-                      <Input
-                        type="number"
-                        id="sku_code"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        style={{ width: "100%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                </div>
-    
-          
-    
-                <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="price"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Giá tiền</span>
-                    </label>
-                    <Form.Item name="price">
-                      <Input
-                        type="number"
-                        id="price"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Giá tiền"
-                        style={{ width: "45%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-               
-                </div>
-    
-                <div className="flex flex-row ">
-                <div style={{ width: "100%" }}>
-                    <label
-                      for="quantity_in_stock"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Số lượng nhập kho</span>
-                    </label>
-    
-                    <Form.Item name="quantity_in_stock">
-                      <Input
-                        type="number"
-                        id="quantity_in_stock"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Số lượng nhập kho"
-                        style={{ width: "90%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="quantity_in_stock"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Số lượng hàng trong kho</span>
-                    </label>
-    
-                    <Form.Item name="quantity_in_stock">
-                      <Input
-                        type="number"
-                        id="quantity_in_stock"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Số lượng hàng trong kho"
-                        style={{ width: "100%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                </div>
-    
-                <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="product_origin"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Xuất xứ</span>
-                    </label>
-                    <Form.Item name="product_origin">
-                      <select
-                        className="border border-black text-lg rounded-md"
-                        id="product_origin"
-                        style={{ width: "90%", height: "3.6rem" }}
-                      >
-                        <option className="text-opacity-10">Xuất xứ</option>
-                        <option id="vietnam">Việt Nam</option>
-                        <option id="russia">Nga</option>
-                        <option id="germany">Đức</option>
-                      </select>
-                    </Form.Item>
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="quantity_in_stock"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Danh mục sản phẩm</span>
-                    </label>
-    
-                    <Form.Item name="quantity_in_stock">
-                      <select
-                        className="border border-black text-lg rounded-md"
-                        id="product_origin"
-                        style={{ width: "100%", height: "3.6rem" }}
-                      >
-                        <option className="text-opacity-10">
-                          Danh mục sản phẩm
-                        </option>
-                        <option id="vegetable">Rau</option>
-                        <option id="meat">Thịt</option>
-                        <option id="beverage">Nước</option>
-                      </select>
-                    </Form.Item>
-                  </div>
-                </div>
-    
-                <div className="flex flex-row ">
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="imported_date"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Ngày nhập kho</span>
-                    </label>
-                    <Form.Item name="imported_date">
-                      <Input
-                        type="date"
-                        id="imported_date"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Ngày nhập kho"
-                        style={{ width: "90%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <label
-                      for="expired_date"
-                      className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
-                    >
-                      <span className="text-lg font-semibold">Hạn sử dụng</span>
-                    </label>
-    
-                    <Form.Item name="expired_date">
-                      <Input
-                        type="date"
-                        id="expired_date"
-                        className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
-                        placeholder="Hạn sử dụng"
-                        style={{ width: "100%", height: "3.6rem" }}
-                      />
-                    </Form.Item>
-                  </div>
-                </div>
-    
-            <Button
-              type="default"
-              htmlType="submit"
-              className=" pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:border-green-700 focus:text-green-700"
-              style={{ width: "100%" }}
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { connect, useDispatch, useSelector } from "react-redux";
+import { getProductListByCategoryIdAction } from '../../../redux/action/product/ProductAction';
+import { ADD_PRODUCT_TEMPORARILY_TO_IMPORT_GOODS_FORM } from '../../../redux/type/inventory/InventoryType';
+
+function AddNewImportGoods(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue
+  } = props;
+
+  console.log("VALUES SAO KHÔNG HIỆN: ", values);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductListByCategoryIdAction(0, 1000, 0));
+  }, [])
+
+  const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
+
+  console.log("productListByCategoryId IN ADD NEW PRODUCTS INTO IMPORT GOODS FORM: ", productListByCategoryId);
+
+  return (
+    <div>
+      <Form onSubmitCapture={handleSubmit}>
+        <div className="flex flex-row ">
+          <div style={{ width: "100%" }}>
+            <label
+              for="importedProduct"
+              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
             >
-              Thêm vào phiếu nhập kho
-            </Button>
-          </Form>
+              <span className="text-lg font-semibold">Tên sản phẩm</span>
+            </label>
+
+            <div>
+              <select
+                defaultValue={0}
+                id="importedProduct"
+                name="importedProduct"
+                onChange={e => {
+                  props.setFieldTouched('importedProduct')
+                  handleChange(e)
+                }}
+                className="border border-black text-base rounded-md"
+                style={{ width: "90%", height: "45px" }}
+              >
+                <option value="0" disabled>Chọn sản phẩm</option>
+                {productListByCategoryId.map((item, index) => {
+                  return <option key={index} value={item.id}>
+                    {item.title}
+                  </option>
+                })}
+              </select>
+            </div>
+          </div>
+
+          <div style={{ width: "100%" }}>
+            <label
+              for="price"
+              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+            >
+              <span className="text-lg font-semibold">Giá tiền</span>
+            </label>
+            <Form.Item className='mb-1'>
+              <Input
+                type="text"
+                id="price"
+                name="price"
+                onChange={e => {
+                  props.setFieldTouched('price')
+                  handleChange(e)
+                }}
+                className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
+                placeholder="Nhập giá tiền sản phẩm"
+                style={{ width: "100%", height: "45px" }}
+              />
+            </Form.Item>
+            {errors.price && touched.price ? <div className='text-red-600'>{errors.price}</div> : <div></div>}
+          </div>
         </div>
-      );
+
+        <div className="flex flex-row ">
+          <div style={{ width: "100%" }}>
+            <label
+              for="quantityImport"
+              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+            >
+              <span className="text-lg font-semibold">Số lượng nhập kho</span>
+            </label>
+
+            <Form.Item className='mb-1'>
+              <Input
+                type="text"
+                id="quantityImport"
+                name="quantityImport"
+                onChange={e => {
+                  props.setFieldTouched('quantityImport')
+                  handleChange(e)
+                }}
+                className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
+                placeholder="Nhập số lượng nhập kho"
+                style={{ width: "90%", height: "45px" }}
+              />
+            </Form.Item>
+          </div>
+
+          <div style={{ width: "100%" }}>
+            <label
+              for="expiryDate"
+              className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+            >
+              <span className="text-lg font-semibold">Hạn sử dụng</span>
+            </label>
+
+            <Form.Item className='mb-1'>
+              <Input
+                type="date"
+                id="expiryDate"
+                name="expiryDate"
+                onChange={e => {
+                  props.setFieldTouched('expiryDate')
+                  handleChange(e)
+                }}
+                className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
+                placeholder="Hạn sử dụng"
+                style={{ width: "100%", height: "45px" }}
+              />
+            </Form.Item>
+          </div>
+        </div>
+
+        <Button
+          type="default"
+          htmlType="submit"
+          onClick={handleSubmit}
+          className="mt-3 pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:border-green-700 focus:text-green-700"
+          style={{ width: "100%" }}
+        >
+          Thêm sản phẩm vào phiếu nhập kho
+        </Button>
+      </Form>
+    </div>
+  );
 }
+
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
+const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+const regexAllNumber = /^[0-9]+$/;
+const regexSelect = /^[1-9]$/;
+
+const AddNewImportGoodsWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    importedProduct: 0,
+    price: 0,
+    quantityImport: 0,
+    expiryDate: ""
+  }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+
+  }),
+
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    // alert("CÓ VÀO THÊM SẢN PHẨM NHẬP HÀNG GỬI LOCAL STORAGE");
+    let data = {
+      "productId": values.importedProduct,
+      "quantityImport": values.quantityImport,
+      "expiryDate": values.expiryDate,
+      "price": values.price,
+      "totalPrice": values.price * values.quantityImport
+    }
+    props.dispatch({
+      type: ADD_PRODUCT_TEMPORARILY_TO_IMPORT_GOODS_FORM,
+      importProductAction: data
+    })
+    console.log("VALUES GỬI ĐI TẠI HANDLE SUBMIT ADD PRODUCT: ", data);
+  },
+
+  displayName: 'AddNewImportGoodsWithFormik'
+})(AddNewImportGoods);
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, null)(AddNewImportGoodsWithFormik);

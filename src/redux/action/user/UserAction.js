@@ -1,7 +1,7 @@
 import { history } from "../../../App";
 import { userManagementService } from "../../../services/UserManagementService";
 import { TOKEN } from "../../../utils/settings/config";
-import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
+import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, SEARCH_USER_FOR_ADMIN, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
 import Swal from 'sweetalert2'
 import { imageManagementServices } from "../../../services/ImageManagementService";
 import { notification } from "antd";
@@ -164,11 +164,34 @@ export const getAllUserListForAdminAction = () => {
     }
 }
 
+export const searchUserForAdminAction = (keyWord) => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.searchUserForAdmin(keyWord);
+            console.log("RESULT SEARCH USER FOR ADMIN: ", result.data.users);
+            dispatch({
+                type: SEARCH_USER_FOR_ADMIN,
+                searchUserListForAdminAction: result.data.users
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+const openNotificationResetNewPassword = (placement) => {
+    notification.success({
+        message: `Gửi yêu cầu reset mật khẩu thành công !`,
+        placement,
+        duration: 2
+    });
+};
 export const resetPasswordAction = (userEmailInfo) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.resetPassword(userEmailInfo);
             console.log("RESULT RESET PASSWORD: ", result);
+            openNotificationResetNewPassword('bottomRight');
             // dispatch({
             //     type: RESET_PASSWORD
             // })
@@ -178,16 +201,46 @@ export const resetPasswordAction = (userEmailInfo) => {
     }
 }
 
-export const changePasswordAction = () => {
+export const verifyResetPasswordAction = (verificationCode) => {
     return async (dispatch) => {
         try {
-            const result = await userManagementService.changePassword();
-            console.log("RESULT CHANGE PASSWORD: ", result);
-            dispatch({
-                type: CHANGE_PASSWORD
-            })
+            const result = await userManagementService.verifyResetPassword(verificationCode);
+            console.log("RESULT VERIFY RESET PASSWORD: ", result);
+            // dispatch({
+            //     type: RESET_PASSWORD
+            // })
         } catch (error) {
             console.log('error', error.response.data);
+        }
+    }
+}
+
+const openNotificationChangePassword = (placement) => {
+    notification.success({
+        message: `Đổi mật khẩu thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationChangePasswordError = (placement) => {
+    notification.error({
+        message: `Đổi mật khẩu thất bại ! Mật khẩu hiện tại quý khách nhập không đúng`,
+        placement,
+        duration: 2
+    });
+};
+export const changePasswordAction = (userPasswordInfo) => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.changePassword(userPasswordInfo);
+            console.log("RESULT CHANGE PASSWORD: ", result);
+            openNotificationChangePassword('bottomRight');
+            // dispatch({
+            //     type: CHANGE_PASSWORD
+            // })
+        } catch (error) {
+            console.log('error', error.response.data);
+            openNotificationChangePasswordError('bottomRight');
         }
     }
 }

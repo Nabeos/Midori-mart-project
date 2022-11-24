@@ -81,12 +81,12 @@ function UserDetailInformation(props) {
           <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
             <img
               name="thumbnail"
-              src={values.thumbnail}
+              src={values.thumbnail ? values.thumbnail : "/images/user/anonymous_avatar.jpg"}
               className="mr-5"
               style={{ width: "150px", height: "150px", borderRadius: "50%" }}
             />
             <div className="flex whitespace-nowrap items-end">
-              <label htmlFor="filePicker" className="bg-green-700 text-white p-2" style={{ fontSize: '15px' }}>
+              <label htmlFor="filePicker" className="bg-green-700 text-white p-2 cursor-pointer" style={{ fontSize: '15px' }}>
                 Upload ảnh
               </label>
               <input type="file" id="filePicker" style={{ visibility: "hidden" }} name="file" placeholder='Upload an image'
@@ -264,16 +264,20 @@ function UserDetailInformation(props) {
               </label>
               <div>
                 <input type="text"
-                  onChange={handleChange}
-                  value={values.detailAddress}
-                  //value này ko phải dạng mảng mà nó là string và ta findIndex dấu "," thứ 3 rồi sau đó lấy sau đó
                   id="detailAddress"
                   name="detailAddress"
+                  onChange={e => {
+                    props.setFieldTouched('detailAddress')
+                    handleChange(e)
+                  }}
+                  value={values.detailAddress}
+                  //value này ko phải dạng mảng mà nó là string và ta findIndex dấu "," thứ 3 rồi sau đó lấy sau đó
                   className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                   placeholder="Địa chỉ cụ thể"
                 />
 
               </div>
+              {errors.detailAddress && touched.detailAddress ? <div className='text-red-600'>{errors.detailAddress}</div> : <div></div>}
             </div>
           </div>
 

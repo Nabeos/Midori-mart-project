@@ -202,11 +202,17 @@ export default function ProductList(props) {
     console.log("PRODUCTS ĐANG CẦN: ", products);
     return (
       <div className="products grid grid-cols-5 mb-5">
-        {products?.map((product, index) => (
-          <div>
-            <Product key={index} className="col-span-1" product={product} />
-          </div>
-        ))}
+        {/* {products?.map((product, index) => (
+          
+        ))} */}
+        {products?.map((product, index) => {
+          if (product.deleted == 0) {
+            return <div>
+              <Product key={index} className="col-span-1" product={product} />
+            </div>
+          }
+
+        })}
       </div>
     );
   }

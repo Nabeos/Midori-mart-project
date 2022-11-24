@@ -4,9 +4,10 @@ import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
 import styles from "./ManagerProfile.module.css";
 import ChangePassword from './ChangePassword';
 import { connect, useSelector, useDispatch } from 'react-redux'
-import UserDetailInformation from './UserDetailInformation';
+import UserDetailInformation from './UserDetailInformationForSeAd';
 import { Redirect } from 'react-router-dom';
 import { USER } from '../../redux/type/user/UserType';
+import UserDetailInformationForSeAd from './UserDetailInformationForSeAd';
 
 export default function ManagerProfile() {
   // const user = useSelector(state => state.UserReducer.user);
@@ -20,7 +21,7 @@ export default function ManagerProfile() {
           <div className="flex items-center flex-col" style={{ minHeight: "60.5rem" }}>
             {/* header */}
             <div
-              className="bg-white rounded-md flex mt-3"
+              className="bg-white rounded-md flex justify-end mt-3"
               style={{
                 width: "90%",
                 boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
@@ -38,7 +39,7 @@ export default function ManagerProfile() {
             >
               <Tabs defaultActiveKey="1" className="ml-3">
                 <Tabs.TabPane tab="Thông tin cá nhân" key="1">
-                  <UserDetailInformation />
+                  <UserDetailInformationForSeAd />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Đổi mật khẩu" key="2">
                   <ChangePassword />

@@ -7,6 +7,9 @@ import { FaEye } from "react-icons/fa";
 import CancelOrderDetail from "./CancelOrderDetail";
 import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL_SELLER_CANCEL_ORDER, SHOW_MODAL_SELLER_CANCEL_ORDER } from "../../redux/type/order/OrderType";
+import { SearchOutlined } from "@ant-design/icons";
+import { FormControl } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function CancelOrderManagement() {
   const openModalSellerCancelOrder = useSelector(state => state.OrderReducer.openModalSellerCancelOrder);
@@ -42,13 +45,28 @@ export default function CancelOrderManagement() {
           className="rounded-md mt-3 flex justify-end mr-3 text-black"
           style={{ width: "100%" }}
         >
-          <Form>
+          {/* <Form>
             <Input
               placeholder="Tìm kiếm"
               className="shadow-none hover:border-green-700 focus:border-green-700"
               style={{ width: "100%", height: "2.5rem" }}
             />
-          </Form>
+          </Form> */}
+          <div className="rounded-md mt-3 flex justify-end mr-3">
+            <Form>
+              <InputGroup className={` `} >
+                <FormControl
+                  name="header__search"
+                  className={` form-control shadow-none outline-none `}
+                  placeholder="Tìm kiếm đơn hàng"
+                  style={{ width: '300px' }}
+                />
+                <InputGroup.Text className="text-white">
+                  <SearchOutlined className="cursor-pointer" />
+                </InputGroup.Text>
+              </InputGroup>
+            </Form>
+          </div>
         </div>
       </div>
 
@@ -109,7 +127,7 @@ export default function CancelOrderManagement() {
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
                     onClick={() => { showModal(item) }}
                   >
-                    <FaEye className='text-xl'/>
+                    <FaEye className='text-xl' />
                   </Button>
                   <Modal
                     open={openModalSellerCancelOrder}

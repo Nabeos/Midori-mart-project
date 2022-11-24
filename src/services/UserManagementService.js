@@ -25,6 +25,10 @@ export class UserManagementService extends baseService {
         return this.postAddNewUserForAdmin(`api/v1/user-management/users`, userInfo);
     }
 
+    searchUserForAdmin = (keyWord) => {
+        return this.getSearchUserForAdmin(`api/v1/user-management/searchUser?name=${keyWord}&offset=0&limit=1000`);
+    }
+
     getAllUserListForAdmin = () => {
         return this.getAllUserListForAdminApi(`api/v1/user-management/users?offset=0&limit=1000`);
     }
@@ -33,8 +37,12 @@ export class UserManagementService extends baseService {
         return this.post(`api/v1/user-management/forgot-password`, userEmailInfo);
     }
 
-    changePassword = () => {
-        return this.put();
+    verifyResetPassword = (verificationCode) => {
+        return this.get(`api/user-management/verify?code=${verificationCode}`);
+    }
+
+    changePassword = (userPasswordInfo) => {
+        return this.postChangePassword(`api/v1/user/changePassword`, userPasswordInfo);
     }
 
     getAllRoleInMidori = () => {

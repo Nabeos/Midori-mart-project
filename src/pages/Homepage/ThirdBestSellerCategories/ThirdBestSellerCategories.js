@@ -111,9 +111,11 @@ function ProductsList(props) {
         <div className="products grid grid-cols-5" style={{ minWidth: 0, minHeight: 0 }}>
             {/* <div> */}
             <Slider {...settings} style={{ width: "950px" }}>
-                {products.map((product) => (
-                    <Product className="col-span-1" product={product} />
-                ))}
+                {products.map((product) => {
+                    if (product.deleted == 0) {
+                        return <Product className="col-span-1" product={product} />
+                    }
+                })}
             </Slider>
         </div>
     );

@@ -8,9 +8,8 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
-
 import AddNewUser from "./AddNewUser";
-import { getAllUserListForAdminAction } from "../../redux/action/user/UserAction";
+import { getAllUserListForAdminAction, searchUserForAdminAction } from "../../redux/action/user/UserAction";
 import { Redirect } from 'react-router-dom';
 import { CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, USER } from "../../redux/type/user/UserType";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -19,15 +18,15 @@ import { FormControl } from "react-bootstrap";
 
 
 
-export default function UserManagement(props) {
-  // const {
-  //   values,
-  //   touched,
-  //   errors,
-  //   handleChange,
-  //   handleBlur,
-  //   handleSubmit,
-  // } = props;
+function UserManagement(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
   // const user = useSelector(state => state.UserReducer.user);
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN USER MANAGEMENT FOR ADMIN: ", user?.roleId);
@@ -71,7 +70,7 @@ export default function UserManagement(props) {
           <div className="flex items-center flex-col">
             {/* header */}
             <div
-              className="bg-white rounded-md flex mt-3"
+              className="bg-white rounded-md flex mt-3 justify-end"
               style={{
                 width: "99%",
                 boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",
@@ -88,16 +87,20 @@ export default function UserManagement(props) {
               }}
             >
               <div className="rounded-md mt-3 flex justify-end mr-3">
-                <Form>
+                <Form onSubmitCapture={handleSubmit}>
                   <InputGroup className={` `} >
                     <FormControl
                       name="header__search"
                       className={` form-control shadow-none outline-none `}
+                      onChange={(e) => {
+                        handleChange(e);
+                        dispatch(searchUserForAdminAction(e.target.value));
+                      }}
                       placeholder="Tìm kiếm người dùng"
                       style={{ width: '300px' }}
                     />
                     <InputGroup.Text className="text-white">
-                      <SearchOutlined className="cursor-pointer" />
+                      <SearchOutlined onClick={handleSubmit} className="cursor-pointer" />
                     </InputGroup.Text>
                   </InputGroup>
                 </Form>
@@ -309,10 +312,10 @@ export default function UserManagement(props) {
 
               {/* </div > */}
               {/* table for Authorization Management */}
-              <div className="flex justify-center" >
+              <div className="flex justify-center" style={{ minHeight: "440px" }}>
                 <table
                   className={`${styles.usermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                  style={{ width: "90%", minHeight: "780px" }}
+                  style={{ width: "90%", minHeight: userListForAdmin.length < 7 ? "300px" : "780px" }}
                 >
                   <thead>
                     <tr>
@@ -401,68 +404,28 @@ export default function UserManagement(props) {
       </div > : <Redirect to="/" />
   );
 }
-// const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-// const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
-// const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+const UserManagementWithFormik = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => ({
+    header__search: ""
+  }),
 
-// const UserManagementWithFormik = withFormik({
-//   enableReinitialize: true,
-//   mapPropsToValues: (props) => ({
-//     lastName: "",
-//     firstName: "",
-//     phoneNumber: "",
-//     email: "",
-//     role: "",
-//     password: "",
-//     confirmPassword: ""
-//   }),
+  validationSchema: Yup.object().shape({
 
-//   // Custom sync validation
-//   validationSchema: Yup.object().shape({
-//     lastName: Yup.string()
-//       .required("Không được để trống mục họ !!!")
-//       .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
-//     firstName: Yup.string()
-//       .required("Không được để trống mục tên !!!")
-//       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
-//     phoneNumber: Yup.string()
-//       .required("Không được để trống mục số điện thoại !!!")
-//       .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
-//     email: Yup.string()
-//       .required("Không được để trống mục email !!!")
-//       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
-//     role: Yup.string()
-//       .required("Không được để trống vai trò !!!"),
-//     password: Yup.string()
-//       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
-//       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-//       .required("Không được để trống mục mật khẩu !!!")
-//       .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
-//     confirmPassword: Yup.string()
-//       .required("Không được để trống mục nhập lại mật khẩu !!!")
-//   }),
+  }),
 
+  handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
+    console.log("VALUE FORM: ", values);
+    props.dispatch(searchUserForAdminAction(values.header__search))
+  },
 
-//   handleSubmit: (values, { props, setSubmitting }) => {
-//     console.log("CÓ VÀO HANDLE SUBMIT");
-//     console.log("VALUE FORM: ", values);
-//     let data = {
-//       "user": {
-//         "fullname": values.lastName + " " + values.firstName,
-//         "email": values.email,
-//         "phonenumber": values.phoneNumber,
-//         "password": values.password
-//       }
-//     }
-//     console.log("REGISTER DATA: ", data);
-//   },
+  displayName: 'UserManagementWithFormik'
+})(UserManagement);
 
-//   displayName: 'UserManagementWithFormik'
-// })(UserManagement);
+const mapStateToProps = (state) => {
+  return {
+  }
+}
 
-// const mapStateToProps = (state) => {
-//   return {
-//   }
-// }
-
-// export default connect(mapStateToProps, null)(UserManagementWithFormik);
+export default connect(mapStateToProps, null)(UserManagementWithFormik);

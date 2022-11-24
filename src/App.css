@@ -278,3 +278,7 @@ code {
 .slick-next{
   right: -30px!important;
 }
+
+.ck-editor__editable {
+  min-height: 200px;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./EmailVerification.module.css";
 import {
   Button,
@@ -10,8 +10,17 @@ import {
   Upload,
   message,
 } from "antd";
+import { connect, useSelector, useDispatch } from 'react-redux'
 import { NavLink } from "react-router-dom";
-export default function EmailVerification() {
+import { verifyResetPasswordAction } from "../../redux/action/user/UserAction";
+export default function EmailVerification(props) {
+  console.log("PROPS: ", props.match.params.verificationCode);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(verifyResetPasswordAction(props.match.params.verificationCode));
+  }, [])
+
+
   return (
     <div className="flex items-center justify-center" style={{ height: "500px" }}>
       <div
@@ -41,17 +50,16 @@ export default function EmailVerification() {
           </NavLink>
         </div>
         <div className="text-xl font-bold mb-2 text-center">
-          Xác nhận địa chỉ email của bạn
         </div>
         <div className="text-lg font-medium mb-2 text-center">
-          Hãy xác nhận để chúng tôi biết rằng bạn là người yêu cầu reset mật khẩu .<br /> Một khi hoàn thành xác nhận bạn sẽ nhận được email kèm mật khẩu mới từ chúng tôi!
+          Xin vui lòng kiểm tra email để xem mật khẩu reset mới .<br />
         </div>
         <div className="text-lg font-medium mb-2 text-center font-bold">
           Thân ái !
         </div>
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <Button className={`${styles.emailverification__verify__button} p-4 text-lg flex justify-center items-center`} style={{ width: "100%" }}>Xác nhận email</Button>
-        </div>
+        </div> */}
       </div>
     </div >
   );

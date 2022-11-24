@@ -16,6 +16,9 @@ import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/Ord
 import CustomerCancelOrderManagement from "./CustomerCancelOrderManagement";
 import { Redirect } from 'react-router-dom';
 import { USER } from "../../redux/type/user/UserType";
+import { SearchOutlined } from "@ant-design/icons";
+import { FormControl } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function OrderManagement() {
   // popup
@@ -54,7 +57,7 @@ export default function OrderManagement() {
           <div className="flex items-center flex-col">
             {/* header */}
             <div
-              className="bg-white rounded-md flex mt-3"
+              className="bg-white rounded-md flex mt-3 justify-end"
               style={{
                 width: "99%",
                 boxShadow: "3px 4px 9px 0 rgba(0, 0, 0, 0.4)",

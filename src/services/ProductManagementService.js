@@ -14,7 +14,7 @@ export class ProductManagementService extends baseService {
     }
 
     searchProduct = (keyWord) => {
-        return this.get(`product-management/search-product?title=${keyWord}`);
+        return this.get(`product-management/search-product?title=${keyWord}&offset=0&limit=1000`);
     }
 
     getBestSellerProductListByCategoryId = (categoryId) => {

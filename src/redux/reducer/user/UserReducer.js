@@ -1,4 +1,4 @@
-import { ADD_NEW_USER_DEMO, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
+import { ADD_NEW_USER_DEMO, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, SEARCH_USER_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
 
 let defaultUser = {};
 if (localStorage.getItem(USER)) {
@@ -12,6 +12,7 @@ const initialState = {
     userListForAdmin: [],
     roleList: [],
     userDetailedInfoForAdmin: {},
+    searchUserListForAdmin: [],
     openAddNewUserForAdminPopup: false
 }
 
@@ -41,10 +42,18 @@ export const UserReducer = (state = initialState, action) => {
             state.userProfileInfo = userProfileInfoUpdate;
             return { ...state }
 
+
+
         case GET_ALL_USER_LIST_FOR_ADMIN:
             let userListForAdminUpdate = [...state.userListForAdmin];
             userListForAdminUpdate = action.userListForAdminAction;
             state.userListForAdmin = userListForAdminUpdate;
+            return { ...state }
+
+        case SEARCH_USER_FOR_ADMIN:
+            let searchUserListForAdminUpdate = [...state.userListForAdmin];
+            searchUserListForAdminUpdate = action.searchUserListForAdminAction;
+            state.userListForAdmin = searchUserListForAdminUpdate;
             return { ...state }
 
         case UPLOAD_IMAGE:

@@ -136,7 +136,6 @@ const ForgotPasswordWithFormik = withFormik({
 
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT");
-    alert("CÓ VÀO HANDLE SUBMIT");
     let data = {
       "information": {
         "email": values.email,

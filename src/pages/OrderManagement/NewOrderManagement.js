@@ -8,6 +8,10 @@ import NewOrderDetail from "./NewOrderDetail";
 import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL } from "../../redux/type/order/OrderType";
 import OrderHistoryProduct from "../UserOrderHistory/OrderHistoryProduct";
+import { SearchOutlined } from "@ant-design/icons";
+import { FormControl } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
+
 export default function NewOrderManagement(props) {
   const openModal = useSelector(state => state.OrderReducer.openModal);
   const dispatch = useDispatch();
@@ -42,13 +46,28 @@ export default function NewOrderManagement(props) {
           className="rounded-md mt-3 flex justify-end mr-3 text-black"
           style={{ width: "100%" }}
         >
-          <Form>
+          {/* <Form>
             <Input
               placeholder="Tìm kiếm"
               className="shadow-none hover:border-green-700 focus:border-green-700"
               style={{ width: "100%", height: "2.5rem" }}
             />
-          </Form>
+          </Form> */}
+          <div className="rounded-md mt-3 flex justify-end mr-3">
+            <Form>
+              <InputGroup className={` `} >
+                <FormControl
+                  name="header__search"
+                  className={` form-control shadow-none outline-none `}
+                  placeholder="Tìm kiếm đơn hàng"
+                  style={{ width: '300px' }}
+                />
+                <InputGroup.Text className="text-white">
+                  <SearchOutlined className="cursor-pointer" />
+                </InputGroup.Text>
+              </InputGroup>
+            </Form>
+          </div>
         </div>
       </div>
 
@@ -113,7 +132,7 @@ export default function NewOrderManagement(props) {
                     className=" text-green-700 no-shadow border-none font-bold text-base focus:text-green-700 hover:text-green-700"
                     onClick={() => { showModal(item) }}
                   >
-                    <FaEye className='text-xl'/>
+                    <FaEye className='text-xl' />
                   </Button>
                   <Modal
                     open={openModal}
@@ -141,7 +160,7 @@ export default function NewOrderManagement(props) {
           total={50}
         />
       </div>
-    </div> : <div style={{ minHeight: "485px" }}>
+    </div> : <div style={{ minHeight: "520px" }}>
       <div className="text-center" style={{
         width: "80%",
         margin: "30px auto 0 auto",

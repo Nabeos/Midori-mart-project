@@ -66,11 +66,11 @@ function App() {
         <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />
         <Route exact path="/inventorymanagement" component={InventoryManagement} />
         <Route exact path="/importsheet" component={ImportSheet} />
-        <Route exact path="/importgoodsdetail" component={ImportGoodsDetail} />
+        <Route exact path="/importgoodsdetail/:formId" component={ImportGoodsDetail} />
         <Route exact path="/exportsheet" component={ExportSheet} />
         <Route exact path="/exportgoodsdetail" component={ExportGoodsDetail} />
         {/* <Route exact path="/inventorymanagement" component={InventoryManagementTabPane} /> */}
-        <Route exact path="/productdetailmanagement" component={ProductDetailManagement} />
+        <Route exact path="/productdetailmanagement/:sku" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/ordermanagement" component={OrderManagement} />
@@ -83,7 +83,7 @@ function App() {
         <Route exact path="/searchresult/:keyWord" component={SearchResult} />
         <Route exact path="/revenuemanagement" component={RevenueManagement} />
         <Route exact path="/shippermanagement" component={ShipperManagement} />
-        <Route exact path="/emailverification" component={EmailVerification} />
+        <Route exact path="/emailverification/:verificationCode" component={EmailVerification} />
         {/* <Route exact path="/revenuemanagement" component={RevenueManagement} /> */}
         {/* <Route exact path="/shippermanagement" component={ShipperManagement} /> */}
         {/* <Route exact path="/deliverymanagement" component={DeliveryManagement} /> */}

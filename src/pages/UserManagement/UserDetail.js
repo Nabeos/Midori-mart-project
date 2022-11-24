@@ -37,6 +37,7 @@ function UserDetail(props) {
   console.log("THỬ NGHIỆM: ", typeof (values.thumbnail) == typeof null);
   useEffect(() => {
     dispatch(getAllRoleInMidoriAction());
+    window.scrollTo(0, 0);
   }, [])
   console.log("VALUES.THUMBNAIL: ", values.thumbnail);
   let roleList = useSelector(state => state.UserReducer.roleList);
