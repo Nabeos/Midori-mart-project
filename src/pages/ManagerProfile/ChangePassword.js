@@ -123,11 +123,11 @@ const ChangePasswordWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-    currentPassword: Yup.string()
-      .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
-      .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
-      .required("Quý khách vui lòng không được để trống mục mật khẩu !!!")
-      .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
+    // currentPassword: Yup.string()
+    //   .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
+    //   .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
+    //   .required("Quý khách vui lòng không được để trống mục mật khẩu !!!")
+    //   .matches(regexPassword, 'Mật khẩu phải có độ dài tối thiếu 6 ký tự và tối đa 32 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt !!!'),
     newPassword: Yup.string()
       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')

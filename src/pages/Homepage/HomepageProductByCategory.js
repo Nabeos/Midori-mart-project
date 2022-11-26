@@ -8,8 +8,9 @@ const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
   const { product } = props;
-  const handleNavigate = () => {
-    history.push("/product");
+  console.log("PRODUCT IN FIRST BEST SELLER: ", product);
+  const handleNavigate = (categoryId, slug) => {
+    history.push(`/product/${categoryId}/${slug}`);
   };
   return (
     <div
@@ -31,12 +32,12 @@ function Product(props) {
             className={`${styles.productlist__cardtitle} text-left no-underline text-sm font-semibold h-20`}
             style={{}}
           >
-            <a
-              className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-              href="/product"
+            <p
+              className={`${styles.productlist__cardtitle} mb-0 no-underline text-sm cursor-pointer font-semibold hover:text-green-800`}
+              onClick={() => { handleNavigate(product.category.id, product.slug) }}
             >
               {product.title}
-            </a>
+            </p>
             <div className="text-xs">{product.sku}</div>
             <div className="text-sm mt-2 font-normal">
               {product.price.toLocaleString()}đ
@@ -46,7 +47,7 @@ function Product(props) {
         </div>
         <button
           style={{ width: "100%" }}
-          onClick={handleNavigate}
+          onClick={() => { handleNavigate(product.category.id, product.slug) }}
           className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
         >
           Thêm vào giỏ

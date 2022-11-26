@@ -1,4 +1,4 @@
-import { ADD_NEW_USER_DEMO, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, SEARCH_USER_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
+import { ADD_NEW_USER_DEMO, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, SEARCH_USER_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, UPLOAD_IMAGE, UPLOAD_IMAGE_USER_IN_USER_MNGT, USER } from "../../type/user/UserType";
 
 let defaultUser = {};
 if (localStorage.getItem(USER)) {
@@ -9,6 +9,7 @@ const initialState = {
     userProfileInfo: {},
     userListDemo: [],
     uploadAvatar: "",
+    uploadAvatarUserInUserMngt: "",
     userListForAdmin: [],
     roleList: [],
     userDetailedInfoForAdmin: {},
@@ -62,6 +63,12 @@ export const UserReducer = (state = initialState, action) => {
             state.uploadAvatar = action.uploadAvatarAction;
             return { ...state }
 
+        case UPLOAD_IMAGE_USER_IN_USER_MNGT:
+            let uploadAvatarUserInUserMngtUpdate = { ...state.uploadAvatarUserInUserMngt }
+            uploadAvatarUserInUserMngtUpdate = action.uploadAvatarUserInUserMngtAction;
+            state.uploadAvatarUserInUserMngt = uploadAvatarUserInUserMngtUpdate;
+            return { ...state }
+
         case GET_ALL_ROLE:
             let roleListUpdate = { ...state.roleList };
             roleListUpdate = action.roleListAction;
@@ -77,6 +84,7 @@ export const UserReducer = (state = initialState, action) => {
         case GET_USER_DETAILED_INFORMATION_FOR_ADMIN:
             let userDetailedInfoForAdminUpdate = { ...state.userDetailedInfoForAdmin };
             let fullnameUser = action.userDetailedInfoForAdminAction.fullname;
+            state.uploadAvatarUserInUserMngt = action.userDetailedInfoForAdminAction.thumbnail;
             let countAdmin = 0;
             let desiredIndexAdmin = 0;
             for (let index = 0; index < fullnameUser.length; index++) {

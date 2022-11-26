@@ -105,6 +105,7 @@ function ProductDetail(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+    window.scrollTo(0, 0);
     dispatch(getProductDetailAction(props.match.params.id));
     dispatch(getBestSellerProductListByCategoryIdAction(props.match.params.categoryId));
   }, [])
@@ -194,23 +195,21 @@ function ProductDetail(props) {
                       ĐVT: <span>{productDetail?.unit?.name}</span>
                     </div>
                     <div>
-                      {productDetail?.productQuantityInStock?.map((item, index) => {
-                        totalInStock += item.quantity
-                      })}
+
                       <span className="mr-1">Tình trạng:</span>
-                      {totalInStock == 0 ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
-                      {totalInStock > 20 ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
-                      {totalInStock < 20 && totalInStock > 0 ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
+                      {(productDetail?.quantity == 0) ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
+                      {(productDetail?.quantity > 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
+                      {(productDetail?.quantity < 20 && productDetail?.quantity > 0) ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
                       {/* <span>{productDetail?.status}</span> */}
                     </div>
                     <div>
-                      <span className="">Số lượng hàng trong kho:</span> {totalInStock}
+                      <span className="">Số lượng hàng trong kho:</span> {productDetail?.quantity}
                     </div>
                     <div className="mt-1">
                       <label>Quy cách đóng gói:</label>
                       <span className="ml-1">{productDetail?.amount}{productDetail?.unit?.name}</span>
                     </div>
-                    {totalInStock == 0 ? <div className="flex flex-row mt-2">
+                    {productDetail?.quantity == 0 ? <div className="flex flex-row mt-2">
                       <label>Số lượng</label>
                       <div className="ml-2">
                         <div className="input-group">
@@ -279,7 +278,7 @@ function ProductDetail(props) {
 
 
                     <div className="text-3xl font-bold my-2">{(productDetail?.price * num).toLocaleString()}đ</div>
-                    {totalInStock == 0 ? <div className="mt-1">
+                    {productDetail?.quantity == 0 ? <div className="mt-1">
 
                       <Button
                         disabled
