@@ -1,7 +1,7 @@
 import { history } from "../../../App";
 import { userManagementService } from "../../../services/UserManagementService";
 import { TOKEN } from "../../../utils/settings/config";
-import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, SEARCH_USER_FOR_ADMIN, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, USER } from "../../type/user/UserType";
+import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, SEARCH_USER_FOR_ADMIN, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, UPLOAD_IMAGE_USER_IN_USER_MNGT, USER } from "../../type/user/UserType";
 import Swal from 'sweetalert2'
 import { imageManagementServices } from "../../../services/ImageManagementService";
 import { notification } from "antd";
@@ -253,6 +253,21 @@ export const uploadImageAction = (filesName) => {
             dispatch({
                 type: UPLOAD_IMAGE,
                 uploadAvatarAction: result.data.images[0].url
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const uploadImageUserInUserMngtAction = (filesName) => {
+    return async (dispatch) => {
+        try {
+            const result = await imageManagementServices.uploadAvatar(filesName);
+            console.log("RESULT UPLOAD IMAGE USER IN USER MNGT: ", result.data.images[0].url);
+            dispatch({
+                type: UPLOAD_IMAGE_USER_IN_USER_MNGT,
+                uploadAvatarUserInUserMngtAction: result.data.images[0].url
             })
         } catch (error) {
             console.log('error', error.response.data);

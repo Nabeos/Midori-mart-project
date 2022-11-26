@@ -16,7 +16,7 @@ import AddNewProduct from '../AddNewProduct';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getAllProductListForSellerAction, searchProductForSellerAction } from '../../../redux/action/inventory/InventoryAction';
 import { getAllCategoriesAction } from '../../../redux/action/categories/CategoriesAction';
-import { getProductListByCategoryIdAction } from '../../../redux/action/product/ProductAction';
+import { getProductDetailAction, getProductListByCategoryIdAction } from '../../../redux/action/product/ProductAction';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -70,13 +70,13 @@ function ProductManagement(props) {
     };
     const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
     console.log("productListByCategoryId: ", productListByCategoryId);
-    // useEffect(() => {
-    //     dispatch(getProductListByCategoryIdAction(0, 1000, 0));
-    // }, [productListByCategoryId])
-
     useEffect(() => {
         dispatch(getProductListByCategoryIdAction(0, 1000, 0));
-    }, [])
+    }, [productListByCategoryId])
+
+    // useEffect(() => {
+    //     dispatch(getProductListByCategoryIdAction(0, 1000, 0));
+    // }, [])
 
     useEffect(() => {
         dispatch(getAllCategoriesAction());
@@ -219,18 +219,15 @@ function ProductManagement(props) {
                                         </td>
 
                                         <td className="border border-slate-300 text-center">
-                                            {item.productQuantityInStock.map((itemStock, index) => {
-                                                totalStock += Number(itemStock.quantity);
-                                            })}
-                                            {totalStock}
+                                            {item.quantity}
                                         </td>
                                         <td className="border border-slate-300 text-center ">
-                                            {totalStock > 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
+                                            {item.quantity > 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
                                                 Còn hàng
                                             </span> : <Fragment></Fragment>}
-                                            {totalStock == 0 ? <span className="p-2 bg-red-600 rounded-md text-white">
+                                            {item.quantity == 0 ? <span className="p-2 bg-red-600 rounded-md text-white">
                                                 Hết hàng
-                                            </span> : <Fragment></Fragment>}{totalStock > 0 && totalStock < 20 ? <span className="p-2 bg-yellow-600 rounded-md text-white">
+                                            </span> : <Fragment></Fragment>}{item.quantity > 0 && item.quantity < 20 ? <span className="p-2 bg-yellow-600 rounded-md text-white">
                                                 Ít hàng
                                             </span> : <Fragment></Fragment>}
                                         </td>
@@ -238,6 +235,9 @@ function ProductManagement(props) {
                                         <td className="border border-slate-300 text-center">
                                             <NavLink
                                                 to={`/productdetailmanagement/${item.slug}`}
+                                                onClick={() => {
+                                                    dispatch(getProductDetailAction(item.slug));
+                                                }}
                                                 className="flex justify-center text-green-700 hover:text-green-700 "
                                             >
                                                 <FaEye className='text-xl' />

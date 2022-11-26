@@ -40,7 +40,7 @@ export const getProductDetailAction = (slug) => {
                 productDetail: result.data.product
             })
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data)
         }
     }
 }

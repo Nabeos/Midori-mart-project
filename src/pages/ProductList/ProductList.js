@@ -46,12 +46,12 @@ function Product(props) {
               className={`${styles.productlist__cardtitle} text-start no-underline text-sm font-semibold h-24`}
 
             >
-              <a
-                className={`${styles.productlist__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-                href="/product"
+              <p
+                className={`${styles.productlist__cardtitle} mb-0 cursor-pointer no-underline text-sm font-semibold hover:text-green-800`}
+                onClick={() => { handleNavigate(product.category.id, product.slug) }}
               >
                 {product?.title}
-              </a>
+              </p>
               <div className="text-xs">{product?.sku}</div>
               <div className="text-sm mt-2 font-normal">{product.price?.toLocaleString()}đ</div>
             </header>

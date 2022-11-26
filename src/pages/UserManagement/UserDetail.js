@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import { USER } from "../../redux/type/user/UserType";
-import { activateUserAction, deactivateUserAccountAction, getAllRoleInMidoriAction, uploadImageAction } from "../../redux/action/user/UserAction";
+import { activateUserAction, deactivateUserAccountAction, getAllRoleInMidoriAction, getUserProfileInformationAction, uploadImageAction, uploadImageUserInUserMngtAction } from "../../redux/action/user/UserAction";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import Item from "antd/lib/list/Item";
@@ -37,6 +37,7 @@ function UserDetail(props) {
   console.log("THỬ NGHIỆM: ", typeof (values.thumbnail) == typeof null);
   useEffect(() => {
     dispatch(getAllRoleInMidoriAction());
+    dispatch(getUserProfileInformationAction());
     window.scrollTo(0, 0);
   }, [])
   console.log("VALUES.THUMBNAIL: ", values.thumbnail);
@@ -71,7 +72,7 @@ function UserDetail(props) {
     const data = new FormData();
     data.append("files", files[0]);
     console.log("DATA FIRST: ", data);
-    dispatch(uploadImageAction(data));
+    dispatch(uploadImageUserInUserMngtAction(data));
   }
   return (
     user?.roleId == 1 ?
@@ -98,19 +99,28 @@ function UserDetail(props) {
                 Thông tin người dùng
               </div>
               <div className="text-2xl font-bold mt-3 mb-3 flex flex-row">
-                <img
-                  name="thumbnail"
-                  src={values.thumbnail ? values.thumbnail : "/images/user/anonymous_avatar.jpg"}
-                  className="mr-5"
-                  style={{ width: "150px", height: "150px", borderRadius: "50%" }}
-                />
-                <div className="flex whitespace-nowrap items-end">
+                {values.thumbnail ?
+                  <img
+                    name="thumbnail"
+                    src={values.thumbnail}
+                    className="mr-5"
+                    style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+                  />
+                  : <img
+                    name="thumbnail"
+                    src="/images/user/anonymous_avatar.jpg"
+                    className="mr-5"
+                    style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+                  />
+                }
+
+                {/* <div className="flex whitespace-nowrap items-end">
                   <label htmlFor="filePicker" className="bg-green-700 text-white p-2" style={{ fontSize: '15px' }}>
                     Upload ảnh
                   </label>
                   <input type="file" id="filePicker" style={{ visibility: "hidden" }} name="file" placeholder='Upload an image'
                     onChange={uploadImage} />
-                </div>
+                </div> */}
               </div>
               <div className="flex flex-row ">
                 <div style={{ width: "100%" }}>
@@ -421,7 +431,8 @@ const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689
 const UserDetailWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
-    thumbnail: props.userDetailedInfoForAdmin.thumbnail,
+    // thumbnail: props.userDetailedInfoForAdmin.thumbnail,
+    thumbnail: props?.uploadImage,
     lastName: props.lastName,
     firstName: props.firstName,
     phoneNumber: props.userDetailedInfoForAdmin.phonenumber,
@@ -480,6 +491,7 @@ const UserDetailWithFormik = withFormik({
 const mapStateToProps = (state) => {
   return {
     userDetailedInfoForAdmin: JSON.parse(localStorage.getItem("userDetailedInfoAdmin")),
+    uploadImage: state.UserReducer.uploadAvatarUserInUserMngt,
     lastName: localStorage.getItem("lastNameUserDetailedAdmin"),
     firstName: localStorage.getItem("firstNameUserDetailedAdmin")
   }
