@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -96,8 +96,29 @@ function Header(props) {
     })
   }
 
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true)
+  
+  const handleScroll = () => {
+      const currentScrollPos = window.scrollY
+  
+      if(currentScrollPos > prevScrollPos){
+          setVisible(false)
+      }else{
+          setVisible(true)
+      }
+  
+      setPrevScrollPos(currentScrollPos)
+  }
+  
+  useEffect( () => {
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => window.removeEventListener('scroll', handleScroll)
+  })
+
   return (
-    <div className="bg-white sticky top-0 z-50">
+    <div className={`bg-white sticky z-50 ${visible ? 'top-0' : ''} `}>
       <div className="grid grid-cols-12 ml-11 items-center">
         <div className="col-span-2 mr-2 flex items-center">
           <NavLink
