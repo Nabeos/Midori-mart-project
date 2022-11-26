@@ -97,8 +97,8 @@ function Header(props) {
   }
 
   return (
-    <div className="bg-white">
-      <div className="grid grid-cols-12 ml-11 -mt-10 items-center">
+    <div className="bg-white sticky top-0 z-50">
+      <div className="grid grid-cols-12 ml-11 items-center">
         <div className="col-span-2 mr-2 flex items-center">
           <NavLink
             to="/"
