@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { deleteImportGoodsOrderAction, getAllMerchantAction } from "../../../redux/action/inventory/InventoryAction";
 import { USER } from "../../../redux/type/user/UserType";
+import { NAVIGATE_TO_IMPORT_PAGE } from "../../../redux/type/inventory/InventoryType";
 
 function ImportGoodsDetail(props) {
   const {
@@ -341,6 +342,12 @@ function ImportGoodsDetail(props) {
                     <NavLink
                       to={"/inventorymanagement"}
                       className="flex flex-row text-black no-underline text-lg"
+                      onClick={() => {
+                        // dispatch({
+                        //   type: NAVIGATE_TO_IMPORT_PAGE
+                        // })
+                        localStorage.setItem("defaultActiveKeyValueInventory", 2);
+                      }}
                     >
                       <FaArrowLeft className="mr-1 mt-1 hover:text-green-800" />
                       <span className="hover:text-green-800">Quay lại</span>
@@ -359,7 +366,7 @@ function ImportGoodsDetail(props) {
 const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
 const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
-const regexAllNumber = /^[0-9]+$/;
+const regexAllNumber = /^[0-9.,]+$/;
 const regexSelect = /^[1-9]$/;
 
 const ImportGoodsDetailWithFormik = withFormik({

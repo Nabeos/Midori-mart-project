@@ -55,6 +55,7 @@ function UserManagement(props) {
 
   useEffect(() => {
     dispatch(getAllUserListForAdminAction());
+    window.scrollTo(0, 0);
   }, [])
 
   const userListForAdmin = useSelector(state => state.UserReducer.userListForAdmin);

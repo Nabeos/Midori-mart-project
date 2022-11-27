@@ -33,6 +33,7 @@ export default function ImportGoods() {
   useEffect(() => {
     dispatch(getAllImportGoodsOrderListAction());
     dispatch(getAllSellersAction());
+    window.scrollTo(0, 0);
   }, [])
 
   const importGoodsOrderList = useSelector(state => state.InventoryReducer.importGoodsOrderList);

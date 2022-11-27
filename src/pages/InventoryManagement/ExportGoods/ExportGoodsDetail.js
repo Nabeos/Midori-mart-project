@@ -1,4 +1,4 @@
-import { Button, Modal, Pagination, Form, Input } from "antd";
+import { Button, Modal, Pagination, Form, Input, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaEye } from "react-icons/fa";
 import HeaderManagement from "../../../components/HeaderManagement/HeaderManagement";
@@ -6,10 +6,18 @@ import styles from "./ExportGoodsDetail.module.css";
 import { NavLink } from "react-router-dom";
 import EditExportGoods from "./EditExportGoods";
 import AddNewExportGoods from "./AddNewExportGoods";
+import { deleteExportGoodsOrderAction } from "../../../redux/action/inventory/InventoryAction";
+import { useDispatch } from "react-redux";
 
-export default function ExportGoodsDetail() {
+export default function ExportGoodsDetail(props) {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const dispatch = useDispatch();
+  let totalBill = 0;
+  const textDeleteExportGoodsForm = "Bạn có chắc chắn muốn xóa phiếu xuất kho này ?";
+  const exportGoodsOrderDetailedInformation = JSON.parse(localStorage.getItem("exportGoodsDetailInfo"));
+  console.log("exportGoodsOrderDetailedInformation: ", exportGoodsOrderDetailedInformation);
+  let { createdBy, createdAt, name, note, deliveryDetail, orderDate, order } = exportGoodsOrderDetailedInformation;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
@@ -60,60 +68,47 @@ export default function ExportGoodsDetail() {
                     <Input
                       type="text"
                       id="product_name"
+                      value={name}
                       className=" text-gray-900 ml-2 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu xuất kho"
                       style={{ width: "200px", height: "35px" }}
                     />
                   </div>
                   <div className="flex justify-end" style={{ width: "90%" }}>
-                    <Button
+                    {/* <Button
                       className={`${styles.exportgoodsdetail__border__confirm}  mr-2`}
                     >
                       Cập nhật phiếu
-                    </Button>
-                    <Button
-                      className={`${styles.exportgoodsdetail__border__cancel}  mr-5`}
-                    >
-                      Hủy phiếu
-                    </Button>
+                    </Button> */}
+
+                    <Popconfirm placement="top"
+                      onConfirm={() => { dispatch(deleteExportGoodsOrderAction(props.match.params.formId)) }}
+                      title={textDeleteExportGoodsForm}
+                      okText="Yes" cancelText="No">
+                      <Button
+                        className={`${styles.exportgoodsdetail__border__cancel}  mr-5`}
+                      >
+                        Hủy phiếu
+                      </Button>
+                    </Popconfirm>
+
                   </div>
                 </div>
                 {/* warehouse info */}
                 <div className="mt-3">
                   <span className="text-lg font-semibold">
-                    Thông tin lưu kho
+                    Thông tin phiếu xuất kho
                   </span>
-                  <div>
-                    <span className="text-base">Vị trí:</span>{" "}
-                    <Input
-                      type="text"
-                      id="product_name"
-                      className="my-1 text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "250px", height: "35px" }}
-                    />
-                  </div>
-                  <div>
-                    <span className="text-base">Địa chỉ:</span>{" "}
-                    <Input
-                      type="text"
-                      id="product_name"
-                      className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
-                      placeholder="Mã phiếu nhập kho"
-                      style={{ width: "250px", height: "35px" }}
-                    />
-                  </div>
                 </div>
                 {/* confirmation info */}
                 <div className="mt-2 mb-2">
-                  <span className="text-lg font-semibold">
-                    Thông tin xác nhận
-                  </span>
+
                   <div>
                     <span className="text-base">Người tạo đơn:</span>{" "}
                     <Input
                       type="text"
                       id="product_name"
+                      value={createdBy}
                       className="my-1 text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
                       style={{ width: "250px", height: "35px" }}
@@ -122,8 +117,9 @@ export default function ExportGoodsDetail() {
                   <div>
                     <span className="text-base">Ngày tạo đơn:</span>{" "}
                     <Input
-                      type="date"
+                      type="text"
                       id="product_name"
+                      value={createdAt}
                       className=" text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
                       style={{ width: "250px", height: "35px" }}
@@ -135,26 +131,50 @@ export default function ExportGoodsDetail() {
                   <span className="text-lg font-semibold">Ghi chú</span>
                   <div>
                     <textarea
+                      className="p-2 text-base"
                       style={{
                         border: "1px solid lightgray",
                         borderRadius: "3px",
                         minWidth: "50rem",
                         minHeight: "10rem",
                       }}
-                    ></textarea>
+                      value={note}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <span className="text-lg font-semibold">
+                    Thông tin đơn đặt hàng của khách
+                  </span>
+                  <div className="text-base">
+                    <div className="flex">
+                      <p className="mr-2 mb-0">Mã đơn hàng: </p>
+                      <span>{order.orderNumber}</span>
+                    </div>
+                    <div className="flex">
+                      <p className="mr-2 mb-0">Ngày nhận hàng: </p>
+                      <span>{order.orderDate}</span>
+                    </div>
+                    <div className="flex">
+                      <p className="mr-2">Phương thức nhận hàng: </p>
+                      <span>{order.receiveProductsMethod}</span>
+                    </div>
                   </div>
                 </div>
                 {/* goods table */}
                 <div>
-                  <div className="mt-3 ">
-                    <Button
+                  <div className="mt-1 ">
+                    <span className="text-lg font-semibold">
+                      Thông tin sản phẩm xuất kho
+                    </span>
+                    {/* <Button
                       type=""
                       className="bg-green-700 text-white hover:text-white hover:bg-green-700 hover:border-green-700 rounded-md no-shadow focus:bg-green-700 focus:border-green-700 font-bold text-base"
                       onClick={showModalAdd}
                     >
                       + Thêm sản phẩm xuất kho
-                    </Button>
-                    <Modal
+                    </Button> */}
+                    {/* <Modal
                       open={openAdd}
                       title="Thêm sản phẩm xuất kho"
                       onCancel={handleCancelAdd}
@@ -162,7 +182,7 @@ export default function ExportGoodsDetail() {
                       width={900}
                     >
                       <AddNewExportGoods />
-                    </Modal>
+                    </Modal> */}
                   </div>
                   <div className="">
                     <table
@@ -191,62 +211,66 @@ export default function ExportGoodsDetail() {
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Thành tiền
                           </th>
-                          <th className="border border-slate-300 p-4 text-base text-center">
+                          {/* <th className="border border-slate-300 p-4 text-base text-center">
                             Hạn sử dụng
-                          </th>
+                          </th> */}
                           <th className="border border-slate-300 p-4 text-base text-center">
                             Xem chi tiết
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="border border-slate-300 text-center">
-                            1
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            Thịt nạc hảo hạng
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23022001
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            20
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            23.000đ
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            460.000đ
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            30/11/2022
-                          </td>
-                          <td className="border border-slate-300 text-center">
-                            <Button
-                              type=""
-                              className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
-                              onClick={showModalEdit}
-                            >
-                              <FaEye className="text-xl" />
-                            </Button>
-                            <Modal
-                              open={openEdit}
-                              title="Chỉnh sửa sản phẩm nhập kho"
-                              onCancel={handleCancelEdit}
-                              footer={[]}
-                              width={900}
-                            >
-                              <EditExportGoods />
-                            </Modal>
-                          </td>
-                        </tr>
+                        {deliveryDetail.map((item, index) => {
+                          totalBill += item.quantityExport * item.price;
+                          return <tr>
+                            <td className="border border-slate-300 text-center">
+                              {index + 1}
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              {item.title}
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              {item.sku}
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              {item.quantityExport}
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              {item.price.toLocaleString()}đ
+                            </td>
+                            <td className="border border-slate-300 text-center">
+                              {(item.quantityExport * item.price).toLocaleString()}đ
+                            </td>
+                            {/* <td className="border border-slate-300 text-center">
+                              30/11/2022
+                            </td> */}
+                            <td className="border border-slate-300 text-center">
+                              <Button
+                                type=""
+                                className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
+                                onClick={showModalEdit}
+                              >
+                                <FaEye className="text-xl" />
+                              </Button>
+                              <Modal
+                                open={openEdit}
+                                title="Chỉnh sửa sản phẩm nhập kho"
+                                onCancel={handleCancelEdit}
+                                footer={[]}
+                                width={900}
+                              >
+                                <EditExportGoods />
+                              </Modal>
+                            </td>
+                          </tr>
+                        })}
+
 
 
                       </tbody>
                     </table>
                   </div>
-                  <div
+                  {/* <div
                     className="flex justify-end mb-4"
                     style={{ width: "95%" }}
                   >
@@ -255,7 +279,7 @@ export default function ExportGoodsDetail() {
                       defaultCurrent={1}
                       total={50}
                     />
-                  </div>
+                  </div> */}
                   <div
                     className="flex justify-end mb-4"
                     style={{ width: "95%" }}
@@ -264,7 +288,7 @@ export default function ExportGoodsDetail() {
                       <span className="font-semibold">
                         Tổng giá trị đơn hàng:{" "}
                       </span>{" "}
-                      23000000đ
+                      {totalBill.toLocaleString()}đ
                     </div>
                   </div>
                   <div
@@ -273,6 +297,9 @@ export default function ExportGoodsDetail() {
                   >
                     <NavLink
                       to={"/inventorymanagement"}
+                      onClick={() => {
+                        localStorage.setItem("defaultActiveKeyValueInventory", 3);
+                      }}
                       className="flex flex-row text-black no-underline text-lg"
                     >
                       <FaArrowLeft className="mr-1 mt-1 hover:text-green-800" />

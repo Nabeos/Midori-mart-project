@@ -21,6 +21,14 @@ export class baseService {
         })
     }
 
+    putDeleteExportGoodsOrder = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'PUT',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     putUpdateProductDetailedInformationForSeller = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -188,7 +196,23 @@ export class baseService {
         })
     }
 
+    getSearchExportGoodsFormForSellerByTimeRange = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     getSearchImportGoodsFormForSellerByTimeRange = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getSearchExportGoodsFormForSellerByTimeRangeAndSeller = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',
@@ -212,6 +236,14 @@ export class baseService {
         })
     }
 
+    getAllExportGoodsOrderListByCreatorApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     getAllSellersApi = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
@@ -221,6 +253,14 @@ export class baseService {
     }
 
     getAllImportGoodsOrderListApi = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'GET',
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
+    getAllExportGoodsOrderListApi = (url) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'GET',

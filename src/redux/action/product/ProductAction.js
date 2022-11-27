@@ -1,13 +1,29 @@
 import { productManagementService } from "../../../services/ProductManagementService";
-import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
 
 export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
     return async (dispatch) => {
         try {
             const result = await productManagementService.getProductListByCategoryId(categoryId, limit, offset);
+            console.log("GET PRODUCT LIST BY CATE ID ACTION RESULT: ", result);
             dispatch({
                 type: GET_PRODUCT_LIST_BY_CATEGORY_ID,
                 productList: result.data.product
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const getProductListByOriginAction = (categoryId, origin1, origin2, origin3, origin4, origin5) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getProductListByOrigin(categoryId, origin1, origin2, origin3, origin4, origin5);
+            console.log("RESULT FILTER BY ORIGIN: ", result);
+            dispatch({
+                type: GET_PRODUCT_LIST_BY_ORIGIN,
+                productFilterByOriginListAction: result.data.product
             })
         } catch (error) {
             console.log('error', error.response.data);

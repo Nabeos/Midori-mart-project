@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { inventoryManagementService } from '../../../services/InventoryManagementService';
-import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
+import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
 import { notification } from "antd";
+import { history } from '../../../App';
 
 export const getAllProductListForSellerAction = () => {
     return async (dispatch) => {
@@ -73,7 +74,9 @@ export const deleteProductForSellerAction = (productId) => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.deleteProductForSeller(productId);
-            openNotificationDeleteProduct('bottomRight')
+            openNotificationDeleteProduct('bottomRight');
+            localStorage.setItem("defaultActiveKeyValueInventory", 1);
+            history.push("/inventorymanagement");
             console.log("RESULT DELETE PRODUCT FOR SELLER: ", result);
         } catch (error) {
             openNotificationDeleteProductError('bottomRight')
@@ -111,6 +114,8 @@ export const updateProductDetailedInformationForSellerAction = (slug, updatedPro
         try {
             const result = await inventoryManagementService.updateProductDetailedInformationForSeller(slug, updatedProductInfo);
             openNotificationUpdateProductDetailInfoForSeller('bottomRight');
+            localStorage.setItem("defaultActiveKeyValueInventory", 1);
+            history.push("/inventorymanagement");
             console.log("RESULT UPDATE PRODUCT INFO FOR SELLER: ", result);
         } catch (error) {
             openNotificationUpdateProductDetailInfoForSellerError('bottomRight');
@@ -193,9 +198,41 @@ export const deleteImportGoodsOrderAction = (formId) => {
         try {
             const result = await inventoryManagementService.deleteImportGoodsOrder(formId);
             openNotificationDeleteImportGoodsForm('bottomRight');
+            localStorage.setItem("defaultActiveKeyValueInventory", 2);
+            history.push("/inventorymanagement");
             console.log("RESULT DELETE IMPORT GOODS ORDER: ", result);
         } catch (error) {
             openNotificationDeleteImportGoodsFormError('bottomRight');
+            console.log('error', error)
+        }
+    }
+}
+
+const openNotificationDeleteExportGoodsForm = (placement) => {
+    notification.success({
+        message: `Xóa phiếu xuất kho thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationDeleteExportGoodsFormError = (placement) => {
+    notification.error({
+        message: `Xóa phiếu xuất kho thất bại !`,
+        placement,
+        duration: 2
+    });
+};
+
+export const deleteExportGoodsOrderAction = (formId) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.deleteExportGoodsOrder(formId);
+            openNotificationDeleteExportGoodsForm('bottomRight');
+            localStorage.setItem("defaultActiveKeyValueInventory", 3);
+            history.push("/inventorymanagement");
+            console.log("RESULT DELETE EXPORT GOODS ORDER: ", result);
+        } catch (error) {
+            openNotificationDeleteExportGoodsFormError('bottomRight');
             console.log('error', error)
         }
     }
@@ -287,13 +324,58 @@ export const getAllExportGoodsOrderListAction = () => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.getAllExportGoodsOrderList();
-            console.log("RESULT ALL EXPORT GOODS ORDER LIST: ", result);
+            console.log("RESULT ALL EXPORT GOODS ORDER LIST: ", result.data.deliveryNotes);
             dispatch({
                 type: GET_ALL_EXPORT_GOODS_ORDER_LIST,
-                exportGoodsOrderListAction: result
+                exportGoodsOrderListAction: result.data.deliveryNotes
             })
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const searchExportGoodsFormForSellerByTimeRangeAction = (firstDate, secondDate) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRange(firstDate, secondDate);
+            console.log("RESULT SEARCH EXPORTED GOODS FORM LIST BY TIME RANGE: ", result);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE,
+                searchedExportedGoodsFormListByTimeRangeAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const searchExportGoodsFormForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate);
+            console.log("RESULT SEARCH EXPORT GOODS FORM LIST BY TIME RANGE AND SELLER: ", result.data.deliveryNotes);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER,
+                searchedExportedGoodsFormListByTimeRangeAndSellerAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const getAllExportGoodsOrderListByCreatorAction = (userId) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.getAllExportGoodsOrderListByCreator(userId);
+            console.log("RESULT ALL EXPORT GOODS ORDER LIST BY CREATOR: ", result);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR,
+                exportedGoodsOrderListByCreatorAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
         }
     }
 }

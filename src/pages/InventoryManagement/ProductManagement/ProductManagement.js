@@ -70,15 +70,16 @@ function ProductManagement(props) {
     };
     const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
     console.log("productListByCategoryId: ", productListByCategoryId);
-    useEffect(() => {
-        dispatch(getProductListByCategoryIdAction(0, 1000, 0));
-    }, [productListByCategoryId])
-
     // useEffect(() => {
     //     dispatch(getProductListByCategoryIdAction(0, 1000, 0));
-    // }, [])
+    // }, [productListByCategoryId])
 
     useEffect(() => {
+        dispatch(getProductListByCategoryIdAction(0, 1000, 0));
+    }, [])
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
         dispatch(getAllCategoriesAction());
     }, [])
 

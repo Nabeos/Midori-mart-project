@@ -122,7 +122,9 @@ function ProductDetail(props) {
   let [num, setNum] = useState(1);
   let totalInStock = 0;
   let incNum = () => {
-    setNum(Number(num) + 1);
+    if (num < productDetail?.quantity) {
+      setNum(Number(num) + 1);
+    }
   };
   let decNum = () => {
     if (num > 1) {

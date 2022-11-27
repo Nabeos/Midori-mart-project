@@ -5,6 +5,10 @@ export class ProductManagementService extends baseService {
         super();
     }
 
+    getProductListByOrigin = (categoryId, origin1, origin2, origin3, origin4, origin5) => {
+        return this.get(`product-management/products?category=${categoryId}&origin=${origin1}&origin=${origin2}&origin=${origin3}&origin=${origin4}&origin=${origin5}&limit=1000&offset=0`);
+    }
+
     getProductListByCategoryId = (categoryId, limit, offset) => {
         return this.get(`product-management/products?category=${categoryId}&limit=${limit}&offset=${offset}`);
     }

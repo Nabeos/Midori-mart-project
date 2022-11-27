@@ -245,6 +245,20 @@ export const changePasswordAction = (userPasswordInfo) => {
     }
 }
 
+const openNotificationUploadAvatar = (placement) => {
+    notification.success({
+        message: `Đổi ảnh đại diện thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationUploadAvatarError = (placement) => {
+    notification.error({
+        message: `Đổi ảnh đại diện thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const uploadImageAction = (filesName) => {
     return async (dispatch) => {
         try {
@@ -254,8 +268,10 @@ export const uploadImageAction = (filesName) => {
                 type: UPLOAD_IMAGE,
                 uploadAvatarAction: result.data.images[0].url
             })
+            openNotificationUploadAvatar('bottomRight');
         } catch (error) {
             console.log('error', error.response.data);
+            openNotificationUploadAvatarError('bottomRight');
         }
     }
 }
@@ -297,17 +313,27 @@ const openNotificationActivateUserAccountForAdmin = (placement) => {
     });
 };
 
+const openNotificationActivateUserAccountForAdminError = (placement) => {
+    notification.error({
+        message: `Kích hoạt lại tài khoản này thất bại !`,
+        placement,
+        duration: 2
+    });
+};
+
 export const activateUserAction = (userId) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.activateUserAccountForAdmin(userId);
             console.log("RESULT ACTIVATE USER ACCOUNT FOR ADMIN: ", result);
-            openNotificationActivateUserAccountForAdmin('bottomRight')
+            openNotificationActivateUserAccountForAdmin('bottomRight');
+            history.push("/usermanagement");
             // dispatch({
             //     type: GET_ALL_ROLE,
             //     roleListAction: result.data.roles
             // })
         } catch (error) {
+            openNotificationActivateUserAccountForAdminError('bottomRight');
             console.log('error', error.response.data);
         }
     }
@@ -321,17 +347,26 @@ const openNotificationDeactivateUserAccountForAdmin = (placement) => {
         duration: 2
     });
 };
+const openNotificationDeactivateUserAccountForAdminError = (placement) => {
+    notification.success({
+        message: `Vô hiệu hóa tài khoản này thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const deactivateUserAccountAction = (userId) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.deactivateUserAccountForAdmin(userId);
             console.log("RESULT DEACTIVATE USER ACCOUNT FOR ADMIN: ", result);
             openNotificationDeactivateUserAccountForAdmin('bottomRight');
+            history.push("/usermanagement");
             // dispatch({
             //     type: GET_ALL_ROLE,
             //     roleListAction: result.data.roles
             // })
         } catch (error) {
+            openNotificationDeactivateUserAccountForAdminError('bottomRight');
             console.log('error', error.response.data);
         }
     }

@@ -87,7 +87,7 @@ function Header(props) {
       return <NavLink
         key={index}
         to={`/productlist/${id}`}
-        onClick={() => { dispatch(getProductListByCategoryIdAction(id, 1000, 0)) }}
+        // onClick={() => { dispatch(getProductListByCategoryIdAction(id, 1000, 0)) }}
         activeStyle={{ fontWeight: "bold" }}
         className="text-white whitespace-nowrap hover:text-lime-800 no-underline font-semibold col-span-1 text-lg"
       >
@@ -114,7 +114,7 @@ function Header(props) {
           </NavLink>
         </div>
         {localStorage.getItem(USER) ?
-          <div className="col-span-6">
+          <div className="col-span-7 mr-5">
             {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
             <Form onSubmit={handleSubmit}>
               <InputGroup className={`${styles.header__searchbar} `} >
@@ -130,7 +130,7 @@ function Header(props) {
               </InputGroup>
             </Form>
 
-          </div> : <div className="col-span-7">
+          </div> : <div className="col-span-8 mr-3">
             {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
             <Form onSubmit={handleSubmit}>
               <InputGroup className={`${styles.header__searchbar} `} >
@@ -147,14 +147,14 @@ function Header(props) {
             </Form>
 
           </div>}
-        <div className="col-span-1 text-center">
+        {/* <div className="col-span-1 text-center">
           <NavLink
             to="/blog"
             className="text-black no-underline col-span-1 font-medium ml-6 text-lg"
           >
             Blog
           </NavLink>
-        </div>
+        </div> */}
         <div className="col-span-1 text-center">
           <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 -ml-10" />
           {cartList.map((item, index) => {

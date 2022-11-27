@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import SidebarShopkeeper from "../../components/SidebarShopkeeper/SidebarShopkeeper";
 import styles from "./InventoryManagement.module.css";
@@ -60,6 +60,14 @@ export default function InventoryManagement() {
     setOpen(false);
   };
 
+
+  // const defaultActiveKeyValueInventory = useSelector(state => state.InventoryReducer.defaultActiveKeyValueInventory);
+  // console.log("defaultActiveKeyValueInventory: ", defaultActiveKeyValueInventory);
+  useEffect(() => {
+    localStorage.setItem("defaultActiveKeyValueInventory", 1);
+  }, [])
+  let defaultActiveKeyValueInventory = localStorage.getItem("defaultActiveKeyValueInventory");
+
   const dispatch = useDispatch();
   const handleSelectTabPane = (key) => {
     console.log("KEY TỔNG: ", key);
@@ -67,6 +75,7 @@ export default function InventoryManagement() {
     } else if (key == 2) {
       localStorage.setItem("sellerIdFilter", 0);
     } else if (key == 3) {
+      localStorage.setItem("sellerIdFilter", 0);
     }
     // else {
     //   dispatch(getAllCustomerOrderForSellerAction(1000, 0, 0));
@@ -101,7 +110,7 @@ export default function InventoryManagement() {
             >
               <div className="">
 
-                <Tabs defaultActiveKey="1" className='ml-3' onChange={handleSelectTabPane}>
+                <Tabs defaultActiveKey={defaultActiveKeyValueInventory} className='ml-3' onChange={handleSelectTabPane}>
                   <Tabs.TabPane tab="Quản lý sản phẩm" key="1" >
                     <ProductManagement />
                   </Tabs.TabPane>

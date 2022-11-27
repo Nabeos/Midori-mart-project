@@ -73,6 +73,10 @@ export class InventoryManagementService extends baseService {
         return this.putDeleteImportGoodsOrder(`api/v1/received-notes?id=${formId}`);
     }
 
+    deleteExportGoodsOrder = (formId) => {
+        return this.putDeleteExportGoodsOrder(`api/v1/delivery-notes?id=${formId}`);
+    }
+
     getAllSellers = () => {
         return this.getAllSellersApi(`api/v1/user-management/users/sellers`);
     }
@@ -93,8 +97,20 @@ export class InventoryManagementService extends baseService {
         return this.post();
     }
 
+    searchExportGoodsFormForSellerByTimeRange = (firstDate, secondDate) => {
+        return this.getSearchExportGoodsFormForSellerByTimeRange(`api/v1/delivery-notes?firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
+    }
+
+    searchExportGoodsFormForSellerByTimeRangeAndSeller = (userId, firstDate, secondDate) => {
+        return this.getSearchExportGoodsFormForSellerByTimeRangeAndSeller(`api/v1/delivery-notes?user=${userId}&firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
+    }
+
     getAllExportGoodsOrderList = () => {
-        return this.get();
+        return this.getAllExportGoodsOrderListApi(`api/v1/delivery-notes?offset=0&limit=1000`);
+    }
+
+    getAllExportGoodsOrderListByCreator = (userId) => {
+        return this.getAllExportGoodsOrderListByCreatorApi(`api/v1/delivery-notes?user=${userId}&offset=0&limit=1000`);
     }
 
     getExportGoodsOrderDetailedInformation = () => {
