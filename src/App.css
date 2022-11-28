@@ -294,3 +294,7 @@ code {
 .ant-picker-focused{
   box-shadow: none;
 }
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector{
+  display:none!important;
+}

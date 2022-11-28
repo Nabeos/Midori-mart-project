@@ -11,7 +11,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import { Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction, getProductListByOriginAction, getProductListLengthByCategoryIdAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, getProductListByOriginAction, getProductListLengthByCategoryIdAction, getProductListLengthByOriginAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
 import { useStateCallback } from "use-state-callback";
 import { Rate } from 'antd';
 import { USER } from '../../redux/type/user/UserType';
@@ -93,7 +93,7 @@ export default function ProductList(props) {
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
     dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
-
+    setCurrentCustom(1);
   }, [props.match.params.id])
 
   useEffect(() => {
@@ -126,6 +126,8 @@ export default function ProductList(props) {
     { id: 9, image: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/1200px-Flag_of_France.svg.png", nationName: "Pháp" }
   ];
   const productListLengthByCategoryId = useSelector(state => state.ProductReducer.productListLengthByCategoryId);
+  const productListLengthByOrigin = useSelector(state => state.ProductReducer.productListLengthByOrigin);
+  console.log("LENGTH BY ORIGIN: ", productListLengthByOrigin);
   let countTotal = 0;
   {
     productListLengthByCategoryId.map((item, index) => {
@@ -166,7 +168,13 @@ export default function ProductList(props) {
     console.log("PAGE SIZE handlePaginationChange: ", pageSize);
     setCurrentCustom(page);
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
-    dispatch(getProductListByCategoryIdAction(props.match.params.id, 5 * page, (page - 1) * 5));
+    if (localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined) {
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
+    } else if (localStorage.getItem("countryArrLength") > 0) {
+      dispatch(getProductListByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
+      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
+    }
+
   }
 
   const [checkedState, setCheckedState] = useState(
@@ -186,11 +194,19 @@ export default function ProductList(props) {
 
 
   const handleChangeOrigin = (countryArr) => {
-    console.log("COUNTRY ARR: ", countryArr);
     if (countryArr.length == 0) {
-      dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
+      console.log("COUNTRY ARR: ", countryArr);
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
     } else {
-      dispatch(getProductListByOriginAction(props.match.params.id, countryArr[0], countryArr[1], countryArr[2], countryArr[3], countryArr[4]));
+      console.log("COUNTRY ARR: ", countryArr);
+      localStorage.setItem("countryArrLength", countryArr.length);
+      localStorage.setItem("country1", countryArr[0]);
+      localStorage.setItem("country2", countryArr[1]);
+      localStorage.setItem("country3", countryArr[2]);
+      localStorage.setItem("country4", countryArr[3]);
+      localStorage.setItem("country5", countryArr[4]);
+      dispatch(getProductListByOriginAction(props.match.params.id, countryArr[0], countryArr[1], countryArr[2], countryArr[3], countryArr[4], 5, (currentCustom - 1) * 5));
+      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (currentCustom - 1) * 5));
     }
 
   }
@@ -332,7 +348,7 @@ export default function ProductList(props) {
                   onChange={(page) => { handlePaginationChange(page) }}
                   // showSizeChanger
                   onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
-                  total={countTotal}
+                  total={localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined ? countTotal : productListLengthByOrigin.length}
                 />
               </div>
             </div>

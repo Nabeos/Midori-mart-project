@@ -8,22 +8,27 @@ import Footer from "../../components/Footer/Footer";
 import AllUserOrderDetail from "./AllUserOrderDetail";
 import Slogan from "../../components/Slogan/Slogan";
 import { FaEye } from "react-icons/fa";
-import { getAllCustomerOrderForCustomerAction, getAllCustomerSuccessfulOrderAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
+import { getAllCustomerOrderForCustomerAction, getAllCustomerOrderLengthForCustomerAction, getAllCustomerSuccessfulOrderAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL_IN_PROGRESS } from "../../redux/type/order/OrderType";
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
-
+import { useStateCallback } from "use-state-callback";
 
 export default function AllUserOrder() {
   const dispatch = useDispatch();
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   useEffect(() => {
-    dispatch(getAllCustomerOrderForCustomerAction());
+    dispatch(getAllCustomerOrderForCustomerAction(5, 0));
+    dispatch(getAllCustomerOrderLengthForCustomerAction(1000, 0));
   }, [])
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
 
   const allCustomerOrderListForCustomer = useSelector(state => state.OrderReducer.allCustomerOrderListForCustomer);
   console.log("ALL CUSTOMER ORDER LIST FOR CUSTOMER: ", allCustomerOrderListForCustomer);
+  const allCustomerOrderListLengthForCustomer = useSelector(state => state.OrderReducer.allCustomerOrderListLengthForCustomer);
+  console.log("allCustomerOrderListLengthForCustomer: ", allCustomerOrderListLengthForCustomer.length);
+
   const openModal = useSelector(state => state.OrderReducer.openModal);
   const showModal = (inProgressItemAction) => {
     dispatch({
@@ -37,6 +42,25 @@ export default function AllUserOrder() {
     })
 
   };
+
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    dispatch(getAllCustomerOrderForCustomerAction(5, (page - 1) * 5));
+  }
+
   return (
     (user?.roleId == 2) ?
       <div className="bg-gray-100">
@@ -77,7 +101,7 @@ export default function AllUserOrder() {
                 >
                   <thead>
                     <th className="border border-slate-300 p-4 text-lg text-center">
-                      Stt
+                      Id
                     </th>
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Mã đơn hàng
@@ -99,7 +123,7 @@ export default function AllUserOrder() {
                   <tbody>
                     {allCustomerOrderListForCustomer.map((item, index) => {
                       return <tr>
-                        <td className="border border-slate-300 text-center">{index + 1}</td>
+                        <td className="border border-slate-300 text-center">{item.id}</td>
                         <td className="border border-slate-300 text-center">
                           {item.orderNumber}
                         </td>
@@ -111,12 +135,12 @@ export default function AllUserOrder() {
 
                         </td>
                         <td className="border border-slate-300 text-center ">
-                          {item.status == "Thành Công" ? <span className="bg-green-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
-                          {item.status == "Hủy Bỏ" ? <span className="bg-red-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
-                          {item.status == "Từ Chối" ? <span className="bg-red-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
-                          {item.status == "Đang Xử Lý" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                          {item.status == "Thành Công" ? <button style={{ width: "164px", height: "33px" }} className="bg-green-600 mr-0 pt-1 text-white p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
+                          {item.status == "Hủy Bỏ" ? <button style={{ width: "164px", height: "33px" }} className="bg-red-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
+                          {item.status == "Từ Chối" ? <button style={{ width: "164px", height: "33px" }} className="bg-red-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
+                          {item.status == "Đang Xử Lý" ? <button style={{ width: "164px", height: "33px" }} className="bg-yellow-600 pt-1 text-white p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                           {item.status == "Đang Chờ Xác Nhận" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
-                          {item.status == "Hoàn Tiền" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                          {item.status == "Hoàn Tiền" ? <button style={{ width: "164px", height: "33px" }} className="bg-yellow-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                         </td>
                         <td className="border border-slate-300 text-center">
                           {" "}
@@ -160,11 +184,17 @@ export default function AllUserOrder() {
                 </div>
               </div >}
 
-              {(allCustomerOrderListForCustomer.length) > 0 ? <div className="flex justify-center mt-10">
+              {(allCustomerOrderListForCustomer.length) > 0 ? <div className="flex justify-center mb-4">
                 <Pagination
                   className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
                   defaultCurrent={1}
-                  total={50}
+                  pageSize={5}
+                  // pageSizeOptions={3}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  // showSizeChanger
+                  // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={allCustomerOrderListLengthForCustomer.length}
                 />
               </div> : <Fragment></Fragment>}
             </div>

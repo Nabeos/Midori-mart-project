@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarShopkeeper from "../../components/SidebarShopkeeper/SidebarShopkeeper";
 import styles from "./OrderManagement.module.css";
 import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
@@ -26,25 +26,38 @@ export default function OrderManagement() {
   // const user = useSelector(state => state.UserReducer.user);
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN ORDER MANAGEMENT FOR SELLER: ", user?.roleId);
+  useEffect(() => {
+    localStorage.setItem("keyOrder", 0);
+    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+  }, [])
+
   const handleSelectTabPane = (key) => {
     console.log("KEY TỔNG: ", key);
     if (key == 1) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 0));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 0);
     } else if (key == 2) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 1));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 1);
     } else if (key == 3) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 2));
+      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 2);
     } else if (key == 4) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 3));
+      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 3);
     } else if (key == 5) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 4));
+      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 4);
     } else if (key == 6) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 5));
+      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 5);
     } else if (key == 7) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, 6));
+      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      localStorage.setItem("keyOrder", 6);
     }
     // else {
-    //   dispatch(getAllCustomerOrderForSellerAction(1000, 0, 0));
+    //   localStorage.setItem("keyOrder", 0);
+    //   dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
     // }
   }
   return (
@@ -77,10 +90,10 @@ export default function OrderManagement() {
               <div className="">
                 <Tabs defaultActiveKey="1" className='ml-3' onChange={handleSelectTabPane}>
                   <Tabs.TabPane tab="Đơn hàng mới" key="1" >
-                    <NewOrderManagement />
+                    <NewOrderManagement keyNew="1" />
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Đơn hàng đã duyệt và chờ giao" key="2">
-                    <PendingOrderManagement />
+                    <PendingOrderManagement keyPending="2" />
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Đơn hàng đang giao" key="3">
                     <DeliveringOrderManagement />

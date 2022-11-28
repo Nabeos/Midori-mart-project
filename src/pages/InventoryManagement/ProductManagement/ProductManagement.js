@@ -14,15 +14,16 @@ import { NavLink } from "react-router-dom";
 import styles from "./ProductManagement.module.css";
 import AddNewProduct from '../AddNewProduct';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getAllProductListForSellerAction, searchProductForSellerAction } from '../../../redux/action/inventory/InventoryAction';
+import { getAllProductListForSellerAction, searchProductForSellerAction, searchProductLengthForSellerAction } from '../../../redux/action/inventory/InventoryAction';
 import { getAllCategoriesAction } from '../../../redux/action/categories/CategoriesAction';
-import { getProductDetailAction, getProductListByCategoryIdAction } from '../../../redux/action/product/ProductAction';
+import { getProductDetailAction, getProductListByCategoryIdAction, getProductListLengthByCategoryIdAction } from '../../../redux/action/product/ProductAction';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, SHOW_MODAL_ADD_NEW_PRODUCT_FOR_SELLER } from '../../../redux/type/inventory/InventoryType';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import { useStateCallback } from "use-state-callback";
 
 function ProductManagement(props) {
     const {
@@ -33,6 +34,8 @@ function ProductManagement(props) {
         handleBlur,
         handleSubmit,
     } = props;
+    console.log("values.header__search: ", values.header__search);
+    const [currentCustom, setCurrentCustom] = useStateCallback(1);
     // const text = <span>Lọc sản phẩm</span>;
     // const content = (
     //     <div
@@ -70,17 +73,35 @@ function ProductManagement(props) {
     };
     const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
     console.log("productListByCategoryId: ", productListByCategoryId);
+    const productListLengthByCategoryId = useSelector(state => state.ProductReducer.productListLengthByCategoryId);
+    console.log("productListLengthByCategoryId: ", productListLengthByCategoryId);
+
+    const searchProductListLengthForSeller = useSelector(state => state.ProductReducer.searchProductListLengthForSeller);
+    console.log("SEARCH LENGTH: ", searchProductListLengthForSeller.length);
+
+    let countTotalProductForSeller = 0;
+    {
+        productListLengthByCategoryId.map((item, index) => {
+            if (item.deleted == 0) {
+                countTotalProductForSeller++;
+            }
+        })
+    }
     // useEffect(() => {
-    //     dispatch(getProductListByCategoryIdAction(0, 1000, 0));
+    //     dispatch(getProductListByCategoryIdAction(0, 15, 0));
+    //     dispatch(getProductListLengthByCategoryIdAction(0, 1000, 0));
     // }, [productListByCategoryId])
 
-    useEffect(() => {
-        dispatch(getProductListByCategoryIdAction(0, 1000, 0));
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getProductListByCategoryIdAction(0, 15, 0));
+    // }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(getAllCategoriesAction());
+        dispatch(getProductListByCategoryIdAction(0, 15, 0));
+        dispatch(getProductListLengthByCategoryIdAction(0, 1000, 0));
+        localStorage.setItem("categoriesIdForSeller", 0);
     }, [])
 
 
@@ -90,8 +111,34 @@ function ProductManagement(props) {
     // console.log("categories: ", categories);
     const handleChangeCategories = (e) => {
         console.log("HANDLE CHANGE CATEGORIES: ", e.target.value);
-        dispatch(getProductListByCategoryIdAction(e.target.value, 1000, 0));
+        localStorage.setItem("categoriesIdForSeller", e.target.value);
+        setCurrentCustom(1);
+        dispatch(getProductListByCategoryIdAction(e.target.value, 15, 0));
+        dispatch(getProductListLengthByCategoryIdAction(e.target.value, 1000, 0));
     }
+
+    const onShowSizeChangeCustom = (current, pageSize) => {
+        console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+        console.log("CURRENT onShowSizeChangeCustom: ", current);
+        console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+        if (current == 0) {
+            current = 1;
+            setCurrentCustom(1);
+        }
+    };
+    const handlePaginationChange = (page, pageSize) => {
+        console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+        console.log("PAGE handlePaginationChange: ", page);
+        console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+        setCurrentCustom(page);
+        if (values.header__search == "") {
+            dispatch(getProductListByCategoryIdAction(localStorage.getItem("categoriesIdForSeller"), 15, (page - 1) * 15));
+        } else if (values.header__search != "") {
+            dispatch(searchProductForSellerAction(values.header__search, (page - 1) * 15, 15));
+        }
+
+    }
+
     return (
         <div>
             <div className="flex">
@@ -127,7 +174,13 @@ function ProductManagement(props) {
                                     placeholder="Tìm kiếm sản phẩm"
                                     onChange={(e) => {
                                         handleChange(e);
-                                        dispatch(searchProductForSellerAction(e.target.value))
+                                        if (e.target.value == "") {
+                                            dispatch(getProductListByCategoryIdAction(e.target.value, 15, 0));
+                                        } else if (e.target.value != "") {
+                                            dispatch(searchProductForSellerAction(e.target.value, 0, 15));
+                                            dispatch(searchProductLengthForSellerAction(e.target.value, 0, 1000));
+                                        }
+
                                     }}
                                     style={{ width: '300px' }}
                                 />
@@ -166,7 +219,7 @@ function ProductManagement(props) {
                 <div className="flex justify-center">
                     <table
                         className={`${styles.productmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                        style={{ width: "80%", minHeight: productListByCategoryId.length < 5 ? "300px" : "900px" }}
+                        style={{ width: "80%", minHeight: productListByCategoryId.length < 7 ? "300px" : "900px" }}
                     >
                         <thead>
                             <tr>
@@ -253,11 +306,17 @@ function ProductManagement(props) {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-end mb-4" style={{ width: "90%" }}>
+                <div className="flex justify-center mb-4">
                     <Pagination
                         className="hover:text-green-800 focus:border-green-800"
+                        current={currentCustom}
                         defaultCurrent={1}
-                        total={50}
+                        pageSize={15}
+                        // pageSizeOptions={3}
+                        onChange={(page) => { handlePaginationChange(page) }}
+                        // showSizeChanger
+                        // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                        total={values.header__search == "" ? countTotalProductForSeller : searchProductListLengthForSeller.length}
                     />
                 </div>
             </div>
@@ -278,7 +337,8 @@ const ProductManagementWithFormik = withFormik({
     handleSubmit: (values, { props, setSubmitting }) => {
         console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
         console.log("VALUE FORM: ", values);
-        props.dispatch(searchProductForSellerAction(values.header__search))
+        props.dispatch(searchProductForSellerAction(values.header__search, 0, 15));
+        props.dispatch(searchProductLengthForSellerAction(values.header__search, 0, 1000));
     },
 
     displayName: 'ProductManagementWithFormik'

@@ -10,24 +10,27 @@ import { Button, Form, Modal, Popover, Pagination, Input } from "antd";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import UserOrderPendingDetail from "./UserOrderPendingDetail";
-import { getAllInProgressOrderAction } from "../../redux/action/order/OrderAction";
+import { getAllInProgressOrderAction, getAllInProgressOrderLengthAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL_IN_PROGRESS } from "../../redux/type/order/OrderType";
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
-
+import { useStateCallback } from "use-state-callback";
 
 export default function UserOrderPending() {
   const dispatch = useDispatch();
   let user = JSON.parse(localStorage.getItem(USER));
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllInProgressOrderAction());
+    dispatch(getAllInProgressOrderAction(5, 0));
+    dispatch(getAllInProgressOrderLengthAction(1000, 0));
   }, [openModal])
 
   const inProgressOrderList = useSelector(state => state.OrderReducer.inProgressOrderList);
   console.log("IN PROGRESS ORDER LIST: ", inProgressOrderList);
-
+  const inProgressOrderListLength = useSelector(state => state.OrderReducer.inProgressOrderListLength);
+  console.log("inProgressOrderListLength: ", inProgressOrderListLength.length);
 
   const showModal = (inProgressItemAction) => {
     dispatch({
@@ -50,6 +53,25 @@ export default function UserOrderPending() {
   // const handleCancel = () => {
   //   setOpen(false);
   // };
+
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    dispatch(getAllInProgressOrderAction(5, (page - 1) * 5));
+  }
+
   return (
     (user?.roleId == 2) ?
       <div className="bg-gray-100">
@@ -90,7 +112,7 @@ export default function UserOrderPending() {
                 >
                   <thead>
                     <th className="border border-slate-300 p-4 text-lg text-center">
-                      Stt
+                      Id
                     </th>
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Mã đơn hàng
@@ -112,7 +134,7 @@ export default function UserOrderPending() {
                   <tbody>
                     {inProgressOrderList.map((item, index) => {
                       return <tr key={index}>
-                        <td className="border border-slate-300 text-center">{index + 1}</td>
+                        <td className="border border-slate-300 text-center">{item.id}</td>
                         <td className="border border-slate-300 text-center">
                           {item.orderNumber}
                         </td>
@@ -164,11 +186,17 @@ export default function UserOrderPending() {
 
                   </div>
                 </div >}
-              {(inProgressOrderList.length) > 0 ? <div className="flex justify-center mt-10">
+              {(inProgressOrderList.length) > 0 ? <div className="flex justify-center mb-4">
                 <Pagination
                   className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
                   defaultCurrent={1}
-                  total={50}
+                  pageSize={5}
+                  // pageSizeOptions={3}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  // showSizeChanger
+                  // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={inProgressOrderListLength.length}
                 />
               </div> : <Fragment></Fragment>}
 

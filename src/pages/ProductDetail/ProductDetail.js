@@ -114,10 +114,10 @@ function ProductDetail(props) {
   // console.log("COMMENT: ", productDetail?.comments);
   console.log("PRODUCT DETAIL: ", productDetail);
   console.log("BEST SELLER LIST: ", bestSellerProductList);
-  // useEffect(() => {
-  //   // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
-  //   dispatch(getProductDetailAction(props.match.params.id));
-  // }, [productDetail?.comments])
+  useEffect(() => {
+    // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+    dispatch(getProductDetailAction(props.match.params.id));
+  }, [productDetail?.comments])
   // quantity handle
   let [num, setNum] = useState(1);
   let totalInStock = 0;
@@ -593,7 +593,7 @@ function ProductDetail(props) {
         </div>
 
         <Footer />
-      </div> : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
+      </div > : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
   );
 }
 

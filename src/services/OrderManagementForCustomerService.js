@@ -5,16 +5,16 @@ export class OrderManagementForCustomerService extends baseService {
         super();
     }
 
-    getAllCustomerSuccessfulOrder = () => {
-        return this.getSuccessfulOrderCustomer(`api/v1/users/purchase?limit=1000&offset=0&status=3`);
+    getAllCustomerSuccessfulOrder = (limit, offset) => {
+        return this.getSuccessfulOrderCustomer(`api/v1/users/purchase?limit=${limit}&offset=${offset}&status=3`);
     }
 
-    getAllInProgressOrder = () => {
-        return this.getInProgressOrderCustomer(`api/v1/users/purchase?limit=1000&offset=0&status=0`);
+    getAllInProgressOrder = (limit, offset) => {
+        return this.getInProgressOrderCustomer(`api/v1/users/purchase?limit=${limit}&offset=${offset}&status=0`);
     }
 
-    getAllCustomerOrderForCustomer = () => {
-        return this.getCustomerOrderAll(`api/v1/users/purchase?limit=1000&offset=0`);
+    getAllCustomerOrderForCustomer = (limit, offset) => {
+        return this.getCustomerOrderAll(`api/v1/users/purchase?limit=${limit}&offset=${offset}`);
     }
 
     cancelInProgressOrderForCustomer = (orderNumber) => {

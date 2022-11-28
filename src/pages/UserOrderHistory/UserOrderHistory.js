@@ -8,22 +8,27 @@ import Footer from "../../components/Footer/Footer";
 import OrderHistoryProduct from "./OrderHistoryProduct";
 import Slogan from "../../components/Slogan/Slogan";
 import { FaEye } from "react-icons/fa";
-import { getAllCustomerSuccessfulOrderAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
+import { getAllCustomerSuccessfulOrderAction, getAllCustomerSuccessfulOrderLengthAction, getAllPurchaseHistoryOrderAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL_IN_PROGRESS } from "../../redux/type/order/OrderType";
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
+import { useStateCallback } from "use-state-callback";
 
 export default function UserOrderHistory() {
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   const dispatch = useDispatch();
   const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllCustomerSuccessfulOrderAction());
+    dispatch(getAllCustomerSuccessfulOrderAction(5, 0));
+    dispatch(getAllCustomerSuccessfulOrderLengthAction(1000, 0));
   }, [openModal])
 
   const successfulOrderList = useSelector(state => state.OrderReducer.successfulOrderList);
   console.log("SUCCESSFUL CUSTOMER ORDER LIST FOR CUSTOMER: ", successfulOrderList);
+  const successfulOrderListLength = useSelector(state => state.OrderReducer.successfulOrderListLength);
+  console.log("successfulOrderListLength: ", successfulOrderListLength.length);
 
   const showModal = (inProgressItemAction) => {
     dispatch({
@@ -37,6 +42,25 @@ export default function UserOrderHistory() {
     })
 
   };
+
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    dispatch(getAllCustomerSuccessfulOrderAction(5, (page - 1) * 5));
+  }
+
   return (
     (user?.roleId == 2) ?
       <div className="bg-gray-100">
@@ -77,7 +101,7 @@ export default function UserOrderHistory() {
                 >
                   <thead>
                     <th className="border border-slate-300 p-4 text-lg text-center">
-                      Stt
+                      Id
                     </th>
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Mã đơn hàng
@@ -99,7 +123,7 @@ export default function UserOrderHistory() {
                   <tbody>
                     {successfulOrderList.map((item, index) => {
                       return <tr key={index}>
-                        <td className="border border-slate-300 text-center">{index + 1}</td>
+                        <td className="border border-slate-300 text-center">{item.id}</td>
                         <td className="border border-slate-300 text-center">
                           {item.orderNumber}
                         </td>
@@ -153,11 +177,17 @@ export default function UserOrderHistory() {
                 </div>
               </div >}
 
-              {(successfulOrderList.length) > 0 ? <div className="flex justify-center mt-10">
+              {(successfulOrderList.length) > 0 ? <div className="flex justify-center mb-4">
                 <Pagination
                   className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
                   defaultCurrent={1}
-                  total={50}
+                  pageSize={5}
+                  // pageSizeOptions={3}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  // showSizeChanger
+                  // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={successfulOrderListLength.length}
                 />
               </div> : <Fragment></Fragment>}
             </div>

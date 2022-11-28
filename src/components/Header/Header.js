@@ -15,7 +15,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { history } from "../../App";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction, searchProductAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, searchProductAction, searchProductLengthAction } from "../../redux/action/product/ProductAction";
 import { Input } from 'antd';
 import { handleAddToCartQuantity } from "../../redux/action/cart/CartAction";
 import { withFormik } from 'formik';
@@ -87,6 +87,15 @@ function Header(props) {
       return <NavLink
         key={index}
         to={`/productlist/${id}`}
+        onClick={() => {
+          localStorage.removeItem("country");
+          localStorage.removeItem("countryArrLength");
+          localStorage.removeItem("country1");
+          localStorage.removeItem("country2");
+          localStorage.removeItem("country3");
+          localStorage.removeItem("country4");
+          localStorage.removeItem("country5");
+        }}
         // onClick={() => { dispatch(getProductListByCategoryIdAction(id, 1000, 0)) }}
         activeStyle={{ fontWeight: "bold" }}
         className="text-white whitespace-nowrap hover:text-lime-800 no-underline font-semibold col-span-1 text-lg"
@@ -102,6 +111,15 @@ function Header(props) {
         <div className="col-span-2 mr-2 flex items-center">
           <NavLink
             to="/"
+            onClick={() => {
+              // localStorage.removeItem("country");
+              // localStorage.removeItem("countryArrLength");
+              // localStorage.removeItem("country1");
+              // localStorage.removeItem("country2");
+              // localStorage.removeItem("country3");
+              // localStorage.removeItem("country4");
+              // localStorage.removeItem("country5");
+            }}
             className="text-black no-underline font-medium flex items-center"
           >
             <img className={styles.header__logo} src="/images/midori_logo.png" style={{ width: "50%" }} />
@@ -210,7 +228,9 @@ const HeaderWithFormik = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
     console.log("VALUE FORM: ", values);
-    props.dispatch(searchProductAction(values.header__search));
+    localStorage.setItem("searchResultProductCustomer", values.header__search);
+    props.dispatch(searchProductAction(values.header__search, 0, 5));
+    props.dispatch(searchProductLengthAction(values.header__search, 0, 1000));
     history.push(`/searchresult/${values.header__search}`);
   },
 

@@ -9,13 +9,13 @@ import * as Yup from 'yup';
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import AddNewUser from "./AddNewUser";
-import { getAllUserListForAdminAction, searchUserForAdminAction } from "../../redux/action/user/UserAction";
+import { getAllUserListForAdminAction, getAllUserListLengthForAdminAction, searchUserForAdminAction, searchUserLengthForAdminAction } from "../../redux/action/user/UserAction";
 import { Redirect } from 'react-router-dom';
 import { CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_USER_DETAILED_INFORMATION_FOR_ADMIN, SHOW_ADD_NEW_USER_FOR_ADMIN_POPUP, USER } from "../../redux/type/user/UserType";
 import InputGroup from "react-bootstrap/InputGroup";
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
-
+import { useStateCallback } from "use-state-callback";
 
 
 function UserManagement(props) {
@@ -27,8 +27,10 @@ function UserManagement(props) {
     handleBlur,
     handleSubmit,
   } = props;
+  console.log("values.header__search", values.header__search == "");
   // const user = useSelector(state => state.UserReducer.user);
   let user = JSON.parse(localStorage.getItem(USER));
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   console.log("ROLE ID IN USER MANAGEMENT FOR ADMIN: ", user?.roleId);
   const userListDemo = useSelector(state => state.UserReducer.userListDemo);
   console.log("USER LIST DEMO: ", userListDemo);
@@ -54,12 +56,39 @@ function UserManagement(props) {
   };
 
   useEffect(() => {
-    dispatch(getAllUserListForAdminAction());
+    dispatch(getAllUserListForAdminAction(0, 10));
+    dispatch(getAllUserListLengthForAdminAction(0, 1000));
     window.scrollTo(0, 0);
   }, [])
 
   const userListForAdmin = useSelector(state => state.UserReducer.userListForAdmin);
   console.log("USER LIST FOR ADMIN: ", userListForAdmin);
+  const userListLengthForAdmin = useSelector(state => state.UserReducer.userListLengthForAdmin);
+  console.log("USER LENGTH: ", userListLengthForAdmin);
+  const searchUserListLengthForAdmin = useSelector(state => state.UserReducer.searchUserListLengthForAdmin);
+  console.log("searchUserListLengthForAdmin: ", searchUserListLengthForAdmin.length);
+
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    if (values.header__search == "") {
+      dispatch(getAllUserListForAdminAction((page - 1) * 10, 10));
+    } else if (values.header__search != "") {
+      props.dispatch(searchUserForAdminAction(values.header__search, (page - 1) * 10, 10));
+    }
+
+  }
 
   return (
     user?.roleId == 1 ?
@@ -94,8 +123,12 @@ function UserManagement(props) {
                       name="header__search"
                       className={` form-control shadow-none outline-none `}
                       onChange={(e) => {
+                        if (e.target.value == "") {
+                          setCurrentCustom(1);
+                        }
                         handleChange(e);
-                        dispatch(searchUserForAdminAction(e.target.value));
+                        dispatch(searchUserForAdminAction(e.target.value, 0, 10));
+                        props.dispatch(searchUserLengthForAdminAction(values.header__search, 0, 1000));
                       }}
                       placeholder="Tìm kiếm người dùng"
                       style={{ width: '300px' }}
@@ -322,7 +355,7 @@ function UserManagement(props) {
                     <tr>
                       <th className="border border-slate-300 p-4 text-lg text-center">
                         {" "}
-                        STT
+                        Id
                       </th>
                       <th className="border border-slate-300 p-4 text-lg text-center" style={{ width: '140px' }}>
                         {" "}
@@ -349,7 +382,7 @@ function UserManagement(props) {
                     {userListForAdmin.map((item, index) => {
                       console.log("ITEM USER MNGT: ", item);
                       return <tr>
-                        <td className="border border-slate-300 text-center p-2">{index + 1}</td>
+                        <td className="border border-slate-300 text-center p-2">{item.id}</td>
                         <td className="border border-slate-300 text-center p-2">
                           <span className="p-2">{item.fullname}</span>
                         </td>
@@ -392,11 +425,17 @@ function UserManagement(props) {
                   </tbody>
                 </table>
               </div>
-              <div className="flex justify-end mb-4" style={{ width: "90%" }}>
+              <div className="flex justify-center mb-4">
                 <Pagination
                   className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
                   defaultCurrent={1}
-                  total={50}
+                  pageSize={10}
+                  // pageSizeOptions={3}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  // showSizeChanger
+                  onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={values.header__search == "" ? userListLengthForAdmin.length : searchUserListLengthForAdmin.length}
                 />
               </div>
             </div >
@@ -418,7 +457,8 @@ const UserManagementWithFormik = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
     console.log("VALUE FORM: ", values);
-    props.dispatch(searchUserForAdminAction(values.header__search))
+    props.dispatch(searchUserForAdminAction(values.header__search, 0, 10));
+    props.dispatch(searchUserLengthForAdminAction(values.header__search, 0, 1000));
   },
 
   displayName: 'UserManagementWithFormik'

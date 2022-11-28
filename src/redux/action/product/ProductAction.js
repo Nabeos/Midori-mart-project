@@ -1,5 +1,5 @@
 import { productManagementService } from "../../../services/ProductManagementService";
-import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_ORIGIN, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SEARCH_PRODUCT_LENGTH, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC } from "../../type/product/ProductType";
 
 export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
     return async (dispatch) => {
@@ -16,14 +16,29 @@ export const getProductListByCategoryIdAction = (categoryId, limit, offset) => {
     }
 }
 
-export const getProductListByOriginAction = (categoryId, origin1, origin2, origin3, origin4, origin5) => {
+export const getProductListByOriginAction = (categoryId, origin1, origin2, origin3, origin4, origin5, limit, offset) => {
     return async (dispatch) => {
         try {
-            const result = await productManagementService.getProductListByOrigin(categoryId, origin1, origin2, origin3, origin4, origin5);
+            const result = await productManagementService.getProductListByOrigin(categoryId, origin1, origin2, origin3, origin4, origin5, limit, offset);
             console.log("RESULT FILTER BY ORIGIN: ", result);
             dispatch({
                 type: GET_PRODUCT_LIST_BY_ORIGIN,
                 productFilterByOriginListAction: result.data.product
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const getProductListLengthByOriginAction = (categoryId, origin1, origin2, origin3, origin4, origin5, limit, offset) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.getProductListByOrigin(categoryId, origin1, origin2, origin3, origin4, origin5, limit, offset);
+            console.log("RESULT ORIGIN LENGTH BY ORIGIN: ", result);
+            dispatch({
+                type: GET_PRODUCT_LIST_LENGTH_BY_ORIGIN,
+                productFilterByOriginListLengthAction: result.data.product
             })
         } catch (error) {
             console.log('error', error.response.data);
@@ -61,14 +76,29 @@ export const getProductDetailAction = (slug) => {
     }
 }
 
-export const searchProductAction = (keyWord) => {
+export const searchProductAction = (keyWord, offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await productManagementService.searchProduct(keyWord);
+            const result = await productManagementService.searchProduct(keyWord, offset, limit);
             console.log("result", result);
             dispatch({
                 type: SEARCH_PRODUCT,
                 searchProductList: result.data.products
+            })
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+}
+
+export const searchProductLengthAction = (keyWord, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await productManagementService.searchProduct(keyWord, offset, limit);
+            console.log("result", result);
+            dispatch({
+                type: SEARCH_PRODUCT_LENGTH,
+                searchProductListLengthAction: result.data.products
             })
         } catch (error) {
             console.log('error', error)

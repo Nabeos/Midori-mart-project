@@ -598,7 +598,7 @@ const ProductDetailManagementWithFormik = withFormik({
     productUnit: props?.productDetail?.unit?.id,
     price: props.productDetail.price,
     // productDiscount: 0,
-    productOrigin: props?.productDetail?.origin,
+    productOrigin: props?.productDetail?.origin?.code,
     productCategories: props?.productDetail?.category?.id,
     productDescription: props.productDetail.description
   }),
