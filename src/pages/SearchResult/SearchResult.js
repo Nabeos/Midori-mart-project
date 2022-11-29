@@ -9,13 +9,13 @@ import { Pagination } from "antd";
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
 import { useStateCallback } from "use-state-callback";
-import { searchProductAction } from "../../redux/action/product/ProductAction";
+import { searchProductAction, searchProductLengthAction } from "../../redux/action/product/ProductAction";
 const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
   const { product } = props;
-  const handleNavigate = () => {
-    history.push("/product");
+  const handleNavigate = (categoryId, slug) => {
+    history.push(`/product/${categoryId}/${slug}`);
   };
   return (
     <div className="">
@@ -42,22 +42,22 @@ function Product(props) {
             <header
               className={`${styles.searchresult__cardtitle} text-start no-underline text-sm font-semibold hover:text-green-800 h-24`}
             >
-              <a
-                className={`${styles.searchresult__cardtitle} no-underline text-sm font-semibold hover:text-green-800`}
-                href="/product"
+              <p
+                className={`${styles.searchresult__cardtitle} cursor-pointer mb-0 no-underline text-sm font-semibold hover:text-green-800`}
+                onClick={() => { handleNavigate(product.category.id, product.slug) }}
               >
                 {product.title}
-              </a>
+              </p>
               <div className="text-xs">{product.sku}</div>
               <div className="text-sm mt-2 font-normal">{product.price.toLocaleString()}đ</div>
             </header>
           </div>
           <button
             style={{ width: "100%" }}
-            onClick={handleNavigate}
+            onClick={() => { handleNavigate(product.category.id, product.slug) }}
             className={`${styles.searchresult__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
           >
-            Thêm vào giỏ
+            Xem chi tiết
           </button>
         </div>
       </div>
@@ -80,8 +80,14 @@ function ProductsList(props) {
 }
 
 export default function SearchResult(props) {
-  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), 0, 5));
+    dispatch(searchProductLengthAction(localStorage.getItem("searchResultProductCustomer"), 0, 1000));
+  }, [])
+
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
+
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const returnSearchProductList = useSelector(state => state.ProductReducer.returnSearchProductList);
