@@ -19,24 +19,34 @@ import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllExportGoodsOrderListAction, getAllExportGoodsOrderListByCreatorAction, getAllSellersAction, searchExportGoodsFormForSellerByTimeRangeAction, searchExportGoodsFormForSellerByTimeRangeAndSellerAction } from "../../../redux/action/inventory/InventoryAction";
+import { getAllExportGoodsOrderListAction, getAllExportGoodsOrderListByCreatorAction, getAllExportGoodsOrderListLengthAction, getAllExportGoodsOrderListLengthByCreatorAction, getAllSellersAction, searchExportGoodsFormForSellerByTimeRangeAction, searchExportGoodsFormForSellerByTimeRangeAndSellerAction, searchExportGoodsFormLengthForSellerByTimeRangeAction, searchExportGoodsFormLengthForSellerByTimeRangeAndSellerAction } from "../../../redux/action/inventory/InventoryAction";
 import { GET_EXPORT_GOODS_ORDER_DETAILED_INFORMATION } from "../../../redux/type/inventory/InventoryType";
+import { useStateCallback } from "use-state-callback";
 const { RangePicker } = DatePicker;
 
 export default function ExportGoods() {
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   const handleNavigateToExportSheet = () => {
     history.push("/exportsheet");
   };
   useEffect(() => {
-    dispatch(getAllExportGoodsOrderListAction());
+    localStorage.setItem("startDateExport", "");
+    localStorage.setItem("endDateExport", "");
+    localStorage.setItem("sellerIdFilter", 0);
+    dispatch(getAllExportGoodsOrderListAction(0, 15));
+    dispatch(getAllExportGoodsOrderListLengthAction(0, 1000));
     dispatch(getAllSellersAction());
     window.scrollTo(0, 0);
   }, [])
 
   const dispatch = useDispatch();
   const exportGoodsOrderList = useSelector(state => state.InventoryReducer.exportGoodsOrderList);
+  const exportGoodsOrderListLength = useSelector(state => state.InventoryReducer.exportGoodsOrderListLength);
+  console.log("exportGoodsOrderListLength: ", exportGoodsOrderListLength);
   let sellerIdFilter = localStorage.getItem("sellerIdFilter");
   console.log("exportGoodsOrderList: ", exportGoodsOrderList);
+  const exportedGoodsOrderListLengthByCreator = useSelector(state => state.InventoryReducer.exportedGoodsOrderListLengthByCreator);
+  console.log("exportedGoodsOrderListLengthByCreator: ", exportedGoodsOrderListLengthByCreator);
   // const text = <span>Lọc sản phẩm</span>;
   // const content = (
   //     <div
@@ -69,6 +79,36 @@ export default function ExportGoods() {
     setOpen(false);
   };
 
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    if (sellerIdFilter == 0) {
+      if (localStorage.getItem("startDateExport") && localStorage.getItem("endDateExport")) {
+        dispatch(searchExportGoodsFormForSellerByTimeRangeAction(localStorage.getItem("startDateExport"), localStorage.getItem("endDateExport"), (page - 1) * 15, 15));
+      }
+      else if (localStorage.getItem("startDateExport") == "" && localStorage.getItem("endDateExport") == "") {
+        dispatch(getAllExportGoodsOrderListAction((page - 1) * 15, 15));
+      }
+    } else if (sellerIdFilter != 0) {
+      if (localStorage.getItem("startDateExport") && localStorage.getItem("endDateExport")) {
+        dispatch(searchExportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, localStorage.getItem("startDateExport"), localStorage.getItem("endDateExport"), (page - 1) * 15, 15));
+      } else if (localStorage.getItem("startDateExport") == "" && localStorage.getItem("endDateExport") == "") {
+        dispatch(getAllExportGoodsOrderListByCreatorAction(localStorage.getItem("sellerIdFilter"), (page - 1) * 15, 15));
+      }
+    }
+  }
+
   return (
     <div>
       <div className="flex">
@@ -77,12 +117,14 @@ export default function ExportGoods() {
           <select
             defaultValue={0}
             onChange={(e) => {
+              setCurrentCustom(1);
               console.log("SELLER ID: ", e.target.value);
               localStorage.setItem("sellerIdFilter", e.target.value);
               if (e.target.value == 0) {
-                dispatch(getAllExportGoodsOrderListAction());
+                dispatch(getAllExportGoodsOrderListAction(0, 15));
               } else if (e.target.value != 0) {
-                dispatch(getAllExportGoodsOrderListByCreatorAction(e.target.value));
+                dispatch(getAllExportGoodsOrderListByCreatorAction(e.target.value, 0, 15));
+                dispatch(getAllExportGoodsOrderListLengthByCreatorAction(e.target.value, 0, 1000));
               }
             }}
             className="rounded-md"
@@ -105,19 +147,33 @@ export default function ExportGoods() {
           <RangePicker style={{ width: 300, height: "38px" }} onCalendarChange={(dates, dateStrings, info) => {
             if (sellerIdFilter == 0) {
               if (dateStrings[0] && dateStrings[1]) {
+                setCurrentCustom(1);
+                localStorage.setItem("startDateExport", dateStrings[0]);
+                localStorage.setItem("endDateExport", dateStrings[1]);
                 console.log("start date: ", dateStrings[0]);
                 console.log("end date: ", dateStrings[1]);
-                dispatch(searchExportGoodsFormForSellerByTimeRangeAction(dateStrings[0], dateStrings[1]));
+                dispatch(searchExportGoodsFormForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 15));
+                dispatch(searchExportGoodsFormLengthForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 1000));
               } else if (dateStrings[0] == "" && dateStrings[1] == "") {
-                dispatch(getAllExportGoodsOrderListAction());
+                setCurrentCustom(1);
+                localStorage.setItem("startDateExport", dateStrings[0]);
+                localStorage.setItem("endDateExport", dateStrings[1]);
+                dispatch(getAllExportGoodsOrderListAction(0, 15));
               }
             } else if (sellerIdFilter != 0) {
               if (dateStrings[0] && dateStrings[1]) {
+                setCurrentCustom(1);
+                localStorage.setItem("startDateExport", dateStrings[0]);
+                localStorage.setItem("endDateExport", dateStrings[1]);
                 console.log("start date: ", dateStrings[0]);
                 console.log("end date: ", dateStrings[1]);
-                dispatch(searchExportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1]));
+                dispatch(searchExportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1], 0, 15));
+                dispatch(searchExportGoodsFormLengthForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1], 0, 1000));
               } else if (dateStrings[0] == "" && dateStrings[1] == "") {
-                dispatch(getAllExportGoodsOrderListByCreatorAction(sellerIdFilter));
+                setCurrentCustom(1);
+                localStorage.setItem("startDateExport", dateStrings[0]);
+                localStorage.setItem("endDateExport", dateStrings[1]);
+                dispatch(getAllExportGoodsOrderListByCreatorAction(sellerIdFilter, 0, 15));
               }
             }
 
@@ -238,11 +294,17 @@ export default function ExportGoods() {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-end mb-4" style={{ width: "90%" }}>
+        <div className="flex justify-center mb-4">
           <Pagination
             className="hover:text-green-800 focus:border-green-800"
+            current={currentCustom}
             defaultCurrent={1}
-            total={50}
+            pageSize={15}
+            // pageSizeOptions={3}
+            onChange={(page) => { handlePaginationChange(page) }}
+            // showSizeChanger
+            // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+            total={sellerIdFilter == 0 ? exportGoodsOrderListLength.length : exportedGoodsOrderListLengthByCreator.length}
           />
         </div>
       </div>

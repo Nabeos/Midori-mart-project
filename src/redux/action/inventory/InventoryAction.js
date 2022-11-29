@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { inventoryManagementService } from '../../../services/InventoryManagementService';
-import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE, SEARCH_PRODUCT_FOR_SELLER, SEARCH_PRODUCT_LENGTH_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
+import { CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE_AND_SELLER, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_PRODUCT_FOR_SELLER, SEARCH_PRODUCT_LENGTH_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from '../../type/inventory/InventoryType';
 import { notification } from "antd";
 import { history } from '../../../App';
 import { SEARCH_PRODUCT_LENGTH } from '../../type/product/ProductType';
@@ -368,10 +368,10 @@ export const createNewExportGoodsFormAction = () => {
     }
 }
 
-export const getAllExportGoodsOrderListAction = () => {
+export const getAllExportGoodsOrderListAction = (offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.getAllExportGoodsOrderList();
+            const result = await inventoryManagementService.getAllExportGoodsOrderList(offset, limit);
             console.log("RESULT ALL EXPORT GOODS ORDER LIST: ", result.data.deliveryNotes);
             dispatch({
                 type: GET_ALL_EXPORT_GOODS_ORDER_LIST,
@@ -383,10 +383,25 @@ export const getAllExportGoodsOrderListAction = () => {
     }
 }
 
-export const searchExportGoodsFormForSellerByTimeRangeAction = (firstDate, secondDate) => {
+export const getAllExportGoodsOrderListLengthAction = (offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRange(firstDate, secondDate);
+            const result = await inventoryManagementService.getAllExportGoodsOrderList(offset, limit);
+            console.log("RESULT ALL EXPORT GOODS ORDER LIST LENGTH: ", result.data.deliveryNotes);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH,
+                exportGoodsOrderListLengthAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const searchExportGoodsFormForSellerByTimeRangeAction = (firstDate, secondDate, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRange(firstDate, secondDate, offset, limit);
             console.log("RESULT SEARCH EXPORTED GOODS FORM LIST BY TIME RANGE: ", result);
             dispatch({
                 type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE,
@@ -398,10 +413,25 @@ export const searchExportGoodsFormForSellerByTimeRangeAction = (firstDate, secon
     }
 }
 
-export const searchExportGoodsFormForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate) => {
+export const searchExportGoodsFormLengthForSellerByTimeRangeAction = (firstDate, secondDate, offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate);
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRange(firstDate, secondDate, offset, limit);
+            console.log("RESULT SEARCH EXPORTED GOODS FORM LIST LENGTH BY TIME RANGE: ", result);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE,
+                searchedExportedGoodsFormListLengthByTimeRangeAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const searchExportGoodsFormForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate, offset, limit);
             console.log("RESULT SEARCH EXPORT GOODS FORM LIST BY TIME RANGE AND SELLER: ", result.data.deliveryNotes);
             dispatch({
                 type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER,
@@ -413,14 +443,44 @@ export const searchExportGoodsFormForSellerByTimeRangeAndSellerAction = (userId,
     }
 }
 
-export const getAllExportGoodsOrderListByCreatorAction = (userId) => {
+export const searchExportGoodsFormLengthForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate, offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.getAllExportGoodsOrderListByCreator(userId);
+            const result = await inventoryManagementService.searchExportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate, offset, limit);
+            console.log("RESULT SEARCH EXPORT GOODS FORM LIST LENGTH BY TIME RANGE AND SELLER: ", result.data.deliveryNotes);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE_AND_SELLER,
+                searchedExportedGoodsFormListLengthByTimeRangeAndSellerAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const getAllExportGoodsOrderListByCreatorAction = (userId, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.getAllExportGoodsOrderListByCreator(userId, offset, limit);
             console.log("RESULT ALL EXPORT GOODS ORDER LIST BY CREATOR: ", result);
             dispatch({
                 type: GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR,
                 exportedGoodsOrderListByCreatorAction: result.data.deliveryNotes
+            })
+        } catch (error) {
+            console.log('error', error.response.data)
+        }
+    }
+}
+
+export const getAllExportGoodsOrderListLengthByCreatorAction = (userId, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await inventoryManagementService.getAllExportGoodsOrderListByCreator(userId, offset, limit);
+            console.log("RESULT ALL EXPORT GOODS ORDER LIST LENGTH BY CREATOR: ", result);
+            dispatch({
+                type: GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR,
+                exportedGoodsOrderListLengthByCreatorAction: result.data.deliveryNotes
             })
         } catch (error) {
             console.log('error', error.response.data)
@@ -555,14 +615,14 @@ export const searchImportGoodsFormForSellerByTimeRangeAndSellerAction = (userId,
     }
 }
 
-export const searchImportGoodsFormLengthForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate) => {
+export const searchImportGoodsFormLengthForSellerByTimeRangeAndSellerAction = (userId, firstDate, secondDate, offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await inventoryManagementService.searchImportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate);
-            console.log("RESULT SEARCH IMPORTED GOODS FORM LIST BY TIME RANGE AND SELLER: ", result.data.receivedNote);
+            const result = await inventoryManagementService.searchImportGoodsFormForSellerByTimeRangeAndSeller(userId, firstDate, secondDate, offset, limit);
+            console.log("RESULT SEARCH IMPORTED GOODS FORM LIST LENGTH BY TIME RANGE AND SELLER: ", result.data.receivedNote);
             dispatch({
-                type: SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER,
-                searchedImportedGoodsFormListByTimeRangeAndSellerAction: result.data.receivedNote
+                type: SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE_AND_SELLER,
+                searchedImportedGoodsFormListLengthByTimeRangeAndSellerAction: result.data.receivedNote
             })
         } catch (error) {
             console.log('error', error.response.data);

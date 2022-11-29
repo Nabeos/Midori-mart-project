@@ -269,14 +269,14 @@ export default function ProductList(props) {
         >
           <div
             className={`${styles.productlist__border} grid grid-cols-12 justify-center flex ml-10 bg-white`}
-            style={{ width: "80%" }}
+            style={{ width: "70%" }}
           >
-            <div
-              className={`${styles.productlist__border__filter} col-span-3 `}
-            // style={{ width: "70%", borderBottom: "" }}
-            // style={{ width: '300px' }}
-            >
-              <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
+            {/* <div
+              className={`${styles.productlist__border__filter} col-span-3 `} */}
+            {/* // style={{ width: "70%", borderBottom: "" }} */}
+            {/* // style={{ width: '300px' }} */}
+            {/* > */}
+            {/* <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
               {renderProductOrigin()}
               <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Đánh giá</div>
               <Checkbox.Group onChange={handleChangeStarRate}>
@@ -285,12 +285,12 @@ export default function ProductList(props) {
                     <Rate disabled value={item.value} style={{ color: '#febb02', fontSize: '1rem' }} />
                   </Checkbox>
                 })}
-              </Checkbox.Group>
+              </Checkbox.Group> */}
 
 
 
-              {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
-              {/* <Slider
+            {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
+            {/* <Slider
               style={{ marginTop: '50px' }}
               className="productlist__slider"
               range={{ draggableTrack: true }}
@@ -303,8 +303,8 @@ export default function ProductList(props) {
               max={maxCustom}
             /> */}
 
-            </div>
-            <div className="col-span-9">
+            {/* </div> */}
+            <div className="col-span-12">
               <div
                 className={`${styles.productlist__border__general} flex justify-end `} style={{ width: "99%" }}
               >

@@ -93,7 +93,7 @@ export default function NewOrderManagement(props) {
               style={{ width: "100%", height: "2.5rem" }}
             />
           </Form> */}
-          <div className="rounded-md mt-3 flex justify-end mr-3">
+          {/* <div className="rounded-md mt-3 flex justify-end mr-3">
             <Form>
               <InputGroup className={` `} >
                 <FormControl
@@ -107,7 +107,7 @@ export default function NewOrderManagement(props) {
                 </InputGroup.Text>
               </InputGroup>
             </Form>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -19,7 +19,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllImportGoodsOrderListAction, getAllImportGoodsOrderListByCreatorAction, getAllImportGoodsOrderListLengthAction, getAllImportGoodsOrderListLengthByCreatorAction, getAllSellersAction, searchImportGoodsFormForSellerByTimeRangeAction, searchImportGoodsFormForSellerByTimeRangeAndSellerAction, searchImportGoodsFormLengthForSellerByTimeRangeAction } from "../../../redux/action/inventory/InventoryAction";
+import { getAllImportGoodsOrderListAction, getAllImportGoodsOrderListByCreatorAction, getAllImportGoodsOrderListLengthAction, getAllImportGoodsOrderListLengthByCreatorAction, getAllSellersAction, searchImportGoodsFormForSellerByTimeRangeAction, searchImportGoodsFormForSellerByTimeRangeAndSellerAction, searchImportGoodsFormLengthForSellerByTimeRangeAction, searchImportGoodsFormLengthForSellerByTimeRangeAndSellerAction } from "../../../redux/action/inventory/InventoryAction";
 import { GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION } from "../../../redux/type/inventory/InventoryType";
 import { useStateCallback } from "use-state-callback";
 const { RangePicker } = DatePicker;
@@ -36,7 +36,7 @@ export default function ImportGoods() {
     localStorage.setItem("startDate", "");
     localStorage.setItem("endDate", "");
     localStorage.setItem("sellerIdFilter", 0);
-    dispatch(getAllImportGoodsOrderListAction(0, 10));
+    dispatch(getAllImportGoodsOrderListAction(0, 15));
     dispatch(getAllImportGoodsOrderListLengthAction(0, 1000));
     dispatch(getAllSellersAction());
     window.scrollTo(0, 0);
@@ -49,7 +49,7 @@ export default function ImportGoods() {
   const importedGoodsOrderListLength = useSelector(state => state.InventoryReducer.importedGoodsOrderListLength);
   console.log("importedGoodsOrderListLength: ", importedGoodsOrderListLength.length);
   const importedGoodsOrderListLengthByCreator = useSelector(state => state.InventoryReducer.importedGoodsOrderListLengthByCreator);
-  console.log("importedGoodsOrderListLengthByCreator: ", importedGoodsOrderListLengthByCreator.length);
+  console.log("importedGoodsOrderListLengthByCreator: ", importedGoodsOrderListLengthByCreator);
   // const text = <span>Lọc sản phẩm</span>;
   // const content = (
   //     <div
@@ -99,17 +99,17 @@ export default function ImportGoods() {
     setCurrentCustom(page);
     if (sellerIdFilter == 0) {
       if (localStorage.getItem("startDate") && localStorage.getItem("endDate")) {
-        dispatch(searchImportGoodsFormForSellerByTimeRangeAction(localStorage.getItem("startDate"), localStorage.getItem("endDate"), (page - 1) * 10, 10));
+        dispatch(searchImportGoodsFormForSellerByTimeRangeAction(localStorage.getItem("startDate"), localStorage.getItem("endDate"), (page - 1) * 15, 15));
         // dispatch(searchImportGoodsFormLengthForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 1000));
       } else if (localStorage.getItem("startDate") == "" && localStorage.getItem("endDate") == "") {
-        dispatch(getAllImportGoodsOrderListAction((page - 1) * 10, 10));
+        dispatch(getAllImportGoodsOrderListAction((page - 1) * 15, 15));
       }
 
     } else if (sellerIdFilter != 0) {
       if (localStorage.getItem("startDate") && localStorage.getItem("endDate")) {
-
+        dispatch(searchImportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, localStorage.getItem("startDate"), localStorage.getItem("endDate"), (page - 1) * 15, 15));
       } else if (localStorage.getItem("startDate") == "" && localStorage.getItem("endDate") == "") {
-        dispatch(getAllImportGoodsOrderListByCreatorAction(localStorage.getItem("sellerIdFilter"), (page - 1) * 10, 10));
+        dispatch(getAllImportGoodsOrderListByCreatorAction(localStorage.getItem("sellerIdFilter"), (page - 1) * 15, 15));
       }
 
     }
@@ -124,12 +124,13 @@ export default function ImportGoods() {
           <select
             defaultValue={0}
             onChange={(e) => {
+              setCurrentCustom(1);
               console.log("SELLER ID: ", e.target.value);
               localStorage.setItem("sellerIdFilter", e.target.value);
               if (e.target.value == 0) {
-                dispatch(getAllImportGoodsOrderListAction(0, 10));
+                dispatch(getAllImportGoodsOrderListAction(0, 15));
               } else if (e.target.value != 0) {
-                dispatch(getAllImportGoodsOrderListByCreatorAction(e.target.value, 0, 10));
+                dispatch(getAllImportGoodsOrderListByCreatorAction(e.target.value, 0, 15));
                 dispatch(getAllImportGoodsOrderListLengthByCreatorAction(e.target.value, 0, 1000));
               }
             }}
@@ -153,24 +154,33 @@ export default function ImportGoods() {
           <RangePicker style={{ width: 300, height: "38px" }} onCalendarChange={(dates, dateStrings, info) => {
             if (sellerIdFilter == 0) {
               if (dateStrings[0] && dateStrings[1]) {
+                setCurrentCustom(1);
                 localStorage.setItem("startDate", dateStrings[0]);
                 localStorage.setItem("endDate", dateStrings[1]);
                 console.log("start date: ", dateStrings[0]);
                 console.log("end date: ", dateStrings[1]);
-                dispatch(searchImportGoodsFormForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 10));
+                dispatch(searchImportGoodsFormForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 15));
                 dispatch(searchImportGoodsFormLengthForSellerByTimeRangeAction(dateStrings[0], dateStrings[1], 0, 1000));
               } else if (dateStrings[0] == "" && dateStrings[1] == "") {
+                setCurrentCustom(1);
                 localStorage.setItem("startDate", dateStrings[0]);
                 localStorage.setItem("endDate", dateStrings[1]);
-                dispatch(getAllImportGoodsOrderListAction(0, 10));
+                dispatch(getAllImportGoodsOrderListAction(0, 15));
               }
             } else if (sellerIdFilter != 0) {
               if (dateStrings[0] && dateStrings[1]) {
+                setCurrentCustom(1);
+                localStorage.setItem("startDate", dateStrings[0]);
+                localStorage.setItem("endDate", dateStrings[1]);
                 console.log("start date: ", dateStrings[0]);
                 console.log("end date: ", dateStrings[1]);
-                dispatch(searchImportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1], 0, 10));
+                dispatch(searchImportGoodsFormForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1], 0, 15));
+                dispatch(searchImportGoodsFormLengthForSellerByTimeRangeAndSellerAction(sellerIdFilter, dateStrings[0], dateStrings[1], 0, 1000));
               } else if (dateStrings[0] == "" && dateStrings[1] == "") {
-                dispatch(getAllImportGoodsOrderListByCreatorAction(sellerIdFilter, 0, 10));
+                setCurrentCustom(1);
+                localStorage.setItem("startDate", dateStrings[0]);
+                localStorage.setItem("endDate", dateStrings[1]);
+                dispatch(getAllImportGoodsOrderListByCreatorAction(sellerIdFilter, 0, 15));
               }
             }
 
@@ -316,7 +326,7 @@ export default function ImportGoods() {
             className="hover:text-green-800 focus:border-green-800"
             current={currentCustom}
             defaultCurrent={1}
-            pageSize={10}
+            pageSize={15}
             // pageSizeOptions={3}
             onChange={(page) => { handlePaginationChange(page) }}
             // showSizeChanger

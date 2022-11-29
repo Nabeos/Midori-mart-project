@@ -1,5 +1,5 @@
 import { history } from "../../../App";
-import { ADD_NEW_PRODUCT_FOR_SELLER, ADD_PRODUCT_TEMPORARILY_TO_IMPORT_GOODS_FORM, CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, CLOSE_MODAL_ADD_PRODUCT_INTO_IMPORT_GOODS_FORM, CREATE_NEW_EXPORT_GOODS_FORM, CREATE_NEW_IMPORT_GOODS_FORM, DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM, DELETE_PRODUCT_FOR_SELLER, DELETE_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_BY_CATEGORY_ID_FOR_SELLER, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_EXPORT_GOODS_ORDER_DETAILED_INFORMATION, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, GET_PRODUCT_DETAILED_INFORMATION_FOR_SELLER, NAVIGATE_TO_IMPORT_PAGE, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE, SEARCH_PRODUCT_FOR_SELLER, SHOW_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, SHOW_MODAL_ADD_PRODUCT_INTO_IMPORT_GOODS_FORM, UPDATE_EXPORT_GOODS_ORDER_INFORMATION, UPDATE_IMPORT_GOODS_ORDER_INFORMATION, UPDATE_PRODUCT_DETAILED_INFORMATION_FOR_SELLER } from "../../type/inventory/InventoryType"
+import { ADD_NEW_PRODUCT_FOR_SELLER, ADD_PRODUCT_TEMPORARILY_TO_IMPORT_GOODS_FORM, CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, CLOSE_MODAL_ADD_PRODUCT_INTO_IMPORT_GOODS_FORM, CREATE_NEW_EXPORT_GOODS_FORM, CREATE_NEW_IMPORT_GOODS_FORM, DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM, DELETE_PRODUCT_FOR_SELLER, DELETE_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM, GET_ALL_EXPORT_GOODS_ORDER_LIST, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE, GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE_AND_SELLER, GET_ALL_IMPORT_GOODS_ORDER_LIST, GET_ALL_IMPORT_GOODS_ORDER_LIST_BY_CREATOR, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH, GET_ALL_IMPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR, GET_ALL_MERCHANT, GET_ALL_ORIGIN, GET_ALL_PRODUCT_BY_CATEGORY_ID_FOR_SELLER, GET_ALL_PRODUCT_LIST_FOR_SELLER, GET_ALL_PRODUCT_UNIT, GET_ALL_SELLERS, GET_EXPORT_GOODS_ORDER_DETAILED_INFORMATION, GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION, GET_PRODUCT_DETAILED_INFORMATION_FOR_SELLER, NAVIGATE_TO_IMPORT_PAGE, SEARCH_EXPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE, SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE_AND_SELLER, SEARCH_PRODUCT_FOR_SELLER, SHOW_MODAL_ADD_NEW_PRODUCT_FOR_SELLER, SHOW_MODAL_ADD_PRODUCT_INTO_IMPORT_GOODS_FORM, UPDATE_EXPORT_GOODS_ORDER_INFORMATION, UPDATE_IMPORT_GOODS_ORDER_INFORMATION, UPDATE_PRODUCT_DETAILED_INFORMATION_FOR_SELLER } from "../../type/inventory/InventoryType"
 
 let defaultImportProductList = [];
 if (localStorage.getItem("importProductList")) {
@@ -16,6 +16,8 @@ const initialState = {
     importedGoodsOrderListLengthByCreator: [],
     importGoodsOrderDetailedInformation: {},
     exportGoodsOrderList: [],
+    exportGoodsOrderListLength: [],
+    exportedGoodsOrderListLengthByCreator: [],
     exportGoodsOrderDetailedInformation: {},
     allProductListForSeller: [],
     productUnitList: [],
@@ -168,6 +170,12 @@ export const InventoryReducer = (state = initialState, action) => {
             state.importGoodsOrderList = searchedImportedGoodsFormListByTimeRangeAndSellerUpdate;
             return { ...state }
 
+        case SEARCH_IMPORT_GOODS_FORM_LENGTH_FOR_SELLER_BY_TIME_RANGE_AND_SELLER:
+            let searchedImportedGoodsFormListLengthByTimeRangeAndSellerUpdate = [...state.importedGoodsOrderListLengthByCreator];
+            searchedImportedGoodsFormListLengthByTimeRangeAndSellerUpdate = action.searchedImportedGoodsFormListLengthByTimeRangeAndSellerAction;
+            state.importedGoodsOrderListLengthByCreator = searchedImportedGoodsFormListLengthByTimeRangeAndSellerUpdate;
+            return { ...state }
+
         case GET_IMPORT_GOODS_ORDER_DETAILED_INFORMATION:
             let importGoodsOrderDetailedInformationUpdate = { ...state.importGoodsOrderDetailedInformation };
             importGoodsOrderDetailedInformationUpdate = action.detailedImportGoodsFormInfoAction;
@@ -185,20 +193,40 @@ export const InventoryReducer = (state = initialState, action) => {
             exportGoodsOrderListUpdate = action.exportGoodsOrderListAction;
             state.exportGoodsOrderList = exportGoodsOrderListUpdate;
             return { ...state }
+        case GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH:
+            let exportGoodsOrderListLengthUpdate = [...state.exportGoodsOrderListLength];
+            exportGoodsOrderListLengthUpdate = action.exportGoodsOrderListLengthAction;
+            state.exportGoodsOrderListLength = exportGoodsOrderListLengthUpdate;
+            return { ...state }
         case GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_CREATOR:
             let exportedGoodsOrderListByCreatorUpdate = [...state.exportGoodsOrderList];
             exportedGoodsOrderListByCreatorUpdate = action.exportedGoodsOrderListByCreatorAction;
             state.exportGoodsOrderList = exportedGoodsOrderListByCreatorUpdate;
+            return { ...state }
+        case GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_CREATOR:
+            let exportedGoodsOrderListLengthByCreatorUpdate = [...state.exportedGoodsOrderListLengthByCreator];
+            exportedGoodsOrderListLengthByCreatorUpdate = action.exportedGoodsOrderListLengthByCreatorAction;
+            state.exportedGoodsOrderListLengthByCreator = exportedGoodsOrderListLengthByCreatorUpdate;
             return { ...state }
         case GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE:
             let searchedExportedGoodsFormListByTimeRangeUpdate = [...state.exportGoodsOrderList];
             searchedExportedGoodsFormListByTimeRangeUpdate = action.searchedExportedGoodsFormListByTimeRangeAction;
             state.exportGoodsOrderList = searchedExportedGoodsFormListByTimeRangeUpdate;
             return { ...state }
+        case GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE:
+            let searchedExportedGoodsFormListLengthByTimeRangeUpdate = [...state.exportGoodsOrderListLength];
+            searchedExportedGoodsFormListLengthByTimeRangeUpdate = action.searchedExportedGoodsFormListLengthByTimeRangeAction;
+            state.exportGoodsOrderListLength = searchedExportedGoodsFormListLengthByTimeRangeUpdate;
+            return { ...state }
         case GET_ALL_EXPORT_GOODS_ORDER_LIST_BY_TIME_RANGE_AND_SELLER:
             let searchedExportedGoodsFormListByTimeRangeAndSellerUpdate = [...state.exportGoodsOrderList];
             searchedExportedGoodsFormListByTimeRangeAndSellerUpdate = action.searchedExportedGoodsFormListByTimeRangeAndSellerAction;
             state.exportGoodsOrderList = searchedExportedGoodsFormListByTimeRangeAndSellerUpdate;
+            return { ...state }
+        case GET_ALL_EXPORT_GOODS_ORDER_LIST_LENGTH_BY_TIME_RANGE_AND_SELLER:
+            let searchedExportedGoodsFormListLengthByTimeRangeAndSellerUpdate = [...state.exportedGoodsOrderListLengthByCreator];
+            searchedExportedGoodsFormListLengthByTimeRangeAndSellerUpdate = action.searchedExportedGoodsFormListLengthByTimeRangeAndSellerAction;
+            state.exportedGoodsOrderListLengthByCreator = searchedExportedGoodsFormListLengthByTimeRangeAndSellerUpdate;
             return { ...state }
 
         case SEARCH_EXPORT_GOODS_FORM_FOR_SELLER:
