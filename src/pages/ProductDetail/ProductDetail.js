@@ -32,7 +32,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { AddCommentAction } from "../../redux/action/comment/CommentAction";
 import { UPDATE_STAR_RATE } from "../../redux/type/product/ProductType";
-
+import ReactHtmlParser from 'react-html-parser';
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
 const { Meta } = Card;
@@ -385,7 +385,8 @@ function ProductDetail(props) {
                   className="text-justify mt-2"
                   style={{ width: "95%", height: "50%" }}
                 >
-                  {productDetail?.description}
+                  {ReactHtmlParser(productDetail?.description)}
+                  {/* {productDetail?.description} */}
                 </div>
               </div>
               <div
