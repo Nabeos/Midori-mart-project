@@ -362,6 +362,7 @@ function ImportSheet(props) {
                       to={"/inventorymanagement"}
                       onClick={() => {
                         // localStorage.removeItem("importProductList");
+                        // localStorage.setItem("defaultActiveKeyValueInventory", 2);
                         dispatch({
                           type: DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM
                         })
