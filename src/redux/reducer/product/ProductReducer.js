@@ -1,5 +1,5 @@
-import { SEARCH_PRODUCT_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from "../../type/inventory/InventoryType";
-import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
+import { SEARCH_PRODUCT_FOR_SELLER, SEARCH_PRODUCT_LENGTH_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from "../../type/inventory/InventoryType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_ORIGIN, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SEARCH_PRODUCT_LENGTH, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
 
 const initialState = {
     productListByCategoryId: [
@@ -8,6 +8,9 @@ const initialState = {
     productListLengthByCategoryId: [
 
     ],
+    searchProductListLength: [],
+    searchProductListLengthForSeller: [],
+    productListLengthByOrigin: [],
     productDetail: {},
     returnSearchProductList: [],
     bestSellerProductList: [
@@ -27,6 +30,17 @@ export const ProductReducer = (state = initialState, action) => {
             let productListUpdate = [...state.productListByCategoryId];
             productListUpdate = action.productList;
             state.productListByCategoryId = productListUpdate;
+            return { ...state }
+        case GET_PRODUCT_LIST_BY_ORIGIN:
+            let productFilterByOriginListUpdate = [...state.productListByCategoryId];
+            productFilterByOriginListUpdate = action.productFilterByOriginListAction;
+            state.productListByCategoryId = productFilterByOriginListUpdate;
+            return { ...state }
+        case GET_PRODUCT_LIST_LENGTH_BY_ORIGIN:
+            console.log("CÓ VÀO PRODUCT LIST LENGTH BY ORIGIN");
+            let productListLengthByOriginUpdate = [...state.productListLengthByOrigin];
+            productListLengthByOriginUpdate = action.productFilterByOriginListLengthAction;
+            state.productListLengthByOrigin = productListLengthByOriginUpdate;
             return { ...state }
         case GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID:
             let productListLengthUpdate = [...state.productListLengthByCategoryId];
@@ -49,10 +63,20 @@ export const ProductReducer = (state = initialState, action) => {
             returnSearchProductListUpdate = action.searchProductList;
             state.returnSearchProductList = returnSearchProductListUpdate;
             return { ...state }
+        case SEARCH_PRODUCT_LENGTH:
+            let searchProductListLengthUpdate = [...state.searchProductListLength];
+            searchProductListLengthUpdate = action.searchProductListLengthAction;
+            state.searchProductListLength = searchProductListLengthUpdate;
+            return { ...state }
         case SEARCH_PRODUCT_FOR_SELLER:
             let searchProductListForSellerUpdate = [...state.productListByCategoryId];
             searchProductListForSellerUpdate = action.searchProductListForSellerAction;
             state.productListByCategoryId = searchProductListForSellerUpdate;
+            return { ...state }
+        case SEARCH_PRODUCT_LENGTH_FOR_SELLER:
+            let searchProductListLengthForSellerUpdate = [...state.searchProductListLengthForSeller];
+            searchProductListLengthForSellerUpdate = action.searchProductListLengthForSellerAction;
+            state.searchProductListLengthForSeller = searchProductListLengthForSellerUpdate;
             return { ...state }
         case UPDATE_STAR_RATE:
             console.log("CÓ VÀO UPDATE_STAR_RATE");

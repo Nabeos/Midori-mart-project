@@ -48,6 +48,7 @@ export default function Comment(props) {
 
                 <div className="flex">
                   <Rate
+                    disabled
                     className="text-base"
                     value={starRate}
                   />

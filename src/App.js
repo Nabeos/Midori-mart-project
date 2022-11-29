@@ -68,7 +68,7 @@ function App() {
         <Route exact path="/importsheet" component={ImportSheet} />
         <Route exact path="/importgoodsdetail/:formId" component={ImportGoodsDetail} />
         <Route exact path="/exportsheet" component={ExportSheet} />
-        <Route exact path="/exportgoodsdetail" component={ExportGoodsDetail} />
+        <Route exact path="/exportgoodsdetail/:formId" component={ExportGoodsDetail} />
         {/* <Route exact path="/inventorymanagement" component={InventoryManagementTabPane} /> */}
         <Route exact path="/productdetailmanagement/:sku" component={ProductDetailManagement} />
         <Route exact path="/login" component={Login} />

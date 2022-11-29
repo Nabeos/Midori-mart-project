@@ -25,12 +25,12 @@ export class UserManagementService extends baseService {
         return this.postAddNewUserForAdmin(`api/v1/user-management/users`, userInfo);
     }
 
-    searchUserForAdmin = (keyWord) => {
-        return this.getSearchUserForAdmin(`api/v1/user-management/searchUser?name=${keyWord}&offset=0&limit=1000`);
+    searchUserForAdmin = (keyWord, offset, limit) => {
+        return this.getSearchUserForAdmin(`api/v1/user-management/searchUser?name=${keyWord}&offset=${offset}&limit=${limit}`);
     }
 
-    getAllUserListForAdmin = () => {
-        return this.getAllUserListForAdminApi(`api/v1/user-management/users?offset=0&limit=1000`);
+    getAllUserListForAdmin = (offset, limit) => {
+        return this.getAllUserListForAdminApi(`api/v1/user-management/users?offset=${offset}&limit=${limit}`);
     }
 
     resetPassword = (userEmailInfo) => {

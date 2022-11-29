@@ -5,16 +5,44 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import NewOrderDetail from "./NewOrderDetail";
-import { getAllCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
+import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL } from "../../redux/type/order/OrderType";
 import OrderHistoryProduct from "../UserOrderHistory/OrderHistoryProduct";
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useStateCallback } from "use-state-callback";
 
 export default function NewOrderManagement(props) {
+  console.log("PROPS.KEY NEW = ", props.keyNew);
   const openModal = useSelector(state => state.OrderReducer.openModal);
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
+  let countTotal = 0;
+  // {
+  //   productListLengthByCategoryId.map((item, index) => {
+  //     if (item.deleted == 0) {
+  //       countTotal++;
+  //     }
+  //   })
+  // }
+  console.log("countTotal = ", countTotal);
   const dispatch = useDispatch();
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    dispatch(getAllCustomerOrderForSellerAction(15, (page - 1) * 15, localStorage.getItem("keyOrder")));
+  }
   const showModal = (itemAction) => {
     dispatch({
       type: SHOW_MODAL,
@@ -27,12 +55,24 @@ export default function NewOrderManagement(props) {
     })
 
   };
+
   useEffect(() => {
-    dispatch(getAllCustomerOrderForSellerAction(1000, 0, 0));
+    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+    setCurrentCustom(1);
   }, [openModal])
+
+  useEffect(() => {
+    setCurrentCustom(1);
+    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+  }, [localStorage.getItem("keyOrder")])
 
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("NEW CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
+  const customerOrdersLengthForSeller = useSelector(state => state.OrderReducer.customerOrdersLengthForSeller);
+  console.log("CUSTOMER ORDERS LENGTH FOR SELLER: ", customerOrdersLengthForSeller.length);
+
   return (
     (customerOrdersForSeller.length) > 0 ? <div>
       <div className="flex flex-row">
@@ -40,7 +80,7 @@ export default function NewOrderManagement(props) {
           className=" mt-3 ml-2 text-xl font-semibold"
           style={{ width: "100%" }}
         >
-          Có <span className="text-green-800"> {customerOrdersForSeller.length} </span> đơn hàng mới
+          Có <span className="text-green-800"> {customerOrdersLengthForSeller.length} </span> đơn hàng mới
         </div>
         <div
           className="rounded-md mt-3 flex justify-end mr-3 text-black"
@@ -53,7 +93,7 @@ export default function NewOrderManagement(props) {
               style={{ width: "100%", height: "2.5rem" }}
             />
           </Form> */}
-          <div className="rounded-md mt-3 flex justify-end mr-3">
+          {/* <div className="rounded-md mt-3 flex justify-end mr-3">
             <Form>
               <InputGroup className={` `} >
                 <FormControl
@@ -67,7 +107,7 @@ export default function NewOrderManagement(props) {
                 </InputGroup.Text>
               </InputGroup>
             </Form>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -80,7 +120,7 @@ export default function NewOrderManagement(props) {
             <tr>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
-                STT
+                Id
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
@@ -106,7 +146,9 @@ export default function NewOrderManagement(props) {
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
               return <tr key={index}>
-                <td className="border border-slate-300 text-center">{index + 1}</td>
+                <td className="border border-slate-300 text-center">
+                  {item.id}
+                </td>
                 <td className="border border-slate-300 text-center">
                   {item.orderNumber}
                 </td>
@@ -153,11 +195,17 @@ export default function NewOrderManagement(props) {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end mb-4" style={{ width: "90%" }}>
+      <div className="flex justify-center mb-4">
         <Pagination
           className="hover:text-green-800 focus:border-green-800"
+          current={currentCustom}
           defaultCurrent={1}
-          total={50}
+          pageSize={15}
+          // pageSizeOptions={3}
+          onChange={(page) => { handlePaginationChange(page) }}
+          // showSizeChanger
+          // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+          total={customerOrdersLengthForSeller.length}
         />
       </div>
     </div> : <div style={{ minHeight: "520px" }}>

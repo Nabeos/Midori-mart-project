@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "antd";
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
+import { useStateCallback } from "use-state-callback";
+import { searchProductAction } from "../../redux/action/product/ProductAction";
 const { useCallback, useEffect, useState } = React;
 
 function Product(props) {
@@ -78,16 +80,42 @@ function ProductsList(props) {
 }
 
 export default function SearchResult(props) {
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
+  const dispatch = useDispatch();
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const returnSearchProductList = useSelector(state => state.ProductReducer.returnSearchProductList);
+  const searchProductListLength = useSelector(state => state.ProductReducer.searchProductListLength);
+  console.log("searchProductListLength: ", searchProductListLength.length);
   const [state, setState] = useState({
     //Tạo ProductListReducer rồi dùng useSelector lấy về
     products: returnSearchProductList,
     filters: new Set(),
   });
   console.log("PROPS SEARCH RESULT: ", props.match.params.keyWord);
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+    // setPageSizeCustom(pageSize, () => {
+    //   dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSize * current, (current - 1) * pageSize));
+    // });
+  };
 
+
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    // dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
+    // dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
+    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), (page - 1) * 5, 5));
+  }
 
   return (
     (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
@@ -102,7 +130,7 @@ export default function SearchResult(props) {
             style={{ width: "80%" }}
           >
             <div className="flex justify-start-start text-xl ml-2 mt-2 font-semibold">
-              Có <span className="text-green-700 mr-1 ml-1 font-bold">{returnSearchProductList.length}</span>{" "} sản phẩm cho{" "}
+              Có <span className="text-green-700 mr-1 ml-1 font-bold">{searchProductListLength.length}</span>{" "} sản phẩm cho{" "}
               <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
             </div>
             <div>
@@ -114,8 +142,14 @@ export default function SearchResult(props) {
             <div className="flex justify-center mb-4">
               <Pagination
                 className="hover:text-green-800 focus:border-green-800"
+                current={currentCustom}
                 defaultCurrent={1}
-                total={50}
+                pageSize={5}
+                // pageSizeOptions={3}
+                onChange={(page) => { handlePaginationChange(page) }}
+                // showSizeChanger
+                onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                total={searchProductListLength.length}
               />
             </div>
           </div>

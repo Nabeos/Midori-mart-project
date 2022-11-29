@@ -41,20 +41,20 @@ export class InventoryManagementService extends baseService {
         return this.putUpdateProductDetailedInformationForSeller(`api/v1/product-management/product/${slug}`, updatedProductInfo);
     }
 
-    searchProductForSeller = (keyWord) => {
-        return this.get(`product-management/search-product?title=${keyWord}&offset=0&limit=1000`);
+    searchProductForSeller = (keyWord, offset, limit) => {
+        return this.get(`product-management/search-product?title=${keyWord}&offset=${offset}&limit=${limit}`);
     }
 
     getAllMerchant = () => {
         return this.get(`api/merchants`);
     }
 
-    searchImportGoodsFormForSellerByTimeRange = (firstDate, secondDate) => {
-        return this.getSearchImportGoodsFormForSellerByTimeRange(`api/v1/received-notes?firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
+    searchImportGoodsFormForSellerByTimeRange = (firstDate, secondDate, offset, limit) => {
+        return this.getSearchImportGoodsFormForSellerByTimeRange(`api/v1/received-notes?firstDate=${firstDate}&secondDate=${secondDate}&offset=${offset}&limit=${limit}`);
     }
 
-    searchImportGoodsFormForSellerByTimeRangeAndSeller = (userId, firstDate, secondDate) => {
-        return this.getSearchImportGoodsFormForSellerByTimeRangeAndSeller(`api/v1/received-notes?user=${userId}&firstDate=${firstDate}&secondDate=${secondDate}&offset=0&limit=1000`);
+    searchImportGoodsFormForSellerByTimeRangeAndSeller = (userId, firstDate, secondDate, offset, limit) => {
+        return this.getSearchImportGoodsFormForSellerByTimeRangeAndSeller(`api/v1/received-notes?user=${userId}&firstDate=${firstDate}&secondDate=${secondDate}&offset=${offset}&limit=${limit}`);
     }
 
     searchExportGoodsFormForSeller = (keyWord) => {
@@ -65,20 +65,24 @@ export class InventoryManagementService extends baseService {
         return this.postCreateNewImportGoodsForm(`api/v1/received-notes`, newImportGoodsFormInfo);
     }
 
-    getAllImportGoodsOrderList = () => {
-        return this.getAllImportGoodsOrderListApi(`api/v1/received-notes?offset=0&limit=1000`);
+    getAllImportGoodsOrderList = (offset, limit) => {
+        return this.getAllImportGoodsOrderListApi(`api/v1/received-notes?offset=${offset}&limit=${limit}`);
     }
 
     deleteImportGoodsOrder = (formId) => {
         return this.putDeleteImportGoodsOrder(`api/v1/received-notes?id=${formId}`);
     }
 
+    deleteExportGoodsOrder = (formId) => {
+        return this.putDeleteExportGoodsOrder(`api/v1/delivery-notes?id=${formId}`);
+    }
+
     getAllSellers = () => {
         return this.getAllSellersApi(`api/v1/user-management/users/sellers`);
     }
 
-    getAllImportGoodsOrderListByCreator = (userId) => {
-        return this.getAllImportGoodsOrderListByCreatorApi(`api/v1/received-notes/users?id=${userId}&offset=0&limit=1000`);
+    getAllImportGoodsOrderListByCreator = (userId, offset, limit) => {
+        return this.getAllImportGoodsOrderListByCreatorApi(`api/v1/received-notes/users?id=${userId}&offset=${offset}&limit=${limit}`);
     }
 
     getImportGoodsOrderDetailedInformation = () => {
@@ -93,8 +97,20 @@ export class InventoryManagementService extends baseService {
         return this.post();
     }
 
-    getAllExportGoodsOrderList = () => {
-        return this.get();
+    searchExportGoodsFormForSellerByTimeRange = (firstDate, secondDate, offset, limit) => {
+        return this.getSearchExportGoodsFormForSellerByTimeRange(`api/v1/delivery-notes?firstDate=${firstDate}&secondDate=${secondDate}&offset=${offset}&limit=${limit}`);
+    }
+
+    searchExportGoodsFormForSellerByTimeRangeAndSeller = (userId, firstDate, secondDate, offset, limit) => {
+        return this.getSearchExportGoodsFormForSellerByTimeRangeAndSeller(`api/v1/delivery-notes?user=${userId}&firstDate=${firstDate}&secondDate=${secondDate}&offset=${offset}&limit=${limit}`);
+    }
+
+    getAllExportGoodsOrderList = (offset, limit) => {
+        return this.getAllExportGoodsOrderListApi(`api/v1/delivery-notes?offset=${offset}&limit=${limit}`);
+    }
+
+    getAllExportGoodsOrderListByCreator = (userId, offset, limit) => {
+        return this.getAllExportGoodsOrderListByCreatorApi(`api/v1/delivery-notes?user=${userId}&offset=${offset}&limit=${limit}`);
     }
 
     getExportGoodsOrderDetailedInformation = () => {

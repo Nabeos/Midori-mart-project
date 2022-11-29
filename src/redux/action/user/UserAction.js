@@ -1,7 +1,7 @@
 import { history } from "../../../App";
 import { userManagementService } from "../../../services/UserManagementService";
 import { TOKEN } from "../../../utils/settings/config";
-import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, SEARCH_USER_FOR_ADMIN, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, UPLOAD_IMAGE_USER_IN_USER_MNGT, USER } from "../../type/user/UserType";
+import { CHANGE_PASSWORD, CLOSE_ADD_NEW_USER_FOR_ADMIN_POPUP, GET_ALL_ROLE, GET_ALL_USER_LIST_FOR_ADMIN, GET_ALL_USER_LIST_LENGTH_FOR_ADMIN, GET_USER_PROFILE_INFORMATION, LOGIN, RESET_PASSWORD, SEARCH_USER_FOR_ADMIN, SEARCH_USER_LENGTH_FOR_ADMIN, UPDATE_USER_PROFILE_INFORMATION, UPLOAD_IMAGE, UPLOAD_IMAGE_USER_IN_USER_MNGT, USER } from "../../type/user/UserType";
 import Swal from 'sweetalert2'
 import { imageManagementServices } from "../../../services/ImageManagementService";
 import { notification } from "antd";
@@ -149,10 +149,10 @@ export const addNewUserForAdminAction = (userInfo) => {
     }
 }
 
-export const getAllUserListForAdminAction = () => {
+export const getAllUserListForAdminAction = (offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await userManagementService.getAllUserListForAdmin();
+            const result = await userManagementService.getAllUserListForAdmin(offset, limit);
             console.log("RESULT GET ALL USER LIST FOR ADMIN: ", result.data.users);
             dispatch({
                 type: GET_ALL_USER_LIST_FOR_ADMIN,
@@ -164,14 +164,44 @@ export const getAllUserListForAdminAction = () => {
     }
 }
 
-export const searchUserForAdminAction = (keyWord) => {
+export const getAllUserListLengthForAdminAction = (offset, limit) => {
     return async (dispatch) => {
         try {
-            const result = await userManagementService.searchUserForAdmin(keyWord);
+            const result = await userManagementService.getAllUserListForAdmin(offset, limit);
+            console.log("RESULT GET ALL USER LIST LENGTH FOR ADMIN: ", result.data.users);
+            dispatch({
+                type: GET_ALL_USER_LIST_LENGTH_FOR_ADMIN,
+                userListLengthForAdminAction: result.data.users
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const searchUserForAdminAction = (keyWord, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.searchUserForAdmin(keyWord, offset, limit);
             console.log("RESULT SEARCH USER FOR ADMIN: ", result.data.users);
             dispatch({
                 type: SEARCH_USER_FOR_ADMIN,
                 searchUserListForAdminAction: result.data.users
+            })
+        } catch (error) {
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const searchUserLengthForAdminAction = (keyWord, offset, limit) => {
+    return async (dispatch) => {
+        try {
+            const result = await userManagementService.searchUserForAdmin(keyWord, offset, limit);
+            console.log("RESULT SEARCH USER LENGTH FOR ADMIN: ", result.data.users);
+            dispatch({
+                type: SEARCH_USER_LENGTH_FOR_ADMIN,
+                searchUserListLengthForAdminAction: result.data.users
             })
         } catch (error) {
             console.log('error', error.response.data);
@@ -245,6 +275,20 @@ export const changePasswordAction = (userPasswordInfo) => {
     }
 }
 
+const openNotificationUploadAvatar = (placement) => {
+    notification.success({
+        message: `Đổi ảnh đại diện thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationUploadAvatarError = (placement) => {
+    notification.error({
+        message: `Đổi ảnh đại diện thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const uploadImageAction = (filesName) => {
     return async (dispatch) => {
         try {
@@ -254,8 +298,10 @@ export const uploadImageAction = (filesName) => {
                 type: UPLOAD_IMAGE,
                 uploadAvatarAction: result.data.images[0].url
             })
+            openNotificationUploadAvatar('bottomRight');
         } catch (error) {
             console.log('error', error.response.data);
+            openNotificationUploadAvatarError('bottomRight');
         }
     }
 }
@@ -297,17 +343,27 @@ const openNotificationActivateUserAccountForAdmin = (placement) => {
     });
 };
 
+const openNotificationActivateUserAccountForAdminError = (placement) => {
+    notification.error({
+        message: `Kích hoạt lại tài khoản này thất bại !`,
+        placement,
+        duration: 2
+    });
+};
+
 export const activateUserAction = (userId) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.activateUserAccountForAdmin(userId);
             console.log("RESULT ACTIVATE USER ACCOUNT FOR ADMIN: ", result);
-            openNotificationActivateUserAccountForAdmin('bottomRight')
+            openNotificationActivateUserAccountForAdmin('bottomRight');
+            history.push("/usermanagement");
             // dispatch({
             //     type: GET_ALL_ROLE,
             //     roleListAction: result.data.roles
             // })
         } catch (error) {
+            openNotificationActivateUserAccountForAdminError('bottomRight');
             console.log('error', error.response.data);
         }
     }
@@ -321,17 +377,26 @@ const openNotificationDeactivateUserAccountForAdmin = (placement) => {
         duration: 2
     });
 };
+const openNotificationDeactivateUserAccountForAdminError = (placement) => {
+    notification.success({
+        message: `Vô hiệu hóa tài khoản này thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const deactivateUserAccountAction = (userId) => {
     return async (dispatch) => {
         try {
             const result = await userManagementService.deactivateUserAccountForAdmin(userId);
             console.log("RESULT DEACTIVATE USER ACCOUNT FOR ADMIN: ", result);
             openNotificationDeactivateUserAccountForAdmin('bottomRight');
+            history.push("/usermanagement");
             // dispatch({
             //     type: GET_ALL_ROLE,
             //     roleListAction: result.data.roles
             // })
         } catch (error) {
+            openNotificationDeactivateUserAccountForAdminError('bottomRight');
             console.log('error', error.response.data);
         }
     }

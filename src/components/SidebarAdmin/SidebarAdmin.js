@@ -45,13 +45,13 @@ export default function SidebarAdmin() {
             }}>Quản lí người dùng</NavLink>
         </div>
         <div className={`${styles.sidebaradmin__sidebaritem} ${active == 2 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateAuthorizationMngt}>
-          <NavLink to={"/authorizationmanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}
+          {/* <NavLink to={"/authorizationmanagement"} className={`${styles.sidebaradmin__text} no-underline text-xl`}
             onClick={handleNavigateAuthorizationMngt}
             isActive={(match, location) => {
               if (location.pathname === "/authorizationmanagement") {
                 setActive(2);
               }
-            }}>Quản lí phân quyền</NavLink>
+            }}>Quản lí phân quyền</NavLink> */}
         </div>
         {/* <div className={`${styles.sidebaradmin__sidebaritem} ${active == 3 ? `${styles.sidebaradmin__sidebaritemActive}` : ''} mb-2 p-2`} style={{ width: '100%' }} onClick={handleNavigateRevenueMngt}>
           <NavLink to={"/usermanagement"}

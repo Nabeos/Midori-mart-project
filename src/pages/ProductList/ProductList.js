@@ -11,7 +11,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import { Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction, getProductListLengthByCategoryIdAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, getProductListByOriginAction, getProductListLengthByCategoryIdAction, getProductListLengthByOriginAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
 import { useStateCallback } from "use-state-callback";
 import { Rate } from 'antd';
 import { USER } from '../../redux/type/user/UserType';
@@ -74,6 +74,7 @@ function Product(props) {
 
 
 export default function ProductList(props) {
+  console.log("props.match.params.id", props.match.params.id);
   const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
   console.log("PRODUCT LIST BY CATE ID: ", productListByCategoryId);
   let user = JSON.parse(localStorage.getItem(USER));
@@ -90,9 +91,15 @@ export default function ProductList(props) {
   useEffect(() => {
     dispatch(getAllCategoriesAction());
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
-    dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
+    // dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
+    dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+    setCurrentCustom(1);
+  }, [props.match.params.id])
+
+  useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
+  }, [props.match.params.id])
+
 
   useEffect(() => {
     setCheckedState(new Array(merchant.length).fill(false));
@@ -106,7 +113,7 @@ export default function ProductList(props) {
   //   dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
   // }, [productListByCategoryId])
   const maxCustom = 100000;
-
+  const starArr = [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }];
   const productOrigin = [
     { id: 1, image: "https://cdn.britannica.com/78/6078-004-77AF7322/Flag-Australia.jpg", nationName: "Úc" },
     { id: 2, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png", nationName: "Việt Nam" },
@@ -118,7 +125,18 @@ export default function ProductList(props) {
     { id: 8, image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/800px-Flag_of_the_United_Kingdom.svg.png", nationName: "Anh" },
     { id: 9, image: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/1200px-Flag_of_France.svg.png", nationName: "Pháp" }
   ];
-  const totalCustom = useSelector(state => state.ProductReducer.productListLengthByCategoryId);
+  const productListLengthByCategoryId = useSelector(state => state.ProductReducer.productListLengthByCategoryId);
+  const productListLengthByOrigin = useSelector(state => state.ProductReducer.productListLengthByOrigin);
+  console.log("LENGTH BY ORIGIN: ", productListLengthByOrigin);
+  let countTotal = 0;
+  {
+    productListLengthByCategoryId.map((item, index) => {
+      if (item.deleted == 0) {
+        countTotal++;
+      }
+    })
+  }
+  console.log("countTotal = ", countTotal);
   // const [pageSizeCustom, setPageSizeCustom] = useState(10);
   const [pageSizeCustom, setPageSizeCustom] = useStateCallback(10);
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
@@ -131,70 +149,91 @@ export default function ProductList(props) {
   });
   const onShowSizeChangeCustom = (current, pageSize) => {
     console.log("CÓ VÀO ON SHOW SIZE CHANGE");
-    console.log("CURRENT: ", current);
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
     if (current == 0) {
       current = 1;
       setCurrentCustom(1);
     }
-    setPageSizeCustom(pageSize, () => {
-      dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSize * current, (current - 1) * pageSize));
-    });
+    // setPageSizeCustom(pageSize, () => {
+    //   dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSize * current, (current - 1) * pageSize));
+    // });
 
   };
 
 
   const handlePaginationChange = (page, pageSize) => {
     console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
-    console.log("PAGE: ", page);
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
     setCurrentCustom(page);
-    dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
+    // dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
+    if (localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined) {
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
+    } else if (localStorage.getItem("countryArrLength") > 0) {
+      dispatch(getProductListByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
+      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
+    }
+
   }
-
-
-
 
   const [checkedState, setCheckedState] = useState(
     merchant.length != 0 ? new Array(merchant.length).fill(false) : merchant.length
   );
-
-
-
-
-
-
   console.log("CHECKED STATE: ", checkedState);
-  const handleOnChange = (itemMerchant, position) => {
-
-    console.log("POSITION", position);
-    console.log("ITEM MERCHANT CHECKED: ", itemMerchant);
-
-    const updatedCheckedState = checkedState.map((item, index) =>
-      // console.log("CHECKED STATE: ", item);
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-
-
-
-  };
+  // const handleOnChange = (itemMerchant, position) => {
+  //   console.log("POSITION", position);
+  //   console.log("ITEM MERCHANT CHECKED: ", itemMerchant);
+  //   const updatedCheckedState = checkedState.map((item, index) =>
+  //     // console.log("CHECKED STATE: ", item);
+  //     index === position ? !item : item
+  //   );
+  //   setCheckedState(updatedCheckedState);
+  // };
 
 
 
+  const handleChangeOrigin = (countryArr) => {
+    if (countryArr.length == 0) {
+      console.log("COUNTRY ARR: ", countryArr);
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+    } else {
+      console.log("COUNTRY ARR: ", countryArr);
+      localStorage.setItem("countryArrLength", countryArr.length);
+      localStorage.setItem("country1", countryArr[0]);
+      localStorage.setItem("country2", countryArr[1]);
+      localStorage.setItem("country3", countryArr[2]);
+      localStorage.setItem("country4", countryArr[3]);
+      localStorage.setItem("country5", countryArr[4]);
+      dispatch(getProductListByOriginAction(props.match.params.id, countryArr[0], countryArr[1], countryArr[2], countryArr[3], countryArr[4], 5, (currentCustom - 1) * 5));
+      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (currentCustom - 1) * 5));
+    }
 
+  }
+  const handleChangeStarRate = (starArr) => {
+    console.log("STAR ARR: ", starArr);
+  }
   let countryArr = [];
   const renderProductOrigin = () => {
-    return merchant.map((itemMerchant, indexMerchant) => {
-      return <Checkbox
-        key={indexMerchant}
-        checked={checkedState[indexMerchant]}
-        onChange={() => handleOnChange(itemMerchant, indexMerchant)}
-        className="mb-1">
-        <div className="flex items-end" style={{ height: '100%' }}>
-          <img src={itemMerchant?.thumbnail} style={{ width: '30px' }} />
-          <span className="ml-1">{itemMerchant?.name}</span>
-        </div>
-      </Checkbox>
-    })
+    return <Checkbox.Group onChange={handleChangeOrigin}>
+      {merchant.map((itemMerchant, indexMerchant) => {
+        return <Checkbox value={itemMerchant.code}>{itemMerchant.name}</Checkbox>
+      })}
+    </Checkbox.Group>;
+
+    // return merchant.map((itemMerchant, indexMerchant) => {
+    // console.log("ITEM MERCHANT: ", itemMerchant)
+    // return <Checkbox
+    //   key={indexMerchant}
+    //   checked={checkedState[indexMerchant]}
+    //   onChange={() => handleOnChange(itemMerchant, indexMerchant)}
+    //   className="mb-1">
+    //   <div className="flex items-end" style={{ height: '100%' }}>
+    //     <img src={itemMerchant?.thumbnail} style={{ width: '30px' }} />
+    //     <span className="ml-1">{itemMerchant?.name}</span>
+    //   </div>
+    // </Checkbox>
+    // })
   }
 
   function ProductsList(props) {
@@ -206,7 +245,7 @@ export default function ProductList(props) {
           
         ))} */}
         {products?.map((product, index) => {
-          if (product.deleted == 0) {
+          if (product?.deleted == 0) {
             return <div>
               <Product key={index} className="col-span-1" product={product} />
             </div>
@@ -216,9 +255,6 @@ export default function ProductList(props) {
       </div>
     );
   }
-
-
-
 
   return (
     (user?.roleId == 2 || typeof (user?.roleId) == typeof undefined) ?
@@ -230,8 +266,9 @@ export default function ProductList(props) {
         >
           <div
             className={`${styles.productlist__border} grid grid-cols-12 justify-center flex ml-10 bg-white`}
-            style={{ width: "80%" }}
+            style={{ width: "70%" }}
           >
+
             {/* <div */}
             {/* className={`${styles.productlist__border__filter} col-span-3 `} */}
             {/* style={{ width: "70%", borderBottom: "" }} */}
@@ -255,6 +292,22 @@ export default function ProductList(props) {
               <Checkbox className="mb-1">
                 <Rate disabled defaultValue={1} style={{ color: '#febb02', fontSize: '1rem' }} />
               </Checkbox> */}
+
+            {/* <div
+              className={`${styles.productlist__border__filter} col-span-3 `} */}
+            {/* // style={{ width: "70%", borderBottom: "" }} */}
+            {/* // style={{ width: '300px' }} */}
+            {/* > */}
+            {/* <div className="font-medium mb-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Thương hiệu</div>
+              {renderProductOrigin()}
+              <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Đánh giá</div>
+              <Checkbox.Group onChange={handleChangeStarRate}>
+                {starArr.map((item, index) => {
+                  return <Checkbox value={item.value}>
+                    <Rate disabled value={item.value} style={{ color: '#febb02', fontSize: '1rem' }} />
+                  </Checkbox>
+                })}
+              </Checkbox.Group> */}
             {/* <div className="font-medium mt-3" style={{ width: "100%", borderBottom: "1px solid lightgray" }}>Vùng giá</div> */}
             {/* <Slider
               style={{ marginTop: '50px' }}
@@ -309,12 +362,12 @@ export default function ProductList(props) {
                   className="hover:text-green-800 focus:border-green-800"
                   current={currentCustom}
                   defaultCurrent={1}
-                  pageSize={pageSizeCustom}
-                  pageSizeOptions={[3, 5, 10]}
+                  pageSize={5}
+                  // pageSizeOptions={3}
                   onChange={(page) => { handlePaginationChange(page) }}
-                  showSizeChanger
+                  // showSizeChanger
                   onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
-                  total={totalCustom.length}
+                  total={localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined ? countTotal : productListLengthByOrigin.length}
                 />
               </div>
             </div>

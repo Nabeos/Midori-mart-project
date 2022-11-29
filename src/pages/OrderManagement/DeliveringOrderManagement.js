@@ -5,14 +5,16 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import DeliveringOrderDetail from './DeliveringOrderDetail';
-import { getAllCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
+import { getAllCustomerOrderForSellerAction, getAllDeliveringCustomerOrderLengthForSellerAction } from '../../redux/action/order/OrderAction';
 import { CLOSE_MODAL_DELIVERING_SELLER, SHOW_MODAL_DELIVERING_SELLER } from '../../redux/type/order/OrderType';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useStateCallback } from "use-state-callback";
 
 export default function DeliveringOrderManagement() {
   const openModalDeliveringSeller = useSelector(state => state.OrderReducer.openModalDeliveringSeller);
+  const [currentCustom, setCurrentCustom] = useStateCallback(1);
   console.log("openModalDeliveringSeller", openModalDeliveringSeller);
   const dispatch = useDispatch();
   const showModal = (deliveringSellerItemAction) => {
@@ -28,11 +30,38 @@ export default function DeliveringOrderManagement() {
 
   };
   useEffect(() => {
-    dispatch(getAllCustomerOrderForSellerAction(1000, 0, 2));
+    setCurrentCustom(1);
+    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllDeliveringCustomerOrderLengthForSellerAction(1000, 0));
   }, [openModalDeliveringSeller])
+
+  useEffect(() => {
+    setCurrentCustom(1);
+    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllDeliveringCustomerOrderLengthForSellerAction(1000, 0));
+  }, [localStorage.getItem("keyOrder")])
+
+  const onShowSizeChangeCustom = (current, pageSize) => {
+    console.log("CÓ VÀO ON SHOW SIZE CHANGE");
+    console.log("CURRENT onShowSizeChangeCustom: ", current);
+    console.log("pageSize onShowSizeChangeCustom: ", pageSize);
+    if (current == 0) {
+      current = 1;
+      setCurrentCustom(1);
+    }
+  };
+  const handlePaginationChange = (page, pageSize) => {
+    console.log("CÓ VÀO HANDLE PAGINATION CHANGE");
+    console.log("PAGE handlePaginationChange: ", page);
+    console.log("PAGE SIZE handlePaginationChange: ", pageSize);
+    setCurrentCustom(page);
+    dispatch(getAllCustomerOrderForSellerAction(15, (page - 1) * 15, localStorage.getItem("keyOrder")));
+  }
 
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("DELIVERING CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
+  const deliveringCustomerOrdersLengthForSeller = useSelector(state => state.OrderReducer.deliveringCustomerOrdersLengthForSeller);
+  console.log("delivering LENGTH: ", deliveringCustomerOrdersLengthForSeller.length);
   return (
     (customerOrdersForSeller.length) > 0 ? <div>
       <div className="flex flex-row">
@@ -40,7 +69,7 @@ export default function DeliveringOrderManagement() {
           className=" mt-3 ml-2 text-xl font-semibold"
           style={{ width: "100%" }}
         >
-          Có <span className="text-green-800"> {customerOrdersForSeller.length} </span> đơn hàng đang giao
+          Có <span className="text-green-800"> {deliveringCustomerOrdersLengthForSeller.length} </span> đơn hàng đang giao
         </div>
         <div
           className="rounded-md mt-3 flex justify-end mr-3 text-black"
@@ -53,7 +82,7 @@ export default function DeliveringOrderManagement() {
               style={{ width: "100%", height: "2.5rem" }}
             />
           </Form> */}
-          <div className="rounded-md mt-3 flex justify-end mr-3">
+          {/* <div className="rounded-md mt-3 flex justify-end mr-3">
             <Form>
               <InputGroup className={` `} >
                 <FormControl
@@ -67,7 +96,7 @@ export default function DeliveringOrderManagement() {
                 </InputGroup.Text>
               </InputGroup>
             </Form>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -80,7 +109,7 @@ export default function DeliveringOrderManagement() {
             <tr>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
-                STT
+                Id
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
@@ -106,7 +135,7 @@ export default function DeliveringOrderManagement() {
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
               return <tr key={index}>
-                <td className="border border-slate-300 text-center">{index + 1}</td>
+                <td className="border border-slate-300 text-center">{item.id}</td>
                 <td className="border border-slate-300 text-center">
                   {item.orderNumber}
                 </td>
@@ -146,11 +175,17 @@ export default function DeliveringOrderManagement() {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end mb-4" style={{ width: "90%" }}>
+      <div className="flex justify-center mb-4">
         <Pagination
           className="hover:text-green-800 focus:border-green-800"
+          current={currentCustom}
           defaultCurrent={1}
-          total={50}
+          pageSize={15}
+          // pageSizeOptions={3}
+          onChange={(page) => { handlePaginationChange(page) }}
+          // showSizeChanger
+          // onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+          total={deliveringCustomerOrdersLengthForSeller.length}
         />
       </div>
     </div> : <div style={{ minHeight: "520px" }}>
