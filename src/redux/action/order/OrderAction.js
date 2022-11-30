@@ -2,6 +2,7 @@ import axios from 'axios'
 import { orderManagementForCustomerService } from '../../../services/OrderManagementForCustomerService';
 import { orderManagementForSellerService } from '../../../services/OrderManagementForSellerService';
 import { CLOSE_MODAL, CLOSE_MODAL_DELIVERING_SELLER, CLOSE_MODAL_PENDING_SELLER, CREATE_NEW_ORDER, GET_ALL_CANCEL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_CANCEL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_ORDERS_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_FOR_SELLER, GET_ALL_CUSTOMER_ORDERS_LENGTH_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER_LENGTH, GET_ALL_DELIVERING_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_IN_PROGRESS_ORDER, GET_ALL_IN_PROGRESS_ORDER_LENGTH, GET_ALL_PENDING_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_PURCHASE_HISTORY_ORDER, GET_ALL_REFUND_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_SUCCESSFUL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER } from '../../type/order/OrderType';
+import { notification } from "antd";
 
 export const getAllCustomerOrderForSellerAction = (limit, offset, statusOrder) => {
     return async (dispatch) => {
@@ -122,44 +123,150 @@ export const getAllCustomerCancelCustomerOrderLengthForSellerAction = (limit, of
         }
     }
 }
-
+const openNotification = (placement) => {
+    notification.success({
+        message: `Cập nhật trạng thái đơn hàng thành công`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationUpdateOrderStatusError = (placement) => {
+    notification.error({
+        message: `Cập nhật trạng thái đơn hàng thất bại`,
+        placement,
+        duration: 2
+    });
+};
 export const updateCustomerOrderForSellerAction = (orderNumber, status) => {
     return async (dispatch) => {
         try {
             const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
             console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            openNotification('bottomRight');
+            // localStorage.setItem("flagOrderOutside", orderNumber);
             dispatch({
                 type: CLOSE_MODAL
             })
         } catch (error) {
+            openNotificationUpdateOrderStatusError('bottomRight');
             console.log('error', error);
         }
     }
 }
 
+export const updateCustomerOrderForSellerOutsideAction = (orderNumber, status) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            openNotification('bottomRight');
+            localStorage.setItem("flagOrderOutside", orderNumber);
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
+        } catch (error) {
+            openNotificationUpdateOrderStatusError('bottomRight');
+            console.log('error', error);
+        }
+    }
+}
+
+const openNotificationStartDelivering = (placement) => {
+    notification.success({
+        message: `Cập nhật trạng thái đơn hàng thành công`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationStartDeliveringError = (placement) => {
+    notification.error({
+        message: `Cập nhật trạng thái đơn hàng thất bại`,
+        placement,
+        duration: 2
+    });
+};
 export const startDeliveringCustomerOrderAction = (orderNumber, status) => {
     return async (dispatch) => {
         try {
             const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
             console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            openNotificationStartDelivering('bottomRight');
             dispatch({
                 type: CLOSE_MODAL_PENDING_SELLER
             })
         } catch (error) {
+            openNotificationStartDeliveringError('bottomRight');
             console.log('error', error);
         }
     }
 }
 
+export const startDeliveringCustomerOutsideOrderAction = (orderNumber, status) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            openNotificationStartDelivering('bottomRight');
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
+            // setTimeout(function () {
+            //     localStorage.setItem("keyOrder", 1);
+            // }, 10);
+            // dispatch({
+            //     type: CLOSE_MODAL_PENDING_SELLER
+            // })
+        } catch (error) {
+            openNotificationStartDeliveringError('bottomRight');
+            console.log('error', error);
+        }
+    }
+}
+
+const openNotificationFinishDelivering = (placement) => {
+    notification.success({
+        message: `Cập nhật trạng thái đơn hàng thành công`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationFinishDeliveringError = (placement) => {
+    notification.error({
+        message: `Cập nhật trạng thái đơn hàng thất bại`,
+        placement,
+        duration: 2
+    });
+};
 export const handleFinishDeliveringCustomerOrderAction = (orderNumber, status) => {
     return async (dispatch) => {
         try {
             const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            openNotificationFinishDelivering('bottomRight');
             console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
             await dispatch({
                 type: CLOSE_MODAL_DELIVERING_SELLER
             })
         } catch (error) {
+            openNotificationFinishDeliveringError('bottomRight');
+            console.log('error', error);
+        }
+    }
+}
+
+export const handleFinishDeliveringOutsideCustomerOrderAction = (orderNumber, status) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            openNotificationFinishDelivering('bottomRight');
+            console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
+            await dispatch({
+                type: CLOSE_MODAL_DELIVERING_SELLER
+            })
+        } catch (error) {
+            openNotificationFinishDeliveringError('bottomRight');
             console.log('error', error);
         }
     }

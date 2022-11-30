@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./NewOrderManagement.module.css";
-import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
+import { Button, Form, Modal, Popover, Pagination, Input, Tabs, Popconfirm } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import NewOrderDetail from "./NewOrderDetail";
-import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction } from "../../redux/action/order/OrderAction";
+import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction, updateCustomerOrderForSellerAction, updateCustomerOrderForSellerOutsideAction } from "../../redux/action/order/OrderAction";
 import { CLOSE_MODAL, SHOW_MODAL } from "../../redux/type/order/OrderType";
 import OrderHistoryProduct from "../UserOrderHistory/OrderHistoryProduct";
 import { SearchOutlined } from "@ant-design/icons";
@@ -55,6 +55,22 @@ export default function NewOrderManagement(props) {
     })
 
   };
+  const textAccept = 'Bạn có chắc chắn muốn duyệt đơn hàng này ?';
+  const textReject = 'Bạn có chắc chắn muốn hủy đơn hàng này ?';
+  const handleAcceptNewOrder = (orderNumber) => {
+    dispatch(updateCustomerOrderForSellerOutsideAction(orderNumber, 1));
+    // localStorage.setItem("flagOrderOutside", orderNumber);
+    // openNotification('bottomRight')
+  }
+  const handleRejectNewOrder = (orderNumber) => {
+    dispatch(updateCustomerOrderForSellerOutsideAction(orderNumber, 4));
+    // openNotification('bottomRight')
+  }
+
+  // useEffect(() => {
+  //   localStorage.setItem("flagOrderOutside", 1);
+  // }, [])
+
 
   useEffect(() => {
     dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
@@ -68,10 +84,22 @@ export default function NewOrderManagement(props) {
     dispatch(getAllCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
   }, [localStorage.getItem("keyOrder")])
 
+  // useEffect(() => {
+  //   setCurrentCustom(1);
+  //   dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+  //   dispatch(getAllCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+  // }, [localStorage.getItem("flagOrderOutside")])
+
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("NEW CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
   const customerOrdersLengthForSeller = useSelector(state => state.OrderReducer.customerOrdersLengthForSeller);
   console.log("CUSTOMER ORDERS LENGTH FOR SELLER: ", customerOrdersLengthForSeller.length);
+
+
+
+
+
+
 
   return (
     (customerOrdersForSeller.length) > 0 ? <div>
@@ -118,10 +146,10 @@ export default function NewOrderManagement(props) {
         >
           <thead>
             <tr>
-              <th className="border border-slate-300 p-4 text-lg text-center">
+              {/* <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Id
-              </th>
+              </th> */}
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Mã đơn hàng
@@ -141,14 +169,17 @@ export default function NewOrderManagement(props) {
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Xem chi tiết
               </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Thao tác
+              </th>
             </tr>
           </thead>
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
               return <tr key={index}>
-                <td className="border border-slate-300 text-center">
+                {/* <td className="border border-slate-300 text-center">
                   {item.id}
-                </td>
+                </td> */}
                 <td className="border border-slate-300 text-center">
                   {item.orderNumber}
                 </td>
@@ -186,6 +217,36 @@ export default function NewOrderManagement(props) {
                   >
                     <NewOrderDetail newDetailInfo={item} />
                   </Modal>
+
+                </td>
+                <td className="border border-slate-300 text-center" style={{ width: "150px" }}>
+                  <div className="flex p-2">
+                    <div>
+                      <Popconfirm placement="top"
+                        onConfirm={() => { handleAcceptNewOrder(item.orderNumber) }}
+                        title={textAccept}
+                        okText="Yes" cancelText="No">
+                        <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+                        >
+                          Xác nhận
+                        </Button>
+                      </Popconfirm>
+                    </div>
+                    <div>
+                      <Popconfirm placement="top"
+                        onConfirm={() => { handleRejectNewOrder(item.orderNumber) }}
+                        title={textReject}
+                        okText="Yes" cancelText="No">
+
+                        <Button className='round-md hover:bg-red-700 hover:text-white hover:border-red-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow'
+                        >
+                          Hủy đơn
+                        </Button>
+                      </Popconfirm>
+                    </div>
+                  </div>
+
+
 
                 </td>
               </tr>

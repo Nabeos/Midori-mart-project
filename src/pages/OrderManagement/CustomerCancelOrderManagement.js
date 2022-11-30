@@ -32,13 +32,13 @@ export default function CustomerCancelOrderManagement() {
     };
     useEffect(() => {
         setCurrentCustom(1);
-        dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+        dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
         dispatch(getAllCustomerCancelCustomerOrderLengthForSellerAction(1000, 0));
     }, [openModalCustomerCancelOrderSeller])
 
     useEffect(() => {
         setCurrentCustom(1);
-        dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+        dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
         dispatch(getAllCustomerCancelCustomerOrderLengthForSellerAction(1000, 0));
     }, [localStorage.getItem("keyOrder")])
 

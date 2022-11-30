@@ -10,20 +10,20 @@ export default function NewOrderDetail(props) {
   const dispatch = useDispatch();
   const textAccept = 'Bạn có chắc chắn muốn duyệt đơn hàng này ?';
   const textReject = 'Bạn có chắc chắn muốn hủy đơn hàng này ?';
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Cập nhật trạng thái đơn hàng thành công`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   const handleAcceptNewOrder = (orderNumber) => {
     dispatch(updateCustomerOrderForSellerAction(orderNumber, 1));
-    openNotification('bottomRight')
+    // openNotification('bottomRight')
   }
   const handleRejectNewOrder = (orderNumber) => {
     dispatch(updateCustomerOrderForSellerAction(orderNumber, 4));
-    openNotification('bottomRight')
+    // openNotification('bottomRight')
   }
   return (
     <div className="">

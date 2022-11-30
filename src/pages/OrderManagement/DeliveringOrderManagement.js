@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./DeliveringOrderManagement.module.css";
-import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
+import { Button, Form, Modal, Popover, Pagination, Input, Tabs, Popconfirm } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import DeliveringOrderDetail from './DeliveringOrderDetail';
-import { getAllCustomerOrderForSellerAction, getAllDeliveringCustomerOrderLengthForSellerAction } from '../../redux/action/order/OrderAction';
+import { getAllCustomerOrderForSellerAction, getAllDeliveringCustomerOrderLengthForSellerAction, handleFinishDeliveringOutsideCustomerOrderAction } from '../../redux/action/order/OrderAction';
 import { CLOSE_MODAL_DELIVERING_SELLER, SHOW_MODAL_DELIVERING_SELLER } from '../../redux/type/order/OrderType';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
@@ -15,6 +15,11 @@ import { useStateCallback } from "use-state-callback";
 export default function DeliveringOrderManagement() {
   const openModalDeliveringSeller = useSelector(state => state.OrderReducer.openModalDeliveringSeller);
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
+  const textFinishDelivering = 'Bạn có chắc chắn đơn hàng này đã được giao ?';
+  const handleFinishDeliveringCustomerOrder = (orderNumber) => {
+    dispatch(handleFinishDeliveringOutsideCustomerOrderAction(orderNumber, 3));
+    // openNotification('bottomRight')
+  }
   console.log("openModalDeliveringSeller", openModalDeliveringSeller);
   const dispatch = useDispatch();
   const showModal = (deliveringSellerItemAction) => {
@@ -107,10 +112,10 @@ export default function DeliveringOrderManagement() {
         >
           <thead>
             <tr>
-              <th className="border border-slate-300 p-4 text-lg text-center">
+              {/* <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Id
-              </th>
+              </th> */}
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Mã đơn hàng
@@ -130,12 +135,15 @@ export default function DeliveringOrderManagement() {
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Xem chi tiết
               </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Thao tác
+              </th>
             </tr>
           </thead>
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
               return <tr key={index}>
-                <td className="border border-slate-300 text-center">{item.id}</td>
+                {/* <td className="border border-slate-300 text-center">{item.id}</td> */}
                 <td className="border border-slate-300 text-center">
                   {item.orderNumber}
                 </td>
@@ -168,6 +176,17 @@ export default function DeliveringOrderManagement() {
                   >
                     <DeliveringOrderDetail deliveringDetailInfo={item} />
                   </Modal>
+                </td>
+                <td className="border border-slate-300 text-center p-2">
+                  <Popconfirm placement="top"
+                    onConfirm={() => { handleFinishDeliveringCustomerOrder(item.orderNumber) }}
+                    title={textFinishDelivering}
+                    okText="Yes" cancelText="No">
+                    <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+                    >
+                      Đã giao hàng
+                    </Button>
+                  </Popconfirm>
                 </td>
               </tr>
             })}

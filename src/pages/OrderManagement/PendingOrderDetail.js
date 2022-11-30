@@ -10,16 +10,16 @@ export default function PendingOrderDetail(props) {
   const textStartDelivering = 'Bạn có chắc chắn muốn bắt đầu giao đơn hàng này ?';
   const pendingSellerItem = useSelector(state => state.OrderReducer.pendingSellerItem);
   console.log("pendingSellerItem: ", pendingSellerItem);
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Cập nhật trạng thái đơn hàng thành công`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   const handleStartDeliveringOrder = (orderNumber) => {
     dispatch(startDeliveringCustomerOrderAction(orderNumber, 2));
-    openNotification('bottomRight')
+    // openNotification('bottomRight')
   }
   return (
     <div className="">

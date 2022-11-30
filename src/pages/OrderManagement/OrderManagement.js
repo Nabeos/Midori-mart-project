@@ -40,19 +40,19 @@ export default function OrderManagement() {
       dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 1);
     } else if (key == 3) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 2);
     } else if (key == 4) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 3);
     } else if (key == 5) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 4);
     } else if (key == 6) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 5);
     } else if (key == 7) {
-      dispatch(getAllCustomerOrderForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
+      dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
       localStorage.setItem("keyOrder", 6);
     }
     // else {

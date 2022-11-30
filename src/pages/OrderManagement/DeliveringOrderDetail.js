@@ -11,16 +11,16 @@ export default function DeliveringOrderDetail(props) {
 
   const deliveringSellerItem = useSelector(state => state.OrderReducer.deliveringSellerItem);
   console.log(" deliveringSellerItem: ", deliveringSellerItem);
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Cập nhật trạng thái đơn hàng thành công`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   const handleFinishDeliveringCustomerOrder = (orderNumber) => {
     dispatch(handleFinishDeliveringCustomerOrderAction(orderNumber, 3));
-    openNotification('bottomRight')
+    // openNotification('bottomRight')
   }
   return (
     <div className="">

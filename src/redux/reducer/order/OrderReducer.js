@@ -11,6 +11,7 @@ const initialState = {
     customerCancelCustomerOrdersLengthForSeller: [],
     flag: 1,
     flagPayment: 1,
+    flagOrderOutside: 1,
     openModal: false,
     openModalSuccessful: false,
     openModalPendingSeller: false,

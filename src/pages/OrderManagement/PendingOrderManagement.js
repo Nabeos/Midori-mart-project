@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./PendingOrderManagement.module.css";
-import { Button, Form, Modal, Popover, Pagination, Input, Tabs } from "antd";
+import { Button, Form, Modal, Popover, Pagination, Input, Tabs, Popconfirm } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import PendingOrderDetail from './PendingOrderDetail';
-import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction, getAllPendingCustomerOrderLengthForSellerAction } from '../../redux/action/order/OrderAction';
+import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction, getAllPendingCustomerOrderLengthForSellerAction, startDeliveringCustomerOrderAction, startDeliveringCustomerOutsideOrderAction } from '../../redux/action/order/OrderAction';
 import { CLOSE_MODAL_PENDING_SELLER, SHOW_MODAL_PENDING_SELLER } from '../../redux/type/order/OrderType';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
@@ -14,7 +14,13 @@ import { useStateCallback } from "use-state-callback";
 
 export default function PendingOrderManagement(props) {
   console.log("PROPS.KEY PENDING = ", props.keyPending);
+  const pendingSellerItem = useSelector(state => state.OrderReducer.pendingSellerItem);
   const openModalPendingSeller = useSelector(state => state.OrderReducer.openModalPendingSeller);
+  const textStartDelivering = 'Bạn có chắc chắn muốn bắt đầu giao đơn hàng này ?';
+  const handleStartDeliveringOrder = (orderNumber) => {
+    dispatch(startDeliveringCustomerOutsideOrderAction(orderNumber, 2));
+    // openNotification('bottomRight')
+  }
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
   const dispatch = useDispatch();
   const showModal = (pendingItemAction) => {
@@ -107,10 +113,10 @@ export default function PendingOrderManagement(props) {
         >
           <thead>
             <tr>
-              <th className="border border-slate-300 p-4 text-lg text-center">
+              {/* <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Id
-              </th>
+              </th> */}
               <th className="border border-slate-300 p-4 text-lg text-center">
                 {" "}
                 Mã đơn hàng
@@ -130,14 +136,17 @@ export default function PendingOrderManagement(props) {
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Xem chi tiết
               </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Thao tác
+              </th>
             </tr>
           </thead>
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
               return <tr key={index}>
-                <td className="border border-slate-300 text-center">
+                {/* <td className="border border-slate-300 text-center">
                   {item.id}
-                </td>
+                </td> */}
                 <td className="border border-slate-300 text-center">
                   {item.orderNumber}
                 </td>
@@ -170,6 +179,17 @@ export default function PendingOrderManagement(props) {
                   >
                     <PendingOrderDetail pendingDetailInfo={item} />
                   </Modal>
+                </td>
+                <td className="border border-slate-300 text-center" style={{ width: "150px" }}>
+                  <Popconfirm placement="top"
+                    onConfirm={() => { handleStartDeliveringOrder(item.orderNumber) }}
+                    title={textStartDelivering}
+                    okText="Yes" cancelText="No">
+                    <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+                    >
+                      Bắt đầu giao
+                    </Button>
+                  </Popconfirm>
                 </td>
               </tr>
             })}
