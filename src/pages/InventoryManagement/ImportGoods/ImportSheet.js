@@ -92,13 +92,14 @@ function ImportSheet(props) {
             <Form onSubmitCapture={handleSubmit}>
               <div className="mt-3 ml-3">
                 <div className="flex">
-                  <div className="text-2xl flex" style={{ width: "80%" }}>
+                  <div className="text-2xl flex" style={{ width: "60%" }}>
                     <span className="font-semibold">Mã số phiếu nhập kho:</span>{" "}
                     <Input
                       type="text"
                       id="importCode"
                       name="importCode"
                       onChange={e => {
+                        localStorage.setItem('importCode', e.target.value);
                         props.setFieldTouched('importCode')
                         handleChange(e)
                       }}
@@ -107,6 +108,7 @@ function ImportSheet(props) {
                       style={{ width: "200px", height: "35px" }}
                     />
                   </div>
+                  {errors.importCode && touched.importCode ? <div className='text-red-600'>{errors.importCode}</div> : <div></div>}
                   <div className="flex justify-end" style={{ width: "90%" }}>
                     <Popconfirm placement="top"
                       onConfirm={handleSubmit}
@@ -141,6 +143,7 @@ function ImportSheet(props) {
                     <select
                       defaultValue={0}
                       onChange={e => {
+                        localStorage.setItem('manufactureCompany', e.target.value);
                         props.setFieldTouched('manufactureCompany')
                         handleChange(e)
                       }}
@@ -158,6 +161,7 @@ function ImportSheet(props) {
                     </select>
                   </div>
                 </div>
+                {errors.manufactureCompany && touched.manufactureCompany ? <div className='text-red-600'>{errors.manufactureCompany}</div> : <div></div>}
                 {/* confirmation info */}
                 <div className="mt-2 mb-2">
                   <span className="text-lg font-semibold">
@@ -201,6 +205,7 @@ function ImportSheet(props) {
                       name="note"
                       className="p-2 text-base"
                       onChange={e => {
+                        localStorage.setItem('noteInImportGoods', e.target.value);
                         props.setFieldTouched('note')
                         handleChange(e)
                       }}
@@ -235,7 +240,7 @@ function ImportSheet(props) {
                   </div>
                   <div className="">
                     <table
-                      className={`${styles.importsheet__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
+                      className={`${styles.importsheet__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-2 `}
                       style={{ width: "95%", minHeight: "10rem" }}
                     >
                       <thead>
@@ -326,12 +331,10 @@ function ImportSheet(props) {
                                 </Popconfirm>
                               </td>
                             </tr>
-
                           })}
-
-
                       </tbody>
                     </table>
+                    {errors.importedProductInForm && touched.importedProductInForm ? <div className='text-red-600'>{errors.importedProductInForm}</div> : <div></div>}
                   </div>
                   {/* <div
                     className="flex justify-end mb-4"
@@ -361,6 +364,9 @@ function ImportSheet(props) {
                     <NavLink
                       to={"/inventorymanagement"}
                       onClick={() => {
+                        localStorage.removeItem("importCode");
+                        localStorage.removeItem("noteInImportGoods");
+                        localStorage.removeItem("manufactureCompany");
                         // localStorage.removeItem("importProductList");
                         // localStorage.setItem("defaultActiveKeyValueInventory", 2);
                         dispatch({
@@ -392,17 +398,21 @@ const regexSelect = /^[1-9]$/;
 const ImportSheetWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
-    importCode: "",
-    manufactureCompany: 0,
+    importCode: localStorage.getItem("importCode"),
+    manufactureCompany: localStorage.getItem("manufactureCompany"),
     createdDate: "",
     createdBy: JSON.parse(localStorage.getItem(USER))?.id,
-    note: "",
+    note: localStorage.getItem("noteInImportGoods"),
     importedProductInForm: props.importProductListProps
   }),
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-
+    importCode: Yup.string()
+      .required("Vui lòng không được để trống mã nhập kho !!!").nullable(),
+    manufactureCompany: Yup.string()
+      .required("Vui lòng không được để trống thông tin nhà cung cấp !!!").nullable(),
+    importedProductInForm: Yup.array().min(1, "Vui lòng không được để trống sản phẩm nhập kho !!!")
   }),
 
 
@@ -412,7 +422,7 @@ const ImportSheetWithFormik = withFormik({
     // console.log("VALUE FORM ADD NEW PRODUCT FOR SELLER: ", values);
     let data = {
       "receivedNote": {
-        "name": values.importCode,
+        "name": localStorage.getItem("importCode"),
         "merchant": values.manufactureCompany,
         "note": values.note,
         "receivedDetail": values.importedProductInForm

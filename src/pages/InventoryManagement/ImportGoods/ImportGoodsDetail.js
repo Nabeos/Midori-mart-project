@@ -89,13 +89,19 @@ function ImportGoodsDetail(props) {
                     <span className="font-semibold">Mã số phiếu nhập kho:</span>{" "}
                     <Input
                       type="text"
-                      id="product_name"
+                      id="importCode"
+                      name="importCode"
+                      onChange={e => {
+                        props.setFieldTouched('importCode')
+                        handleChange(e)
+                      }}
                       value={name}
                       className=" text-gray-900 ml-2 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
                       style={{ width: "200px", height: "35px" }}
                     />
                   </div>
+                  {errors.importCode && touched.importCode ? <div className='text-red-600'>{errors.importCode}</div> : <div></div>}
                   <div className="flex justify-end" style={{ width: "90%" }}>
                     {/* <Button
                       className={`${styles.importgoodsdetail__border__confirm}  mr-2`}
@@ -382,7 +388,8 @@ const ImportGoodsDetailWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-
+    importedCode: Yup.string()
+      .required("Vui lòng không được để trống mã nhập kho !!!"),
   }),
 
 
