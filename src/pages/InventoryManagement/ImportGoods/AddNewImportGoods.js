@@ -199,7 +199,7 @@ const AddNewImportGoodsWithFormik = withFormik({
 
 
   handleSubmit: (values, { props, setSubmitting }) => {
-    alert("CÓ VÀO THÊM SẢN PHẨM NHẬP HÀNG GỬI LOCAL STORAGE");
+    // alert("CÓ VÀO THÊM SẢN PHẨM NHẬP HÀNG GỬI LOCAL STORAGE");
     let data = {
       "productId": values.importedProduct,
       "quantityImport": values.quantityImport,

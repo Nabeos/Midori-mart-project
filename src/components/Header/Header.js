@@ -107,23 +107,23 @@ function Header(props) {
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true)
-  
+
   const handleScroll = () => {
-      const currentScrollPos = window.scrollY
-  
-      if(currentScrollPos > prevScrollPos){
-          setVisible(false)
-      }else{
-          setVisible(true)
-      }
-  
-      setPrevScrollPos(currentScrollPos)
+    const currentScrollPos = window.scrollY
+
+    if (currentScrollPos > prevScrollPos) {
+      setVisible(false)
+    } else {
+      setVisible(true)
+    }
+
+    setPrevScrollPos(currentScrollPos)
   }
-  
-  useEffect( () => {
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => window.removeEventListener('scroll', handleScroll)
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll)
   })
 
   return (
@@ -169,7 +169,7 @@ function Header(props) {
               </InputGroup>
             </Form>
 
-          </div> : <div className="col-span-8 mr-3">
+          </div> : <div className="col-span-7 mr-3">
             {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
             <Form onSubmit={handleSubmit}>
               <InputGroup className={`${styles.header__searchbar} `} >
@@ -207,7 +207,7 @@ function Header(props) {
               {user?.fullname}
             </span>
           </Popover>
-        </div> : <div className="col-span-1 text-center ml-2">
+        </div> : <div className="col-span-2 text-center ml-2">
           <FaUserCircle className="text-3xl hidden" />
           <NavLink
             to="/login"
