@@ -112,9 +112,10 @@ export const InventoryReducer = (state = initialState, action) => {
             return { ...state }
 
         case DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM:
-            localStorage.removeItem("importProductList");
             history.push("/inventorymanagement");
             window.location.reload();
+            // localStorage.setItem("defaultActiveKeyValueInventory", 2);
+            localStorage.removeItem("importProductList");
             return { ...state }
 
         case SHOW_MODAL_ADD_PRODUCT_INTO_IMPORT_GOODS_FORM:

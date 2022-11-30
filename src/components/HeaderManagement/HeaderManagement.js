@@ -15,8 +15,8 @@ export default function HeaderManagement() {
   let user = JSON.parse(localStorage.getItem(USER));
   // avatar hover
   const content = (
-    <div className="flex flex-col mr-8" style={{ width: "5rem" }}>
-      {user.roleId == 1 ? <NavLink to={"/"} style={{ width: "9rem" }} className="text-black no-underline hover:bg-gray-300 -ml-4">Trang chủ</NavLink> : ""}
+    <div className="flex flex-col mr-8" style={{ width: "5rem", fontSize: "16px", marginLeft: "1px" }}>
+      {user.roleId == 1 ? <NavLink to={"/"} style={{ width: "9rem", fontSize: "16px" }} className="text-black no-underline hover:bg-gray-300 ml-3">Trang chủ</NavLink> : ""}
       {user.roleId == 4 ? <NavLink to={"/"} style={{ width: "9rem" }} className="text-black no-underline hover:bg-gray-300 -ml-4">Trang chủ</NavLink> : ""}
 
       <NavLink to={`/managerprofile/${user.email}`} className="text-black no-underline hover:bg-gray-300 -ml-4" style={{ width: "9rem" }}>Thông tin cá nhân</NavLink>

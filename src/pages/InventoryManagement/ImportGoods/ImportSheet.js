@@ -38,6 +38,11 @@ function ImportSheet(props) {
     dispatch(getAllMerchantAction());
     window.scrollTo(0, 0);
   }, [])
+  window.onpopstate = () => {
+    dispatch({
+      type: DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM
+    })
+  }
   const merchantList = useSelector(state => state.InventoryReducer.merchantList);
   const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
   console.log("MERCHANT LIST: ", merchantList);
