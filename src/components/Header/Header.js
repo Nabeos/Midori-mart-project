@@ -215,6 +215,13 @@ function Header(props) {
           >
             Đăng nhập
           </NavLink>
+          <span>/</span>
+          <NavLink
+            to="/register"
+            className="font-medium text-lg no-underline text-black"
+          >
+            Đăng ký
+          </NavLink>
         </div>}
 
       </div>
