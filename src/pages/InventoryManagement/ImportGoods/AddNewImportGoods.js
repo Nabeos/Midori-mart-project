@@ -72,7 +72,9 @@ function AddNewImportGoods(props) {
                   </option>
                 })}
               </select>
+
             </div>
+            {errors.importedProduct && touched.importedProduct ? <div className='text-red-600'>{errors.importedProduct}</div> : <div></div>}
           </div>
 
           <div style={{ width: "100%" }}>
@@ -123,6 +125,7 @@ function AddNewImportGoods(props) {
                 style={{ width: "90%", height: "45px" }}
               />
             </Form.Item>
+            {errors.quantityImport && touched.quantityImport ? <div className='text-red-600'>{errors.quantityImport}</div> : <div></div>}
           </div>
 
           <div style={{ width: "100%" }}>
@@ -147,6 +150,7 @@ function AddNewImportGoods(props) {
                 style={{ width: "100%", height: "45px" }}
               />
             </Form.Item>
+            {errors.expiryDate && touched.expiryDate ? <div className='text-red-600'>{errors.expiryDate}</div> : <div></div>}
           </div>
         </div>
 
@@ -173,20 +177,29 @@ const regexSelect = /^[1-9]$/;
 const AddNewImportGoodsWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
-    importedProduct: 0,
-    price: 0,
-    quantityImport: 0,
+    importedProduct: "",
+    price: "",
+    quantityImport: "",
     expiryDate: ""
   }),
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-
+    importedProduct: Yup.string()
+      .required("Vui lòng không được để trống hạn sử dụng !!!"),
+    price: Yup.string()
+      .required("Vui lòng không được để trống mục giá !!!")
+      .matches(regexAllNumber, 'Giá sản phẩm không được phép chứa chữ !!!'),
+    quantityImport: Yup.string()
+      .required("Vui lòng không được để trống số lượng nhập kho !!!")
+      .matches(regexAllNumber, 'Số lượng nhập kho không được phép chứa chữ !!!'),
+    expiryDate: Yup.string()
+      .required("Vui lòng không được để trống hạn sử dụng !!!")
   }),
 
 
   handleSubmit: (values, { props, setSubmitting }) => {
-    // alert("CÓ VÀO THÊM SẢN PHẨM NHẬP HÀNG GỬI LOCAL STORAGE");
+    alert("CÓ VÀO THÊM SẢN PHẨM NHẬP HÀNG GỬI LOCAL STORAGE");
     let data = {
       "productId": values.importedProduct,
       "quantityImport": values.quantityImport,
