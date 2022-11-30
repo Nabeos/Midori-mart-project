@@ -11,6 +11,7 @@ import {
   message,
 } from "antd";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import moment from 'moment';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -67,9 +68,11 @@ function AddNewImportGoods(props) {
               >
                 <option value="0" disabled>Chọn sản phẩm</option>
                 {productListByCategoryId.map((item, index) => {
-                  return <option key={index} value={item.id}>
-                    {item.title}
-                  </option>
+                  if (item.quantity == 0) {
+                    return <option key={index} value={item.id}>
+                      {item.title}
+                    </option>
+                  }
                 })}
               </select>
 
@@ -147,6 +150,7 @@ function AddNewImportGoods(props) {
                 }}
                 className=' text-gray-900 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5'
                 placeholder="Hạn sử dụng"
+                min={moment().format("YYYY-MM-DD")}
                 style={{ width: "100%", height: "45px" }}
               />
             </Form.Item>
