@@ -109,7 +109,7 @@ function ImportSheet(props) {
                     />
                   </div>
                   {errors.importCode && touched.importCode ? <div className='text-red-600'>{errors.importCode}</div> : <div></div>}
-                  <div className="flex justify-end" style={{ width: "90%" }}>
+                  <div className="flex justify-end mr-3" style={{ width: "90%" }}>
                     <Popconfirm placement="top"
                       onConfirm={handleSubmit}
                       title={textConfirmImportForm}
@@ -120,7 +120,7 @@ function ImportSheet(props) {
                         Xác nhận tạo phiếu
                       </Button>
                     </Popconfirm>
-                    <Popconfirm placement="top"
+                    {/* <Popconfirm placement="top"
                       onConfirm={() => { }}
                       title={textCancelImportForm}
                       okText="Yes" cancelText="No">
@@ -129,7 +129,7 @@ function ImportSheet(props) {
                       >
                         Hủy phiếu
                       </Button>
-                    </Popconfirm>
+                    </Popconfirm> */}
 
 
                   </div>
