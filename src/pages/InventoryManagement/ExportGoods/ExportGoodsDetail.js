@@ -81,7 +81,7 @@ export default function ExportGoodsDetail(props) {
                       Cập nhật phiếu
                     </Button> */}
 
-                    <Popconfirm placement="top"
+                    {/* <Popconfirm placement="top"
                       onConfirm={() => { dispatch(deleteExportGoodsOrderAction(props.match.params.formId)) }}
                       title={textDeleteExportGoodsForm}
                       okText="Yes" cancelText="No">
@@ -90,7 +90,7 @@ export default function ExportGoodsDetail(props) {
                       >
                         Hủy phiếu
                       </Button>
-                    </Popconfirm>
+                    </Popconfirm> */}
 
                   </div>
                 </div>

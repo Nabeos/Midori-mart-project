@@ -109,7 +109,7 @@ function ImportGoodsDetail(props) {
                       Cập nhật phiếu
                     </Button> */}
 
-                    <Popconfirm placement="top"
+                    {/* <Popconfirm placement="top"
                       onConfirm={() => { dispatch(deleteImportGoodsOrderAction(props.match.params.formId)) }}
                       title={textDeleteImportGoodsForm}
                       okText="Yes" cancelText="No">
@@ -118,7 +118,7 @@ function ImportGoodsDetail(props) {
                       >
                         Hủy phiếu
                       </Button>
-                    </Popconfirm>
+                    </Popconfirm> */}
 
                   </div>
                 </div>
