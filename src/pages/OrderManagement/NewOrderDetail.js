@@ -45,7 +45,7 @@ export default function NewOrderDetail(props) {
             Ghi chú:<span> {item.notes}</span>
           </div>
         </div>
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <div className="text-base font-semibold">Thông tin shipper</div>
           <div className="text-base">
             Shipper:
@@ -56,7 +56,7 @@ export default function NewOrderDetail(props) {
               <option>Nguyen Van A</option>
             </select>
           </div>
-        </div>
+        </div> */}
         <div>
           <div className="text-base font-semibold">Thông tin đơn hàng</div>
           <div>
