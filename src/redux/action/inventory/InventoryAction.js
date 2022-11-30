@@ -39,7 +39,7 @@ const openNotificationAddNewProduct = (placement) => {
 };
 const openNotificationAddNewProductError = (placement) => {
     notification.error({
-        message: `Thêm sản phẩm mới thất bại !`,
+        message: `Thêm sản phẩm mới thất bại. Sản phẩm có thể đã tồn tại trong hệ thống !`,
         placement,
         duration: 2
     });
@@ -53,6 +53,7 @@ export const addNewProductForSellerAction = (newProductInfo) => {
             console.log("RESULT ADD NEW PRODUCT FOR SELLER: ", result);
         } catch (error) {
             openNotificationAddNewProductError('bottomRight');
+            dispatch({ type: CLOSE_MODAL_ADD_NEW_PRODUCT_FOR_SELLER })
             console.log('error', error.response.data);
         }
     }
