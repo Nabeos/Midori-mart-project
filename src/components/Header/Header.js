@@ -143,8 +143,8 @@ function Header(props) {
             }}
             className="text-black no-underline font-medium flex items-center"
           >
-            <img className={styles.header__logo} src="/images/midori_logo.png" style={{ width: "50%" }} />
-            <div className="-ml-10 text-2xl font-bold">
+            <img className={`${styles.header__logo} -mt-12`} src="/images/midori_logo.png" style={{ width: "50%" }} />
+            <div className="-ml-10 text-2xl font-bold -mt-10">
               <span className={`${styles.header__logo__m1} `}>M</span>
               <span>idori</span>
               <span className={`${styles.header__logo__m2} `}>M</span>
@@ -153,7 +153,7 @@ function Header(props) {
           </NavLink>
         </div>
         {localStorage.getItem(USER) ?
-          <div className="col-span-7 mr-5">
+          <div className="col-span-7 mr-5 -mt-10">
             {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
             <Form onSubmit={handleSubmit}>
               <InputGroup className={`${styles.header__searchbar} `} >
@@ -169,7 +169,7 @@ function Header(props) {
               </InputGroup>
             </Form>
 
-          </div> : <div className="col-span-7 mr-3">
+          </div> : <div className="col-span-7 mr-3 -mt-10">
             {/* Thử nghiệm dispatch gửi text lên xem có nhận ko */}
             <Form onSubmit={handleSubmit}>
               <InputGroup className={`${styles.header__searchbar} `} >
@@ -194,8 +194,8 @@ function Header(props) {
             Blog
           </NavLink>
         </div> */}
-        <div className="col-span-1 text-center">
-          <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 -ml-10" />
+        <div className="col-span-1 text-center -mt-9">
+          <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 " />
           {cartList.map((item, index) => {
             totalQuantityInCart += item.quantity;
           })}
@@ -207,7 +207,7 @@ function Header(props) {
               {user?.fullname}
             </span>
           </Popover>
-        </div> : <div className="col-span-2 text-center ml-2">
+        </div> : <div className="col-span-2 text-center ml-2 -mt-9">
           <FaUserCircle className="text-3xl hidden" />
           <NavLink
             to="/login"
