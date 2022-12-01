@@ -550,10 +550,10 @@ function ProductDetail(props) {
               className={`${styles.productdetail__border} mb-14`}
               style={{ width: "80%", height: "350px" }}
             >
-              <div className="font-semibold text-xl pl-6 pt-3 ">
+              <div className="font-semibold text-xl pl-6 pt-3 mb-2">
                 Các sản phẩm {productDetail?.category?.name} bán chạy
               </div>
-              <Slider {...settings} style={{ margin: "0 auto", width: "80%" }}>
+              <Slider {...settings} style={{ margin: "0 auto", width: "75%" }}>
                 {bestSellerProductList.map((item, index) => {
                   console.log("item: ", item);
                   return <div>
