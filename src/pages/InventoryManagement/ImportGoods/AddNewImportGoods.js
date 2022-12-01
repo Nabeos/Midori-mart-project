@@ -190,9 +190,9 @@ const AddNewImportGoodsWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     importedProduct: Yup.string()
-      .required("Vui lòng không được để trống hạn sử dụng !!!"),
+      .required("Vui lòng không được để trống tên sản phẩm !!!"),
     price: Yup.string()
-      .required("Vui lòng không được để trống mục giá !!!")
+      .required("Vui lòng không được để trống giá sản phẩm !!!")
       .matches(regexAllNumber, 'Giá sản phẩm không được phép chứa chữ !!!'),
     quantityImport: Yup.string()
       .required("Vui lòng không được để trống số lượng nhập kho !!!")
