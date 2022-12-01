@@ -39,6 +39,9 @@ function ImportSheet(props) {
     window.scrollTo(0, 0);
   }, [])
   window.onpopstate = () => {
+    localStorage.removeItem("importCode");
+    localStorage.removeItem("noteInImportGoods");
+    localStorage.removeItem("manufactureCompany");
     dispatch({
       type: DELETE_ALL_PRODUCT_TEMPORARILY_FROM_IMPORT_GOODS_FORM
     })

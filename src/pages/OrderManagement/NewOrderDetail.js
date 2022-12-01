@@ -138,7 +138,7 @@ export default function NewOrderDetail(props) {
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
               <div>
-                Thành tiền:<span className="text-red-600"> {item.totalBill}đ</span>
+                Thành tiền:<span className="text-red-600"> {item.totalBill.toLocaleString()}đ</span>
               </div>
             </div>
           </div>

@@ -90,7 +90,10 @@ export default function UserOrderPendingDetail() {
               </thead>
               <tbody>
                 {inProgressItem.orderDetail.map((item, index) => {
-                  totalBill += item.price * item.quantity;
+                  // totalBill += item.price * item.quantity;
+                  // if (index == 0) {
+                  //   totalBill = item.totalBill;
+                  // }
                   return <tr>
                     <td className="border border-slate-300 text-base text-center">
                       {index + 1}
@@ -122,7 +125,7 @@ export default function UserOrderPendingDetail() {
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
               <div>
-                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
+                Thành tiền:<span className="text-red-600"> {inProgressItem?.totalBill?.toLocaleString()}đ</span>
               </div>
             </div>
           </div>

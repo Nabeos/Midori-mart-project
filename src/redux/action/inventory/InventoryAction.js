@@ -185,6 +185,9 @@ export const createNewImportGoodsFormAction = (newImportGoodsFormInfo) => {
             // window.location.reload();
             localStorage.setItem("defaultActiveKeyValueInventory", 2);
             localStorage.removeItem("importProductList");
+            localStorage.removeItem("importCode");
+            localStorage.removeItem("noteInImportGoods");
+            localStorage.removeItem("manufactureCompany");
             console.log("RESULT CREATE NEW IMPORT GOODS FORM: ", result);
         } catch (error) {
             openNotificationCreateNewImportGoodsFormError('bottomRight');

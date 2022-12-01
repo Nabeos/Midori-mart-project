@@ -109,7 +109,7 @@ export default function SuccessfulOrderDetail(props) {
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
               <div>
-                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
+                Thành tiền:<span className="text-red-600"> {successfulItem?.totalBill?.toLocaleString()}đ</span>
               </div>
             </div>
           </div>
