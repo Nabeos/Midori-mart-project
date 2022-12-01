@@ -205,7 +205,14 @@ function ProductDetail(props) {
                     <div className="text-sm text-gray-400">
                       SKU: <span>{productDetail?.sku}</span>
                     </div>
-                    <div className="mt-3">
+                    <div>
+                      <Rate
+                        disabled
+                        className="text-base mb-0"
+                        value={productDetail?.star}
+                      />
+                    </div>
+                    <div className="mt-1">
                       ĐVT: <span>{productDetail?.unit?.name}</span>
                     </div>
                     <div>
@@ -541,18 +548,18 @@ function ProductDetail(props) {
           <div className="flex justify-center">
             <div
               className={`${styles.productdetail__border} mb-14`}
-              style={{ width: "80%" }}
+              style={{ width: "80%", height: "350px" }}
             >
               <div className="font-semibold text-xl pl-6 pt-3 ">
                 Các sản phẩm {productDetail?.category?.name} bán chạy
               </div>
-              <Slider {...settings}>
+              <Slider {...settings} style={{ margin: "0 auto", width: "80%" }}>
                 {bestSellerProductList.map((item, index) => {
                   console.log("item: ", item);
                   return <div>
                     <Card
                       className={`${styles.productdetail__relatedproduct__border} mt-3 mb-3 pr-5 pl-5`}
-                      style={{ width: "80%", minHeight: "430px" }}
+                      style={{ width: "200px", minHeight: "250px" }}
                     >
                       {item?.thumbnails.map((item, index) => {
                         if (index == 0) {
@@ -570,7 +577,7 @@ function ProductDetail(props) {
                         <div className="h-28">
                           <p
                             onClick={() => { handleNavigate(item.category.id, item.slug) }}
-                            className={`${styles.productdetail__cardtitle} cursor-pointer mb-0 no-underline text-xl font-semibold hover:text-green-800`}
+                            className={`${styles.productdetail__cardtitle} cursor-pointer mb-0 no-underline text-base font-semibold hover:text-green-800`}
                           >
                             {item.title}
                           </p>
