@@ -49,7 +49,7 @@ function Product(props) {
             onClick={() => { handleNavigate(product.category.id, product.slug) }}
             className={`${styles.productlist__addtocart__button} rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-1 pb-2 font-medium`}
           >
-            Thêm vào giỏ
+            Xem chi tiết
           </button>
         </div>
       </div>
