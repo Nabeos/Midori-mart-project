@@ -72,6 +72,11 @@ function SamplePrevArrow(props) {
 function ProductDetail(props) {
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
+  const handleNavigate = (categoryId, slug) => {
+    window.scrollTo(0, 0);
+    history.push(`/product/${categoryId}/${slug}`);
+    localStorage.setItem("slugLocal", slug);
+  };
   //related product
   const settings = {
     dots: false,
@@ -106,6 +111,7 @@ function ProductDetail(props) {
   useEffect(() => {
     // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     window.scrollTo(0, 0);
+    // localStorage.setItem("slugLocal", props.match.params.id);
     dispatch(getProductDetailAction(props.match.params.id));
     dispatch(getBestSellerProductListByCategoryIdAction(props.match.params.categoryId));
   }, [])
@@ -118,6 +124,12 @@ function ProductDetail(props) {
     // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     dispatch(getProductDetailAction(props.match.params.id));
   }, [productDetail?.comments])
+
+  // useEffect(() => {
+  //   // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+  //   window.scrollTo(0, 0);
+  // }, [localStorage.getItem("slugLocal")])
+
   // quantity handle
   let [num, setNum] = useState(1);
   let totalInStock = 0;
@@ -536,6 +548,7 @@ function ProductDetail(props) {
               </div>
               <Slider {...settings}>
                 {bestSellerProductList.map((item, index) => {
+                  console.log("item: ", item);
                   return <div>
                     <Card
                       className={`${styles.productdetail__relatedproduct__border} mt-3 mb-3 pr-5 pl-5`}
@@ -555,12 +568,12 @@ function ProductDetail(props) {
 
                       <Card.Body className="p-0">
                         <div className="h-28">
-                          <NavLink
-                            to="/login"
-                            className={`${styles.productdetail__cardtitle} no-underline text-xl font-semibold hover:text-green-800`}
+                          <p
+                            onClick={() => { handleNavigate(item.category.id, item.slug) }}
+                            className={`${styles.productdetail__cardtitle} cursor-pointer mb-0 no-underline text-xl font-semibold hover:text-green-800`}
                           >
                             {item.title}
-                          </NavLink>
+                          </p>
                           <Card.Text>
                             <div className="text-xs">SKU: {item.sku}</div>
                             <div className="text-lg mt-2 font-normal">{item.price.toLocaleString()}đ</div>
@@ -569,10 +582,11 @@ function ProductDetail(props) {
 
                         <Button
                           style={{ width: "100%" }}
+                          onClick={() => { handleNavigate(item.category.id, item.slug) }}
                           className="rounded-md border-green-800 text-green-800 hover:bg-green-800 hover:border-green-800 hover:text-white pt-2 pb-4"
                           variant="success"
                         >
-                          Thêm vào giỏ
+                          Xem chi tiết
                         </Button>
                       </Card.Body>
                     </Card>

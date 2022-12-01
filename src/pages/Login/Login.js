@@ -51,10 +51,10 @@ function Login(props) {
           </span>
         </div>
         <Form
-          name="normal_login"
-          initialValues={{
-            remember: true,
-          }}
+          // name="normal_login"
+          // initialValues={{
+          //   remember: true,
+          // }}
           onSubmitCapture={handleSubmit}
         >
           <div className="-mt-5">
@@ -159,11 +159,11 @@ const LoginWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .required("Quý khách không được để trống mục email !!!")
-      .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
-    password: Yup.string()
-      .required("Quý khách vui lòng không được để trống mục password !!!")
+    // email: Yup.string()
+    //   .required("Quý khách không được để trống mục email !!!")
+    //   .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
+    // password: Yup.string()
+    //   .required("Quý khách vui lòng không được để trống mục password !!!")
   }),
 
 
