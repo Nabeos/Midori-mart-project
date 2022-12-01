@@ -201,7 +201,7 @@ function Header(props) {
           })}
           <span>({totalQuantityInCart})</span>
         </div>
-        {localStorage.getItem(USER) ? <div className="col-span-2">
+        {localStorage.getItem(USER) ? <div className="col-span-2 -mt-9">
           <Popover content={content}>
             <span className="text-lg cursor-pointer">
               {user?.fullname}
