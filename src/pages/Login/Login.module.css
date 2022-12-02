@@ -11,10 +11,15 @@
   border-color: #006523 !important;
 }
 
-.login__border__button:hover {
+.login__border__button {
   border-color: #006523 !important;
   color: white;
   background-color: #006523 !important;
+}
+.login__border__button:hover {
+  border-color: #006523 !important;
+  color: #006523 !important;
+  background-color: white !important;
 }
 
 .login__border__button {
