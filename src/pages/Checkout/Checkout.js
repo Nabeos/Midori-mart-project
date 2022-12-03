@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './Checkout.module.css';
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { history } from '../../App';
-import { Checkbox } from 'antd';
+import { Checkbox, Radio } from 'antd';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { getUserProfileInformationAction } from '../../redux/action/user/UserAction';
@@ -20,12 +20,15 @@ function Checkout(props) {
         handleBlur,
         handleSubmit,
     } = props;
+    console.log("VALUES.FLAG = ", values.flag);
     const dispatch = useDispatch();
     let user = JSON.parse(localStorage.getItem(USER));
     console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
     useEffect(() => {
         dispatch(getUserProfileInformationAction());
     }, [])
+
+
 
     const userProfileInfo = useSelector(state => state.UserReducer.userProfileInfo);
     console.log("USER PROFILE INFO CHECKOUT: ", userProfileInfo);
@@ -105,7 +108,7 @@ function Checkout(props) {
                             <NavLink to="/login" className="text-black no-underline">Đăng nhập/Login</NavLink>
                         </p>
                         <form className="mb-3" onSubmit={handleSubmit}>
-                            <div className="form-group mb-2">
+                            <div className="form-group mb-3">
                                 <input type="text"
                                     value={values.fullName}
                                     onChange={e => {
@@ -115,7 +118,7 @@ function Checkout(props) {
                             </div>
 
                             {errors.fullName && touched.fullName ? <div className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
-                            <div className='form-group grid grid-cols-12 mb-2 flex'>
+                            <div className='form-group grid grid-cols-12 mb-3 flex'>
                                 <div className='col-span-6 mr-2'>
                                     <input value={values.email} type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
                                         props.setFieldTouched('email')
@@ -133,10 +136,10 @@ function Checkout(props) {
                                 </div>
 
                             </div>
-                            <div className="form-group">
+                            <div className="form-group mb-3">
                                 <div class="card text-black">
                                     <div className='flex items-center card-header bg-white h-12'>
-                                        {flag == 1 ? <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox> : <Checkbox className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Checkbox>}
+                                        {flag == 1 ? <Radio className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Radio> : <Radio className='mr-2' onChange={handleHomeDeliveryChange} checked={flag}></Radio>}
 
                                         <p className='mb-0'>
                                             Giao tận nơi/Home delivery: Biểu phí giao hàng
@@ -203,7 +206,7 @@ function Checkout(props) {
                                     </div> */}
                                     </div> : <div></div>}
                                     <div className="flex items-center card-footer bg-white h-12">
-                                        {flag == 0 ? <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox> : <Checkbox className='mr-2' onChange={handlePickUpChange} checked={!flag}></Checkbox>}
+                                        {flag == 0 ? <Radio className='mr-2' onChange={handlePickUpChange} checked={!flag}></Radio> : <Radio className='mr-2' onChange={handlePickUpChange} checked={!flag}></Radio>}
                                         <p className='mb-0'>Nhận tại cửa hàng/pick up at the store</p>
                                     </div>
                                 </div>

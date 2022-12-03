@@ -88,7 +88,7 @@ function ProductManagement(props) {
         })
     }
     // useEffect(() => {
-    //     dispatch(getProductListByCategoryIdAction(0, 15, 0));
+    //     dispatch(getProductListByCategoryIdAction(0, 20, (currentCustom - 1) * 20));
     //     dispatch(getProductListLengthByCategoryIdAction(0, 1000, 0));
     // }, [productListByCategoryId])
 
@@ -99,7 +99,7 @@ function ProductManagement(props) {
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(getAllCategoriesAction());
-        dispatch(getProductListByCategoryIdAction(0, 15, 0));
+        dispatch(getProductListByCategoryIdAction(0, 20, 0));
         dispatch(getProductListLengthByCategoryIdAction(0, 1000, 0));
         localStorage.setItem("categoriesIdForSeller", 0);
     }, [])
@@ -113,7 +113,7 @@ function ProductManagement(props) {
         console.log("HANDLE CHANGE CATEGORIES: ", e.target.value);
         localStorage.setItem("categoriesIdForSeller", e.target.value);
         setCurrentCustom(1);
-        dispatch(getProductListByCategoryIdAction(e.target.value, 15, 0));
+        dispatch(getProductListByCategoryIdAction(e.target.value, 20, 0));
         dispatch(getProductListLengthByCategoryIdAction(e.target.value, 1000, 0));
     }
 
@@ -132,9 +132,9 @@ function ProductManagement(props) {
         console.log("PAGE SIZE handlePaginationChange: ", pageSize);
         setCurrentCustom(page);
         if (values.header__search == "") {
-            dispatch(getProductListByCategoryIdAction(localStorage.getItem("categoriesIdForSeller"), 15, (page - 1) * 15));
+            dispatch(getProductListByCategoryIdAction(localStorage.getItem("categoriesIdForSeller"), 20, (page - 1) * 20));
         } else if (values.header__search != "") {
-            dispatch(searchProductForSellerAction(values.header__search, (page - 1) * 15, 15));
+            dispatch(searchProductForSellerAction(values.header__search, (page - 1) * 20, 20));
         }
 
     }
@@ -175,9 +175,9 @@ function ProductManagement(props) {
                                     onChange={(e) => {
                                         handleChange(e);
                                         if (e.target.value == "") {
-                                            dispatch(getProductListByCategoryIdAction(e.target.value, 15, 0));
+                                            dispatch(getProductListByCategoryIdAction(e.target.value, 20, 0));
                                         } else if (e.target.value != "") {
-                                            dispatch(searchProductForSellerAction(e.target.value, 0, 15));
+                                            dispatch(searchProductForSellerAction(e.target.value, 0, 20));
                                             dispatch(searchProductLengthForSellerAction(e.target.value, 0, 1000));
                                         }
 
@@ -219,7 +219,7 @@ function ProductManagement(props) {
                 <div className="flex justify-center">
                     <table
                         className={`${styles.productmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                        style={{ width: "80%", minHeight: productListByCategoryId.length < 7 ? "300px" : "900px" }}
+                        style={{ width: "80%", minHeight: productListByCategoryId.length < 7 ? "350px" : "1000px" }}
                     >
                         <thead>
                             <tr>
@@ -311,7 +311,7 @@ function ProductManagement(props) {
                         className="hover:text-green-800 focus:border-green-800"
                         current={currentCustom}
                         defaultCurrent={1}
-                        pageSize={15}
+                        pageSize={20}
                         // pageSizeOptions={3}
                         onChange={(page) => { handlePaginationChange(page) }}
                         // showSizeChanger
@@ -337,7 +337,7 @@ const ProductManagementWithFormik = withFormik({
     handleSubmit: (values, { props, setSubmitting }) => {
         console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
         console.log("VALUE FORM: ", values);
-        props.dispatch(searchProductForSellerAction(values.header__search, 0, 15));
+        props.dispatch(searchProductForSellerAction(values.header__search, 0, 20));
         props.dispatch(searchProductLengthForSellerAction(values.header__search, 0, 1000));
     },
 

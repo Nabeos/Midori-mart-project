@@ -49,6 +49,8 @@ import ExportGoodsDetail from './pages/InventoryManagement/ExportGoods/ExportGoo
 import EmailVerification from './pages/EmailVerification/EmailVerification';
 import MultipleRow from './components/MultipleRows/MultipleRow';
 import AllBestSellerProductsInHomepageInWeek from './pages/Homepage/AllBestSellerProductsInHomepageInWeek/AllBestSellerProductsInHomepageInWeek';
+import { USER } from './redux/type/user/UserType';
+import { TOKEN } from './utils/settings/config';
 
 
 

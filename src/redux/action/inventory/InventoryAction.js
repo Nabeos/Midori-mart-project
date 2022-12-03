@@ -523,17 +523,32 @@ export const updateExportGoodsOrderInformationAction = () => {
         }
     }
 }
-
+const openNotificationUploadProductImage = (placement) => {
+    notification.success({
+        message: `Upload ảnh sản phẩm thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationUploadProductImageError = (placement) => {
+    notification.error({
+        message: `Upload ảnh sản phẩm thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const uploadProductImageForSellerAction = (slug, filesName) => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.uploadProductImageForSeller(slug, filesName);
+            openNotificationUploadProductImage('bottomRight');
             console.log("RESULT UPLOAD PRODUCT IMAGE FOR SELLER: ", result.data.images[0].url);
             dispatch({
                 type: UPLOAD_PRODUCT_IMAGE_FOR_SELLER,
                 productUploadImageAction: result.data.images[0].url
             })
         } catch (error) {
+            openNotificationUploadProductImageError('bottomRight');
             console.log('error', error.response.data);
         }
     }

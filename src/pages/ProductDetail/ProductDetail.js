@@ -219,7 +219,7 @@ function ProductDetail(props) {
 
                       <span className="mr-1">Tình trạng:</span>
                       {(productDetail?.quantity == 0) ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
-                      {(productDetail?.quantity > 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
+                      {(productDetail?.quantity >= 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
                       {(productDetail?.quantity < 20 && productDetail?.quantity > 0) ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
                       {/* <span>{productDetail?.status}</span> */}
                     </div>

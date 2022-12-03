@@ -298,3 +298,15 @@ code {
 .ant-select:not(.ant-select-customize-input) .ant-select-selector{
   display:none!important;
 }
+
+.ant-radio-inner::after{
+  background-color: #15803d!important;
+}
+
+.ant-radio-input:focus + .ant-radio-inner{
+  box-shadow: none!important;
+}
+
+.ant-radio-checked .ant-radio-inner{
+  border-color: #15803d!important;
+}

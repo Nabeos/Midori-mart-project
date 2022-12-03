@@ -41,6 +41,7 @@ export default function Homepage() {
   const handleNavigate = () => {
     history.push("/product");
   };
+  // let user = JSON.parse(sessionStorage.getItem(USER));
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   console.log("BU LIN HÔM PẾT: ", typeof (user?.roleId) == typeof undefined)
