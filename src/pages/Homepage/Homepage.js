@@ -32,12 +32,15 @@ import ThirdBestSellerCategories from "./ThirdBestSellerCategories/ThirdBestSell
 export default function Homepage() {
   const { Meta } = Card;
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getTopThreeBestSellerCategoriesInHomepageAction());
   }, [])
   const topThreeBestSellerCategories = useSelector(state => state.ProductReducer.topThreeBestSellerCategories);
   console.log("topThreeBestSellerCategories: ", topThreeBestSellerCategories);
-
+  localStorage.setItem("firstTopThreeBestCateId", topThreeBestSellerCategories[0]?.id);
+  localStorage.setItem("secondTopThreeBestCateId", topThreeBestSellerCategories[1]?.id);
+  localStorage.setItem("thirdTopThreeBestCateId", topThreeBestSellerCategories[2]?.id);
   const handleNavigate = () => {
     history.push("/product");
   };
@@ -173,6 +176,7 @@ export default function Homepage() {
           {/* product by category*/}
           {
             topThreeBestSellerCategories.map((item, index) => {
+              console.log("ITEM TOP THREE: ", item.id);
               return <div className="flex flex-col items-center">
                 <div
                   className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
@@ -194,9 +198,9 @@ export default function Homepage() {
                     </div>
                   </div>
                   <div className="" style={{ width: "80%" }}>
-                    {index == 0 ? <HomepageProductByCategory categoryId={1} /> : <Fragment></Fragment>}
-                    {index == 1 ? <SecondBestSellerCategories categoryIdSecond={2} /> : <Fragment></Fragment>}
-                    {index == 2 ? <ThirdBestSellerCategories categoryIdThird={3} /> : <Fragment></Fragment>}
+                    {index == 0 ? <HomepageProductByCategory categoryId={localStorage.getItem("firstTopThreeBestCateId")} /> : <Fragment></Fragment>}
+                    {index == 1 ? <SecondBestSellerCategories categoryIdSecond={localStorage.getItem("secondTopThreeBestCateId")} /> : <Fragment></Fragment>}
+                    {index == 2 ? <ThirdBestSellerCategories categoryIdThird={localStorage.getItem("thirdTopThreeBestCateId")} /> : <Fragment></Fragment>}
                   </div>
                 </div>
               </div>

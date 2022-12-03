@@ -200,7 +200,7 @@ export const getTopTwentyBestSellerProductsOfSecondBestSellerCategoriesAction = 
     return async (dispatch) => {
         try {
             const result = await productManagementService.getTopTwentyBestSellerProductOfSecondBestSellerCategories(categoryId);
-            console.log("RESULT SECOND TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.products);
+            console.log("RESULT SECOND TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result);
             dispatch({
                 type: GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES,
                 topTwentyBestSellerProductOfSecondBestSellerCategoriesListUpdateAction: result.data.products
@@ -215,7 +215,7 @@ export const getTopTwentyBestSellerProductsOfThirdBestSellerCategoriesAction = (
     return async (dispatch) => {
         try {
             const result = await productManagementService.getTopTwentyBestSellerProductOfThirdBestSellerCategories(categoryId);
-            console.log("RESULT THIRD TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result.data.products);
+            console.log("RESULT THIRD TOP THREE BEST SELLER CATEGORIES IN HOMEPAGE: ", result);
             dispatch({
                 type: GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES,
                 topTwentyBestSellerProductOfThirdBestSellerCategoriesListUpdateAction: result.data.products

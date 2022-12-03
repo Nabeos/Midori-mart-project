@@ -219,7 +219,7 @@ function ProductManagement(props) {
                 <div className="flex justify-center">
                     <table
                         className={`${styles.productmanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                        style={{ width: "80%", minHeight: productListByCategoryId.length < 7 ? "350px" : "1000px" }}
+                        style={{ width: "80%", minHeight: productListByCategoryId.length < 7 ? "350px" : "1100px" }}
                     >
                         <thead>
                             <tr>
@@ -276,14 +276,14 @@ function ProductManagement(props) {
                                             {item.quantity}
                                         </td>
                                         <td className="border border-slate-300 text-center ">
-                                            {item.quantity > 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
+                                            {item.quantity >= 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
                                                 Còn hàng
                                             </span> : <Fragment></Fragment>}
                                             {item.quantity == 0 ? <span className="p-2 bg-red-600 rounded-md text-white">
                                                 Hết hàng
-                                            </span> : <Fragment></Fragment>}{item.quantity > 0 && item.quantity < 20 ? <span className="p-2 bg-yellow-600 rounded-md text-white">
+                                            </span> : <Fragment></Fragment>}{item.quantity > 0 && item.quantity < 20 ? <button style={{ width: "76px", height: "32px" }} className="p-2 bg-yellow-600 rounded-md text-white">
                                                 Ít hàng
-                                            </span> : <Fragment></Fragment>}
+                                            </button> : <Fragment></Fragment>}
                                         </td>
 
                                         <td className="border border-slate-300 text-center">

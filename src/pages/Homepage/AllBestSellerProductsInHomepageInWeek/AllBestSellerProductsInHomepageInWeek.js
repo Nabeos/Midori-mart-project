@@ -202,7 +202,7 @@ export default function AllBestSellerProductsInHomepageInWeek(props) {
         const { products } = props;
         console.log("PRODUCTS ĐANG CẦN: ", products);
         return (
-            <div className="products grid grid-cols-5 mb-5">
+            <div className="products grid grid-cols-6 mb-5">
                 {products?.map((product, index) => (
                     <div>
                         <Product key={index} className="col-span-1" product={product} />
@@ -299,7 +299,7 @@ export default function AllBestSellerProductsInHomepageInWeek(props) {
               ))}
             </div> */}
 
-                            <div className="flex justify-center mb-4">
+                            {/* <div className="flex justify-center mb-4">
                                 <Pagination
                                     className="hover:text-green-800 focus:border-green-800"
                                     current={currentCustom}
@@ -311,7 +311,7 @@ export default function AllBestSellerProductsInHomepageInWeek(props) {
                                     onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
                                     total={totalCustom.length}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
