@@ -88,6 +88,7 @@ function ImportGoodsDetail(props) {
                   <div className="text-2xl flex" style={{ width: "80%" }}>
                     <span className="font-semibold">Mã số phiếu nhập kho:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="importCode"
                       name="importCode"
@@ -129,6 +130,7 @@ function ImportGoodsDetail(props) {
                   </span>
                   <div>
                     <select
+                    disabled
                       defaultValue={0}
                       value={merchant?.id}
                       onChange={e => {
@@ -140,10 +142,10 @@ function ImportGoodsDetail(props) {
                       name="manufactureCompany"
                       style={{ width: "250px", height: "35px" }}
                     >
-                      <option value="0" disabled>Chọn nhà cung cấp</option>
+                      <option value="0" >Chọn nhà cung cấp</option>
                       {merchantList.map((item, index) => {
                         if (item.id != 0) {
-                          return <option value={item.id}>{item.name}</option>
+                          return <option value={item.id} >{item.name}</option>
                         }
                       })}
                     </select>
@@ -159,6 +161,7 @@ function ImportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Người tạo đơn:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="product_name"
                       value={createdBy}
@@ -170,6 +173,7 @@ function ImportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Ngày tạo đơn:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="product_name"
                       value={createdAt}
@@ -184,6 +188,7 @@ function ImportGoodsDetail(props) {
                   <span className="text-lg font-semibold">Ghi chú</span>
                   <div>
                     <textarea
+                    disabled
                       className="p-2 text-base"
                       value={note}
                       style={{

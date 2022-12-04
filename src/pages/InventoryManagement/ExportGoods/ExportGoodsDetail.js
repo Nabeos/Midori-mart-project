@@ -66,6 +66,7 @@ export default function ExportGoodsDetail(props) {
                   <div className="text-2xl flex" style={{ width: "80%" }}>
                     <span className="font-semibold">Mã số phiếu xuất kho:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="product_name"
                       value={name}
@@ -106,6 +107,7 @@ export default function ExportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Người tạo đơn:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="product_name"
                       value={createdBy}
@@ -117,6 +119,7 @@ export default function ExportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Ngày tạo đơn:</span>{" "}
                     <Input
+                    disabled
                       type="text"
                       id="product_name"
                       value={createdAt}
@@ -132,6 +135,7 @@ export default function ExportGoodsDetail(props) {
                   <div>
                     <textarea
                       className="p-2 text-base"
+                      disabled
                       style={{
                         border: "1px solid lightgray",
                         borderRadius: "3px",
@@ -214,9 +218,9 @@ export default function ExportGoodsDetail(props) {
                           {/* <th className="border border-slate-300 p-4 text-base text-center">
                             Hạn sử dụng
                           </th> */}
-                          <th className="border border-slate-300 p-4 text-base text-center">
+                          {/* <th className="border border-slate-300 p-4 text-base text-center">
                             Xem chi tiết
-                          </th>
+                          </th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -244,7 +248,7 @@ export default function ExportGoodsDetail(props) {
                             {/* <td className="border border-slate-300 text-center">
                               30/11/2022
                             </td> */}
-                            <td className="border border-slate-300 text-center">
+                            {/* <td className="border border-slate-300 text-center">
                               <Button
                                 type=""
                                 className="border-none text-green-700 hover:text-green-700 focus:text-green-700 rounded-md no-shadow font-bold text-base"
@@ -261,7 +265,7 @@ export default function ExportGoodsDetail(props) {
                               >
                                 <EditExportGoods />
                               </Modal>
-                            </td>
+                            </td> */}
                           </tr>
                         })}
 
