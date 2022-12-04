@@ -216,6 +216,13 @@ const openNotificationResetNewPassword = (placement) => {
         duration: 2
     });
 };
+const openNotificationResetNewPasswordError = (placement) => {
+    notification.error({
+        message: `Gửi yêu cầu reset mật khẩu thất bại ! Quý khách vui lòng kiểm tra lại địa chỉ email.`,
+        placement,
+        duration: 2
+    });
+};
 export const resetPasswordAction = (userEmailInfo) => {
     return async (dispatch) => {
         try {
@@ -226,6 +233,7 @@ export const resetPasswordAction = (userEmailInfo) => {
             //     type: RESET_PASSWORD
             // })
         } catch (error) {
+            openNotificationResetNewPasswordError('bottomRight');
             console.log('error', error.response.data);
         }
     }
