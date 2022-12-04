@@ -429,7 +429,7 @@ function ProductDetail(props) {
                     className="flex justify-end font-medium"
                     style={{ width: "95%" }}
                   >
-                    {productDetail?.merchant?.country?.name}
+                    {productDetail?.origin?.name}
                   </div>
                 </div>
                 <div
