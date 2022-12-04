@@ -247,49 +247,49 @@ export default function ExportGoods() {
             </thead>
             <tbody>
               {exportGoodsOrderList?.map((item, index) => {
-                if (item.status == 1) {
-                  return <tr>
-                    <td className="border border-slate-300 text-center">
-                      {item.id}
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      {item.name}
-                    </td>
-                    <td className="border border-slate-300 text-center">
-                      {item.createdAt}
-                    </td>
-                    {/* <td className="border border-slate-300 text-center">
+
+                return <tr>
+                  <td className="border border-slate-300 text-center">
+                    {item.id}
+                  </td>
+                  <td className="border border-slate-300 text-center">
+                    {item.name}
+                  </td>
+                  <td className="border border-slate-300 text-center">
+                    {item.createdAt}
+                  </td>
+                  {/* <td className="border border-slate-300 text-center">
                     23/02/2001 8:45
                   </td> */}
-                    <td className="border border-slate-300 text-center">
-                      {item.createdBy}
-                    </td>
-                    {/* <td className="border border-slate-300 text-center ">
+                  <td className="border border-slate-300 text-center">
+                    {item.createdBy}
+                  </td>
+                  {/* <td className="border border-slate-300 text-center ">
                     <span className="p-2 bg-green-700 rounded-md text-white">
                       Đã xuất
                     </span>
                   </td> */}
-                    <td className="border border-slate-300 text-center">
-                      {item?.order?.totalBill?.toLocaleString()}đ
-                    </td>
+                  <td className="border border-slate-300 text-center">
+                    {item?.order?.totalBill?.toLocaleString()}đ
+                  </td>
 
-                    <td className="border border-slate-300 text-center">
-                      <NavLink
-                        to={`/exportgoodsdetail/${item.id}`}
-                        className="flex justify-center hover:text-green-700 text-green-700"
-                        onClick={() => {
-                          localStorage.setItem("exportGoodsDetailInfo", JSON.stringify(item))
-                          dispatch({
-                            type: GET_EXPORT_GOODS_ORDER_DETAILED_INFORMATION,
-                            detailedExportGoodsFormInfoAction: item
-                          })
-                        }}
-                      >
-                        <FaEye className="text-xl" />
-                      </NavLink>
-                    </td>
-                  </tr>
-                }
+                  <td className="border border-slate-300 text-center">
+                    <NavLink
+                      to={`/exportgoodsdetail/${item.id}`}
+                      className="flex justify-center hover:text-green-700 text-green-700"
+                      onClick={() => {
+                        localStorage.setItem("exportGoodsDetailInfo", JSON.stringify(item))
+                        dispatch({
+                          type: GET_EXPORT_GOODS_ORDER_DETAILED_INFORMATION,
+                          detailedExportGoodsFormInfoAction: item
+                        })
+                      }}
+                    >
+                      <FaEye className="text-xl" />
+                    </NavLink>
+                  </td>
+                </tr>
+
               })}
             </tbody>
           </table>

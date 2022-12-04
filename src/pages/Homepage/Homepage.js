@@ -32,12 +32,24 @@ import ThirdBestSellerCategories from "./ThirdBestSellerCategories/ThirdBestSell
 export default function Homepage() {
   const { Meta } = Card;
   const dispatch = useDispatch();
+  const topThreeBestSellerCategories = useSelector(state => state.ProductReducer.topThreeBestSellerCategories);
+  console.log("topThreeBestSellerCategories: ", topThreeBestSellerCategories);
+  useEffect(() => {
+    dispatch(getTopThreeBestSellerCategoriesInHomepageAction());
+    localStorage.setItem("firstTopThreeBestCateId", topThreeBestSellerCategories[0]?.id);
+    localStorage.setItem("secondTopThreeBestCateId", topThreeBestSellerCategories[1]?.id);
+    localStorage.setItem("thirdTopThreeBestCateId", topThreeBestSellerCategories[2]?.id);
+  }, [])
 
   useEffect(() => {
     dispatch(getTopThreeBestSellerCategoriesInHomepageAction());
-  }, [])
-  const topThreeBestSellerCategories = useSelector(state => state.ProductReducer.topThreeBestSellerCategories);
-  console.log("topThreeBestSellerCategories: ", topThreeBestSellerCategories);
+    localStorage.setItem("firstTopThreeBestCateId", topThreeBestSellerCategories[0]?.id);
+    localStorage.setItem("secondTopThreeBestCateId", topThreeBestSellerCategories[1]?.id);
+    localStorage.setItem("thirdTopThreeBestCateId", topThreeBestSellerCategories[2]?.id);
+  }, [localStorage.getItem("cart")])
+
+
+
   localStorage.setItem("firstTopThreeBestCateId", topThreeBestSellerCategories[0]?.id);
   localStorage.setItem("secondTopThreeBestCateId", topThreeBestSellerCategories[1]?.id);
   localStorage.setItem("thirdTopThreeBestCateId", topThreeBestSellerCategories[2]?.id);
@@ -154,7 +166,7 @@ export default function Homepage() {
                     }}
                   >
                     <div className="text-3xl">BEST SELLER</div>
-                    <div className="flex" style={{ width: "100%" }}>
+                    {/* <div className="flex" style={{ width: "100%" }}>
                       <NavLink
                         className={`${styles.homepage__bestseller__seemore} hover:text-green-400 no-underline flex text-sm font-medium`}
                         to="/productlist/best-sellers"
@@ -162,7 +174,7 @@ export default function Homepage() {
                         Nhấn vào để xem thêm sản phẩm{" "}
                         <FaArrowCircleRight className="mt-1 ml-2" />
                       </NavLink>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

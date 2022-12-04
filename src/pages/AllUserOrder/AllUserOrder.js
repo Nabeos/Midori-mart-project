@@ -140,6 +140,7 @@ export default function AllUserOrder() {
                           {item.status == "Từ Chối" ? <button style={{ width: "164px", height: "33px" }} className="bg-red-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                           {item.status == "Đang Xử Lý" ? <button style={{ width: "164px", height: "33px" }} className="bg-yellow-600 pt-1 text-white p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                           {item.status == "Đang Chờ Xác Nhận" ? <span className="bg-yellow-600 text-white p-2 whitespace-nowrap rounded-md">{item.status}</span> : <Fragment></Fragment>}
+                          {item.status == "Đang Giao Hàng" ? <button style={{ width: "164px", height: "33px" }} className="bg-yellow-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                           {item.status == "Hoàn Tiền" ? <button style={{ width: "164px", height: "33px" }} className="bg-yellow-600 text-white pt-1 p-2 whitespace-nowrap rounded-md">{item.status}</button> : <Fragment></Fragment>}
                         </td>
                         <td className="border border-slate-300 text-center">

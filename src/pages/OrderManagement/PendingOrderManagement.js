@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import PendingOrderDetail from './PendingOrderDetail';
-import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction, getAllPendingCustomerOrderLengthForSellerAction, startDeliveringCustomerOrderAction, startDeliveringCustomerOutsideOrderAction } from '../../redux/action/order/OrderAction';
+import { getAllCustomerOrderForSellerAction, getAllCustomerOrderLengthForSellerAction, getAllPendingCustomerOrderLengthForSellerAction, handleFinishCustomerGetInStoreOutsideOrderAction, startDeliveringCustomerOrderAction, startDeliveringCustomerOutsideOrderAction } from '../../redux/action/order/OrderAction';
 import { CLOSE_MODAL_PENDING_SELLER, SHOW_MODAL_PENDING_SELLER } from '../../redux/type/order/OrderType';
 import { SearchOutlined } from "@ant-design/icons";
 import { FormControl } from "react-bootstrap";
@@ -17,6 +17,7 @@ export default function PendingOrderManagement(props) {
   const pendingSellerItem = useSelector(state => state.OrderReducer.pendingSellerItem);
   const openModalPendingSeller = useSelector(state => state.OrderReducer.openModalPendingSeller);
   const textStartDelivering = 'Bạn có chắc chắn muốn bắt đầu giao đơn hàng này ?';
+  const textFinishDelivering = 'Bạn có chắc chắn đơn hàng này khách đã lấy ?';
   const handleStartDeliveringOrder = (orderNumber) => {
     dispatch(startDeliveringCustomerOutsideOrderAction(orderNumber, 2));
     // openNotification('bottomRight')
@@ -143,6 +144,7 @@ export default function PendingOrderManagement(props) {
           </thead>
           <tbody>
             {customerOrdersForSeller.map((item, index) => {
+              console.log("ITEM PENDING: ", item);
               return <tr key={index}>
                 {/* <td className="border border-slate-300 text-center">
                   {item.id}
@@ -180,16 +182,27 @@ export default function PendingOrderManagement(props) {
                     <PendingOrderDetail pendingDetailInfo={item} />
                   </Modal>
                 </td>
-                <td className="border border-slate-300 text-center" style={{ width: "150px" }}>
-                  <Popconfirm placement="top"
-                    onConfirm={() => { handleStartDeliveringOrder(item.orderNumber) }}
-                    title={textStartDelivering}
+                <td className="border border-slate-300 text-center p-2" style={{ width: "150px" }}>
+                  {item.receiveProductsMethod == "Nhận Tại Cửa Hàng" ? <Popconfirm placement="top"
+                    onConfirm={() => {
+                      dispatch(handleFinishCustomerGetInStoreOutsideOrderAction(item.orderNumber, 3));
+                    }}
+                    title={textFinishDelivering}
                     okText="Yes" cancelText="No">
                     <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
                     >
+                      Khách đã lấy hàng
+                    </Button>
+                  </Popconfirm> : <Popconfirm placement="top"
+                    onConfirm={() => { handleStartDeliveringOrder(item.orderNumber) }}
+                    title={textStartDelivering}
+                    okText="Yes" cancelText="No">
+                    <Button style={{ width: "148px", height: "32px" }} className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+                    >
                       Bắt đầu giao
                     </Button>
-                  </Popconfirm>
+                  </Popconfirm>}
+
                 </td>
               </tr>
             })}

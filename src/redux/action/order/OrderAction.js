@@ -253,6 +253,55 @@ export const handleFinishDeliveringCustomerOrderAction = (orderNumber, status) =
     }
 }
 
+const openNotificationFinishCustomerGetInStore = (placement) => {
+    notification.success({
+        message: `Cập nhật trạng thái đơn hàng thành công`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationFinishCustomerGetInStoreError = (placement) => {
+    notification.error({
+        message: `Cập nhật trạng thái đơn hàng thất bại`,
+        placement,
+        duration: 2
+    });
+};
+export const handleFinishCustomerGetInStoreOrderAction = (orderNumber, status) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            openNotificationFinishCustomerGetInStore('bottomRight');
+            console.log("UPDATE CUSTOMER GET IN STORE FOR SELLER: ", result);
+            await dispatch({
+                type: CLOSE_MODAL_PENDING_SELLER
+            })
+        } catch (error) {
+            openNotificationFinishCustomerGetInStoreError('bottomRight');
+            console.log('error', error);
+        }
+    }
+}
+
+export const handleFinishCustomerGetInStoreOutsideOrderAction = (orderNumber, status) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForSellerService.updateCustomerOrderForSeller(orderNumber, status);
+            openNotificationFinishCustomerGetInStore('bottomRight');
+            console.log("UPDATE CUSTOMER ORDER FOR SELLER: ", result);
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
+            await dispatch({
+                type: CLOSE_MODAL_PENDING_SELLER
+            })
+        } catch (error) {
+            openNotificationFinishCustomerGetInStoreError('bottomRight');
+            console.log('error', error);
+        }
+    }
+}
+
 export const handleFinishDeliveringOutsideCustomerOrderAction = (orderNumber, status) => {
     return async (dispatch) => {
         try {

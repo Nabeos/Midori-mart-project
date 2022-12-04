@@ -1,5 +1,5 @@
 import { SEARCH_PRODUCT_FOR_SELLER, SEARCH_PRODUCT_LENGTH_FOR_SELLER, UPLOAD_PRODUCT_IMAGE_FOR_SELLER } from "../../type/inventory/InventoryType";
-import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_ORIGIN, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SEARCH_PRODUCT_LENGTH, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, UPDATE_STAR_RATE } from "../../type/product/ProductType";
+import { GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE, GET_BEST_SELLER_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_DETAIL, GET_PRODUCT_LIST_BY_CATEGORY_ID, GET_PRODUCT_LIST_BY_ORIGIN, GET_PRODUCT_LIST_LENGTH_BY_CATEGORY_ID, GET_PRODUCT_LIST_LENGTH_BY_ORIGIN, GET_TOP_THREE_BEST_SELLER_CATEGORIES_IN_HOMEPAGE, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_SECOND_BEST_SELLER_CATEGORIES, GET_TOP_TWENTY_BEST_SELLER_PRODUCT_OF_THIRD_BEST_SELLER_CATEGORIES, SEARCH_PRODUCT, SEARCH_PRODUCT_LENGTH, SORT_PRODUCT_LIST_BY_PRICE_ASC, SORT_PRODUCT_LIST_BY_PRICE_DESC, SORT_PRODUCT_LIST_LENGTH_BY_PRICE, UPDATE_STAR_RATE } from "../../type/product/ProductType";
 
 const initialState = {
     productListByCategoryId: [
@@ -9,6 +9,7 @@ const initialState = {
 
     ],
     searchProductListLength: [],
+    productListLengthByPrice: [],
     searchProductListLengthForSeller: [],
     productListLengthByOrigin: [],
     productDetail: {},
@@ -97,6 +98,11 @@ export const ProductReducer = (state = initialState, action) => {
             let productListSortDescUpdate = [...state.productListByCategoryId];
             productListSortDescUpdate = action.productListByPriceDescAction;
             state.productListByCategoryId = productListSortDescUpdate;
+            return { ...state }
+        case SORT_PRODUCT_LIST_LENGTH_BY_PRICE:
+            let productListLengthByPriceUpdate = [...state.productListLengthByPrice];
+            productListLengthByPriceUpdate = action.productListLengthByPriceAction;
+            state.productListLengthByPrice = productListLengthByPriceUpdate;
             return { ...state }
         case GET_BEST_SELLER_PRODUCT_IN_HOMEPAGE:
             let bestSellerProductsInHomepageUpdate = [...state.bestSellerProductsInHomepage];

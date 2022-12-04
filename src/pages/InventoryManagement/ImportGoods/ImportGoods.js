@@ -233,7 +233,7 @@ export default function ImportGoods() {
         <div className="flex justify-center">
           <table
             className={`${styles.importgoods__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-            style={{ width: "80%", minHeight: importGoodsOrderList?.length < 7 ? "325px" : "800px" }}
+            style={{ width: "80%", minHeight: importGoodsOrderList?.length < 9 ? "400px" : "800px" }}
           >
             <thead>
               <tr>

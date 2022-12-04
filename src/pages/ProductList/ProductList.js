@@ -11,7 +11,7 @@ import Slogan from "../../components/Slogan/Slogan";
 import { Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "../../redux/action/categories/CategoriesAction";
-import { getProductListByCategoryIdAction, getProductListByOriginAction, getProductListLengthByCategoryIdAction, getProductListLengthByOriginAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction } from "../../redux/action/product/ProductAction";
+import { getProductListByCategoryIdAction, getProductListByOriginAction, getProductListLengthByCategoryIdAction, getProductListLengthByOriginAction, sortProductListByPriceAscAction, sortProductListByPriceDescAction, sortProductListLengthByPriceAction } from "../../redux/action/product/ProductAction";
 import { useStateCallback } from "use-state-callback";
 import { Rate } from 'antd';
 import { USER } from '../../redux/type/user/UserType';
@@ -89,6 +89,7 @@ export default function ProductList(props) {
   console.log("merchant: ", merchant.length);
 
   useEffect(() => {
+    localStorage.setItem("sortForCustomerFlag", 0);
     dispatch(getAllCategoriesAction());
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
@@ -128,6 +129,8 @@ export default function ProductList(props) {
   const productListLengthByCategoryId = useSelector(state => state.ProductReducer.productListLengthByCategoryId);
   const productListLengthByOrigin = useSelector(state => state.ProductReducer.productListLengthByOrigin);
   console.log("LENGTH BY ORIGIN: ", productListLengthByOrigin);
+  const productListLengthByPrice = useSelector(state => state.ProductReducer.productListLengthByPrice);
+  console.log("productListLengthByPrice: ", productListLengthByPrice);
   let countTotal = 0;
   {
     productListLengthByCategoryId.map((item, index) => {
@@ -167,14 +170,13 @@ export default function ProductList(props) {
     console.log("PAGE handlePaginationChange: ", page);
     console.log("PAGE SIZE handlePaginationChange: ", pageSize);
     setCurrentCustom(page);
-    // dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
-    if (localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined) {
+    if (localStorage.getItem("sortForCustomerFlag") == 0) {
       dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
-    } else if (localStorage.getItem("countryArrLength") > 0) {
-      dispatch(getProductListByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
-      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (page - 1) * 5));
+    } else if (localStorage.getItem("sortForCustomerFlag") == 1) {
+      dispatch(sortProductListByPriceAscAction(props.match.params.id, 5, (page - 1) * 5));
+    } else if (localStorage.getItem("sortForCustomerFlag") == 2) {
+      dispatch(sortProductListByPriceDescAction(props.match.params.id, 5, (page - 1) * 5));
     }
-
   }
 
   const [checkedState, setCheckedState] = useState(
@@ -330,16 +332,28 @@ export default function ProductList(props) {
                 <select
                   className={`${styles.productlist__border__weight} mr-3 mt-3`}
                   onChange={(e) => {
-                    if (e.target.value == 1) {
-                      dispatch(sortProductListByPriceAscAction(props.match.params.id, 1000, 0));
+                    if (e.target.value == 0) {
+                      setCurrentCustom(1);
+                      localStorage.setItem("sortForCustomerFlag", e.target.value);
+                      dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
+                      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+                    }
+                    else if (e.target.value == 1) {
+                      setCurrentCustom(1);
+                      localStorage.setItem("sortForCustomerFlag", e.target.value);
+                      dispatch(sortProductListByPriceAscAction(props.match.params.id, 5, 0));
+                      dispatch(sortProductListLengthByPriceAction(props.match.params.id, 1000, 0));
                     } else if (e.target.value == 2) {
-                      dispatch(sortProductListByPriceDescAction(props.match.params.id, 1000, 0));
+                      setCurrentCustom(1);
+                      localStorage.setItem("sortForCustomerFlag", e.target.value);
+                      dispatch(sortProductListByPriceDescAction(props.match.params.id, 5, 0));
+                      dispatch(sortProductListLengthByPriceAction(props.match.params.id, 1000, 0));
                     }
                   }}
                   defaultValue="Sắp xếp"
                   style={{ width: "150px" }}
                 >
-                  <option disabled>Sắp xếp</option>
+                  <option value="0">Không sắp xếp</option>
                   <option value="1">Giá: tăng dần</option>
                   <option value="2">Giá: giảm dần</option>
                 </select>
@@ -367,7 +381,7 @@ export default function ProductList(props) {
                   onChange={(page) => { handlePaginationChange(page) }}
                   // showSizeChanger
                   onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
-                  total={localStorage.getItem("countryArrLength") == 0 || localStorage.getItem("countryArrLength") == undefined ? countTotal : productListLengthByOrigin.length}
+                  total={localStorage.getItem("sortForCustomerFlag") == 0 ? countTotal : productListLengthByPrice.length}
                 />
               </div>
             </div>

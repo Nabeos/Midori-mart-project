@@ -2,12 +2,13 @@ import React from 'react'
 import styles from "./PendingOrderDetail.module.css";
 import { Button, notification, Popconfirm } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { startDeliveringCustomerOrderAction, updateCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
+import { handleFinishCustomerGetInStoreOrderAction, handleFinishDeliveringCustomerOrderAction, startDeliveringCustomerOrderAction, updateCustomerOrderForSellerAction } from '../../redux/action/order/OrderAction';
 
 export default function PendingOrderDetail(props) {
   let totalBill = 0;
   const dispatch = useDispatch();
   const textStartDelivering = 'Bạn có chắc chắn muốn bắt đầu giao đơn hàng này ?';
+  const textFinishDelivering = 'Bạn có chắc chắn đơn hàng này khách đã lấy ?';
   const pendingSellerItem = useSelector(state => state.OrderReducer.pendingSellerItem);
   console.log("pendingSellerItem: ", pendingSellerItem);
   // const openNotification = (placement) => {
@@ -126,7 +127,17 @@ export default function PendingOrderDetail(props) {
             </div>
           </div>
           <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>
-            <Popconfirm placement="top"
+            {pendingSellerItem.receiveProductsMethod == "Nhận Tại Cửa Hàng" ? <Popconfirm placement="top"
+              onConfirm={() => {
+                dispatch(handleFinishCustomerGetInStoreOrderAction(pendingSellerItem.orderNumber, 3));
+              }}
+              title={textFinishDelivering}
+              okText="Yes" cancelText="No">
+              <Button className="mr-2 round-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:text-black focus:bg-white focus:border-gray-300 no-shadow"
+              >
+                Khách đã lấy hàng
+              </Button>
+            </Popconfirm> : <Popconfirm placement="top"
               onConfirm={() => { handleStartDeliveringOrder(pendingSellerItem.orderNumber) }}
               title={textStartDelivering}
               okText="Yes" cancelText="No">
@@ -134,7 +145,8 @@ export default function PendingOrderDetail(props) {
               >
                 Bắt đầu giao
               </Button>
-            </Popconfirm>
+            </Popconfirm>}
+
 
           </div>
         </div>

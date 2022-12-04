@@ -548,7 +548,7 @@ function ProductDetail(props) {
           <div className="flex justify-center">
             <div
               className={`${styles.productdetail__border} mb-14`}
-              style={{ width: "80%", height: "350px" }}
+              style={{ width: "80%", minHeight: "400px" }}
             >
               <div className="font-semibold text-xl pl-6 pt-3 mb-2">
                 Các sản phẩm {productDetail?.category?.name} bán chạy
@@ -559,7 +559,7 @@ function ProductDetail(props) {
                   return <div>
                     <Card
                       className={`${styles.productdetail__relatedproduct__border} mt-3 mb-3 pr-5 pl-5`}
-                      style={{ width: "200px", minHeight: "250px" }}
+                      style={{ width: "200px", minHeight: "300px" }}
                     >
                       {item?.thumbnails.map((item, index) => {
                         if (index == 0) {
