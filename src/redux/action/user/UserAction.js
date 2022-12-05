@@ -292,7 +292,7 @@ const openNotificationUploadAvatar = (placement) => {
 };
 const openNotificationUploadAvatarError = (placement) => {
     notification.error({
-        message: `Đổi ảnh đại diện thất bại ! Dung lượng ảnh có thể vượt quá 2MB.`,
+        message: `Đổi ảnh đại diện thất bại ! Dung lượng ảnh có thể vượt quá 5MB.`,
         placement,
         duration: 2
     });
