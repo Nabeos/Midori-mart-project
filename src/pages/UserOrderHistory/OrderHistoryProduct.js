@@ -17,8 +17,8 @@ export default function OrderHistoryProduct() {
   //     duration: 2
   //   });
   // };
-  const handleCancelInProgressOrderForCustomer = (orderNumber) => {
-    dispatch(refundOrderForCustomerAction(orderNumber));
+  const handleCancelInProgressOrderForCustomer = (orderNumber, code) => {
+    dispatch(refundOrderForCustomerAction(orderNumber, code));
     // openNotification('bottomRight')
   }
   return (
@@ -127,7 +127,7 @@ export default function OrderHistoryProduct() {
           </div>
           <div className="flex justify-end mt-3" style={{ width: "98%" }}>
             <Popconfirm placement="top"
-              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }}
+              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber, inProgressItem.orderCode) }}
               title={textRefundOrder}
               okText="Yes" cancelText="No">
               <Button className="text-lg rounded-md bg-yellow-500 border-yellow-500 text-white no-shadow hover:bg-yellow-500 hover:border-yellow-500 hover:text-white focus:bg-yellow-500 focus:border-yellow-500 focus:text-white">Trả lại hàng</Button>

@@ -17,8 +17,8 @@ export default function UserOrderPendingDetail() {
   //     duration: 2
   //   });
   // };
-  const handleCancelInProgressOrderForCustomer = (orderNumber) => {
-    dispatch(cancelInProgressOrderForCustomerAction(orderNumber));
+  const handleCancelInProgressOrderForCustomer = (orderNumber, code) => {
+    dispatch(cancelInProgressOrderForCustomerAction(orderNumber, code));
     // openNotification('bottomRight')
   }
 
@@ -133,7 +133,7 @@ export default function UserOrderPendingDetail() {
 
             {/* <Button className="text-lg rounded-md bg-green-700 border-green-700 text-white no-shadow hover:bg-green-700 hover:border-green-700 hover:text-white focus:bg-green-700 focus:border-green-700 focus:text-white mr-2">Đã nhận hàng</Button> */}
             <Popconfirm placement="top"
-              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber) }}
+              onConfirm={() => { handleCancelInProgressOrderForCustomer(inProgressItem.orderNumber, inProgressItem.orderCode) }}
               title={textCancelOrder}
               okText="Yes" cancelText="No">
               <Button className="text-lg rounded-md bg-red-700 border-red-700 text-white no-shadow hover:bg-red-700 hover:border-red-700 hover:text-white focus:bg-red-700 focus:border-red-700 focus:text-white mr-2">Hủy đơn hàng</Button>

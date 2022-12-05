@@ -17,8 +17,8 @@ export class OrderManagementForCustomerService extends baseService {
         return this.getCustomerOrderAll(`api/v1/users/purchase?limit=${limit}&offset=${offset}`);
     }
 
-    cancelInProgressOrderForCustomer = (orderNumber) => {
-        return this.putCancelInProgressOrderForCustomer(`api/user/purchases/${orderNumber}`);
+    cancelInProgressOrderForCustomer = (orderNumber, code) => {
+        return this.putCancelInProgressOrderForCustomer(`api/user/purchases/${orderNumber}?code=${code}`);
     }
 
     createNewOrder = (newOrderInfo) => {

@@ -51,6 +51,7 @@ import MultipleRow from './components/MultipleRows/MultipleRow';
 import AllBestSellerProductsInHomepageInWeek from './pages/Homepage/AllBestSellerProductsInHomepageInWeek/AllBestSellerProductsInHomepageInWeek';
 import { USER } from './redux/type/user/UserType';
 import { TOKEN } from './utils/settings/config';
+import GuestNotification from './pages/GuestNotification/GuestNotification';
 
 
 
@@ -63,6 +64,7 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/productlist/best-sellers" component={AllBestSellerProductsInHomepageInWeek} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/guestnotification" component={GuestNotification} />
         <Route exact path="/checkout/:orderId" component={Checkout} />
         <Route exact path="/payment/:orderId" component={PaymentMethod} />
         <Route exact path="/paymentByMomo/:orderId" component={PaymentByMomo} />

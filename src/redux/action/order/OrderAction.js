@@ -424,10 +424,10 @@ const openNotificationCancelInProgressOrderForCustomerError = (placement) => {
         duration: 2
     });
 };
-export const cancelInProgressOrderForCustomerAction = (orderNumber) => {
+export const cancelInProgressOrderForCustomerAction = (orderNumber, code) => {
     return async (dispatch) => {
         try {
-            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber);
+            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber, code);
             openNotificationCancelInProgressOrderForCustomer('bottomRight');
             console.log("CANCEL IN PROGRESS ORDER FOR CUSTOMER ACTION: ", result);
             dispatch({
@@ -454,10 +454,10 @@ const openNotificationRefundOrderForCustomerError = (placement) => {
         duration: 2
     });
 };
-export const refundOrderForCustomerAction = (orderNumber) => {
+export const refundOrderForCustomerAction = (orderNumber, code) => {
     return async (dispatch) => {
         try {
-            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber);
+            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber, code);
             openNotificationRefundOrderForCustomer('bottomRight');
             console.log("REFUND ORDER FOR CUSTOMER ACTION: ", result);
             dispatch({
