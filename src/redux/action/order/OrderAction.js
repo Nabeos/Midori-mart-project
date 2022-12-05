@@ -3,6 +3,8 @@ import { orderManagementForCustomerService } from '../../../services/OrderManage
 import { orderManagementForSellerService } from '../../../services/OrderManagementForSellerService';
 import { CLOSE_MODAL, CLOSE_MODAL_DELIVERING_SELLER, CLOSE_MODAL_PENDING_SELLER, CREATE_NEW_ORDER, GET_ALL_CANCEL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_CANCEL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_ORDERS_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_FOR_SELLER, GET_ALL_CUSTOMER_ORDERS_LENGTH_FOR_CUSTOMER, GET_ALL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER, GET_ALL_CUSTOMER_SUCCESSFUL_ORDER_LENGTH, GET_ALL_DELIVERING_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_IN_PROGRESS_ORDER, GET_ALL_IN_PROGRESS_ORDER_LENGTH, GET_ALL_PENDING_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_PURCHASE_HISTORY_ORDER, GET_ALL_REFUND_CUSTOMER_ORDERS_LENGTH_FOR_SELLER, GET_ALL_SUCCESSFUL_CUSTOMER_ORDERS_LENGTH_FOR_SELLER } from '../../type/order/OrderType';
 import { notification } from "antd";
+import Swal from 'sweetalert2'
+import { history } from '../../../App';
 
 export const getAllCustomerOrderForSellerAction = (limit, offset, statusOrder) => {
     return async (dispatch) => {
@@ -440,6 +442,38 @@ export const cancelInProgressOrderForCustomerAction = (orderNumber, code) => {
     }
 }
 
+export const cancelInProgressOrderForGuestAction = (orderNumber, code) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber, code);
+            Swal.fire({
+                icon: 'success',
+                title: 'Quý khách hủy đơn hàng thành công !',
+                // text: 'Quý khách hủy đơn hàng thành công !',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.push("/");
+                }
+            })
+            console.log("CANCEL IN PROGRESS ORDER FOR CUSTOMER ACTION: ", result);
+            dispatch({
+                type: CLOSE_MODAL
+            })
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Quý khách hủy đơn hàng thất bại. Đơn hàng đã được người bán hàng duyệt !',
+                // text: 'Vui lòng liên hệ tới cửa hàng để biết thêm chi tiết',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.push("/");
+                }
+            })
+            console.log('error', error.response.data);
+        }
+    }
+}
+
 const openNotificationRefundOrderForCustomer = (placement) => {
     notification.success({
         message: `Hoàn trả đơn hàng thành công !`,
@@ -465,6 +499,36 @@ export const refundOrderForCustomerAction = (orderNumber, code) => {
             })
         } catch (error) {
             openNotificationRefundOrderForCustomerError('bottomRight');
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const refundOrderForGuestAction = (orderNumber, code) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber, code);
+            Swal.fire({
+                icon: 'success',
+                title: 'Quý khách hoàn trả đơn hàng thành công !',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.push("/");
+                }
+            })
+            console.log("REFUND ORDER FOR CUSTOMER ACTION: ", result);
+            dispatch({
+                type: CLOSE_MODAL
+            })
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Quý khách hoàn trả đơn hàng thất bại !',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.push("/");
+                }
+            })
             console.log('error', error.response.data);
         }
     }
