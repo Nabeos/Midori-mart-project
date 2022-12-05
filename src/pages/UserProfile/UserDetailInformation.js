@@ -331,7 +331,7 @@ const UserDetailInformationWithFormik = withFormik({
       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
     phoneNumber: Yup.string()
       .required("Quý khách không được để trống mục số điện thoại !!!")
-      .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+      .matches(regexPhoneNumber, "Quý khách vui lòng nhập số điện thoại theo đúng định dạng nhà mạng Việt Nam !!!"),
     email: Yup.string()
       .required("Quý khách không được để trống mục email !!!")
       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
