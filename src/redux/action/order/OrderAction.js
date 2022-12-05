@@ -410,16 +410,31 @@ export const getAllCustomerOrderLengthForCustomerAction = (limit, offset) => {
         }
     }
 }
-
+const openNotificationCancelInProgressOrderForCustomer = (placement) => {
+    notification.success({
+        message: `Hủy đơn hàng thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationCancelInProgressOrderForCustomerError = (placement) => {
+    notification.error({
+        message: `Hủy đơn hàng thất bại !`,
+        placement,
+        duration: 2
+    });
+};
 export const cancelInProgressOrderForCustomerAction = (orderNumber) => {
     return async (dispatch) => {
         try {
             const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber);
+            openNotificationCancelInProgressOrderForCustomer('bottomRight');
             console.log("CANCEL IN PROGRESS ORDER FOR CUSTOMER ACTION: ", result);
             dispatch({
                 type: CLOSE_MODAL
             })
         } catch (error) {
+            openNotificationCancelInProgressOrderForCustomerError('bottomRight');
             console.log('error', error.response.data);
         }
     }

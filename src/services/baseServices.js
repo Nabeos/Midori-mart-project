@@ -76,7 +76,7 @@ export class baseService {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,
             method: 'PUT',
-            // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+            headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
         })
     }
 

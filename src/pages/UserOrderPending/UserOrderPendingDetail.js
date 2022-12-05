@@ -10,16 +10,16 @@ export default function UserOrderPendingDetail() {
   const dispatch = useDispatch();
   let totalBill = 0;
   console.log("IN PROGRESS ITEM DETAIL: ", inProgressItem);
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Hủy đơn hàng thành công !`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   const handleCancelInProgressOrderForCustomer = (orderNumber) => {
     dispatch(cancelInProgressOrderForCustomerAction(orderNumber));
-    openNotification('bottomRight')
+    // openNotification('bottomRight')
   }
 
   return (
