@@ -262,7 +262,7 @@ const openNotificationChangePassword = (placement) => {
 };
 const openNotificationChangePasswordError = (placement) => {
     notification.error({
-        message: `Đổi mật khẩu thất bại ! Mật khẩu hiện tại quý khách nhập không đúng`,
+        message: `Đổi mật khẩu thất bại ! Có thể mật khẩu hiện tại quý khách nhập không đúng hoặc mật khẩu mới nhập giống với mật khẩu hiện tại`,
         placement,
         duration: 2
     });
