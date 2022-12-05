@@ -440,6 +440,36 @@ export const cancelInProgressOrderForCustomerAction = (orderNumber) => {
     }
 }
 
+const openNotificationRefundOrderForCustomer = (placement) => {
+    notification.success({
+        message: `Hoàn trả đơn hàng thành công !`,
+        placement,
+        duration: 2
+    });
+};
+const openNotificationRefundOrderForCustomerError = (placement) => {
+    notification.error({
+        message: `Hoàn trả đơn hàng thất bại !`,
+        placement,
+        duration: 2
+    });
+};
+export const refundOrderForCustomerAction = (orderNumber) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForCustomerService.cancelInProgressOrderForCustomer(orderNumber);
+            openNotificationRefundOrderForCustomer('bottomRight');
+            console.log("REFUND ORDER FOR CUSTOMER ACTION: ", result);
+            dispatch({
+                type: CLOSE_MODAL
+            })
+        } catch (error) {
+            openNotificationRefundOrderForCustomerError('bottomRight');
+            console.log('error', error.response.data);
+        }
+    }
+}
+
 export const createNewOrderAction = (newOrderInfo) => {
     return async (dispatch) => {
         try {

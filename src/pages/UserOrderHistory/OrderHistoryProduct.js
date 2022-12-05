@@ -2,7 +2,7 @@ import React from 'react'
 import styles from "./OrderHistoryProduct.module.css";
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, notification, Popconfirm } from "antd";
-import { cancelInProgressOrderForCustomerAction } from '../../redux/action/order/OrderAction';
+import { cancelInProgressOrderForCustomerAction, refundOrderForCustomerAction } from '../../redux/action/order/OrderAction';
 
 export default function OrderHistoryProduct() {
   const inProgressItem = useSelector(state => state.OrderReducer.inProgressItem);
@@ -10,16 +10,16 @@ export default function OrderHistoryProduct() {
   console.log("SUCCESSFUL ORDER ITEM DETAIL: ", inProgressItem);
   const dispatch = useDispatch();
   let totalBill = 0;
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Cập nhật trạng thái đơn hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Cập nhật trạng thái đơn hàng thành công`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   const handleCancelInProgressOrderForCustomer = (orderNumber) => {
-    dispatch(cancelInProgressOrderForCustomerAction(orderNumber));
-    openNotification('bottomRight')
+    dispatch(refundOrderForCustomerAction(orderNumber));
+    // openNotification('bottomRight')
   }
   return (
     <div className="">
