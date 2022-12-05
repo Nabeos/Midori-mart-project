@@ -446,7 +446,11 @@ function ProductDetail(props) {
                     className="flex justify-end font-medium"
                     style={{ width: "95%" }}
                   >
-                    23/02/2001
+                    {productDetail?.expiryDate?.map((item, index) => {
+                      if (index == 0) {
+                        return <span>{item?.expiryDate}</span>
+                      }
+                    })}
                   </div>
                 </div>
                 <div

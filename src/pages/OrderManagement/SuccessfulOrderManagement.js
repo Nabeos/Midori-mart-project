@@ -146,7 +146,8 @@ export default function SuccessfulOrderManagement(props) {
                   <span className='p-2'>{item.orderDate}</span>
                 </td>
                 <td className="border border-slate-300 text-center">
-                  <span className='p-2'>{item.deliveryDate}</span>
+                  <span className='p-2'>{item.deliveryDate}</span><br />
+                  <span>{item.deliveryTimeRange}</span>
                 </td>
                 <td className="border border-slate-300 text-center"><span className="p-2 bg-green-700 rounded-md text-white">{item.status}</span></td>
 
