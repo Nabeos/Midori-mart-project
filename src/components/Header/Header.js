@@ -259,7 +259,11 @@ const HeaderWithFormik = withFormik({
     localStorage.setItem("searchResultProductCustomer", values.header__search);
     props.dispatch(searchProductAction(values.header__search, 0, 5));
     props.dispatch(searchProductLengthAction(values.header__search, 0, 1000));
-    history.push(`/searchresult/${values.header__search}`);
+    if (values.header__search == "") {
+      history.push(`/searchresult/Tất cả sản phẩm`);
+    } else if (values.header__search != "") {
+      history.push(`/searchresult/${values.header__search}`);
+    }
   },
 
   displayName: 'HeaderWithFormik'
