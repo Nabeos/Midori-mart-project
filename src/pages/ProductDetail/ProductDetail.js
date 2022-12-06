@@ -508,12 +508,20 @@ function ProductDetail(props) {
                       <TextArea
                         name="content"
                         value={values.content}
-                        onChange={handleChange}
+                        onChange={e => {
+                          props.setFieldTouched('content')
+                          handleChange(e)
+                        }}
+                        // onChange={handleChange}
                         placeholder="Hãy cho chúng tôi biết bạn nghĩ gì về sản phẩm"
                         className={`${styles.productdetail__textarea} rounded-md shadow-none`}
                         style={{ width: "80%", height: "20vh" }}
-                      />
+                      /><br />
+
+
                     </div>
+                    {errors.content && touched.content ? <div className='text-red-600' style={{ marginLeft: "6.5rem" }}>{errors.content}</div> : <div></div>}
+
                     <Button
                       className={`${styles.productdetail__rate__button} text-center text-base font-medium`}
                       htmlType="submit"
@@ -633,7 +641,8 @@ const ProductDetailWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-
+    content: Yup.string()
+      .required("Quý khách vui lòng không được để trống phần bình luận !")
   }),
 
 
