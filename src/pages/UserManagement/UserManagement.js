@@ -61,6 +61,12 @@ function UserManagement(props) {
     window.scrollTo(0, 0);
   }, [])
 
+  useEffect(() => {
+    dispatch(getAllUserListForAdminAction(0, 10));
+    dispatch(getAllUserListLengthForAdminAction(0, 1000));
+    window.scrollTo(0, 0);
+  }, [openAddNewUserForAdminPopup])
+
   const userListForAdmin = useSelector(state => state.UserReducer.userListForAdmin);
   console.log("USER LIST FOR ADMIN: ", userListForAdmin);
   const userListLengthForAdmin = useSelector(state => state.UserReducer.userListLengthForAdmin);
