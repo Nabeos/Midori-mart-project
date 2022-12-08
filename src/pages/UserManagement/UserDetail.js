@@ -132,6 +132,7 @@ function UserDetail(props) {
                   </label>
                   <Form.Item className="mb-1">
                     <Input
+                      disabled
                       type="text"
                       id="lastName"
                       name="lastName"
@@ -157,6 +158,7 @@ function UserDetail(props) {
 
                   <Form.Item className="mb-1">
                     <Input
+                      disabled
                       type="text"
                       id="firstName"
                       name="firstName"
@@ -183,6 +185,7 @@ function UserDetail(props) {
                 </label>
                 <Form.Item className="mb-1">
                   <Input
+                    disabled
                     type="tel"
                     id="phoneNumber"
                     name="phoneNumber"
@@ -208,6 +211,7 @@ function UserDetail(props) {
                 </label>
                 <Form.Item className="mb-1">
                   <Input
+                    disabled
                     type="email"
                     id="email"
                     name="email"
@@ -228,6 +232,7 @@ function UserDetail(props) {
                 </label>
                 <Form.Item className="mb-1">
                   <select
+                    disabled
                     name="role"
                     // value={values.role}
                     onChange={e => {
@@ -353,6 +358,7 @@ function UserDetail(props) {
 
                   <Form.Item className="mb-1">
                     <Input
+                      disabled
                       type="text"
                       id="detailedAddress"
                       name="detailedAddress"

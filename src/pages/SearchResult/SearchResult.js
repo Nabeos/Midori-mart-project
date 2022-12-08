@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Slogan from "../../components/Slogan/Slogan";
@@ -131,32 +131,41 @@ export default function SearchResult(props) {
           className="bg-gray-100 flex justify-center mt-3"
           style={{ width: "100%" }}
         >
+
           <div
-            className={`${styles.searchresult__border} flex flex-col ml-10 bg-white`}
+            className={`${styles.searchresult__border} flex flex-col justify-center ml-10 bg-white`}
             style={{ width: "80%" }}
           >
-            <div className="flex justify-start-start text-xl ml-2 mt-2 font-semibold">
-              Có <span className="text-green-700 mr-1 ml-1 font-bold">{searchProductListLength.length}</span>{" "} sản phẩm cho{" "}
-              <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
-            </div>
             <div>
-              <ProductsList
-                className={`${styles.searchresult__border__general}`}
-                products={returnSearchProductList}
-              />
-            </div>
-            <div className="flex justify-center mb-4">
-              <Pagination
-                className="hover:text-green-800 focus:border-green-800"
-                current={currentCustom}
-                defaultCurrent={1}
-                pageSize={5}
-                // pageSizeOptions={3}
-                onChange={(page) => { handlePaginationChange(page) }}
-                // showSizeChanger
-                onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
-                total={searchProductListLength.length}
-              />
+              <div className="flex justify-start text-xl ml-2 mt-2 font-semibold">
+                Có <span className="text-green-700 mr-1 ml-1 font-bold">{searchProductListLength.length}</span>{" "} sản phẩm cho{" "}
+                <span className="text-green-700 ml-1 font-bold">{props.match.params.keyWord}</span>
+              </div>
+              <div className="">
+                {searchProductListLength.length == 0 ? <div style={{ height: "400px" }} className="mt-12">
+                  <div className="flex justify-center mb-3">
+                    <img src="/images/search_no_result.png" />
+                  </div>
+                  <p className="text-center text-lg">Chúng tôi không tìm được sản phẩm nào như mong muốn của quý khách</p>
+                </div> : <ProductsList
+                  className={`${styles.searchresult__border__general}`}
+                  products={returnSearchProductList}
+                />}
+
+              </div>
+              {searchProductListLength.length == 0 ? <Fragment></Fragment> : <div className="flex justify-center mb-4">
+                <Pagination
+                  className="hover:text-green-800 focus:border-green-800"
+                  current={currentCustom}
+                  defaultCurrent={1}
+                  pageSize={5}
+                  // pageSizeOptions={3}
+                  onChange={(page) => { handlePaginationChange(page) }}
+                  // showSizeChanger
+                  onShowSizeChange={(current, pageSize) => { onShowSizeChangeCustom(current, pageSize) }}
+                  total={searchProductListLength.length}
+                />
+              </div>}
             </div>
           </div>
         </div>
@@ -171,6 +180,6 @@ export default function SearchResult(props) {
           </div>
         </div>
         <Footer />
-      </div> : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
+      </div > : user?.roleId == 4 ? <Redirect to="/ordermanagement" /> : <Redirect to="/usermanagement" />
   );
 }

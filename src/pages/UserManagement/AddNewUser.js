@@ -157,6 +157,7 @@ function AddNewUser(props) {
 
             </select>
           </Form.Item>
+          {errors.role && touched.role ? <div className='text-red-600'>{errors.role}</div> : <div></div>}
         </div>
         <div className="">
           <label
@@ -224,6 +225,7 @@ function AddNewUser(props) {
 const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
 const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+const regexSelect = /^[1-9][0-9]*$/;
 
 const AddNewUserWithFormik = withFormik({
   enableReinitialize: true,
@@ -247,12 +249,13 @@ const AddNewUserWithFormik = withFormik({
       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
     phoneNumber: Yup.string()
       .required("Không được để trống mục số điện thoại !!!")
-      .matches(regexPhoneNumber, "Quý khách vui lòng nhập đúng định dạng số điện thoại !!!"),
+      .matches(regexPhoneNumber, "Quý khách vui lòng nhập số điện thoại theo đúng định dạng nhà mạng Việt Nam !!!"),
     email: Yup.string()
       .required("Không được để trống mục email !!!")
       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
     role: Yup.string()
-      .required("Không được để trống vai trò !!!"),
+      .required("Vui lòng không để trống vai trò !!!")
+      .matches(regexSelect, "Vui lòng không để trống vai trò !!!"),
     password: Yup.string()
       .min(6, 'Độ dài mật khẩu tối thiếu là 6 ký tự !!!')
       .max(32, 'Độ dài mật khẩu tối đa là 32 ký tự !!!')
