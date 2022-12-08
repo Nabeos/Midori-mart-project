@@ -21,15 +21,9 @@ export default function SidebarAdmin() {
       <div>
         <NavLink
           to="/"
-          className="text-black no-underline font-medium flex items-center"
+          className="text-black no-underline font-medium flex items-center justify-center"
         >
-          <img className={styles.sidebaradmin__logo} src="./images/midori_logo.png" style={{ width: "50%" }} />
-          <div className="-ml-10 text-2xl font-bold">
-            <span className={`${styles.sidebaradmin__logo__m1} `}>M</span>
-            <span>idori</span>
-            <span className={`${styles.sidebaradmin__logo__m2} `}>M</span>
-            <span>art</span>
-          </div>
+          <img className={styles.sidebaradmin__logo} src="./images/midorimart_logo.jpg" style={{ width: "50%" }} />
         </NavLink>
         <hr className='border-2 border-gray-200' />
       </div>

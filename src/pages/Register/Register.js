@@ -41,18 +41,12 @@ function Register(props) {
       </div>
       <div className="flex justify-center flex-col col-span-1 -ml-14 -mt-10">
         <div className="flex flex-col mb-4">
-          <div className="flex ml-20">
+        <div className="flex ml-20 justify-center">
             <NavLink
               to="/"
               className="text-black no-underline font-medium flex items-center"
             >
-              <img src="./images/midori_logo.png" style={{ width: "43%" }} />
-              <div className="-ml-12 text-3xl font-bold">
-                <span className={`${styles.register__logo__m1} `}>M</span>
-                <span>idori</span>
-                <span className={`${styles.register__logo__m2} `}>M</span>
-                <span>art</span>
-              </div>
+              <img src="./images/midorimart_logo.jpg" className="mb-3" style={{ width: "50%" }} />
             </NavLink>
           </div>
 

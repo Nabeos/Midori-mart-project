@@ -143,13 +143,13 @@ function Header(props) {
             }}
             className="text-black no-underline font-medium flex items-center"
           >
-            <img className={`${styles.header__logo} -mt-12`} src="/images/midori_logo.png" style={{ width: "50%" }} />
-            <div className="-ml-10 text-2xl font-bold -mt-10">
+            <img className={`${styles.header__logo} -mt-12`} src="/images/midorimart_logo.jpg" style={{ width: "50%" }} />
+            {/* <div className="-ml-10 text-2xl font-bold -mt-10">
               <span className={`${styles.header__logo__m1} `}>M</span>
               <span>idori</span>
               <span className={`${styles.header__logo__m2} `}>M</span>
               <span>art</span>
-            </div>
+            </div> */}
           </NavLink>
         </div>
         {localStorage.getItem(USER) ?
