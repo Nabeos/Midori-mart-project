@@ -93,7 +93,7 @@ export default function ProductList(props) {
     dispatch(getAllCategoriesAction());
     dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, 1000, 0));
-    dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+    dispatch(getProductListByCategoryIdAction(props.match.params.id, 10, 0));
     setCurrentCustom(1);
   }, [props.match.params.id])
 
@@ -171,11 +171,11 @@ export default function ProductList(props) {
     console.log("PAGE SIZE handlePaginationChange: ", pageSize);
     setCurrentCustom(page);
     if (localStorage.getItem("sortForCustomerFlag") == 0) {
-      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 10, (page - 1) * 10));
     } else if (localStorage.getItem("sortForCustomerFlag") == 1) {
-      dispatch(sortProductListByPriceAscAction(props.match.params.id, 5, (page - 1) * 5));
+      dispatch(sortProductListByPriceAscAction(props.match.params.id, 10, (page - 1) * 10));
     } else if (localStorage.getItem("sortForCustomerFlag") == 2) {
-      dispatch(sortProductListByPriceDescAction(props.match.params.id, 5, (page - 1) * 5));
+      dispatch(sortProductListByPriceDescAction(props.match.params.id, 10, (page - 1) * 10));
     }
   }
 
@@ -198,7 +198,7 @@ export default function ProductList(props) {
   const handleChangeOrigin = (countryArr) => {
     if (countryArr.length == 0) {
       console.log("COUNTRY ARR: ", countryArr);
-      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+      dispatch(getProductListByCategoryIdAction(props.match.params.id, 10, 0));
     } else {
       console.log("COUNTRY ARR: ", countryArr);
       localStorage.setItem("countryArrLength", countryArr.length);
@@ -207,8 +207,8 @@ export default function ProductList(props) {
       localStorage.setItem("country3", countryArr[2]);
       localStorage.setItem("country4", countryArr[3]);
       localStorage.setItem("country5", countryArr[4]);
-      dispatch(getProductListByOriginAction(props.match.params.id, countryArr[0], countryArr[1], countryArr[2], countryArr[3], countryArr[4], 5, (currentCustom - 1) * 5));
-      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 5, (currentCustom - 1) * 5));
+      dispatch(getProductListByOriginAction(props.match.params.id, countryArr[0], countryArr[1], countryArr[2], countryArr[3], countryArr[4], 10, (currentCustom - 1) * 10));
+      dispatch(getProductListLengthByOriginAction(props.match.params.id, localStorage.getItem("country1"), localStorage.getItem("country2"), localStorage.getItem("country3"), localStorage.getItem("country4"), localStorage.getItem("country5"), 10, (currentCustom - 1) * 10));
     }
 
   }
@@ -336,17 +336,17 @@ export default function ProductList(props) {
                       setCurrentCustom(1);
                       localStorage.setItem("sortForCustomerFlag", e.target.value);
                       dispatch(getProductListLengthByCategoryIdAction(props.match.params.id, 1000, 0));
-                      dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, 0));
+                      dispatch(getProductListByCategoryIdAction(props.match.params.id, 10, 0));
                     }
                     else if (e.target.value == 1) {
                       setCurrentCustom(1);
                       localStorage.setItem("sortForCustomerFlag", e.target.value);
-                      dispatch(sortProductListByPriceAscAction(props.match.params.id, 5, 0));
+                      dispatch(sortProductListByPriceAscAction(props.match.params.id, 10, 0));
                       dispatch(sortProductListLengthByPriceAction(props.match.params.id, 1000, 0));
                     } else if (e.target.value == 2) {
                       setCurrentCustom(1);
                       localStorage.setItem("sortForCustomerFlag", e.target.value);
-                      dispatch(sortProductListByPriceDescAction(props.match.params.id, 5, 0));
+                      dispatch(sortProductListByPriceDescAction(props.match.params.id, 10, 0));
                       dispatch(sortProductListLengthByPriceAction(props.match.params.id, 1000, 0));
                     }
                   }}
@@ -376,7 +376,7 @@ export default function ProductList(props) {
                   className="hover:text-green-800 focus:border-green-800"
                   current={currentCustom}
                   defaultCurrent={1}
-                  pageSize={5}
+                  pageSize={10}
                   // pageSizeOptions={3}
                   onChange={(page) => { handlePaginationChange(page) }}
                   // showSizeChanger

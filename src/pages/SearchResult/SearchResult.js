@@ -82,7 +82,7 @@ function ProductsList(props) {
 export default function SearchResult(props) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), 0, 5));
+    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), 0, 10));
     dispatch(searchProductLengthAction(localStorage.getItem("searchResultProductCustomer"), 0, 1000));
   }, [])
 
@@ -120,7 +120,7 @@ export default function SearchResult(props) {
     setCurrentCustom(page);
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, pageSizeCustom * page, (page - 1) * pageSizeCustom));
     // dispatch(getProductListByCategoryIdAction(props.match.params.id, 5, (page - 1) * 5));
-    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), (page - 1) * 5, 5));
+    dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), (page - 1) * 10, 10));
   }
 
   return (
@@ -158,7 +158,7 @@ export default function SearchResult(props) {
                   className="hover:text-green-800 focus:border-green-800"
                   current={currentCustom}
                   defaultCurrent={1}
-                  pageSize={5}
+                  pageSize={10}
                   // pageSizeOptions={3}
                   onChange={(page) => { handlePaginationChange(page) }}
                   // showSizeChanger
