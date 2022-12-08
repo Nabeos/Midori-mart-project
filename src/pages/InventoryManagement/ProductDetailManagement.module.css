@@ -6,10 +6,16 @@
     border-color: #0c6e21 !important;
   }
   
-  .productdetailmanagement__border__button:hover {
+  .productdetailmanagement__border__button {
     border-color: #0c6e21 !important;
     color: white;
     background-color: #0c6e21 !important;
+  }
+
+  .productdetailmanagement__border__button:hover {
+    border-color: #0c6e21 !important;
+    color: #0c6e21 !important;
+    background-color: white !important;
   }
   
   .productdetailmanagement__border__button {
@@ -24,10 +30,16 @@
     border-color: #d13030 !important;
   }
   
-  .productdetailmanagement__delete__button:hover {
+  .productdetailmanagement__delete__button {
     border-color: #d13030 !important;
     color: white;
     background-color: #d13030 !important;
+  }
+
+  .productdetailmanagement__delete__button:hover {
+    border-color: #d13030 !important;
+    color: #d13030 !important;
+    background-color: white !important;
   }
   
   .productdetailmanagement__delete__button {
