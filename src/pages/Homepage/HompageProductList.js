@@ -24,7 +24,7 @@ function Product(props) {
             <div className="flex justify-center items-center">
               {product?.thumbnails.map((item, index) => {
                 if (index == 0) {
-                  return <img key={index} src={item} style={{ width: "60%" }} />
+                  return <img key={index} src={item} style={{ width: "80%" }} />
                 }
               })}
 
