@@ -20,7 +20,7 @@ export default function Footer() {
             <Nav className="">
               {/* How to navigate without button */}
               <div className=" ml-52 mb-2 text-md flex">
-                <div className=" flex -mr-24 -mt-6">
+                <div className=" flex -mr-24 mt-6">
                   <NavLink
                     to="/"
                     activeStyle={{ fontWeight: "bold" }}
@@ -28,15 +28,9 @@ export default function Footer() {
                   >
                     <div className="flex items-center -ml-56">
                       <img
-                        src="/images/logo_no_background.png"
+                        src="/images/midorimart_logo_nobg.png"
                         style={{ width: "50%" }}
                       />
-                      <div className="-ml-14 text-4xl">
-                        <span className={`${styles.footer__logo__m1} `}>M</span>
-                        <span>idori</span>
-                        <span className={`${styles.footer__logo__m2} `}>M</span>
-                        <span>art</span>
-                      </div>
                     </div>
                   </NavLink>
                 </div>
