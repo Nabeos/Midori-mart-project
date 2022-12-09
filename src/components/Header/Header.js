@@ -257,7 +257,7 @@ const HeaderWithFormik = withFormik({
     console.log("CÓ VÀO HANDLE SUBMIT IN HEADER");
     console.log("VALUE FORM: ", values);
     localStorage.setItem("searchResultProductCustomer", values.header__search);
-    props.dispatch(searchProductAction(values.header__search, 0, 5));
+    props.dispatch(searchProductAction(values.header__search, 0, 10));
     props.dispatch(searchProductLengthAction(values.header__search, 0, 1000));
     if (values.header__search == "") {
       history.push(`/searchresult/Tất cả sản phẩm`);
