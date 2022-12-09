@@ -128,7 +128,7 @@ export default function Homepage() {
 
           <div className="flex flex-col items-center -mt-10">
             <div
-              className={`${styles.homepage__product__section} relative bg-white mt-20 grid grid-cols-2`}
+              className={`${styles.homepage__product__section} relative bg-white mt-10 grid grid-cols-2`}
               style={{
                 width: "80%",
                 minHeight: "620px",
@@ -191,7 +191,7 @@ export default function Homepage() {
               console.log("ITEM TOP THREE: ", item.id);
               return <div className="flex flex-col items-center">
                 <div
-                  className={`${styles.homepage__product__section} relative bg-white mt-20 flex flex-col justify-center items-center mb-5`}
+                  className={`${styles.homepage__product__section} relative bg-white mt-10 flex flex-col justify-center items-center mb-5`}
                   style={{
                     width: "80%",
                     minHeight: "660px",
