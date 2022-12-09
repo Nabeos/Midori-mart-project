@@ -279,6 +279,7 @@ function ProductDetail(props) {
                           </div>
                           <Input
                             type="text"
+                            readOnly
                             className={`${styles.productdetail__quantity} text-center shadow-none text-base`}
                             value={num}
                             onChange={handleChangeNumber}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./ProductList.module.css";
 import { history } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ function Product(props) {
     <div className="" style={{}}>
       <div
         className={`${styles.productlist__relatedproduct__border} ml-3 mt-3 mr-3 pr-5 pl-5`}
-        style={{ minHeight: "280px" }}
+        style={{ minHeight: "290px" }}
       >
         <div key={product.id} className="product flex flex-col">
 
@@ -30,17 +30,20 @@ function Product(props) {
 
             </div>
             <header
-              className={`${styles.productlist__cardtitle} flex flex-col items-start no-underline text-sm font-semibold h-20 text-center`}
+              className={`${styles.productlist__cardtitle} flex flex-col items-start no-underline text-sm font-semibold h-28 text-center`}
               style={{}}
             >
               <p
-                className={`${styles.productlist__cardtitle} no-underline text-left text-sm mb-0 cursor-pointer font-semibold hover:text-green-800`}
+                className={`${styles.productlist__cardtitle} no-underline text-left text-sm mb-1 cursor-pointer font-semibold hover:text-green-800`}
                 onClick={() => { handleNavigate(product.category.id, product.slug) }}
               >
                 {product.title}
               </p>
-              <div className="text-xs">{product.sku}</div>
-              <div className="text-sm mt-2 font-normal">{product.price.toLocaleString()}đ</div>
+              <div className="text-xs mb-1">{product.sku}</div>
+              {(product?.quantity == 0) ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
+              {(product?.quantity >= 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
+              {(product?.quantity < 20 && product?.quantity > 0) ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
+              <div className="text-sm mt-1 font-normal">{product.price.toLocaleString()}đ</div>
             </header>
 
           </div>

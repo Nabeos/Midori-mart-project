@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styles from "./SecondBestSellerCategories.module.css";
 
 import Slider from "react-slick";
@@ -29,17 +29,20 @@ function Product(props) {
                 </div>
                 <div className="product-details">
                     <header
-                        className={`${styles.secondproductlist__cardtitle} text-left no-underline text-sm font-semibold h-20`}
+                        className={`${styles.secondproductlist__cardtitle} text-left no-underline text-sm font-semibold h-24`}
                         style={{}}
                     >
                         <p
-                            className={`${styles.secondproductlist__cardtitle} no-underline cursor-pointer mb-0 text-sm font-semibold hover:text-green-800`}
+                            className={`${styles.secondproductlist__cardtitle} no-underline cursor-pointer mb-1 text-sm font-semibold hover:text-green-800`}
                             onClick={() => { handleNavigate(product.category.id, product.slug) }}
                         >
                             {product.title}
                         </p>
-                        <div className="text-xs">{product.sku}</div>
-                        <div className="text-sm mt-2 font-normal">
+                        <div className="text-xs mb-1">{product.sku}</div>
+                        {(product?.quantity == 0) ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
+                        {(product?.quantity >= 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
+                        {(product?.quantity < 20 && product?.quantity > 0) ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
+                        <div className="text-sm mt-1 font-normal">
                             {product.price.toLocaleString()}đ
                         </div>
                     </header>
