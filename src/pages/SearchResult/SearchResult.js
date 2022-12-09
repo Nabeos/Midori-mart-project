@@ -89,6 +89,11 @@ export default function SearchResult(props) {
     dispatch(searchProductLengthAction(localStorage.getItem("searchResultProductCustomer"), 0, 1000));
   }, [])
 
+  useEffect(() => {
+    setCurrentCustom(1);
+  }, [localStorage.getItem("searchResultProductCustomer")])
+
+
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
 
   let user = JSON.parse(localStorage.getItem(USER));
