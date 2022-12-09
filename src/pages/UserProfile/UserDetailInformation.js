@@ -103,13 +103,14 @@ function UserDetailInformation(props) {
               </label>
               <div>
                 <input type="text"
+                  id="lastName"
+                  name="lastName"
                   onChange={e => {
                     props.setFieldTouched('lastName')
+                    // e.target.value = e.target.value.trim();
                     handleChange(e)
                   }}
                   value={values.lastName}
-                  id="lastName"
-                  name="lastName"
                   className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                   placeholder="Họ" />
               </div>
@@ -129,6 +130,7 @@ function UserDetailInformation(props) {
                   value={values.firstName}
                   onChange={e => {
                     props.setFieldTouched('firstName')
+                    // e.target.value = e.target.value.trim();
                     handleChange(e)
                   }}
                   className={`${styles.userdetailInformation__border__hover} text-gray-900 form-control text-base rounded-lg shadow-none focus:border-green-900`}
@@ -324,10 +326,10 @@ const UserDetailInformationWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     lastName: Yup.string()
-      .required("Quý khách không được để trống mục họ !!!")
+      .required("Quý khách không được để trống mục họ !!!").trim()
       .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
     firstName: Yup.string()
-      .required("Quý khách không được để trống mục tên !!!")
+      .required("Quý khách không được để trống mục tên !!!").trim()
       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
     phoneNumber: Yup.string()
       .required("Quý khách không được để trống mục số điện thoại !!!")
@@ -342,7 +344,7 @@ const UserDetailInformationWithFormik = withFormik({
     // wards: Yup.string()
     //   .required("Quý khách không được để trống phường/xã !!!"),
     detailAddress: Yup.string()
-      .required("Quý khách không được để trống địa chỉ đầy đủ !!!")
+      .required("Quý khách không được để trống địa chỉ đầy đủ !!!").trim()
 
   }),
 

@@ -116,7 +116,7 @@ function AddNewUser(props) {
           <Form.Item className="mb-1"
           >
             <Input
-              type="email"
+              type="text"
               id="email"
               name="email"
               className='  text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5 hover:border-green-700'
@@ -242,16 +242,16 @@ const AddNewUserWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     lastName: Yup.string()
-      .required("Không được để trống mục họ !!!")
+      .required("Không được để trống mục họ !!!").trim()
       .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
     firstName: Yup.string()
-      .required("Không được để trống mục tên !!!")
+      .required("Không được để trống mục tên !!!").trim()
       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
     phoneNumber: Yup.string()
       .required("Không được để trống mục số điện thoại !!!")
       .matches(regexPhoneNumber, "Quý khách vui lòng nhập số điện thoại theo đúng định dạng nhà mạng Việt Nam !!!"),
     email: Yup.string()
-      .required("Không được để trống mục email !!!")
+      .required("Không được để trống mục email !!!").trim()
       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
     role: Yup.string()
       .required("Vui lòng không để trống vai trò !!!")
