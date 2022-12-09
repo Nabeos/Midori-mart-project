@@ -643,7 +643,7 @@ const ProductDetailWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     content: Yup.string()
-      .required("Quý khách vui lòng không được để trống phần bình luận !")
+      .required("Quý khách vui lòng không được để trống phần bình luận !").trim()
   }),
 
 

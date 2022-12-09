@@ -420,7 +420,7 @@ function AddNewProduct(props) {
           type="default"
           htmlType="submit"
           onSubmitCapture={handleSubmit}
-          className=" pt-3 pb-11 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white hover:border-green-700 focus:border-green-700 focus:text-green-700"
+          className=" pt-3 pb-11 font-semibold text-xl rounded-md focus:border-green-700 focus:text-green-700 hover:bg-green-700 hover:text-white hover:border-green-700 "
           style={{ width: "100%" }}
         >
           Thêm sản phẩm mới
@@ -453,18 +453,18 @@ const AddNewProductWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     title: Yup.string()
-      .required("Vui lòng không để trống tên sản phẩm !!!"),
+      .required("Vui lòng không để trống tên sản phẩm !!!").trim(),
     // sku: Yup.string()
     //   .required("Vui lòng không để trống mã sku !!!"),
     amount: Yup.string()
       .required("Vui lòng không để trống khối lượng sản phẩm !!!")
-      .matches(regexAllNumber, "Khối lượng chỉ được phép chứa số"),
+      .matches(regexSelect, "Khối lượng chỉ được phép chứa số và phải lớn hơn 0"),
     productUnit: Yup.string()
       .required("Vui lòng không để trống đơn vị tính !!!")
       .matches(regexSelect, "Vui lòng không để trống đơn vị tính !!!"),
     price: Yup.string()
       .required("Vui lòng không để trống giá sản phẩm !!!")
-      .matches(regexAllNumber, "Giá sản phẩm chỉ được phép chứa số"),
+      .matches(regexSelect, "Giá sản phẩm chỉ được phép chứa số và phải lớn hơn 0"),
     // productDiscount: Yup.string()
     //   .required("Vui lòng không để trống mục khuyến mãi !!!")
     //   .matches(regexSelect, "Vui lòng không để trống mục khuyến mãi !!!"),

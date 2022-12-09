@@ -117,8 +117,8 @@ function Checkout(props) {
                                     }} placeholder='Họ và tên/Fullname *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} name="fullName" />
                             </div>
 
-                            {errors.fullName && touched.fullName ? <div className='text-red-600' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
-                            <div className='form-group grid grid-cols-12 mb-3 flex'>
+                            {errors.fullName && touched.fullName ? <div className='text-red-600 mt-0' style={{ fontSize: '0.9rem' }}>{errors.fullName}</div> : <div></div>}
+                            <div className='form-group grid grid-cols-12 mb-3 mt-1 flex'>
                                 <div className='col-span-6 mr-2'>
                                     <input value={values.email} type="email" placeholder='Email *' className={`${styles.checkout__field} form-control pl-0 shadow-none`} onChange={e => {
                                         props.setFieldTouched('email')
@@ -289,7 +289,7 @@ const CheckoutWithFormik = withFormik({
     // Custom sync validation
     validationSchema: Yup.object().shape({
         fullName: Yup.string()
-            .required("Quý khách không được để trống tên !!!")
+            .required("Quý khách không được để trống tên !!!").trim()
             .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
         phoneNumber: Yup.string()
             .required("Quý khách không được để trống mục số điện thoại !!!")
@@ -298,7 +298,7 @@ const CheckoutWithFormik = withFormik({
             .required("Quý khách không được để trống mục email !!!")
             .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
         address: Yup.string()
-            .required("Quý khách vui lòng không được để trống mục địa chỉ nhận hàng !!!"),
+            .required("Quý khách vui lòng không được để trống mục địa chỉ nhận hàng !!!").trim(),
         // province: Yup.string()
         //     .required("Quý khách vui lòng lựa chọn tỉnh !!!"),
         // district: Yup.string()

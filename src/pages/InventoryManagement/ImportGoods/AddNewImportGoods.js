@@ -176,7 +176,8 @@ const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 const regexAllNumber = /^[0-9.,]+$/;
-const regexSelect = /^[1-9]$/;
+// const regexSelect = /^[1-9]$/;
+const regexSelect = /^[1-9][0-9]*$/;
 
 const AddNewImportGoodsWithFormik = withFormik({
   enableReinitialize: true,
@@ -193,10 +194,10 @@ const AddNewImportGoodsWithFormik = withFormik({
       .required("Vui lòng không được để trống tên sản phẩm !!!"),
     price: Yup.string()
       .required("Vui lòng không được để trống giá sản phẩm !!!")
-      .matches(regexAllNumber, 'Giá sản phẩm không được phép chứa chữ !!!'),
+      .matches(regexSelect, 'Giá sản phẩm không được phép chứa chữ và phải lớn hơn 0 !!!'),
     quantityImport: Yup.string()
       .required("Vui lòng không được để trống số lượng nhập kho !!!")
-      .matches(regexAllNumber, 'Số lượng nhập kho không được phép chứa chữ !!!'),
+      .matches(regexSelect, 'Số lượng nhập kho không được phép chứa chữ và phải lớn hơn 0 !!!'),
     expiryDate: Yup.string()
       .required("Vui lòng không được để trống hạn sử dụng !!!")
   }),

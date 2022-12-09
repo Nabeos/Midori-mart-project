@@ -227,10 +227,10 @@ const UserDetailInformationForSeAdWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     lastName: Yup.string()
-      .required("Quý khách không được để trống mục họ !!!")
+      .required("Quý khách không được để trống mục họ !!!").trim()
       .matches(regexAllLetter, "Mục họ chỉ được phép chứa chữ !!!"),
     firstName: Yup.string()
-      .required("Quý khách không được để trống mục tên !!!")
+      .required("Quý khách không được để trống mục tên !!!").trim()
       .matches(regexAllLetter, "Mục tên chỉ được phép chứa chữ !!!"),
     phoneNumber: Yup.string()
       .required("Quý khách không được để trống mục số điện thoại !!!")
@@ -239,10 +239,8 @@ const UserDetailInformationForSeAdWithFormik = withFormik({
       .required("Quý khách không được để trống mục email !!!")
       .email("Quý khách vui lòng nhập đúng định dạng email !!!"),
     detailAddress: Yup.string()
-      .required("Quý khách không được để trống địa chỉ đầy đủ !!!")
-
+      .required("Quý khách không được để trống địa chỉ đầy đủ !!!").trim()
   }),
-
 
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("CÓ VÀO HANDLE SUBMIT USER DETAIL");

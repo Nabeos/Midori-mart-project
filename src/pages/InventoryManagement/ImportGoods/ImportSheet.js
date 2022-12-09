@@ -417,7 +417,7 @@ const ImportSheetWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     importCode: Yup.string()
-      .required("Vui lòng không được để trống mã nhập kho !!!").nullable(),
+      .required("Vui lòng không được để trống mã nhập kho !!!").trim().nullable(),
     manufactureCompany: Yup.string()
       .required("Vui lòng không được để trống thông tin nhà cung cấp !!!").nullable(),
     importedProductInForm: Yup.array().min(1, "Vui lòng không được để trống sản phẩm nhập kho !!!")

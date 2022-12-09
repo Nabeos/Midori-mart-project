@@ -585,7 +585,8 @@ const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 const regexAllLetter = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/;
 const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 const regexAllNumber = /^[0-9.,]+$/;
-const regexSelect = /^[1-9]$/;
+// const regexSelect = /^[1-9]$/;
+const regexSelect = /^[1-9][0-9]*$/;
 
 const ProductDetailManagementWithFormik = withFormik({
   enableReinitialize: true,
@@ -606,18 +607,18 @@ const ProductDetailManagementWithFormik = withFormik({
   // Custom sync validation
   validationSchema: Yup.object().shape({
     title: Yup.string()
-      .required("Vui lòng không để trống tên sản phẩm !!!"),
+      .required("Vui lòng không để trống tên sản phẩm !!!").trim(),
     sku: Yup.string()
       .required("Vui lòng không để trống mã sku !!!"),
     amount: Yup.string()
       .required("Vui lòng không để trống khối lượng sản phẩm !!!")
-      .matches(regexAllNumber, "Khối lượng chỉ được phép chứa số"),
+      .matches(regexSelect, "Khối lượng chỉ được phép chứa số và phải lớn hơn 0"),
     productUnit: Yup.string()
       .required("Vui lòng không để trống đơn vị tính !!!")
       .matches(regexSelect, "Vui lòng không để trống đơn vị tính !!!"),
     price: Yup.string()
       .required("Vui lòng không để trống giá sản phẩm !!!")
-      .matches(regexAllNumber, "Giá sản phẩm chỉ được phép chứa số"),
+      .matches(regexSelect, "Giá sản phẩm chỉ được phép chứa số và phải lớn hơn 0"),
     // productDiscount: Yup.string()
     // .required("Vui lòng không để trống mục khuyến mãi !!!")
     // .matches(regexSelect, "Vui lòng không để trống mục khuyến mãi !!!"),
