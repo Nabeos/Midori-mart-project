@@ -41,7 +41,7 @@ function Register(props) {
       </div>
       <div className="flex justify-center flex-col col-span-1 -ml-14 -mt-10">
         <div className="flex flex-col mb-4">
-        <div className="flex ml-20 justify-center">
+          <div className="flex ml-20 justify-center">
             <NavLink
               to="/"
               className="text-black no-underline font-medium flex items-center"
@@ -73,6 +73,7 @@ function Register(props) {
                     placeholder="Họ"
                     onChange={e => {
                       props.setFieldTouched('lastName')
+                      e.target.value = e.target.value.trim();
                       handleChange(e)
                     }}
                     style={{ width: "90%", minHeight: "6vh" }}
@@ -97,6 +98,7 @@ function Register(props) {
                     placeholder="Tên"
                     onChange={e => {
                       props.setFieldTouched('firstName')
+                      e.target.value = e.target.value.trim();
                       handleChange(e)
                     }}
                     style={{ width: "76%", minHeight: "45px" }}
@@ -139,13 +141,14 @@ function Register(props) {
               </label>
               <Form.Item className="mb-1">
                 <Input
-                  type="email"
+                  type="text"
                   id="email"
                   name="email"
                   className={`${styles.register__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
                   placeholder="abc@gmail.com"
                   onChange={e => {
                     props.setFieldTouched('email')
+                    e.target.value = e.target.value.trim();
                     handleChange(e)
                   }}
                   style={{ width: "88%", minHeight: "45px" }}
