@@ -236,7 +236,7 @@ function ImportSheet(props) {
                     >
                       + Thêm sản phẩm nhập kho
                     </Button>
-                    <Modal
+                    {openAddProductIntoImportGoodsForm && <Modal
                       open={openAddProductIntoImportGoodsForm}
                       title="Thêm sản phẩm nhập kho"
                       onCancel={handleCancelAdd}
@@ -244,7 +244,8 @@ function ImportSheet(props) {
                       width={900}
                     >
                       <AddNewImportGoods />
-                    </Modal>
+                    </Modal>}
+
                   </div>
                   <div className="">
                     <table

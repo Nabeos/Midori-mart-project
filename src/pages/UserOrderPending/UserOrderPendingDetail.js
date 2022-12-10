@@ -120,7 +120,7 @@ export default function UserOrderPendingDetail() {
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
               <div>
-                {/* Phí vận chuyển:<span> 23tr</span> */}
+                Phí vận chuyển:<span className="text-red-600 font-semibold"> 30,000đ</span>
               </div>
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
