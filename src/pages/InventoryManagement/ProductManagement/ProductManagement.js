@@ -203,7 +203,7 @@ function ProductManagement(props) {
                 >
                     + Thêm sản phẩm mới
                 </Button>
-                <Modal
+                {openAddNewProductForSellerModal && <Modal
                     open={openAddNewProductForSellerModal}
                     title="Thêm sản phẩm mới"
                     onCancel={handleCancel}
@@ -211,7 +211,7 @@ function ProductManagement(props) {
                     width={900}
                 >
                     <AddNewProduct />
-                </Modal>
+                </Modal>}
             </div>
 
             {/* table for product Management */}
