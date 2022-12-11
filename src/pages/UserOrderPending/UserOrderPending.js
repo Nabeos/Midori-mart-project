@@ -23,7 +23,8 @@ export default function UserOrderPending() {
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllInProgressOrderAction(5, 0));
+    dispatch(getAllInProgressOrderAction(5, (currentCustom - 1) * 5));
+    // dispatch(getAllInProgressOrderAction(5, 0));
     dispatch(getAllInProgressOrderLengthAction(1000, 0));
   }, [openModal])
 
