@@ -23,6 +23,7 @@ export default function PendingOrderManagement(props) {
     // openNotification('bottomRight')
   }
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
+  console.log("CURRENT CUSTOM: ", currentCustom);
   const dispatch = useDispatch();
   const showModal = (pendingItemAction) => {
     dispatch({
@@ -38,8 +39,9 @@ export default function PendingOrderManagement(props) {
   };
 
   useEffect(() => {
-    setCurrentCustom(1);
-    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    // setCurrentCustom(currentCustom);
+    // dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllCustomerOrderForSellerAction(15, (currentCustom - 1) * 15, localStorage.getItem("keyOrder")));
     dispatch(getAllPendingCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
   }, [openModalPendingSeller])
   useEffect(() => {
