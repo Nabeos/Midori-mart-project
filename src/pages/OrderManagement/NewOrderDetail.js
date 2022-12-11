@@ -1,5 +1,5 @@
 import { Button, notification, Popconfirm } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styles from "./NewOrderDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCustomerOrderForSellerAction } from "../../redux/action/order/OrderAction";
@@ -8,6 +8,7 @@ export default function NewOrderDetail(props) {
   console.log("NEW ORDER DETAIL INFO: ", props.newDetailInfo);
   const item = useSelector(state => state.OrderReducer.item);
   const dispatch = useDispatch();
+  let totalBill = 0;
   const textAccept = 'Bạn có chắc chắn muốn duyệt đơn hàng này ?';
   const textReject = 'Bạn có chắc chắn muốn hủy đơn hàng này ?';
   // const openNotification = (placement) => {
@@ -99,6 +100,7 @@ export default function NewOrderDetail(props) {
               </thead>
               <tbody>
                 {item?.orderDetail?.map((item, index) => {
+                  totalBill += item.price * item.quantity;
                   return <tr>
                     <td className="border border-slate-300 text-base text-center">
                       {index + 1}
@@ -132,14 +134,18 @@ export default function NewOrderDetail(props) {
               </tbody>
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
-              <div>
-                Phí vận chuyển:<span className="text-red-600 font-semibold"> 30,000đ</span>
-              </div>
+              {item?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Phí vận chuyển:<span className="text-red-600 font-semibold">
+                  30,000đ</span>
+              </div> : <Fragment></Fragment>}
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
-              <div>
-                Thành tiền:<span className="text-red-600"> {item.totalBill.toLocaleString()}đ</span>
-              </div>
+              {item?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Thành tiền:<span className="text-red-600"> {(totalBill + 30000).toLocaleString()}đ</span>
+              </div> : <div>
+                Thành tiền:<span className="text-red-600"> {(totalBill).toLocaleString()}đ</span>
+              </div>}
+
             </div>
           </div>
           <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>

@@ -73,9 +73,10 @@ export default function NewOrderManagement(props) {
 
 
   useEffect(() => {
-    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    dispatch(getAllCustomerOrderForSellerAction(15, (currentCustom - 1) * 15, localStorage.getItem("keyOrder")));
+    // dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
     dispatch(getAllCustomerOrderLengthForSellerAction(1000, 0, localStorage.getItem("keyOrder")));
-    setCurrentCustom(1);
+    // setCurrentCustom(1);
   }, [openModal])
 
   useEffect(() => {

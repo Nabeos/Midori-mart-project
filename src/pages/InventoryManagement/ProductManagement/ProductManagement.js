@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import {
     Button,
     Form,
@@ -36,6 +36,7 @@ function ProductManagement(props) {
     } = props;
     console.log("values.header__search: ", values.header__search);
     const [currentCustom, setCurrentCustom] = useStateCallback(1);
+    const searchRef = useRef(null);
     // const text = <span>Lọc sản phẩm</span>;
     // const content = (
     //     <div
@@ -102,6 +103,7 @@ function ProductManagement(props) {
         dispatch(getProductListByCategoryIdAction(0, 20, 0));
         dispatch(getProductListLengthByCategoryIdAction(0, 1000, 0));
         localStorage.setItem("categoriesIdForSeller", 0);
+        localStorage.setItem("currentCustomProductMngtSeller", currentCustom);
     }, [])
 
 
@@ -113,6 +115,7 @@ function ProductManagement(props) {
         console.log("HANDLE CHANGE CATEGORIES: ", e.target.value);
         localStorage.setItem("categoriesIdForSeller", e.target.value);
         setCurrentCustom(1);
+        localStorage.setItem("currentCustomProductMngtSeller", 1);
         dispatch(getProductListByCategoryIdAction(e.target.value, 20, 0));
         dispatch(getProductListLengthByCategoryIdAction(e.target.value, 1000, 0));
     }
@@ -131,10 +134,12 @@ function ProductManagement(props) {
         console.log("PAGE handlePaginationChange: ", page);
         console.log("PAGE SIZE handlePaginationChange: ", pageSize);
         setCurrentCustom(page);
+        localStorage.setItem("currentCustomProductMngtSeller", page);
         if (values.header__search == "") {
             dispatch(getProductListByCategoryIdAction(localStorage.getItem("categoriesIdForSeller"), 20, (page - 1) * 20));
         } else if (values.header__search != "") {
             dispatch(searchProductForSellerAction(values.header__search, (page - 1) * 20, 20));
+            dispatch(searchProductLengthForSellerAction(values.header__search, 0, 1000));
         }
 
     }
@@ -175,12 +180,23 @@ function ProductManagement(props) {
                                     onChange={(e) => {
                                         handleChange(e);
                                         if (e.target.value == "") {
-                                            dispatch(getProductListByCategoryIdAction(e.target.value, 20, 0));
-                                        } else if (e.target.value != "") {
-                                            dispatch(searchProductForSellerAction(e.target.value, 0, 20));
-                                            dispatch(searchProductLengthForSellerAction(e.target.value, 0, 1000));
+                                            if (searchRef.current) {
+                                                clearTimeout(searchRef.current);
+                                            }
+                                            searchRef.current = setTimeout(() => {
+                                                dispatch(getProductListByCategoryIdAction(e.target.value, 20, 0));
+                                                dispatch(getProductListLengthByCategoryIdAction(e.target.value, 1000, 0));
+                                            }, 300)
                                         }
-
+                                        else if (e.target.value != "") {
+                                            if (searchRef.current) {
+                                                clearTimeout(searchRef.current);
+                                            }
+                                            searchRef.current = setTimeout(() => {
+                                                dispatch(searchProductForSellerAction(e.target.value, 0, 20));
+                                                dispatch(searchProductLengthForSellerAction(e.target.value, 0, 1000));
+                                            }, 300)
+                                        }
                                     }}
                                     style={{ width: '300px' }}
                                 />
@@ -244,6 +260,9 @@ function ProductManagement(props) {
                                     Số lượng trong kho
                                 </th>
                                 <th className="border border-slate-300 p-4 text-base text-center">
+                                    Hạn sử dụng
+                                </th>
+                                <th className="border border-slate-300 p-4 text-base text-center">
                                     Trạng thái trong kho
                                 </th>
                                 <th className="border border-slate-300 p-4 text-base text-center">
@@ -273,7 +292,14 @@ function ProductManagement(props) {
                                         </td>
 
                                         <td className="border border-slate-300 text-center">
-                                            {item.quantity}
+                                            {item?.expiryDate.map((productInfo, index) => {
+                                                return <span>{productInfo.quantityInPQ}</span>
+                                            })}
+                                        </td>
+                                        <td className="border border-slate-300 text-center">
+                                            {item?.expiryDate.map((productInfo, index) => {
+                                                return <span>{productInfo.expiryDate}</span>
+                                            })}
                                         </td>
                                         <td className="border border-slate-300 text-center ">
                                             {item.quantity >= 20 ? <span className="p-2 bg-green-600 rounded-md text-white">

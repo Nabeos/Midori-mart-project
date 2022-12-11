@@ -29,15 +29,18 @@ export default function SuccessfulOrderManagement(props) {
 
   };
   useEffect(() => {
-    setCurrentCustom(1);
-    dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
+    // setCurrentCustom(1);
+    dispatch(getAllCustomerOrderForSellerAction(15, (currentCustom - 1) * 15, localStorage.getItem("keyOrder")));
+    // dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
     dispatch(getAllSuccessfulCustomerOrderLengthForSellerAction(1000, 0));
   }, [openModalSuccessful])
+
   useEffect(() => {
     setCurrentCustom(1);
     dispatch(getAllCustomerOrderForSellerAction(15, 0, localStorage.getItem("keyOrder")));
     dispatch(getAllSuccessfulCustomerOrderLengthForSellerAction(1000, 0));
   }, [localStorage.getItem("keyOrder")])
+
   const customerOrdersForSeller = useSelector(state => state.OrderReducer.customerOrdersForSeller);
   console.log("SUCCESSFUL CUSTOMER ORDERS FOR SELLER: ", customerOrdersForSeller);
   const successfulCustomerOrdersLengthForSeller = useSelector(state => state.OrderReducer.successfulCustomerOrdersLengthForSeller);

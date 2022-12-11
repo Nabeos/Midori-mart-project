@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styles from "./PendingOrderDetail.module.css";
 import { Button, notification, Popconfirm } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,14 +116,17 @@ export default function PendingOrderDetail(props) {
               </tbody>
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
-              <div>
-                Phí vận chuyển:<span className='text-red-600 font-semibold'> 30,000đ</span>
-              </div>
+              {pendingSellerItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Phí vận chuyển:<span className="text-red-600 font-semibold">
+                  30,000đ</span>
+              </div> : <Fragment></Fragment>}
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
-              <div>
-                Thành tiền:<span className="text-red-600"> {pendingSellerItem?.totalBill?.toLocaleString()}đ</span>
-              </div>
+              {pendingSellerItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Thành tiền:<span className="text-red-600"> {(totalBill + 30000)?.toLocaleString()}đ</span>
+              </div> : <div>
+                Thành tiền:<span className="text-red-600"> {totalBill?.toLocaleString()}đ</span>
+              </div>}
             </div>
           </div>
           <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import HeaderManagement from "../../components/HeaderManagement/HeaderManagement";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin";
 import styles from "./UserManagement.module.css";
@@ -27,6 +27,7 @@ function UserManagement(props) {
     handleBlur,
     handleSubmit,
   } = props;
+  const searchRef = useRef(null);
   console.log("values.header__search", values.header__search == "");
   // const user = useSelector(state => state.UserReducer.user);
   let user = JSON.parse(localStorage.getItem(USER));
@@ -133,8 +134,13 @@ function UserManagement(props) {
                           setCurrentCustom(1);
                         }
                         handleChange(e);
-                        dispatch(searchUserForAdminAction(e.target.value, 0, 10));
-                        props.dispatch(searchUserLengthForAdminAction(values.header__search, 0, 1000));
+                        if (searchRef.current) {
+                          clearTimeout(searchRef.current);
+                        }
+                        searchRef.current = setTimeout(() => {
+                          dispatch(searchUserForAdminAction(e.target.value, 0, 10));
+                          props.dispatch(searchUserLengthForAdminAction(values.header__search, 0, 1000));
+                        }, 300)
                       }}
                       placeholder="Tìm kiếm người dùng"
                       style={{ width: '300px' }}

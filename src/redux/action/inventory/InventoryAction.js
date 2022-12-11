@@ -130,7 +130,7 @@ export const searchProductForSellerAction = (keyWord, offset, limit) => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.searchProductForSeller(keyWord, offset, limit);
-            console.log("RESULT SEARCH PRODUCT FOR SELLER: ", result.data.products);
+            console.log("RESULT SEARCH PRODUCT FOR SELLER: ", result);
             dispatch({
                 type: SEARCH_PRODUCT_FOR_SELLER,
                 searchProductListForSellerAction: result.data.products
@@ -145,7 +145,7 @@ export const searchProductLengthForSellerAction = (keyWord, offset, limit) => {
     return async (dispatch) => {
         try {
             const result = await inventoryManagementService.searchProductForSeller(keyWord, offset, limit);
-            console.log("RESULT SEARCH PRODUCT LENGTH FOR SELLER: ", result.data.products);
+            console.log("RESULT SEARCH PRODUCT LENGTH FOR SELLER: ", result);
             dispatch({
                 type: SEARCH_PRODUCT_LENGTH_FOR_SELLER,
                 searchProductListLengthForSellerAction: result.data.products
