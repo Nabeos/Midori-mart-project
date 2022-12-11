@@ -17,10 +17,16 @@ import { useStateCallback } from "use-state-callback";
 export default function AllUserOrder() {
   const dispatch = useDispatch();
   const [currentCustom, setCurrentCustom] = useStateCallback(1);
+  // useEffect(() => {
+  //   dispatch(getAllCustomerOrderForCustomerAction(5, 0));
+  //   dispatch(getAllCustomerOrderLengthForCustomerAction(1000, 0));
+  // }, [])
+  const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllCustomerOrderForCustomerAction(5, 0));
+    dispatch(getAllCustomerOrderForCustomerAction(5, (currentCustom - 1) * 5));
     dispatch(getAllCustomerOrderLengthForCustomerAction(1000, 0));
-  }, [])
+  }, [openModal])
+
   let user = JSON.parse(localStorage.getItem(USER));
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
 
@@ -29,7 +35,7 @@ export default function AllUserOrder() {
   const allCustomerOrderListLengthForCustomer = useSelector(state => state.OrderReducer.allCustomerOrderListLengthForCustomer);
   console.log("allCustomerOrderListLengthForCustomer: ", allCustomerOrderListLengthForCustomer.length);
 
-  const openModal = useSelector(state => state.OrderReducer.openModal);
+
   const showModal = (inProgressItemAction) => {
     dispatch({
       type: SHOW_MODAL_IN_PROGRESS,

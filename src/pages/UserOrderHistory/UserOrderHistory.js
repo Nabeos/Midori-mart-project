@@ -21,7 +21,8 @@ export default function UserOrderHistory() {
   const dispatch = useDispatch();
   const openModal = useSelector(state => state.OrderReducer.openModal);
   useEffect(() => {
-    dispatch(getAllCustomerSuccessfulOrderAction(5, 0));
+    dispatch(getAllCustomerSuccessfulOrderAction(5, (currentCustom - 1) * 5));
+    // dispatch(getAllCustomerSuccessfulOrderAction(5, 0));
     dispatch(getAllCustomerSuccessfulOrderLengthAction(1000, 0));
   }, [openModal])
 
