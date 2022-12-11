@@ -8,16 +8,16 @@ export default function CarouselBanner() {
       <Carousel className="mt-3">
         <div>
           <img
-            src="https://theme.hstatic.net/1000282430/1000544102/14/banner-slider-2.jpg?v=2058"
+            src="/images/banner/banner_midorimart_official.jpg"
             style={{ width: "2395px", height: "640px" }}
           />
         </div>
-        <div>
+        {/* <div>
           <img
             src="https://theme.hstatic.net/1000282430/1000544102/14/banner-slider-1.jpg?v=2058"
             style={{ width: "2395px", height: "640px" }}
           />
-        </div>
+        </div> */}
 
       </Carousel>
     </div>
