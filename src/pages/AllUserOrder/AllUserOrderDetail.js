@@ -109,16 +109,22 @@ export default function AllUserOrderDetail() {
               </tbody>
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
-              <div>
-                Phí vận chuyển:<span className='text-red-600 font-semibold'> 30,000đ</span>
-              </div>
+              {inProgressItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Phí vận chuyển:<span className='text-red-600 font-semibold'>
+                  30,000đ</span>
+              </div> : <Fragment></Fragment>}
+
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
-              <div>
+              {inProgressItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
                 Thành tiền:<span className="text-red-600">
-                  {inProgressItem?.totalBill.toLocaleString()}đ
+                  {(totalBill + 30000).toLocaleString()}đ
                 </span>
-              </div>
+              </div> : <div>
+                Thành tiền:<span className="text-red-600">
+                  {totalBill.toLocaleString()}đ
+                </span>
+              </div>}
             </div>
           </div>
           <div className="flex justify-end mt-3" style={{ width: "98%" }}>
