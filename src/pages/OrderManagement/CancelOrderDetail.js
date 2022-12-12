@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./CancelOrderDetail.module.css";
@@ -104,14 +104,16 @@ export default function CancelOrderDetail(props) {
               </tbody>
             </table>
             <div className="flex justify-end mr-5 text-lg font-medium mb-2">
-              <div>
+              {sellerCancelOrderItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
                 Phí vận chuyển:<span className="text-red-600 font-semibold"> 30,000đ</span>
-              </div>
+              </div> : <Fragment></Fragment>}
             </div>
             <div className="flex justify-end mr-5 text-xl font-semibold">
-              <div>
-                Thành tiền:<span className="text-red-600"> {sellerCancelOrderItem?.totalBill?.toLocaleString()}đ</span>
-              </div>
+              {sellerCancelOrderItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                Thành tiền:<span className="text-red-600"> {(totalBill + 30000).toLocaleString()}đ</span>
+              </div> : <div>
+                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
+              </div>}
             </div>
           </div>
           {/* <div className="flex justify-end items-center mt-3" style={{ width: "98%" }}>

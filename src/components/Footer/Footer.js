@@ -16,7 +16,7 @@ export default function Footer() {
         style={{ height: "160px", width: "100%" }}
       >
         <Container>
-          <div className="text-md flex justify-between items-center" style={{ width: "100%" }}>
+          <div className="text-md flex items-center" style={{ width: "75%", margin: "0 auto" }}>
             <div className="">
               <NavLink
                 to="/"
@@ -32,8 +32,8 @@ export default function Footer() {
               </NavLink>
             </div>
             <div className="">
-              <p className="text-white text-lg">
-                Chúc quý khách có trải nghiệm mua sắm tuyệt vời tại Midori Mart
+              <p className="text-white text-xl">
+                Chúc quý khách có trải nghiệm mua sắm tuyệt vời tại Midori Mart !
               </p>
             </div>
           </div>

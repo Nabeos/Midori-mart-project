@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styles from "./RefundOrderDetail.module.css";
 import { Button, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -102,14 +102,17 @@ export default function RefundOrderDetail(props) {
                             </tbody>
                         </table>
                         <div className="flex justify-end mr-5 text-lg font-medium mb-2">
-                            <div>
+                            {sellerRefundOrderItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
                                 Phí vận chuyển:<span className="text-red-600 font-semibold"> 30,000đ</span>
-                            </div>
+                            </div> : <Fragment></Fragment>}
                         </div>
                         <div className="flex justify-end mr-5 text-xl font-semibold">
-                            <div>
-                                Thành tiền:<span className="text-red-600"> {sellerRefundOrderItem?.totalBill?.toLocaleString()}đ</span>
-                            </div>
+                            {sellerRefundOrderItem?.receiveProductsMethod == "Giao Tận Nhà" ? <div>
+                                Thành tiền:<span className="text-red-600"> {(totalBill + 30000).toLocaleString()}đ</span>
+                            </div> : <div>
+                                Thành tiền:<span className="text-red-600"> {totalBill.toLocaleString()}đ</span>
+                            </div>}
+
                         </div>
                     </div>
                 </div>
