@@ -39,8 +39,13 @@ function AddNewImportGoods(props) {
   }, [])
 
   const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
-
+  let productWithPrice = productListByCategoryId.find(item => item.id == values.importedProduct);
+  console.log("PRODUCT WITH PRICE: ", productWithPrice);
   console.log("productListByCategoryId IN ADD NEW PRODUCTS INTO IMPORT GOODS FORM: ", productListByCategoryId);
+
+  useEffect(() => {
+    setFieldValue('price', productWithPrice?.price);
+  }, [productWithPrice])
 
   return (
     <div>
@@ -92,6 +97,8 @@ function AddNewImportGoods(props) {
                 type="text"
                 id="price"
                 name="price"
+                value={productWithPrice?.price}
+                disabled
                 onChange={e => {
                   props.setFieldTouched('price')
                   handleChange(e)

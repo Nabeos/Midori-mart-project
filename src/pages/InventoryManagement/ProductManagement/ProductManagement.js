@@ -37,6 +37,7 @@ function ProductManagement(props) {
     console.log("values.header__search: ", values.header__search);
     const [currentCustom, setCurrentCustom] = useStateCallback(1);
     const searchRef = useRef(null);
+    let quantityStatus = 0;
     // const text = <span>Lọc sản phẩm</span>;
     // const content = (
     //     <div
@@ -293,6 +294,7 @@ function ProductManagement(props) {
 
                                         <td className="border border-slate-300 text-center">
                                             {item?.expiryDate.map((productInfo, index) => {
+                                                quantityStatus = productInfo.quantityInPQ;
                                                 return <span>{productInfo.quantityInPQ}</span>
                                             })}
                                         </td>
@@ -302,12 +304,13 @@ function ProductManagement(props) {
                                             })}
                                         </td>
                                         <td className="border border-slate-300 text-center ">
-                                            {item.quantity >= 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
+                                            {quantityStatus >= 20 ? <span className="p-2 bg-green-600 rounded-md text-white">
                                                 Còn hàng
                                             </span> : <Fragment></Fragment>}
-                                            {item.quantity == 0 ? <span className="p-2 bg-red-600 rounded-md text-white">
+                                            {quantityStatus == 0 ? <span className="p-2 bg-red-600 rounded-md text-white">
                                                 Hết hàng
-                                            </span> : <Fragment></Fragment>}{item.quantity > 0 && item.quantity < 20 ? <button style={{ width: "76px", height: "32px" }} className="p-2 bg-yellow-600 rounded-md text-white">
+                                            </span> : <Fragment></Fragment>}
+                                            {quantityStatus > 0 && quantityStatus < 20 ? <button style={{ width: "76px", height: "32px" }} className="p-2 bg-yellow-600 rounded-md text-white">
                                                 Ít hàng
                                             </button> : <Fragment></Fragment>}
                                         </td>
