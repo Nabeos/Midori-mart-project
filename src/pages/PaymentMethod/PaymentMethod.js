@@ -213,7 +213,7 @@ export default function PaymentMethod() {
                             </div>
                             <div className={`flex justify-between ${styles.payment__totalBill}`}>
                                 <span className='flex items-center'>
-                                    <p className='pr-4'>Tổng cộng/Total</p>
+                                    <p className='pr-5'>Tổng cộng/Total</p>
                                 </span>
                                 <span className='flex'>
                                     <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
