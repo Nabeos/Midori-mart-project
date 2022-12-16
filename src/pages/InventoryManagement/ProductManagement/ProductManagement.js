@@ -286,21 +286,21 @@ function ProductManagement(props) {
                                             {item.sku}
                                         </td>
                                         <td className="border border-slate-300 text-center">
-                                            {item.category.name}
+                                            {item?.category?.name}
                                         </td>
                                         <td className="border border-slate-300 text-center">
-                                            {item.price.toLocaleString()}đ
+                                            {item?.price?.toLocaleString()}đ
                                         </td>
 
                                         <td className="border border-slate-300 text-center">
-                                            {item?.expiryDate.map((productInfo, index) => {
-                                                quantityStatus = productInfo.quantityInPQ;
-                                                return <span>{productInfo.quantityInPQ}</span>
+                                            {item?.expiryDate?.map((productInfo, index) => {
+                                                quantityStatus = productInfo?.quantityInPQ;
+                                                return <span>{productInfo?.quantityInPQ}</span>
                                             })}
                                         </td>
                                         <td className="border border-slate-300 text-center">
-                                            {item?.expiryDate.map((productInfo, index) => {
-                                                return <span>{productInfo.expiryDate}</span>
+                                            {item?.expiryDate?.map((productInfo, index) => {
+                                                return <span>{productInfo?.expiryDate}</span>
                                             })}
                                         </td>
                                         <td className="border border-slate-300 text-center ">
