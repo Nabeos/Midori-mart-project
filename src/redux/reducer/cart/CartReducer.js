@@ -34,15 +34,27 @@ export const CartReducer = (state = initialState, action) => {
             localStorage.setItem("cart", JSON.stringify(state.cartList));
             return { ...state }
         case HANDLE_ADD_TO_CART_QUANTITY:
+            let quantityReal = 0;
             console.log("ACTION PRODUCT DETAIL ADD TO CART: ", action.productDetail);
-            console.log("TYPE OF: ", typeof (action.quantity));
+            console.log("QUANTITY: ", action.quantity);
+            console.log("QUANTITY IN STOCK: ", action.productDetail.quantity);
+            console.log("CART LOCAL STORAGE: ", JSON.parse(localStorage.getItem("cart")));
+            JSON.parse(localStorage.getItem("cart"))?.map((item, index) => {
+                console.log("ỈA RA MÁU: ", item);
+                if (item?.id == action?.productDetail?.id) {
+                    quantityReal = item?.quantity;
+                }
+            })
+            console.log("QUANTITY REAL: ", quantityReal);
             if (action.productDetail !== 0) {
                 let cartListAddToCartUpdate = [...state.cartList];
                 let cartItemAddToCartNeedUpdateAmount = cartListAddToCartUpdate.find(productItem => productItem?.slug === action.productDetail.slug);
                 let indexAddToCart = cartListAddToCartUpdate.findIndex(productItem => productItem?.slug === action.productDetail.slug);
                 if (indexAddToCart !== -1 && typeof (action.quantity) !== undefined && typeof (action.quantity) !== NaN) {
-                    cartItemAddToCartNeedUpdateAmount.quantity += action?.quantity;
-                    cartItemAddToCartNeedUpdateAmount = { ...cartItemAddToCartNeedUpdateAmount }
+                    if (quantityReal <= action.productDetail.quantity - 1) {
+                        cartItemAddToCartNeedUpdateAmount.quantity += action?.quantity;
+                        cartItemAddToCartNeedUpdateAmount = { ...cartItemAddToCartNeedUpdateAmount }
+                    }
                 } else if (indexAddToCart == -1 && typeof (action.quantity) !== undefined && typeof (action.quantity) !== NaN) {
                     let productItemAddToCartUpdate = { ...action.productDetail, quantity: action.quantity, quantityInStock: action.productDetail.quantity };
                     cartListAddToCartUpdate.push(productItemAddToCartUpdate);

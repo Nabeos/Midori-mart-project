@@ -120,10 +120,12 @@ function ProductDetail(props) {
   // console.log("COMMENT: ", productDetail?.comments);
   console.log("PRODUCT DETAIL: ", productDetail);
   console.log("BEST SELLER LIST: ", bestSellerProductList);
-  useEffect(() => {
-    // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
-    dispatch(getProductDetailAction(props.match.params.id));
-  }, [productDetail?.comments])
+
+  //CÁI NÀY NHỚ BỎ RA NHÉ
+  // useEffect(() => {
+  // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
+  // dispatch(getProductDetailAction(props.match.params.id));
+  // }, [productDetail?.comments])
 
   // useEffect(() => {
   //   // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
