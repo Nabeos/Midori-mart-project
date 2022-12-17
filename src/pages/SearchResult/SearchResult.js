@@ -88,7 +88,9 @@ export default function SearchResult(props) {
     dispatch(searchProductAction(localStorage.getItem("searchResultProductCustomer"), 0, 10));
     dispatch(searchProductLengthAction(localStorage.getItem("searchResultProductCustomer"), 0, 1000));
   }, [])
-
+  window.onpopstate = () => {
+    history.push("/");
+  }
   useEffect(() => {
     setCurrentCustom(1);
   }, [localStorage.getItem("searchResultProductCustomer")])
