@@ -215,10 +215,10 @@ export default function ExportGoods() {
           >
             <thead>
               <tr>
-                <th className="border border-slate-300 p-4 text-base text-center">
+                {/* <th className="border border-slate-300 p-4 text-base text-center">
                   {" "}
                   Id
-                </th>
+                </th> */}
 
                 <th className="border border-slate-300 p-4 text-base text-center">
                   Mã xuất kho
@@ -249,9 +249,9 @@ export default function ExportGoods() {
               {exportGoodsOrderList?.map((item, index) => {
 
                 return <tr>
-                  <td className="border border-slate-300 text-center">
+                  {/* <td className="border border-slate-300 text-center">
                     {item.id}
-                  </td>
+                  </td> */}
                   <td className="border border-slate-300 text-center">
                     {item.name}
                   </td>

@@ -40,6 +40,7 @@ function AddNewImportGoods(props) {
 
   const productListByCategoryId = useSelector(state => state.ProductReducer.productListByCategoryId);
   let productWithPrice = productListByCategoryId.find(item => item.id == values.importedProduct);
+  localStorage.setItem("priceImport", productWithPrice?.price);
   console.log("PRODUCT WITH PRICE: ", productWithPrice);
   console.log("productListByCategoryId IN ADD NEW PRODUCTS INTO IMPORT GOODS FORM: ", productListByCategoryId);
 
@@ -73,11 +74,11 @@ function AddNewImportGoods(props) {
               >
                 <option value="0" disabled>Chọn sản phẩm</option>
                 {productListByCategoryId.map((item, index) => {
-                  if (item.quantity == 0) {
-                    return <option key={index} value={item.id}>
-                      {item.title}
-                    </option>
-                  }
+                  // if (item.quantity == 0) {
+                  return <option key={index} value={item.id}>
+                    {item.title}
+                  </option>
+                  // }
                 })}
               </select>
 
@@ -97,8 +98,8 @@ function AddNewImportGoods(props) {
                 type="text"
                 id="price"
                 name="price"
-                value={productWithPrice?.price}
-                disabled
+                value={values.price}
+                // disabled
                 onChange={e => {
                   props.setFieldTouched('price')
                   handleChange(e)

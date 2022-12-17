@@ -237,10 +237,10 @@ export default function ImportGoods() {
           >
             <thead>
               <tr>
-                <th className="border border-slate-300 p-4 text-base text-center">
+                {/* <th className="border border-slate-300 p-4 text-base text-center">
                   {" "}
                   Id
-                </th>
+                </th> */}
 
                 <th className="border border-slate-300 p-4 text-base text-center">
                   Mã nhập kho
@@ -272,9 +272,9 @@ export default function ImportGoods() {
                 let totalBill = 0;
                 if (item.status == 1) {
                   return <tr>
-                    <td className="border border-slate-300 text-center">
+                    {/* <td className="border border-slate-300 text-center">
                       {item.id}
-                    </td>
+                    </td> */}
                     <td className="border border-slate-300 text-center">
                       {item.name}
                     </td>
