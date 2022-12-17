@@ -98,13 +98,13 @@ function ProductDetail(props) {
 
   // console.log("PROPS PRODUCT DETAIL: ", props?.productDetail?.category?.id);
 
-  const openNotification = (placement) => {
-    notification.success({
-      message: `Thêm sản phẩm vào giỏ hàng thành công`,
-      placement,
-      duration: 2
-    });
-  };
+  // const openNotification = (placement) => {
+  //   notification.success({
+  //     message: `Thêm sản phẩm vào giỏ hàng thành công`,
+  //     placement,
+  //     duration: 2
+  //   });
+  // };
   //   rating star
   const [currentValue, setCurrentValue] = useState(0);
   const dispatch = useDispatch();
@@ -150,7 +150,7 @@ function ProductDetail(props) {
   };
 
   const handleNavigateToCartPage = (productItem, num) => {
-    history.push("/cart");
+    // history.push("/cart");
     dispatch({
       type: BUY_NOW,
       productItem,
@@ -318,7 +318,7 @@ function ProductDetail(props) {
                         className={`${styles.productdetail__addtocart__button} text-center text-base font-medium focus:bg-green-800 focus:text-white focus:border-green-800`}
                         onClick={() => {
                           handleAddToCart(productDetail, num)
-                          openNotification('bottomRight')
+                          // openNotification('bottomRight')
                         }}
                       >
                         Thêm vào giỏ
@@ -337,7 +337,7 @@ function ProductDetail(props) {
                         className={`${styles.productdetail__addtocart__button} text-center text-base font-medium focus:bg-green-800 focus:text-white focus:border-green-800`}
                         onClick={() => {
                           handleAddToCart(productDetail, num)
-                          openNotification('bottomRight')
+                          // openNotification('bottomRight')
                         }}
                       >
                         Thêm vào giỏ

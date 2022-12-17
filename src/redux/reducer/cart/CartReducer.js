@@ -1,4 +1,6 @@
 import { BUY_NOW, DELETE_ALL_PRODUCTS_FROM_CART, HANDLE_ADD_TO_CART_QUANTITY, HANDLE_QUANTITY, REMOVE_PRODUCT_FROM_CART } from "../../type/cart/CartType"
+import { notification } from "antd";
+import { history } from "../../../App";
 let defaultCartList = [];
 if (localStorage.getItem("cart")) {
     defaultCartList = JSON.parse(localStorage.getItem("cart"));
@@ -11,6 +13,35 @@ const initialState = {
 }
 
 export const CartReducer = (state = initialState, action) => {
+    const openNotification = (placement) => {
+        notification.success({
+            message: `Thêm sản phẩm vào giỏ hàng thành công`,
+            placement,
+            duration: 2
+        });
+    };
+    const openNotificationAddToCartError = (placement) => {
+        notification.error({
+            message: `Thêm sản phẩm vào giỏ hàng thất bại`,
+            placement,
+            duration: 2
+        });
+    };
+
+    const openNotificationBuyNow = (placement) => {
+        notification.success({
+            message: `Thêm sản phẩm vào giỏ hàng thành công`,
+            placement,
+            duration: 2
+        });
+    };
+    const openNotificationBuyNowError = (placement) => {
+        notification.error({
+            message: `Thêm sản phẩm vào giỏ hàng thất bại`,
+            placement,
+            duration: 2
+        });
+    };
     switch (action.type) {
         case HANDLE_QUANTITY:
             let cartListUpdate = [...state.cartList]
@@ -40,24 +71,33 @@ export const CartReducer = (state = initialState, action) => {
             console.log("QUANTITY IN STOCK: ", action.productDetail.quantity);
             console.log("CART LOCAL STORAGE: ", JSON.parse(localStorage.getItem("cart")));
             JSON.parse(localStorage.getItem("cart"))?.map((item, index) => {
-                console.log("ỈA RA MÁU: ", item);
                 if (item?.id == action?.productDetail?.id) {
                     quantityReal = item?.quantity;
                 }
             })
-            console.log("QUANTITY REAL: ", quantityReal);
+            console.log("Số lượng có thể mua: ", action.productDetail.quantity - quantityReal);
             if (action.productDetail !== 0) {
                 let cartListAddToCartUpdate = [...state.cartList];
                 let cartItemAddToCartNeedUpdateAmount = cartListAddToCartUpdate.find(productItem => productItem?.slug === action.productDetail.slug);
                 let indexAddToCart = cartListAddToCartUpdate.findIndex(productItem => productItem?.slug === action.productDetail.slug);
                 if (indexAddToCart !== -1 && typeof (action.quantity) !== undefined && typeof (action.quantity) !== NaN) {
                     if (quantityReal <= action.productDetail.quantity - 1) {
-                        cartItemAddToCartNeedUpdateAmount.quantity += action?.quantity;
-                        cartItemAddToCartNeedUpdateAmount = { ...cartItemAddToCartNeedUpdateAmount }
+                        if (action?.quantity <= action.productDetail.quantity - quantityReal) {
+                            cartItemAddToCartNeedUpdateAmount.quantity += action?.quantity;
+                            cartItemAddToCartNeedUpdateAmount = { ...cartItemAddToCartNeedUpdateAmount }
+                            openNotification('bottomRight');
+                        } else {
+                            cartItemAddToCartNeedUpdateAmount.quantity += action.productDetail.quantity - quantityReal;
+                            cartItemAddToCartNeedUpdateAmount = { ...cartItemAddToCartNeedUpdateAmount }
+                            openNotification('bottomRight');
+                        }
+                    } else {
+                        openNotificationAddToCartError('bottomRight');
                     }
                 } else if (indexAddToCart == -1 && typeof (action.quantity) !== undefined && typeof (action.quantity) !== NaN) {
                     let productItemAddToCartUpdate = { ...action.productDetail, quantity: action.quantity, quantityInStock: action.productDetail.quantity };
                     cartListAddToCartUpdate.push(productItemAddToCartUpdate);
+                    openNotification('bottomRight');
                     state.cartList = cartListAddToCartUpdate;
                 }
             }
@@ -66,33 +106,43 @@ export const CartReducer = (state = initialState, action) => {
             return { ...state }
         case BUY_NOW:
             let cartListBuyNowUpdate = [...state.cartList];
-            console.log("ACTION.PRODUCT ITEM: ", action.productItem);
+            let quantityRealBuyNow = 0;
+            console.log("QUANTITY BUY NOW: ", action.num);
+            console.log("QUANTITY IN STOCK BUY NOW: ", action.productItem.quantity);
+            JSON.parse(localStorage.getItem("cart"))?.map((item, index) => {
+                console.log("ITEM BUY NOW IN LOCAL STORAGE: ", item);
+                if (item?.id == action?.productItem?.id) {
+                    quantityRealBuyNow = item?.quantity;
+                }
+            })
+            console.log("QUANTITY REAL BUY NOW: ", quantityRealBuyNow);
+            console.log("Hàng trong kho trừ hàng trong giỏ: ", action.productItem.quantity - quantityRealBuyNow);
             let productItemUpdate = { ...action.productItem, quantity: action.num, quantityInStock: action.productItem.quantity };
-            // let productItemUpdate = { productId: action.productItem.id, quantity: action.num, price: action.productItem.price, totalPrice: action.num * action.productItem.price };
             let cartItemNeedUpdateAmount = cartListBuyNowUpdate.find(productItem => productItem.slug === action.productItem.slug);
             let indexBuyNow = cartListBuyNowUpdate.findIndex(productItem => productItem.slug === action.productItem.slug);
             if (indexBuyNow !== -1) {
-                cartItemNeedUpdateAmount.quantity += action.num;
-                cartItemNeedUpdateAmount = { ...cartItemNeedUpdateAmount }
+                if (quantityRealBuyNow <= action.productItem.quantity - 1) {
+                    if (action.num <= action.productItem.quantity - quantityRealBuyNow) {
+                        history.push("/cart");
+                        openNotificationBuyNow('bottomRight');
+                        cartItemNeedUpdateAmount.quantity += action.num;
+                        cartItemNeedUpdateAmount = { ...cartItemNeedUpdateAmount }
+                    } else {
+                        history.push("/cart");
+                        openNotificationBuyNow('bottomRight');
+                        cartItemNeedUpdateAmount.quantity += action.productItem.quantity - quantityRealBuyNow;
+                        cartItemNeedUpdateAmount = { ...cartItemNeedUpdateAmount }
+                    }
+                } else {
+                    openNotificationBuyNowError('bottomRight');
+                }
             } else {
+                history.push("/cart");
+                openNotificationBuyNow('bottomRight');
                 cartListBuyNowUpdate.push(productItemUpdate);
                 state.cartList = cartListBuyNowUpdate;
             }
-            // let cartListBuyNowUpdateLocalStorage = [...state.cartListLocalStorage];
-            // let totalPriceDesired = 0;
-            // totalPriceDesired = action.num * action.productItem.price;
-            // let productItemUpdateLocalStorage = { productId: action.productItem.id, quantity: action.num, price: action.productItem.price, totalPrice: totalPriceDesired };
-            // let cartItemNeedUpdateAmountLocalStorage = cartListBuyNowUpdateLocalStorage.find(productItem => productItem.productId === action.productItem.id);
-            // let indexBuyNowLocalStorage = cartListBuyNowUpdateLocalStorage.findIndex(productItem => productItem.productId === action.productItem.id);
-            // if (indexBuyNowLocalStorage !== -1) {
-            //     cartItemNeedUpdateAmountLocalStorage.quantity += action.num;
-            //     cartItemNeedUpdateAmountLocalStorage = { ...cartItemNeedUpdateAmountLocalStorage }
-            // } else {
-            //     cartListBuyNowUpdateLocalStorage.push(productItemUpdateLocalStorage);
-            //     state.cartListLocalStorage = cartListBuyNowUpdateLocalStorage;
-            // }
             localStorage.setItem("cart", JSON.stringify(state.cartList));
-            // localStorage.setItem("cart", JSON.stringify(state.cartListLocalStorage));
             return { ...state }
 
         case REMOVE_PRODUCT_FROM_CART:
