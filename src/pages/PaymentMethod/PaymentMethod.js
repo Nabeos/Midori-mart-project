@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import styles from './PaymentMethod.module.css';
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
@@ -207,19 +207,18 @@ export default function PaymentMethod() {
                                 <p className='mb-0'>Tạm tính/Notional price</p>
                                 <p className='mb-0'>{totalBill.toLocaleString()}<span className='underline'>đ</span></p>
                             </div>
-                            <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
+                            {localStorage.getItem("receiveProductsMethod") == 1 ? <div className={`flex justify-between h-12 items-center mb-3 ${styles.payment__totalBill}`}>
                                 <p className='pr-5 mb-0'>Phí vận chuyển tạm tính/Transfer costs</p>
                                 <p className='mb-0'>{transferCost.toLocaleString()}<span className='underline'>đ</span></p>
-                            </div>
+                            </div> : <Fragment></Fragment>}
                             <div className={`flex justify-between ${styles.payment__totalBill}`}>
                                 <span className='flex items-center'>
                                     <p className='pr-5'>Tổng cộng/Total</p>
                                 </span>
                                 <span className='flex'>
                                     <span className='mr-2 text-xs mt-2' style={{ color: '#969696' }}>VND</span>
-                                    <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p>
+                                    {localStorage.getItem("receiveProductsMethod") == 1 ? <p className='text-2xl'>{(totalBill + transferCost).toLocaleString()}<span className='underline'>đ</span></p> : <p className='text-2xl'>{(totalBill).toLocaleString()}<span className='underline'>đ</span></p>}
                                 </span>
-
                             </div>
                         </div>
                     </div>
