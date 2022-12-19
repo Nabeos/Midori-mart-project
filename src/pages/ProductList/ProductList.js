@@ -84,7 +84,6 @@ export default function ProductList(props) {
   console.log("ROLE ID IN HOMEPAGE: ", user?.roleId);
   let merchantArr = [];
   for (let index = 0; index < productListByCategoryId.length; index++) {
-    console.log("KHÓ VL: ", productListByCategoryId[index].merchant.country.name)
     merchantArr.push(productListByCategoryId[index].merchant.country);
   }
   let merchant = merchantArr.filter((ele, ind) => ind === merchantArr.findIndex(elem => elem.code === ele.code && elem.name === ele.name));

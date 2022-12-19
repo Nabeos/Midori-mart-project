@@ -30,7 +30,6 @@ function AddNewImportGoods(props) {
     setFieldValue
   } = props;
 
-  console.log("VALUES SAO KHÔNG HIỆN: ", values);
 
   const dispatch = useDispatch();
 
