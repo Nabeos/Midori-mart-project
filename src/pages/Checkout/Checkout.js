@@ -61,7 +61,11 @@ function Checkout(props) {
         return cartList.map((item, index) => {
             totalBill += item.price * item.quantity;
             if (index == cartList.length - 1) {
-                localStorage.setItem("totalBill", totalBill + transferCost);
+                if (values.flag == 1) {
+                    localStorage.setItem("totalBill", totalBill + transferCost);
+                } else if (values.flag == 0) {
+                    localStorage.setItem("totalBill", totalBill);
+                }
             }
             return <div className='flex justify-between mb-3' key={index}>
                 <div className='flex'>
