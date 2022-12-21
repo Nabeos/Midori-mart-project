@@ -53,6 +53,7 @@ import { USER } from './redux/type/user/UserType';
 import { TOKEN } from './utils/settings/config';
 import GuestNotification from './pages/GuestNotification/GuestNotification';
 import GuestNotificationRefund from './pages/GuestNotficationRefund/GuestNotificationRefund';
+import PaymentResult from './pages/PaymentResult/PaymentResult';
 
 
 
@@ -65,6 +66,7 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/productlist/best-sellers" component={AllBestSellerProductsInHomepageInWeek} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/paymentresult" component={PaymentResult} />
         <Route exact path="/guestnotification/:orderNumber/:orderCode" component={GuestNotification} />
         <Route exact path="/guestnotificationrefund/:orderNumber/:orderCode" component={GuestNotificationRefund} />
         <Route exact path="/checkout/:orderId" component={Checkout} />

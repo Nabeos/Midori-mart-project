@@ -18,6 +18,7 @@ export default function ExportGoodsDetail(props) {
   const exportGoodsOrderDetailedInformation = JSON.parse(localStorage.getItem("exportGoodsDetailInfo"));
   console.log("exportGoodsOrderDetailedInformation: ", exportGoodsOrderDetailedInformation);
   let { createdBy, createdAt, name, note, deliveryDetail, orderDate, order } = exportGoodsOrderDetailedInformation;
+  console.log("RECEIVE PRODUCT METHOD: ", order?.receiveProductsMethod);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
@@ -66,7 +67,7 @@ export default function ExportGoodsDetail(props) {
                   <div className="text-2xl flex" style={{ width: "80%" }}>
                     <span className="font-semibold">Mã số phiếu xuất kho:</span>{" "}
                     <Input
-                    disabled
+                      disabled
                       type="text"
                       id="product_name"
                       value={name}
@@ -107,7 +108,7 @@ export default function ExportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Người tạo đơn:</span>{" "}
                     <Input
-                    disabled
+                      disabled
                       type="text"
                       id="product_name"
                       value={createdBy}
@@ -119,7 +120,7 @@ export default function ExportGoodsDetail(props) {
                   <div>
                     <span className="text-base">Ngày tạo đơn:</span>{" "}
                     <Input
-                    disabled
+                      disabled
                       type="text"
                       id="product_name"
                       value={createdAt}
@@ -292,7 +293,9 @@ export default function ExportGoodsDetail(props) {
                       <span className="font-semibold">
                         Tổng giá trị đơn hàng:{" "}
                       </span>{" "}
-                      {totalBill.toLocaleString()}đ
+                      {order?.receiveProductsMethod == "Nhận Tại Cửa Hàng" ? totalBill.toLocaleString() : (totalBill + 30000).toLocaleString()}đ
+
+
                     </div>
                   </div>
                   <div
@@ -315,7 +318,7 @@ export default function ExportGoodsDetail(props) {
             </Form>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
