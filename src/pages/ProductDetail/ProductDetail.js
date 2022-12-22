@@ -94,6 +94,7 @@ function ProductDetail(props) {
     handleChange,
     handleBlur,
     handleSubmit,
+    setFieldValue
   } = props;
 
   // console.log("PROPS PRODUCT DETAIL: ", props?.productDetail?.category?.id);
@@ -106,11 +107,17 @@ function ProductDetail(props) {
   //   });
   // };
   //   rating star
-  const [currentValue, setCurrentValue] = useState(0);
+  const [currentValue, setCurrentValue] = useState(5);
+
   const dispatch = useDispatch();
   useEffect(() => {
     // console.log("CÓ VÀO USE EFFECT PRODUCT DETAIL");
     window.scrollTo(0, 0);
+    setFieldValue("starRate", currentValue);
+    dispatch({
+      type: UPDATE_STAR_RATE,
+      starRateUpdate: currentValue
+    })
     // localStorage.setItem("slugLocal", props.match.params.id);
     dispatch(getProductDetailAction(props.match.params.id));
     dispatch(getBestSellerProductListByCategoryIdAction(props.match.params.categoryId));
@@ -166,7 +173,7 @@ function ProductDetail(props) {
   }
 
   const renderCustomerReviewList = () => {
-    console.log("SỐ COMMENT: ", productDetail?.comments?.length);
+    console.log("SỐ COMMENT: ", productDetail?.comments);
     if (productDetail?.comments?.length == 0) {
       return <div className="pl-6">Sản phẩm này hiện chưa có đánh giá nào.</div>
     } else if (productDetail?.comments?.length > 0) {
@@ -214,8 +221,8 @@ function ProductDetail(props) {
                       <Rate
                         disabled
                         className="text-base mb-0"
-                        // value={productDetail?.star}
-                        value="0.5"
+                        value={productDetail?.star}
+                      // value="0.5"
                       />
                     </div>
                     <div className="mt-1">
@@ -499,6 +506,7 @@ function ProductDetail(props) {
                       <Rate
                         // onChange={handleChange}
                         onChange={(value) => {
+                          console.log("SỐ SAO KHÁCH RATE: ", value);
                           setCurrentValue(value);
                           dispatch({
                             type: UPDATE_STAR_RATE,
@@ -644,7 +652,8 @@ const ProductDetailWithFormik = withFormik({
   mapPropsToValues: (props) => ({
     starRate: props.starRate,
     content: "",
-    slug: props.productDetail.slug
+    slug: props.productDetail.slug,
+    productDetail: props?.productDetail
   }),
 
   // Custom sync validation
@@ -664,7 +673,19 @@ const ProductDetailWithFormik = withFormik({
     }
     console.log("SLUG FORMIK: ", values.slug);
     console.log("data add comment: ", data);
-    props.dispatch(AddCommentAction(values.slug, data));
+    let userLocalStorage = JSON.parse(localStorage.getItem(USER));
+    console.log("USER HANDLE SUBMIT: ", userLocalStorage.fullname);
+    console.log("COMMENTS HANDLE SUBMIT: ", values?.productDetail?.comments);
+    let index = values?.productDetail?.comments.findIndex(item => item.user.fullname == userLocalStorage.fullname);
+    console.log("INDEX:", index);
+    if (index != -1) {
+      alert("Quý khách chỉ được để lại bình luận cho sản phẩm đã mua 1 lần duy nhất !");
+      values.content = "";
+    } else {
+      console.log("SỐ COMMENT HANDLE SUBMIT: ", values?.productDetail?.comments);
+      props.dispatch(AddCommentAction(values.slug, data));
+    }
+
   },
 
   displayName: 'ProductDetailWithFormik'
