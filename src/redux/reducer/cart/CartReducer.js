@@ -95,9 +95,23 @@ export const CartReducer = (state = initialState, action) => {
                         openNotificationAddToCartError('bottomRight');
                     }
                 } else if (indexAddToCart == -1 && typeof (action.quantity) !== undefined && typeof (action.quantity) !== NaN) {
+
                     let productItemAddToCartUpdate = { ...action.productDetail, quantity: action.quantity, quantityInStock: action.productDetail.quantity };
+                    console.log("SẢN PHẨM MỚI QUANTITY: ", productItemAddToCartUpdate.quantity);
+                    console.log("SỐ LƯỢNG HÀNG TRONG KHO CỦA SP MỚI: ", productItemAddToCartUpdate.quantityInStock);
+                    if (productItemAddToCartUpdate.quantity <= productItemAddToCartUpdate.quantityInStock) {
+
+                    } else {
+                        productItemAddToCartUpdate.quantity = productItemAddToCartUpdate.quantityInStock;
+                    }
                     cartListAddToCartUpdate.push(productItemAddToCartUpdate);
                     openNotification('bottomRight');
+
+
+
+
+                    // cartListAddToCartUpdate.push(productItemAddToCartUpdate);
+                    // openNotification('bottomRight');
                     state.cartList = cartListAddToCartUpdate;
                 }
             }
@@ -137,9 +151,15 @@ export const CartReducer = (state = initialState, action) => {
                     openNotificationBuyNowError('bottomRight');
                 }
             } else {
+                console.log("SẢN PHẨM MỚI MUA NGAY: ", productItemUpdate);
+                if (productItemUpdate.quantity <= productItemUpdate.quantityInStock) {
+
+                } else {
+                    productItemUpdate.quantity = productItemUpdate.quantityInStock;
+                }
                 history.push("/cart");
-                openNotificationBuyNow('bottomRight');
                 cartListBuyNowUpdate.push(productItemUpdate);
+                openNotificationBuyNow('bottomRight');
                 state.cartList = cartListBuyNowUpdate;
             }
             localStorage.setItem("cart", JSON.stringify(state.cartList));
