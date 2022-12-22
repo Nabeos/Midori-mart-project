@@ -90,6 +90,7 @@ export default function UserOrderPendingDetail() {
               </thead>
               <tbody>
                 {inProgressItem.orderDetail.map((item, index) => {
+                  // totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
                   totalBill += item.price * item.quantity;
                   // if (index == 0) {
                   //   totalBill = item.totalBill;

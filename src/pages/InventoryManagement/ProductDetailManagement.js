@@ -364,7 +364,7 @@ function ProductDetailManagement(props) {
                         props.setFieldTouched('productCategories')
                         handleChange(e)
                       }}
-                      style={{ width: "100%", height: "45px" }}
+                      style={{ width: "90%", height: "45px" }}
                     >
                       <option className="text-opacity-10" value={0} disabled>
                         Chọn danh mục sản phẩm
@@ -376,6 +376,32 @@ function ProductDetailManagement(props) {
                   </Form.Item>
                   {errors.productCategories && touched.productCategories ? <div className='text-red-600'>{errors.productCategories}</div> : <div></div>}
                 </div>
+
+                <div style={{ width: "100%" }}>
+                  <label
+                    for="discount"
+                    className="block mb-2 font-normal text-gray-900 dark:text-gray-300"
+                  >
+                    <span className="text-lg font-semibold">Giảm giá</span>
+                  </label>
+                  <Form.Item className="mb-1">
+                    <Input
+                      type="text"
+                      id="discount"
+                      name="discount"
+                      onChange={e => {
+                        props.setFieldTouched('discount')
+                        handleChange(e)
+                      }}
+                      value={values.discount}
+                      className={`${styles.productdetailmanagement__border__hover} text-gray-900 text-base rounded-lg shadow-none focus:border-green-900 block w-full p-2.5`}
+                      placeholder="Giảm giá"
+                      style={{ width: "100%", height: "45px" }}
+                    />
+                  </Form.Item>
+                  {errors.discount && touched.discount ? <div className='text-red-600'>{errors.discount}</div> : <div></div>}
+                </div>
+
               </div>
 
               {/* <div className="flex flex-row ">
@@ -598,6 +624,7 @@ const ProductDetailManagementWithFormik = withFormik({
     amount: props.productDetail.amount,
     productUnit: props?.productDetail?.unit?.id,
     price: props.productDetail.price,
+    discount: props.productDetail.discount,
     // productDiscount: 0,
     productOrigin: props?.productDetail?.origin?.code,
     productCategories: props?.productDetail?.category?.id,
@@ -619,6 +646,9 @@ const ProductDetailManagementWithFormik = withFormik({
     price: Yup.string()
       .required("Vui lòng không để trống giá sản phẩm !!!")
       .matches(regexSelect, "Giá sản phẩm chỉ được phép chứa số và phải lớn hơn 0"),
+    discount: Yup.string()
+      .required("Vui lòng không để trống khuyến mãi !!!")
+      .matches(regexSelect, "Phần khuyến mãi chỉ được phép chứa số và phải lớn hơn 0"),
     // productDiscount: Yup.string()
     // .required("Vui lòng không để trống mục khuyến mãi !!!")
     // .matches(regexSelect, "Vui lòng không để trống mục khuyến mãi !!!"),
@@ -647,6 +677,7 @@ const ProductDetailManagementWithFormik = withFormik({
         // "productDiscount": values.productDiscount,
         "origin": values.productOrigin,
         "category": values.productCategories,
+        "discount": values.discount,
         "description": values.productDescription
       }
     }

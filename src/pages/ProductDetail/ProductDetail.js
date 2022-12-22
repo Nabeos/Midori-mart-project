@@ -134,6 +134,7 @@ function ProductDetail(props) {
 
   // quantity handle
   let [num, setNum] = useState(1);
+  console.log("NUM: ", num);
   let totalInStock = 0;
   let incNum = () => {
     if (num < productDetail?.quantity) {
@@ -151,6 +152,7 @@ function ProductDetail(props) {
 
   const handleNavigateToCartPage = (productItem, num) => {
     // history.push("/cart");
+    num = Number(num);
     dispatch({
       type: BUY_NOW,
       productItem,
@@ -159,6 +161,7 @@ function ProductDetail(props) {
   }
 
   const handleAddToCart = (productDetail, num) => {
+    num = Number(num);
     dispatch(handleAddToCartQuantity(productDetail, num));
   }
 
@@ -211,7 +214,8 @@ function ProductDetail(props) {
                       <Rate
                         disabled
                         className="text-base mb-0"
-                        value={productDetail?.star}
+                        // value={productDetail?.star}
+                        value="0.5"
                       />
                     </div>
                     <div className="mt-1">
@@ -281,7 +285,7 @@ function ProductDetail(props) {
                           </div>
                           <Input
                             type="text"
-                            readOnly
+                            // readOnly
                             className={`${styles.productdetail__quantity} text-center shadow-none text-base`}
                             value={num}
                             onChange={handleChangeNumber}
@@ -300,10 +304,12 @@ function ProductDetail(props) {
                       </div>
                     </div>}
 
+                    {productDetail?.discount == 0 ? <div className="text-3xl font-bold my-2">{(productDetail?.price * num).toLocaleString()}đ</div> : <div className="my-2">
+                      <span className="text-3xl my-2 mr-2 line-through text-gray-400">{(productDetail?.price * num).toLocaleString()}đ</span>
+                      <span className="text-3xl font-bold my-2 ">{(productDetail?.price * num * (1 - (productDetail?.discount / 100))).toLocaleString()}đ</span>
+                    </div>}
 
-                    <div className="text-3xl font-bold my-2">{(productDetail?.price * num).toLocaleString()}đ</div>
                     {productDetail?.quantity == 0 ? <div className="mt-1">
-
                       <Button
                         disabled
                         className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
@@ -324,7 +330,6 @@ function ProductDetail(props) {
                         Thêm vào giỏ
                       </Button>
                     </div> : <div className="mt-1">
-
                       <Button
                         className={`${styles.productdetail__buynow__button} text-center text-base font-medium shadow-none focus:border-green-800 focus:text-green-800`}
                         onClick={() => {
@@ -598,7 +603,7 @@ function ProductDetail(props) {
                           </p>
                           <Card.Text>
                             <div className="text-xs">SKU: {item.sku}</div>
-                            <div className="text-lg mt-2 font-normal">{item.price.toLocaleString()}đ</div>
+                            <div className="text-lg mt-2 font-normal">{(item.price * (1 - (item.discount / 100))).toLocaleString()}đ</div>
                           </Card.Text>
                         </div>
 

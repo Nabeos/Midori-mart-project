@@ -84,7 +84,10 @@ function Cart(props) {
     const handleDisplayProductsInCart = () => {
         return cartList?.map((item, index) => {
             console.log("item: ", item);
-            totalBill += item?.price * item?.quantity;
+            if (item.quantity <= 0) {
+                item.quantity = 1;
+            }
+            totalBill += ((item?.price) * (1 - (item?.discount / 100))) * item?.quantity;
             return <tr height="10px" className='pb-0' key={index} style={{ borderBottom: '1px solid rgba(166, 157, 157, 0.3)' }}>
                 <td className='h-auto'>
                     <span className='d-flex'>
@@ -99,7 +102,7 @@ function Cart(props) {
                     </span>
                 </td>
                 <td>
-                    <span className='text-red-700 font-bold'>{item?.price?.toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span>
+                    <span className='text-red-700 font-bold'>{((item?.price) * (1 - (item?.discount / 100)))?.toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span>
                 </td>
                 <td>
                     <div className='d-flex items-center' style={{}}>
@@ -132,7 +135,7 @@ function Cart(props) {
 
                     {/* Chỉnh lại từ 49 đến 61 */}
                 </td>
-                <td><span className='text-red-700 font-bold'>{(item?.quantity * item?.price).toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span></td>
+                <td><span className='text-red-700 font-bold'>{(item?.quantity * ((item?.price) * (1 - (item?.discount / 100)))).toLocaleString()}</span><span className='underline text-red-700 font-bold'>đ</span></td>
                 <td>
 
                     <Popconfirm placement="top"

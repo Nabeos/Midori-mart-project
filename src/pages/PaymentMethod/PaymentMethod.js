@@ -38,24 +38,24 @@ export default function PaymentMethod() {
     }
     const handleFinishOrder = () => {
         if (flagPayment == 1) {
-            Swal.fire({
-                title: 'Cảm ơn quý khách đã đặt hàng',
-                width: '700px',
-                imageUrl: 'https://www.supermarketnews.com/sites/supermarketnews.com/files/styles/article_featured_retina/public/Grocery%20delivery%20GettyImages-1216930551.jpg?itok=GWW_MNb0',
-                imageWidth: '90%',
-                text: 'Đơn hàng của quý khách sẽ được kiểm duyệt và email tình trạng đơn hàng tới quý khách trong thời gian sớm nhất',
-                confirmButtonText: 'Trở về trang chủ',
-                confirmButtonColor: '#2f855a',
-                focusConfirm: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.removeItem("cart");
-                    localStorage.removeItem("deliveryDate");
-                    localStorage.removeItem("deliveryTimeRange");
-                    history.push("/");
-                    window.location.reload();
-                }
-            })
+            // Swal.fire({
+            //     title: 'Cảm ơn quý khách đã đặt hàng',
+            //     width: '700px',
+            //     imageUrl: 'https://www.supermarketnews.com/sites/supermarketnews.com/files/styles/article_featured_retina/public/Grocery%20delivery%20GettyImages-1216930551.jpg?itok=GWW_MNb0',
+            //     imageWidth: '90%',
+            //     text: 'Đơn hàng của quý khách sẽ được kiểm duyệt và email tình trạng đơn hàng tới quý khách trong thời gian sớm nhất',
+            //     confirmButtonText: 'Trở về trang chủ',
+            //     confirmButtonColor: '#2f855a',
+            //     focusConfirm: false
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         localStorage.removeItem("cart");
+            //         localStorage.removeItem("deliveryDate");
+            //         localStorage.removeItem("deliveryTimeRange");
+            //         history.push("/");
+            //         window.location.reload();
+            //     }
+            // })
             localStorage.setItem("paymentMethod", flagPayment);
             let cartListPaymentMethod = JSON.parse(localStorage.getItem("cart"));
             let cartListPaymentMethodCustom = cartListPaymentMethod.map((item, index) => {
@@ -93,7 +93,7 @@ export default function PaymentMethod() {
     }
     const handleRenderProductsInCart = () => {
         return cartList.map((item, index) => {
-            totalBill += item.price * item.quantity;
+            totalBill += ((item.price) * (1 - (item.discount / 100))) * item.quantity;
             return <div className='flex justify-between mb-3' key={index}>
                 <div className='flex'>
                     {item?.thumbnails?.map((image, index) => {
@@ -110,7 +110,7 @@ export default function PaymentMethod() {
                     </div>
                 </div>
                 <div>
-                    {(item.price * item.quantity).toLocaleString()}<span className='underline'>đ</span>
+                    {(((item.price) * (1 - (item.discount / 100))) * item.quantity).toLocaleString()}<span className='underline'>đ</span>
                 </div>
             </div >
         })

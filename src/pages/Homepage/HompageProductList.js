@@ -43,7 +43,11 @@ function Product(props) {
               {(product?.quantity == 0) ? <span className="text-red-600">Hết hàng</span> : <Fragment></Fragment>}
               {(product?.quantity >= 20) ? <span className="text-green-600">Còn hàng</span> : <Fragment></Fragment>}
               {(product?.quantity < 20 && product?.quantity > 0) ? <span className="text-yellow-600">Ít hàng</span> : <Fragment></Fragment>}
-              <div className="text-sm mt-1 font-normal">{product.price.toLocaleString()}đ</div>
+              {product?.discount == 0 ? <div className="text-sm mt-1 font-normal my-2">{(product?.price).toLocaleString()}đ</div> : <div className="my-2">
+                <span className="text-sm mt-1 mr-1 line-through text-red-600">{(product?.price).toLocaleString()}đ</span>
+                <span className="text-sm font-normal">{(product?.price * (1 - (product?.discount / 100))).toLocaleString()}đ</span>
+              </div>}
+              {/* <div className="text-sm mt-1 font-normal">{product.price.toLocaleString()}đ</div> */}
             </header>
 
           </div>

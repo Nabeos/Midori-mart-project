@@ -101,8 +101,8 @@ function ImportSheet(props) {
               <div className="mt-3 ml-3">
                 <div className="flex">
                   <div className="text-2xl flex" style={{ width: "60%" }}>
-                    <span className="font-semibold">Mã số phiếu nhập kho:</span>{" "}
-                    <Input
+                    <span className="font-semibold">Phiếu nhập kho mới</span>{" "}
+                    {/* <Input
                       type="text"
                       id="importCode"
                       name="importCode"
@@ -114,9 +114,9 @@ function ImportSheet(props) {
                       className=" text-gray-900 ml-2 text-base rounded-lg shadow-none hover:border-green-700 focus:border-green-900 block w-full p-2.5"
                       placeholder="Mã phiếu nhập kho"
                       style={{ width: "200px", height: "35px" }}
-                    />
+                    /> */}
                   </div>
-                  {errors.importCode && touched.importCode ? <div className='text-red-600'>{errors.importCode}</div> : <div></div>}
+                  {/* {errors.importCode && touched.importCode ? <div className='text-red-600'>{errors.importCode}</div> : <div></div>} */}
                   <div className="flex justify-end mr-3" style={{ width: "90%" }}>
                     <Popconfirm placement="top"
                       onConfirm={handleSubmit}
@@ -407,7 +407,7 @@ const regexSelect = /^[1-9]$/;
 const ImportSheetWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => ({
-    importCode: localStorage.getItem("importCode"),
+    // importCode: localStorage.getItem("importCode"),
     manufactureCompany: localStorage.getItem("manufactureCompany"),
     createdDate: "",
     createdBy: JSON.parse(localStorage.getItem(USER))?.id,
@@ -417,8 +417,8 @@ const ImportSheetWithFormik = withFormik({
 
   // Custom sync validation
   validationSchema: Yup.object().shape({
-    importCode: Yup.string()
-      .required("Vui lòng không được để trống mã nhập kho !!!").trim().nullable(),
+    // importCode: Yup.string()
+    //   .required("Vui lòng không được để trống mã nhập kho !!!").trim().nullable(),
     manufactureCompany: Yup.string()
       .required("Vui lòng không được để trống thông tin nhà cung cấp !!!").nullable(),
     importedProductInForm: Yup.array().min(1, "Vui lòng không được để trống sản phẩm nhập kho !!!")
@@ -431,7 +431,8 @@ const ImportSheetWithFormik = withFormik({
     // console.log("VALUE FORM ADD NEW PRODUCT FOR SELLER: ", values);
     let data = {
       "receivedNote": {
-        "name": localStorage.getItem("importCode"),
+        // "name": localStorage.getItem("importCode"),
+        "name": "abc",
         "merchant": values.manufactureCompany,
         "note": values.note,
         "receivedDetail": values.importedProductInForm

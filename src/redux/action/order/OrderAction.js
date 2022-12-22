@@ -539,10 +539,40 @@ export const createNewOrderAction = (newOrderInfo) => {
         try {
             const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
             console.log("RESULT CREATE NEW ORDER: ", result);
+            Swal.fire({
+                title: 'Cảm ơn quý khách đã đặt hàng',
+                width: '700px',
+                imageUrl: 'https://www.supermarketnews.com/sites/supermarketnews.com/files/styles/article_featured_retina/public/Grocery%20delivery%20GettyImages-1216930551.jpg?itok=GWW_MNb0',
+                imageWidth: '90%',
+                text: 'Đơn hàng của quý khách sẽ được kiểm duyệt và email tình trạng đơn hàng tới quý khách trong thời gian sớm nhất',
+                confirmButtonText: 'Trở về trang chủ',
+                confirmButtonColor: '#2f855a',
+                focusConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("deliveryDate");
+                    localStorage.removeItem("deliveryTimeRange");
+                    history.push("/");
+                    window.location.reload();
+                }
+            })
             dispatch({
                 type: CREATE_NEW_ORDER
             })
         } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: "Số lượng hàng trong kho không còn đủ. Mong quý khách thông cảm !",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("deliveryDate");
+                    localStorage.removeItem("deliveryTimeRange");
+                    history.push("/");
+                    window.location.reload();
+                }
+            })
             console.log('error', error.response.data);
         }
     }

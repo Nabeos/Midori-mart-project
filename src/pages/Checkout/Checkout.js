@@ -59,7 +59,7 @@ function Checkout(props) {
     // }
     const handleRenderProductsInCart = () => {
         return cartList.map((item, index) => {
-            totalBill += item.price * item.quantity;
+            totalBill += ((item.price) * (1 - (item.discount / 100))) * item.quantity;
             if (index == cartList.length - 1) {
                 if (values.flag == 1) {
                     localStorage.setItem("totalBill", totalBill + transferCost);
@@ -81,7 +81,7 @@ function Checkout(props) {
                     </div>
                 </div>
                 <div>
-                    {(item.price * item.quantity).toLocaleString()}<span className='underline'>đ</span>
+                    {((item.price * (1 - (item.discount / 100))) * item.quantity).toLocaleString()}<span className='underline'>đ</span>
                 </div>
             </div >
         })

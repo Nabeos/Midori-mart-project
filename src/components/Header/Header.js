@@ -197,7 +197,10 @@ function Header(props) {
         <div className="col-span-1 text-center -mt-9">
           <ShoppingCartOutlined onClick={handleNavigateToCartPage} className="text-3xl mb-2 " />
           {cartList.map((item, index) => {
-            totalQuantityInCart += item.quantity;
+            if (item.quantity <= 0) {
+              item.quantity = 1;
+            }
+            totalQuantityInCart += Number(item.quantity);
           })}
           <span>({totalQuantityInCart})</span>
         </div>
