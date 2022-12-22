@@ -74,7 +74,7 @@ export default function SuccessfulOrderDetail(props) {
               </thead>
               <tbody>
                 {successfulItem.orderDetail.map((item, index) => {
-                  totalBill += item.price * item.quantity;
+                  totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
                   return <tr>
                     <td className="border border-slate-300 text-base text-center">
                       {index + 1}
@@ -89,7 +89,7 @@ export default function SuccessfulOrderDetail(props) {
                       {item.sku}
                     </td>
                     <td className="border border-slate-300 text-base text-center">
-                      {item.price.toLocaleString()}đ
+                      {(item.price * (1 - (item.discount / 100))).toLocaleString()}đ
                     </td>
                     <td className="border border-slate-300 text-base text-center">
                       {item.quantity}

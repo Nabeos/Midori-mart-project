@@ -100,7 +100,7 @@ export default function NewOrderDetail(props) {
               </thead>
               <tbody>
                 {item?.orderDetail?.map((item, index) => {
-                  totalBill += item.price * item.quantity;
+                  totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
                   return <tr>
                     <td className="border border-slate-300 text-base text-center">
                       {index + 1}
@@ -123,7 +123,7 @@ export default function NewOrderDetail(props) {
                       {item.sku}
                     </td>
                     <td className="border border-slate-300 text-base text-center">
-                      {item.totalPrice / item.quantity}
+                      {((item.totalPrice * (1 - (item.discount / 100))) / item.quantity).toLocaleString()}đ
                     </td>
                     <td className="border border-slate-300 text-base text-center">
                       {item.quantity}

@@ -7,9 +7,10 @@ import { Checkbox } from 'antd';
 import { Alert } from 'antd';
 import Swal from 'sweetalert2'
 import { SET_PAYMENT_BY_COD, SET_PAYMENT_BY_MOMO } from '../../redux/type/order/OrderType';
-import { createNewOrderAction } from '../../redux/action/order/OrderAction';
+import { createNewOrderAction, createNewOrderVnpayAction } from '../../redux/action/order/OrderAction';
 import { USER } from '../../redux/type/user/UserType';
 import { Redirect } from 'react-router-dom';
+import { navigateToVnpayPaymentPageAction } from '../../redux/action/payment/PaymentAction';
 
 export default function PaymentMethod() {
     let totalBill = 0;
@@ -59,10 +60,12 @@ export default function PaymentMethod() {
             localStorage.setItem("paymentMethod", flagPayment);
             let cartListPaymentMethod = JSON.parse(localStorage.getItem("cart"));
             let cartListPaymentMethodCustom = cartListPaymentMethod.map((item, index) => {
+                console.log("ITEM DISCOUNT DUY ANH CẦN: ", item);
                 return item = {
                     "productId": item.id,
                     "quantity": item.quantity,
                     "price": item.price,
+                    "discount": item.discount,
                     "totalPrice": item.quantity * item.price
                 }
             })
@@ -87,8 +90,37 @@ export default function PaymentMethod() {
             dispatch(createNewOrderAction(data));
 
         } else {
+            let cartListPaymentMethod = JSON.parse(localStorage.getItem("cart"));
+            let cartListPaymentMethodCustom = cartListPaymentMethod.map((item, index) => {
+                return item = {
+                    "productId": item.id,
+                    "quantity": item.quantity,
+                    "price": item.price,
+                    "totalPrice": item.quantity * item.price
+                }
+            })
+            let data = {
+                "orderinformation": {
+                    "fullName": localStorage.getItem("fullName"),
+                    "email": localStorage.getItem("email"),
+                    "phoneNumber": localStorage.getItem("phoneNumber"),
+                    "receiveProductsMethod": localStorage.getItem("receiveProductsMethod"),
+                    "address": JSON.parse(localStorage.getItem("address")),
+                    "paymentMethod": localStorage.getItem("paymentMethod"),
+                    "deliveryDate": localStorage.getItem("deliveryDate"),
+                    "deliveryTimeRange": localStorage.getItem("deliveryTimeRange"),
+                    "cart": cartListPaymentMethodCustom,
+                    "note": localStorage.getItem("note"),
+                    "totalBill": localStorage.getItem("totalBill")
+                }
+            }
             localStorage.setItem("paymentMethod", flagPayment);
-            history.push("/paymentByMomo/1000");
+            dispatch(createNewOrderVnpayAction(data));
+            setTimeout(() => {
+                dispatch(navigateToVnpayPaymentPageAction(localStorage.getItem("orderNumberPayment"), localStorage.getItem("totalBill")));
+            }, 1000)
+
+            // history.push("/paymentByMomo/1000");
         }
     }
     const handleRenderProductsInCart = () => {
@@ -165,8 +197,8 @@ export default function PaymentMethod() {
                             <div className="flex items-center card-footer bg-white h-16">
                                 {flagPayment == 0 ? <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox> : <Checkbox className='mr-2' onChange={handlePaymentByMomoChange} checked={!flagPayment}></Checkbox>}
                                 <div className='flex items-center'>
-                                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=1" style={{ width: '50px' }} />
-                                    <p className='mb-0 ml-3'>Thanh toán online qua ví MoMo (Pay with MoMo E-Wallet)</p>
+                                    <img src="/images/banner/vnpay.jpg" style={{ width: '50px' }} />
+                                    <p className='mb-0 ml-3'>Thanh toán online qua vnpay (Pay with Vnpay E-Wallet)</p>
                                 </div>
 
                             </div>

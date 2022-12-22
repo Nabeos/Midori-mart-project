@@ -91,7 +91,7 @@ export default function UserOrderPendingDetail() {
               <tbody>
                 {inProgressItem.orderDetail.map((item, index) => {
                   // totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
-                  totalBill += item.price * item.quantity;
+                  totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
                   // if (index == 0) {
                   //   totalBill = item.totalBill;
                   // }
@@ -109,7 +109,7 @@ export default function UserOrderPendingDetail() {
                       {item.sku}
                     </td>
                     <td className="border border-slate-300 text-base text-center">
-                      {item.price}
+                      {(item.price * (1 - (item.discount / 100))).toLocaleString()}đ
                     </td>
                     <td className="border border-slate-300 text-base text-center">
                       {item.quantity}

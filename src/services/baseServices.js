@@ -107,6 +107,14 @@ export class baseService {
         })
     }
 
+    postNavigateToVnpayPaymentPage = (url) => {
+        return Axios({
+            url: `${DOMAIN_CAPSTONE}/${url}`,
+            method: 'POST',
+            // headers: { 'Authorization': 'Token ' + localStorage.getItem(TOKEN) } //JWT
+        })
+    }
+
     postCreateNewImportGoodsForm = (url, model) => {
         return Axios({
             url: `${DOMAIN_CAPSTONE}/${url}`,

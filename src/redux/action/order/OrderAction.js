@@ -539,6 +539,7 @@ export const createNewOrderAction = (newOrderInfo) => {
         try {
             const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
             console.log("RESULT CREATE NEW ORDER: ", result);
+            // localStorage.setItem("orderNumberPayment", result?.data?.order_response?.orderNumber);
             Swal.fire({
                 title: 'Cảm ơn quý khách đã đặt hàng',
                 width: '700px',
@@ -557,6 +558,33 @@ export const createNewOrderAction = (newOrderInfo) => {
                     window.location.reload();
                 }
             })
+            dispatch({
+                type: CREATE_NEW_ORDER
+            })
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: "Số lượng hàng trong kho không còn đủ. Mong quý khách thông cảm !",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("deliveryDate");
+                    localStorage.removeItem("deliveryTimeRange");
+                    history.push("/");
+                    window.location.reload();
+                }
+            })
+            console.log('error', error.response.data);
+        }
+    }
+}
+
+export const createNewOrderVnpayAction = (newOrderInfo) => {
+    return async (dispatch) => {
+        try {
+            const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
+            console.log("RESULT CREATE NEW ORDER: ", result);
+            localStorage.setItem("orderNumberPayment", result?.data?.order_response?.orderNumber);
             dispatch({
                 type: CREATE_NEW_ORDER
             })

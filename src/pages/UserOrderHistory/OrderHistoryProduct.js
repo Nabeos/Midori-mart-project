@@ -89,7 +89,7 @@ export default function OrderHistoryProduct() {
               </thead>
               <tbody>
                 {inProgressItem.orderDetail.map((item, index) => {
-                  totalBill += item.price * item.quantity;
+                  totalBill += (item.price * (1 - (item.discount / 100))) * item.quantity;
                   return <tr key={index}>
                     <td className="border border-slate-300 text-base text-center">
                       {index + 1}
@@ -104,7 +104,7 @@ export default function OrderHistoryProduct() {
                       {item.sku}
                     </td>
                     <td className="border border-slate-300 text-base text-center">
-                      {item.price}
+                      {(item.price * (1 - (item.discount / 100))).toLocaleString()}đ
                     </td>
                     <td className="border border-slate-300 text-base text-center">
                       {item.quantity}

@@ -66,7 +66,8 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/productlist/best-sellers" component={AllBestSellerProductsInHomepageInWeek} />
         <Route exact path="/cart" component={Cart} />
-        <Route exact path="/paymentresult" component={PaymentResult} />
+        <Route exact path="/paymentresult/:vnp_Amount/:vnp_BankCode/:vnp_BankTranNo/:vnp_CardType/:vnp_OrderInfo/:vnp_PayDate/:vnp_ResponseCode/:vnp_TmnCode/:vnp_TransactionNo/:vnp_TransactionStatus/:vnp_TxnRef/:vnp_SecureHash" component={PaymentResult} />
+
         <Route exact path="/guestnotification/:orderNumber/:orderCode" component={GuestNotification} />
         <Route exact path="/guestnotificationrefund/:orderNumber/:orderCode" component={GuestNotificationRefund} />
         <Route exact path="/checkout/:orderId" component={Checkout} />
