@@ -6,8 +6,8 @@ export const navigateToVnpayPaymentPageAction = (orderNumber, totalBill) => {
     return async (dispatch) => {
         try {
             const result = await paymentManagementService.navigateToVnpayPaymentPage(orderNumber, totalBill);
-            console.log("RESULT NAVIGATE TO VNPAY PAYMENT: ", result);
-            window.location.href = result?.data?.payment?.data;
+            console.log("RESULT NAVIGATE TO VNPAY PAYMENT: ", result.data.payment.data);
+            window.location.href = result.data.payment.data;
             // history.push(result?.data?.payment?.data);
         } catch (error) {
             console.log('error', error.response.data)

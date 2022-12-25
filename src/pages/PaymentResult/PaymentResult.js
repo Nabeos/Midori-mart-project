@@ -31,7 +31,9 @@ export default function PaymentResult(props) {
     console.log("vnp_TxnRef", vnp_TxnRef);
     console.log("vnp_SecureHash", vnp_SecureHash);
     const dispatch = useDispatch();
+
     useEffect(() => {
+        alert("CÓ VÀO");
         dispatch(saveCustomerTransactionOnlinePaymentAction(vnp_Amount, vnp_BankCode, vnp_CardType, vnp_BankTranNo, vnp_OrderInfo, vnp_PayDate, vnp_TransactionNo, vnp_ResponseCode, vnp_TmnCode, vnp_TxnRef, vnp_SecureHash));
     }, [])
 
@@ -52,6 +54,8 @@ export default function PaymentResult(props) {
                         localStorage.removeItem("cart");
                         localStorage.removeItem("deliveryDate");
                         localStorage.removeItem("deliveryTimeRange");
+                        localStorage.removeItem("orderNumberPayment");
+                        localStorage.setItem("transactionStatus", 1);
                         history.push("/");
                         window.location.reload();
                     }
@@ -70,6 +74,8 @@ export default function PaymentResult(props) {
                         // localStorage.removeItem("cart");
                         // localStorage.removeItem("deliveryDate");
                         // localStorage.removeItem("deliveryTimeRange");
+                        localStorage.removeItem("orderNumberPayment");
+                        localStorage.setItem("transactionStatus", 0);
                         history.push("/payment/1000");
                         window.location.reload();
                     }

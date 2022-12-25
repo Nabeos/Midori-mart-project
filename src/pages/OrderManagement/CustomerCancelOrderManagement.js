@@ -107,14 +107,14 @@ export default function CustomerCancelOrderManagement() {
             <div className="flex justify-center">
                 <table
                     className={`${styles.customercancelordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-                    style={{ width: "80%", minHeight: "350px" }}
+                    style={{ width: "90%", minHeight: "350px" }}
                 >
                     <thead>
                         <tr>
-                            <th className="border border-slate-300 p-4 text-lg text-center">
+                            {/* <th className="border border-slate-300 p-4 text-lg text-center">
                                 {" "}
                                 Id
-                            </th>
+                            </th> */}
                             <th className="border border-slate-300 p-4 text-lg text-center">
                                 {" "}
                                 Mã đơn hàng
@@ -129,6 +129,9 @@ export default function CustomerCancelOrderManagement() {
                                 Thời gian giao hàng
                             </th>
                             <th className="border border-slate-300 p-4 text-lg text-center">
+                                Trạng thái thanh toán
+                            </th>
+                            <th className="border border-slate-300 p-4 text-lg text-center">
                                 Trạng thái đơn hàng
                             </th>
                             <th className="border border-slate-300 p-4 text-lg text-center">
@@ -139,7 +142,7 @@ export default function CustomerCancelOrderManagement() {
                     <tbody>
                         {customerOrdersForSeller.map((item, index) => {
                             return <tr key={index}>
-                                <td className="border border-slate-300 text-center">{item.id}</td>
+                                {/* <td className="border border-slate-300 text-center">{item.id}</td> */}
                                 <td className="border border-slate-300 text-center">
                                     {item.orderNumber}
                                 </td>
@@ -152,6 +155,9 @@ export default function CustomerCancelOrderManagement() {
                                 <td className="border border-slate-300 text-center">
                                     <span className="p-2">{item.deliveryDate}</span><br />
                                     <span>{item.deliveryTimeRange}</span>
+                                </td>
+                                <td className="border border-slate-300 text-center">
+                                    <span className="p-2">{item.paymentMethod}</span>
                                 </td>
                                 <td className="border border-slate-300 text-center"><span className="p-2 bg-red-700 rounded-md text-white">{item.status}</span></td>
 

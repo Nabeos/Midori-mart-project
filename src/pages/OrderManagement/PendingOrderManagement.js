@@ -112,7 +112,7 @@ export default function PendingOrderManagement(props) {
       <div className="flex justify-center">
         <table
           className={`${styles.pendingordermanagement__table__striped} table-auto border-collapse border border-slate-400 mt-3 mb-5 `}
-          style={{ width: "80%", minHeight: "360px" }}
+          style={{ width: "90%", minHeight: "360px" }}
         >
           <thead>
             <tr>
@@ -132,6 +132,9 @@ export default function PendingOrderManagement(props) {
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Thời gian giao hàng
+              </th>
+              <th className="border border-slate-300 p-4 text-lg text-center">
+                Trạng thái thanh toán
               </th>
               <th className="border border-slate-300 p-4 text-lg text-center">
                 Trạng thái đơn hàng
@@ -164,6 +167,7 @@ export default function PendingOrderManagement(props) {
                   <span className='p-2'>{item.deliveryDate}</span><br />
                   <span>{item.deliveryTimeRange}</span>
                 </td>
+                <td className="border border-slate-300 text-center"><span>{item.paymentMethod}</span></td>
                 <td className="border border-slate-300 text-center"><span className="p-2 bg-yellow-600 rounded-md text-white">{item.status}</span></td>
 
                 <td className="border border-slate-300 text-center">
@@ -226,7 +230,7 @@ export default function PendingOrderManagement(props) {
           total={pendingCustomerOrdersLengthForSeller.length}
         />
       </div>
-    </div> : <div style={{ minHeight: "520px" }}>
+    </div > : <div style={{ minHeight: "520px" }}>
       <div className="text-center" style={{
         width: "80%",
         margin: "30px auto 0 auto",

@@ -106,9 +106,9 @@ export default function AllUserOrder() {
                   style={{ width: '100%', minHeight: "20rem" }}
                 >
                   <thead>
-                    <th className="border border-slate-300 p-4 text-lg text-center">
+                    {/* <th className="border border-slate-300 p-4 text-lg text-center">
                       Id
-                    </th>
+                    </th> */}
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Mã đơn hàng
                     </th>
@@ -118,7 +118,9 @@ export default function AllUserOrder() {
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Thời gian đặt
                     </th>
-
+                    <th className="border border-slate-300 p-4 text-lg text-center">
+                      Tình trạng thanh toán
+                    </th>
                     <th className="border border-slate-300 p-4 text-lg text-center">
                       Trạng thái đơn hàng
                     </th>
@@ -129,15 +131,20 @@ export default function AllUserOrder() {
                   <tbody>
                     {allCustomerOrderListForCustomer.map((item, index) => {
                       return <tr>
-                        <td className="border border-slate-300 text-center">{item.id}</td>
+                        {/* <td className="border border-slate-300 text-center">{item.id}</td> */}
                         <td className="border border-slate-300 text-center">
                           {item.orderNumber}
                         </td>
                         <td className="border border-slate-300 text-center">
                           <span className="p-2 whitespace-nowrap">{item.fullName}</span>
                         </td>
+
                         <td className="border border-slate-300 text-center">
                           <span className="p-2">{item.orderDate}</span>
+
+                        </td>
+                        <td className="border border-slate-300 text-center">
+                          <span className="p-2">{item.paymentMethod}</span>
 
                         </td>
                         <td className="border border-slate-300 text-center ">

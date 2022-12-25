@@ -5,6 +5,8 @@ import { CLOSE_MODAL, CLOSE_MODAL_DELIVERING_SELLER, CLOSE_MODAL_PENDING_SELLER,
 import { notification } from "antd";
 import Swal from 'sweetalert2'
 import { history } from '../../../App';
+import { paymentManagementService } from '../../../services/PaymentManagementService';
+import { HIDE_LOADING, SHOW_LOADING } from '../../type/loading/LoadingType';
 
 export const getAllCustomerOrderForSellerAction = (limit, offset, statusOrder) => {
     return async (dispatch) => {
@@ -537,7 +539,9 @@ export const refundOrderForGuestAction = (orderNumber, code) => {
 export const createNewOrderAction = (newOrderInfo) => {
     return async (dispatch) => {
         try {
+            dispatch({ type: SHOW_LOADING })
             const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
+            await dispatch({ type: HIDE_LOADING });
             console.log("RESULT CREATE NEW ORDER: ", result);
             // localStorage.setItem("orderNumberPayment", result?.data?.order_response?.orderNumber);
             Swal.fire({
@@ -554,6 +558,7 @@ export const createNewOrderAction = (newOrderInfo) => {
                     localStorage.removeItem("cart");
                     localStorage.removeItem("deliveryDate");
                     localStorage.removeItem("deliveryTimeRange");
+                    localStorage.removeItem("orderNumberPayment");
                     history.push("/");
                     window.location.reload();
                 }
@@ -582,7 +587,13 @@ export const createNewOrderAction = (newOrderInfo) => {
 export const createNewOrderVnpayAction = (newOrderInfo) => {
     return async (dispatch) => {
         try {
+            dispatch({ type: SHOW_LOADING })
             const result = await orderManagementForCustomerService.createNewOrder(newOrderInfo);
+            //PHẦN NÀY MỚI THÊM NHÉ
+            const result1 = await paymentManagementService.navigateToVnpayPaymentPage(result?.data?.order_response?.orderNumber, localStorage.getItem("totalBill"));
+            await dispatch({ type: HIDE_LOADING });
+            window.location.href = result1.data.payment.data;
+            //END
             console.log("RESULT CREATE NEW ORDER: ", result);
             localStorage.setItem("orderNumberPayment", result?.data?.order_response?.orderNumber);
             dispatch({
@@ -591,7 +602,7 @@ export const createNewOrderVnpayAction = (newOrderInfo) => {
         } catch (error) {
             Swal.fire({
                 icon: 'error',
-                title: "Số lượng hàng trong kho không còn đủ. Mong quý khách thông cảm !",
+                title: "Số lượng hàng trong kho không đủ hoặc không tìm thấy đơn hàng. Mong quý khách thông cảm !",
             }).then((result) => {
                 if (result.isConfirmed) {
                     localStorage.removeItem("cart");

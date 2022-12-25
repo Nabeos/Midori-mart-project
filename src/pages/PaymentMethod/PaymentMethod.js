@@ -20,6 +20,10 @@ export default function PaymentMethod() {
     const { cartList } = useSelector(state => state.CartReducer);
     const dispatch = useDispatch();
     const flagPayment = useSelector(state => state.OrderReducer.flagPayment);
+    useEffect(() => {
+        localStorage.setItem("paymentMethod", flagPayment);
+    }, [flagPayment])
+
     console.log("FLAG PAYMENT: ", flagPayment);
     // const handleSubmit = () => {
 
@@ -38,7 +42,9 @@ export default function PaymentMethod() {
         })
     }
     const handleFinishOrder = () => {
-        if (flagPayment == 1) {
+        if (localStorage.getItem("paymentMethod") == 1) {
+            console.log("PHƯƠNG THỨC COD: ", localStorage.getItem("paymentMethod"))
+            console.log("CÓ VÀO COD");
             // Swal.fire({
             //     title: 'Cảm ơn quý khách đã đặt hàng',
             //     width: '700px',
@@ -87,9 +93,15 @@ export default function PaymentMethod() {
 
             }
             console.log("data create new order: ", data);
-            dispatch(createNewOrderAction(data));
-
-        } else {
+            if (localStorage.getItem("transactionStatus") == 0) {
+                dispatch(createNewOrderAction(data));
+            } else {
+                dispatch(createNewOrderAction(data));
+                localStorage.setItem("transactionStatus", 1);
+            }
+        } else if (localStorage.getItem("paymentMethod") == 0) {
+            console.log("PHƯƠNG THỨC VNPAY: ", localStorage.getItem("paymentMethod"))
+            console.log("CÓ VÀO VNPAY");
             let cartListPaymentMethod = JSON.parse(localStorage.getItem("cart"));
             let cartListPaymentMethodCustom = cartListPaymentMethod.map((item, index) => {
                 return item = {
@@ -115,10 +127,25 @@ export default function PaymentMethod() {
                 }
             }
             localStorage.setItem("paymentMethod", flagPayment);
-            dispatch(createNewOrderVnpayAction(data));
-            setTimeout(() => {
-                dispatch(navigateToVnpayPaymentPageAction(localStorage.getItem("orderNumberPayment"), localStorage.getItem("totalBill")));
-            }, 1000)
+            if (localStorage.getItem("transactionStatus") == 0) {
+                dispatch(createNewOrderVnpayAction(data));
+
+                //TÍ NHỚ BỎ RA NHÉ
+                // setTimeout(() => {
+                //     dispatch(navigateToVnpayPaymentPageAction(localStorage.getItem("orderNumberPayment"), localStorage.getItem("totalBill")));
+                // }, 2000)
+
+                // dispatch(navigateToVnpayPaymentPageAction(localStorage.getItem("orderNumberPayment"), localStorage.getItem("totalBill")));
+            } else {
+                dispatch(createNewOrderVnpayAction(data));
+
+                //TÍ NHỚ BỎ RA NHÉ
+                // localStorage.setItem("transactionStatus", 1);
+                // setTimeout(() => {
+                //     dispatch(navigateToVnpayPaymentPageAction(localStorage.getItem("orderNumberPayment"), localStorage.getItem("totalBill")));
+                // }, 2000)
+            }
+
 
             // history.push("/paymentByMomo/1000");
         }
@@ -167,8 +194,8 @@ export default function PaymentMethod() {
                             </li>
 
                         </ul>
-                        <p className='font-bold mb-3 text-lg'>Phương thức vận chuyển/Transportation method</p>
-                        <div class="card text-black mb-5">
+                        {localStorage.getItem("receiveProductsMethod") == 1 ? <p className='font-bold mb-3 text-lg'>Phương thức vận chuyển/Transportation method</p> : <Fragment></Fragment>}
+                        {localStorage.getItem("receiveProductsMethod") == 1 ? <div class="card text-black mb-5">
                             <div className="card-body p-3">
                                 <div className='flex justify-between grid grid-cols-4'>
                                     <div className='col-span-3' style={{ fontSize: '0.9rem' }}>
@@ -179,9 +206,8 @@ export default function PaymentMethod() {
                                     <div className='text-right'>{transferCost.toLocaleString()}<span className='underline'>đ</span></div>
                                 </div>
                             </div>
+                        </div> : <Fragment></Fragment>}
 
-
-                        </div>
 
                         <p className='font-bold mb-3 text-lg'>Phương thức thanh toán/Payment method</p>
                         <div class="card text-black mb-3">

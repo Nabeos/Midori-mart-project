@@ -40,6 +40,7 @@ function Header(props) {
     localStorage.removeItem(USER);
     localStorage.removeItem(TOKEN);
     localStorage.removeItem("cart");
+    localStorage.removeItem("transactionStatus");
     localStorage.removeItem("deliveryDate");
     localStorage.removeItem("deliveryTimeRange");
     localStorage.removeItem("note");
@@ -49,6 +50,7 @@ function Header(props) {
     localStorage.removeItem("phoneNumber");
     localStorage.removeItem("totalBill");
     localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("orderNumberPayment");
     localStorage.removeItem("receiveProductsMethod");
     localStorage.removeItem("userDetailedInfoAdmin");
     localStorage.removeItem("firstNameUserDetailedAdmin");

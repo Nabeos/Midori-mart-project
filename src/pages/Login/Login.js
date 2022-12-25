@@ -170,6 +170,7 @@ const LoginWithFormik = withFormik({
       }
     }
     // console.log("data login: ", data);
+    localStorage.setItem("transactionStatus", 1);
     props.dispatch(loginAction(data));
   },
 
