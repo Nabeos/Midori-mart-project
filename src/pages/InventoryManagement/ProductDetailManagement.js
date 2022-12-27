@@ -613,6 +613,7 @@ const regexPhoneNumber = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689
 const regexAllNumber = /^[0-9.,]+$/;
 // const regexSelect = /^[1-9]$/;
 const regexSelect = /^[1-9][0-9]*$/;
+const regexDiscount = /^([0-9]|([1-9][0-9])|100)$/;
 
 const ProductDetailManagementWithFormik = withFormik({
   enableReinitialize: true,
@@ -648,7 +649,7 @@ const ProductDetailManagementWithFormik = withFormik({
       .matches(regexSelect, "Giá sản phẩm chỉ được phép chứa số và phải lớn hơn 0"),
     discount: Yup.string()
       .required("Vui lòng không để trống khuyến mãi !!!")
-      .matches(regexSelect, "Phần khuyến mãi chỉ được phép chứa số và phải lớn hơn 0"),
+      .matches(regexDiscount, "Phần khuyến mãi chỉ được phép chứa số và phải lớn hơn 0 và nhỏ hơn 100"),
     // productDiscount: Yup.string()
     // .required("Vui lòng không để trống mục khuyến mãi !!!")
     // .matches(regexSelect, "Vui lòng không để trống mục khuyến mãi !!!"),
